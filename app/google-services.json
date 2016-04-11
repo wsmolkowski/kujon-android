@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_id": "kujon-942c2",
+    "project_number": "774265221464",
+    "name": "Kujon"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:774265221464:android:96ffee1a1f1f65f7",
+        "client_id": "android:mobi.kujon",
+        "client_type": 1,
+        "android_client_info": {
+          "package_name": "mobi.kujon",
+          "certificate_hash": []
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "774265221464-gi5maqif828almefe4o6un9863ok54sd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "mobi.kujon",
+            "certificate_hash": "509249D1AFCE24CE6316443228787FFB1EF46DD7"
+          }
+        },
+        {
+          "client_id": "774265221464-1v0trui5rbc375cea793r1dposo7tkan.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "cloud_messaging_service": {
+          "status": 2,
+          "apns_config": []
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "google_signin_service": {
+          "status": 2
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "client_info": [],
+  "ARTIFACT_VERSION": "1"
+}
