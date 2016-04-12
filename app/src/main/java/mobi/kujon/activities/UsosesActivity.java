@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -102,7 +101,7 @@ public class UsosesActivity extends BaseActivity {
             super(itemView);
             ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(v -> {
-                Toast.makeText(UsosesActivity.this, "Going to" + url, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(UsosesActivity.this, "Going to" + url, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(UsosesActivity.this, UsoswebLoginActivity.class);
                 intent.putExtra(UsoswebLoginActivity.USOS_URL, url);
                 startActivity(intent);

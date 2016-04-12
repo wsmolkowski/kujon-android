@@ -11,7 +11,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 22
         versionCode 1
-        versionName "1.0"
+        versionName "0.0.1"
     }
 
     signingConfigs {
@@ -28,7 +28,7 @@ android {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             ext.betaDistributionReleaseNotesFilePath = "release_notes/${android.defaultConfig.versionName}.txt"
-            ext.betaDistributionEmails = "robotestowy@gmail.com"
+            ext.betaDistributionEmails = "akonior@gmail.com"
             signingConfig signingConfigs.release
         }
     }
