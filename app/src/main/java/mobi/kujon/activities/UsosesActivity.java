@@ -17,27 +17,27 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
+import mobi.kujon.network.KujonBackendApi;
 import mobi.kujon.network.KujonBackendService;
 import mobi.kujon.network.json.Usos;
 import mobi.kujon.network.json.UsosesResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
-import static mobi.kujon.KujonApplication.getContext;
 
 public class UsosesActivity extends BaseActivity {
 
     @Bind(R.id.recyclerView) RecyclerView recyclerView;
     private UsosesAdapter adapter;
+    private KujonBackendApi kujonBackendApi;
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_usoses);
         ButterKnife.bind(this);
+        kujonBackendApi = KujonBackendService.getInstance().getKujonBackendApi();
 
         requestUsoses();
 
@@ -47,14 +47,7 @@ public class UsosesActivity extends BaseActivity {
     }
 
     private void requestUsoses() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.kujon.mobi")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        KujonBackendService kujonBackendService = retrofit.create(KujonBackendService.class);
-
-        kujonBackendService.usoses().enqueue(new Callback<UsosesResponse>() {
+        kujonBackendApi.usoses().enqueue(new Callback<UsosesResponse>() {
             @Override public void onResponse(Call<UsosesResponse> call, Response<UsosesResponse> response) {
                 System.out.println(response);
                 adapter.setItems(response.body().data);
@@ -81,7 +74,7 @@ public class UsosesActivity extends BaseActivity {
         @Override public void onBindViewHolder(UsosViewHolder holder, int position) {
             Usos usos = items.get(position);
             holder.name.setText(usos.name);
-            Picasso.with(getContext()).load(usos.logo).into(holder.logo);
+            Picasso.with(KujonApplication.getApplication()).load(usos.logo).into(holder.logo);
         }
 
         @Override public int getItemCount() {
