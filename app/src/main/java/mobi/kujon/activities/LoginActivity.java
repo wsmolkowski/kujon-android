@@ -42,6 +42,10 @@ public class LoginActivity extends BaseActivity implements ResultCallback<Google
         }
     }
 
+    @Override public void handle(GoogleSignInResult result) {
+        onResult(result);
+    }
+
     @Override public void onResult(@NonNull GoogleSignInResult result) {
         if (result.isSuccess()) {
             startActivity(new Intent(this, AFTER_LOGIN_ACTIVITY));

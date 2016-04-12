@@ -69,6 +69,7 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
     }
 
     public void checkLoggingStatus(ResultCallback<GoogleSignInResult> resultCallback) {
+        Log.i(TAG, "checkLoggingStatus: " + this.getClass().getSimpleName());
         OptionalPendingResult<GoogleSignInResult> silentSignIn = Auth.GoogleSignInApi.silentSignIn(apiClient);
         if (silentSignIn.isDone()) {
             resultCallback.onResult(silentSignIn.get());
@@ -78,6 +79,7 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
     }
 
     public void handle(GoogleSignInResult result) {
+        Log.i(TAG, "handle sign in status: " + result.isSuccess());
         if (!result.isSuccess() && !(this instanceof LoginActivity)) {
             finish();
             if (this instanceof UsosesActivity) {

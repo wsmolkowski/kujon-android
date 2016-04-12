@@ -1,5 +1,6 @@
 package mobi.kujon.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -62,7 +64,7 @@ public class UsosesActivity extends BaseActivity {
         });
     }
 
-    private static class UsosesAdapter extends RecyclerView.Adapter<UsosViewHolder> {
+    private class UsosesAdapter extends RecyclerView.Adapter<UsosViewHolder> {
 
         private List<Usos> items = new ArrayList<>();
 
@@ -74,6 +76,7 @@ public class UsosesActivity extends BaseActivity {
         @Override public void onBindViewHolder(UsosViewHolder holder, int position) {
             Usos usos = items.get(position);
             holder.name.setText(usos.name);
+            holder.url = usos.url;
             Picasso.with(KujonApplication.getApplication()).load(usos.logo).into(holder.logo);
         }
 
@@ -89,14 +92,21 @@ public class UsosesActivity extends BaseActivity {
         }
     }
 
-    static class UsosViewHolder extends RecyclerView.ViewHolder {
+    class UsosViewHolder extends RecyclerView.ViewHolder {
 
         @Bind(R.id.usos_name) TextView name;
         @Bind(R.id.usos_logo) ImageView logo;
+        String url;
 
         public UsosViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(v -> {
+                Toast.makeText(UsosesActivity.this, "Going to" + url, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(UsosesActivity.this, UsoswebLoginActivity.class);
+                intent.putExtra(UsoswebLoginActivity.USOS_URL, url);
+                startActivity(intent);
+            });
         }
     }
 }
