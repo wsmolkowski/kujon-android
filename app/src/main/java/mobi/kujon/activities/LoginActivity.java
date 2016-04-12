@@ -1,9 +1,8 @@
-package mobi.kujon;
+package mobi.kujon.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -19,9 +18,10 @@ import com.google.android.gms.common.api.OptionalPendingResult;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import mobi.kujon.R;
 
 
-public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
+public class LoginActivity extends BaseActivity implements GoogleApiClient.OnConnectionFailedListener {
 
     public static final int RC_SIGN_IN = 1;
     private GoogleApiClient apiClient;
@@ -62,6 +62,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         }
     }
 
+    @Override protected void handleLoginStatus(boolean logged) {
+        if (logged) {
+            startActivity(new Intent(this, UsosesActivity.class));
+        }
+    }
+
     private void handle(GoogleSignInResult result) {
         System.out.println("result = [" + result + "]");
         loginUi(result.isSuccess());
@@ -77,6 +83,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private void loginUi(boolean loggedIn) {
         logOutButton.setVisibility(loggedIn ? View.VISIBLE : View.GONE);
         signInButton.setVisibility(loggedIn ? View.GONE : View.VISIBLE);
+        kujonPreferences.edit().putBoolean(LOGGED, loggedIn).apply();
+        handleLoginStatus(loggedIn);
     }
 
     @OnClick(R.id.logout)
