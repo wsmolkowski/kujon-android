@@ -13,12 +13,23 @@ android {
         versionCode 1
         versionName "1.0"
     }
+
+    signingConfigs {
+        release {
+            keyAlias = "Kujon"
+        }
+    }
+
     buildTypes {
+        debug {
+            applicationIdSuffix '.debug'
+        }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             ext.betaDistributionReleaseNotesFilePath = "release_notes/${android.defaultConfig.versionName}.txt"
             ext.betaDistributionEmails = "robotestowy@gmail.com"
+            signingConfig signingConfigs.release
         }
     }
 
