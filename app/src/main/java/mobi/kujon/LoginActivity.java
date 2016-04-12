@@ -37,6 +37,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
+                .requestIdToken(getString(R.string.serverClientId))
                 .requestProfile()
                 .build();
 
@@ -69,6 +70,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             return;
         }
         System.out.println("########### " + result.getSignInAccount().getEmail());
+        System.out.println("result token = [" + result.getSignInAccount().getIdToken() + "]");
         logOutButton.setText("Logout: " + result.getSignInAccount().getEmail());
     }
 
