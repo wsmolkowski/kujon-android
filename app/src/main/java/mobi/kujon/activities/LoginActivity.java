@@ -10,7 +10,6 @@ import com.google.android.gms.common.api.ResultCallback;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
 
 
@@ -18,18 +17,18 @@ public class LoginActivity extends BaseActivity implements ResultCallback<Google
 
     public static final int RC_SIGN_IN = 1;
 
+    public static Class AFTER_LOGIN_ACTIVITY = UsosesActivity.class;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-
-        KujonApplication.getApplication().checkLoggingStatus(this);
     }
 
     @OnClick(R.id.sign_in_button)
     public void signIn() {
-        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(KujonApplication.getApplication().getApiClient());
+        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(apiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
@@ -45,7 +44,7 @@ public class LoginActivity extends BaseActivity implements ResultCallback<Google
 
     @Override public void onResult(@NonNull GoogleSignInResult result) {
         if (result.isSuccess()) {
-            startActivity(new Intent(this, UsosesActivity.class));
+            startActivity(new Intent(this, AFTER_LOGIN_ACTIVITY));
             finish();
         }
     }
