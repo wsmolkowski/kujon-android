@@ -1,0 +1,7 @@
+* handle usos login response from kujon backend
+* plan view with hardcoded data
+* user profile info
+* config endpoint, authentication interceptor
+* view pager with tabs
+* usos login
+* no error or edge cases handling
