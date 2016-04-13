@@ -75,7 +75,7 @@ public class UsosesActivity extends BaseActivity {
         @Override public void onBindViewHolder(UsosViewHolder holder, int position) {
             Usos usos = items.get(position);
             holder.name.setText(usos.name);
-            holder.url = usos.url;
+            holder.usosId = usos.usosId;
             Picasso.with(KujonApplication.getApplication()).load(usos.logo).into(holder.logo);
         }
 
@@ -95,16 +95,16 @@ public class UsosesActivity extends BaseActivity {
 
         @Bind(R.id.usos_name) TextView name;
         @Bind(R.id.usos_logo) ImageView logo;
-        String url;
+        String usosId;
 
         public UsosViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(v -> {
-//                Toast.makeText(UsosesActivity.this, "Going to" + url, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(UsosesActivity.this, UsoswebLoginActivity.class);
-                intent.putExtra(UsoswebLoginActivity.USOS_URL, url);
+                intent.putExtra(UsoswebLoginActivity.USOS_ID, usosId);
                 startActivity(intent);
+                finish();
             });
         }
     }
