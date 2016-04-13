@@ -35,7 +35,8 @@ public class UsoswebLoginActivity extends BaseActivity {
                 progressBar.setVisibility(View.GONE);
                 super.onPageFinished(view, url);
             }
+
         });
-        webView.loadUrl(usosUrl);
+        webView.loadUrl("https://usosapps.demo.usos.edu.pl/apps/authorize?oauth_token=aHn6w2zaJY8RwERdVCP9&interactivity=minimal");
     }
 }

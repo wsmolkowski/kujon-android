@@ -2,16 +2,18 @@ package mobi.kujon.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.widget.Toast;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
-import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.SignInButton;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
 import mobi.kujon.network.KujonBackendApi;
 import mobi.kujon.network.KujonBackendService;
@@ -22,11 +24,14 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class LoginActivity extends BaseActivity implements ResultCallback<GoogleSignInResult> {
+public class LoginActivity extends BaseActivity {
 
     public static final int RC_SIGN_IN = 1;
 
     private KujonBackendApi kujonBackendApi;
+
+    @Bind(R.id.sign_in_button) SignInButton signIn;
+    @Bind(R.id.progressBar) ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,21 +53,20 @@ public class LoginActivity extends BaseActivity implements ResultCallback<Google
 
         if (requestCode == RC_SIGN_IN && resultCode == RESULT_OK) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            onResult(result);
+            handle(result);
         }
     }
 
     @Override public void handle(GoogleSignInResult result) {
-        onResult(result);
-    }
-
-    @Override public void onResult(@NonNull GoogleSignInResult result) {
         if (result.isSuccess()) {
+            signIn.setVisibility(View.GONE);
+            progressBar.setVisibility(View.VISIBLE);
+            KujonApplication.getApplication().setLoginStatus(result);
             kujonBackendApi.config().enqueue(new Callback<KujonResponse<Config>>() {
                 @Override public void onResponse(Call<KujonResponse<Config>> call, Response<KujonResponse<Config>> response) {
                     Config data = response.body().data;
                     if (data.usosPaired) {
-                        Toast.makeText(LoginActivity.this, "Will shou user data", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(LoginActivity.this, UserProfileActivity.class));
                     } else {
                         startActivity(new Intent(LoginActivity.this, UsosesActivity.class));
                     }
@@ -73,7 +77,6 @@ public class LoginActivity extends BaseActivity implements ResultCallback<Google
                     Crashlytics.logException(t);
                 }
             });
-
         }
     }
 }

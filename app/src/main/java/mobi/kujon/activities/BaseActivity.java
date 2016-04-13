@@ -84,7 +84,7 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
         KujonApplication.getApplication().setLoginStatus(result);
         if (!result.isSuccess() && !(this instanceof LoginActivity)) {
             finish();
-            if (this instanceof UsosesActivity) {
+            if (this instanceof UsosesActivity || this instanceof UserProfileActivity) {
                 startActivity(new Intent(this, LoginActivity.class));
             }
         }
