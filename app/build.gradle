@@ -68,6 +68,7 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.0.1'
     compile 'com.android.support:cardview-v7:23.3.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.github.alamkanak:android-week-view:1.2.6'
 }
 
 if (project.properties.keySet().containsAll(['storeFile', 'storePassword', 'keyAlias', 'keyPassword'])) {

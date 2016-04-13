@@ -3,6 +3,7 @@ package mobi.kujon.network;
 import java.util.List;
 
 import mobi.kujon.network.json.Config;
+import mobi.kujon.network.json.Event;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.network.json.User;
 import mobi.kujon.network.json.Usos;
@@ -19,4 +20,6 @@ public interface KujonBackendApi {
     @POST("authentication/register") Call<KujonResponse> register();
 
     @GET("users") Call<KujonResponse<User>> users();
+
+    @GET("tt/2016-04-10") Call<KujonResponse<List<Event>>> plan();
 }

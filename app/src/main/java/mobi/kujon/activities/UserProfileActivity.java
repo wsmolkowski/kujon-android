@@ -12,11 +12,13 @@ import android.support.v7.app.ActionBar;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mobi.kujon.R;
+import mobi.kujon.fragments.PlanFragment;
 import mobi.kujon.fragments.UserInfoFragment;
+import mobi.kujon.ui.CustomViewPager;
 
 public class UserProfileActivity extends BaseActivity {
 
-    @Bind(R.id.viewPager) ViewPager pager;
+    @Bind(R.id.viewPager) CustomViewPager pager;
     private PagerAdapter adapter;
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,6 +60,7 @@ public class UserProfileActivity extends BaseActivity {
 
             @Override public void onPageSelected(int position) {
                 getSupportActionBar().setSelectedNavigationItem(position);
+                pager.setPagingEnabled(position != 1);
             }
 
             @Override public void onPageScrollStateChanged(int state) {
@@ -69,7 +72,8 @@ public class UserProfileActivity extends BaseActivity {
 
     private class PagerAdapter extends FragmentStatePagerAdapter {
 
-        public String[] TITLES = new String[] {"Użytkownik", "Plan", "Przedmioty", "Oceny", "Nauczyciele", "Uczelnia"};
+        public String[] TITLES = new String[]{"Użytkownik", "Plan", "Przedmioty", "Oceny", "Nauczyciele", "Uczelnia"};
+        public Fragment[] FRAGMENTS = new Fragment[]{new UserInfoFragment(), new PlanFragment(), new UserInfoFragment(), new UserInfoFragment(), new UserInfoFragment(), new UserInfoFragment()};
 
         public PagerAdapter(FragmentManager fm) {
             super(fm);
@@ -77,7 +81,7 @@ public class UserProfileActivity extends BaseActivity {
 
         @Override
         public Fragment getItem(int position) {
-            return new UserInfoFragment();
+            return FRAGMENTS[position];
         }
 
         @Override
