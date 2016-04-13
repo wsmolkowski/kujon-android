@@ -5,6 +5,7 @@ import android.app.Application;
 import android.os.Bundle;
 
 import com.crashlytics.android.Crashlytics;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,7 @@ public class KujonApplication extends Application {
     private List<Activity> stack = new ArrayList<>();
 
     private static KujonApplication instance;
+    private GoogleSignInResult loginStatus;
 
     @Override public void onCreate() {
         super.onCreate();
@@ -53,5 +55,13 @@ public class KujonApplication extends Application {
 
     public static KujonApplication getApplication() {
         return instance;
+    }
+
+    public GoogleSignInResult getLoginStatus() {
+        return loginStatus;
+    }
+
+    public void setLoginStatus(GoogleSignInResult loginStatus) {
+        this.loginStatus = loginStatus;
     }
 }

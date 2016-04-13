@@ -22,8 +22,8 @@ import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
 import mobi.kujon.network.KujonBackendApi;
 import mobi.kujon.network.KujonBackendService;
+import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.network.json.Usos;
-import mobi.kujon.network.json.UsosesResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -48,16 +48,16 @@ public class UsosesActivity extends BaseActivity {
     }
 
     private void requestUsoses() {
-        kujonBackendApi.usoses().enqueue(new Callback<UsosesResponse>() {
-            @Override public void onResponse(Call<UsosesResponse> call, Response<UsosesResponse> response) {
+        kujonBackendApi.usoses().enqueue(new Callback<KujonResponse<List<Usos>>>() {
+            @Override public void onResponse(Call<KujonResponse<List<Usos>>> call, Response<KujonResponse<List<Usos>>> response) {
                 System.out.println(response);
                 adapter.setItems(response.body().data);
-                for (mobi.kujon.network.json.Usos usos : response.body().data) {
+                for (Usos usos : response.body().data) {
                     System.out.println(usos);
                 }
             }
 
-            @Override public void onFailure(Call<UsosesResponse> call, Throwable t) {
+            @Override public void onFailure(Call<KujonResponse<List<Usos>>> call, Throwable t) {
                 System.out.println(t);
             }
         });

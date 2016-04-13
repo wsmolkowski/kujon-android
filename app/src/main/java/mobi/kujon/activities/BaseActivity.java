@@ -20,6 +20,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 
+import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
 
 
@@ -80,6 +81,7 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
 
     public void handle(GoogleSignInResult result) {
         Log.i(TAG, "handle sign in status: " + result.isSuccess());
+        KujonApplication.getApplication().setLoginStatus(result);
         if (!result.isSuccess() && !(this instanceof LoginActivity)) {
             finish();
             if (this instanceof UsosesActivity) {
