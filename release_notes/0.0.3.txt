@@ -1,0 +1,6 @@
+* usos login flow
+* course list screen
+* course details screen
+* grades screen
+* user details screen
+* authentication to backend is hardcoded using Cookie - user is kujontest@gmail.com
