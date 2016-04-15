@@ -54,7 +54,7 @@ public class KujonBackendService {
             Request originalRequest = chain.request();
             System.out.println("### modifying request" + originalRequest.url());
             Request request = originalRequest.newBuilder()
-                    .header("Cookie", "KUJON_SECURE_COOKIE=\"2|1:0|10:1460538517|19:KUJON_SECURE_COOKIE|292:IntcImFjY2Vzc190b2tlbl9rZXlcIjogXCJ6R3paYVdOajMySG5zWU1QNjlyYlwiLCBcIl9pZFwiOiB7XCIkb2lkXCI6IFwiNTcwZDNlNWI4NTVlZjkxZWE4M2NjMjE5XCJ9LCBcImFjY2Vzc190b2tlbl9zZWNyZXRcIjogXCJSYnFMdWRLVFVWM1NkZEtiWjJxcXZoR0VZVHJ3QnBVVUtHY2pyMzlXXCIsIFwidXNvc19wYWlyZWRcIjogdHJ1ZSwgXCJ1c29zX2lkXCI6IFwiREVNT1wifSI=|f3eb6d3bc96195e7d2e263fccc7a5c38b79f60463adf80d6b5b582320d79714f\"")
+                    .header("Cookie", "KUJON_SECURE_COOKIE=\"2|1:0|10:1460710958|19:KUJON_SECURE_COOKIE|292:IntcImFjY2Vzc190b2tlbl9rZXlcIjogXCJZRXZqTEVZVTV2U2dkM1I5cHZ4dVwiLCBcIl9pZFwiOiB7XCIkb2lkXCI6IFwiNTcxMGExYjg4NTVlZjkyY2M5ZWE4MDExXCJ9LCBcImFjY2Vzc190b2tlbl9zZWNyZXRcIjogXCJzOUQ0Q2EyaE1mTTZiM2R3VHM1THJNYjZBaGFkZWpOOFZhNXZkR3JWXCIsIFwidXNvc19pZFwiOiBcIkRFTU9cIiwgXCJ1c29zX3BhaXJlZFwiOiB0cnVlfSI=|ac9226ebb15b7cb7b293e59ad5aa260a8032cba07822d522ccf9674fbbaaa169\"")
                     .header("X-kujon.mobi-email", loginStatus.getSignInAccount().getEmail())
                     .header("X-kujon.mobi-token", loginStatus.getSignInAccount().getIdToken())
                     .build();

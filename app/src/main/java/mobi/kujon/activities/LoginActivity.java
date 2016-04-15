@@ -56,11 +56,13 @@ public class LoginActivity extends BaseActivity {
             signIn.setVisibility(View.GONE);
             progressBar.setVisibility(View.VISIBLE);
             KujonApplication.getApplication().setLoginStatus(result);
-            startActivity(new Intent(LoginActivity.this, UsosesActivity.class));
             // FIXME
+            startActivity(new Intent(LoginActivity.this, UserProfileActivity.class));
+            finish();
 //            kujonBackendApi.config().enqueue(new Callback<KujonResponse<Config>>() {
 //                @Override public void onResponse(Call<KujonResponse<Config>> call, Response<KujonResponse<Config>> response) {
 //                    Config data = response.body().data;
+//                    System.out.println("### " + data);
 //                    if (data.usosPaired) {
 //                        startActivity(new Intent(LoginActivity.this, UserProfileActivity.class));
 //                    } else {
