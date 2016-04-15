@@ -11,12 +11,15 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.gson.Gson;
 
 import java.io.IOException;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
 import mobi.kujon.network.json.KujonResponse;
 import okhttp3.Call;
@@ -90,6 +93,10 @@ public class UsoswebLoginActivity extends BaseActivity {
                 return false;
             }
         });
-        webView.loadUrl("https:/api.kujon.mobi/authentication/mobi?email=kujonmobi99@gmail.com&token=123445666654322&usos_id=DEMO");
+        GoogleSignInResult loginStatus = KujonApplication.getApplication().getLoginStatus();
+        GoogleSignInAccount account = loginStatus.getSignInAccount();
+        String url = String.format("https:/api.kujon.mobi/authentication/mobi?email=%s&token=%s&usos_id=%s", account.getEmail(), account.getIdToken(), usosId);
+        System.out.println("url = " + url);
+        webView.loadUrl(url);
     }
 }
