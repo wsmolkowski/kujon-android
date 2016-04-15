@@ -1,54 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
-              android:gravity="center_horizontal"
-              android:padding="16dp">
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/userName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@android:color/black"
-        android:textSize="22sp"
-        tools:text="User info"/>
-
-    <ImageView
-        android:layout_margin="8dp"
-        android:id="@+id/picture"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="160dp"
-        android:src="@drawable/user_placeholder"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
 
-    <TextView
-        android:id="@+id/usosName"
-        android:layout_width="match_parent"
-        android:textColor="@android:color/black"
-        android:textSize="16sp"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        tools:text="Some info"/>
+        <TextView
+            android:id="@+id/userName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@android:color/black"
+            android:textSize="22sp"
+            tools:text="User info"/>
 
-    <TextView
-        android:id="@+id/firstLastName"
-        android:layout_width="match_parent"
-        android:textColor="@android:color/black"
-        android:textSize="16sp"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        tools:text="Some info"/>
+        <ImageView
+            android:id="@+id/picture"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:layout_margin="8dp"
+            android:src="@drawable/user_placeholder"/>
 
-    <TextView
-        android:id="@+id/index"
-        android:layout_width="match_parent"
-        android:textColor="@android:color/black"
-        android:textSize="16sp"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        tools:text="Some info"/>
+        <TextView
+            style="@style/label"
+            android:text="USOS"/>
 
+        <TextView
+            android:id="@+id/usosName"
+            style="@style/entry"
+            tools:text='Lorem ipsum'/>
 
+        <TextView
+            style="@style/label"
+            android:text="Imię i Nazwisko"/>
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/firstLastName"
+            style="@style/entry"
+            tools:text='Lorem ipsum'/>
+
+        <TextView
+            style="@style/label"
+            android:text="Numer indexu"/>
+
+        <TextView
+            android:id="@+id/index"
+            style="@style/entry"
+            tools:text='Lorem ipsum'/>
+
+        <TextView
+            style="@style/label"
+            android:text="Status studenta"/>
+
+        <TextView
+            android:id="@+id/student_status"
+            style="@style/entry"
+            tools:text='Lorem ipsum'/>
+
+        <TextView
+            style="@style/label"
+            android:text="Numer konta"/>
+
+        <TextView
+            android:id="@+id/student_account_number"
+            style="@style/entry"
+            tools:text='Lorem ipsum'/>
+
+        <TextView
+            style="@style/label"
+            android:text="Kierunki"/>
+
+        <TextView
+            android:id="@+id/student_programmes"
+            style="@style/entry"
+            tools:text='Lorem ipsum'/>
+
+    </LinearLayout>
+</ScrollView>
