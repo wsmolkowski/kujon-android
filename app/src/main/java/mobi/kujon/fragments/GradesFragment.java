@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,13 +19,13 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import mobi.kujon.R;
 import mobi.kujon.activities.CourseDetailsActivity;
-import mobi.kujon.network.json.Course;
+import mobi.kujon.network.json.Grade;
 import mobi.kujon.network.json.KujonResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CoursesFragment extends ListFragment {
+public class GradesFragment extends ListFragment {
 
     private Adapter adapter;
 
@@ -32,13 +33,13 @@ public class CoursesFragment extends ListFragment {
         super.onActivityCreated(savedInstanceState);
         adapter = new Adapter();
         recyclerView.setAdapter(adapter);
-        backendApi.coursesEditions().enqueue(new Callback<KujonResponse<List<Course>>>() {
-            @Override public void onResponse(Call<KujonResponse<List<Course>>> call, Response<KujonResponse<List<Course>>> response) {
-                List<Course> data = response.body().data;
+        backendApi.grades().enqueue(new Callback<KujonResponse<List<Grade>>>() {
+            @Override public void onResponse(Call<KujonResponse<List<Grade>>> call, Response<KujonResponse<List<Grade>>> response) {
+                List<Grade> data = response.body().data;
                 adapter.setData(data);
             }
 
-            @Override public void onFailure(Call<KujonResponse<List<Course>>> call, Throwable t) {
+            @Override public void onFailure(Call<KujonResponse<List<Grade>>> call, Throwable t) {
                 Crashlytics.logException(t);
             }
         });
@@ -46,26 +47,28 @@ public class CoursesFragment extends ListFragment {
 
     protected class Adapter extends RecyclerView.Adapter<ViewHolder> {
 
-        List<Course> data = new LinkedList<>();
+        List<Grade> data = new LinkedList<>();
 
         @Override public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_course, parent, false);
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_grade, parent, false);
             return new ViewHolder(v);
         }
 
         @Override public void onBindViewHolder(ViewHolder holder, int position) {
-            Course course = data.get(position);
-            holder.courseName.setText(course.courseName);
-            holder.courseTerm.setText(course.termId);
-            holder.courseId = course.courseId;
-            holder.termId = course.termId;
+            Grade grade = data.get(position);
+            holder.title.setText(grade.courseName + " - " + grade.termId);
+            holder.desc.setText(Html.fromHtml(String.format("Ocena %s, termin: %s", grade.classType, grade.valueSymbol, grade.valueDescription, grade.examSessionNumber)));
+            holder.gradeDesc.setText(grade.valueDescription);
+            holder.gradeSymbol.setText(grade.valueSymbol);
+            holder.courseId = grade.courseId;
+            holder.termId = grade.termId;
         }
 
         @Override public int getItemCount() {
             return data.size();
         }
 
-        public void setData(List<Course> data) {
+        public void setData(List<Grade> data) {
             this.data = data;
             notifyDataSetChanged();
         }
@@ -73,8 +76,10 @@ public class CoursesFragment extends ListFragment {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.course_name) TextView courseName;
-        @Bind(R.id.course_term) TextView courseTerm;
+        @Bind(R.id.title) TextView title;
+        @Bind(R.id.desc) TextView desc;
+        @Bind(R.id.grade_value_symbol) TextView gradeSymbol;
+        @Bind(R.id.grade_value_desc) TextView gradeDesc;
         String courseId;
         String termId;
 
