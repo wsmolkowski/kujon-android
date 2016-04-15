@@ -29,7 +29,7 @@ public interface KujonBackendApi {
 
     @GET("courseseditions") Call<KujonResponse<List<Course>>> coursesEditions();
 
-    @GET("courseseditions/{courseId}") Call<KujonResponse<CourseDetails>> courseDetails(@Path("courseId") String courseId);
+    @GET("courseseditions/{courseId}/{termId}") Call<KujonResponse<CourseDetails>> courseDetails(@Path("courseId") String courseId, @Path("termId") String termId);
 
     @GET("tt/2016-04-10") Call<KujonResponse<List<Event>>> plan();
 }

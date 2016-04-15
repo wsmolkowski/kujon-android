@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  xmlns:tools="http://schemas.android.com/tools"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:orientation="vertical"
+                  android:padding="16dp">
+
+        <TextView
+            android:id="@+id/course_name"
+            android:layout_width="match_parent"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:layout_height="wrap_content"
+            tools:text="Historia sztuki średniowiecznej (4018-KONW52)"/>
+
+        <TextView
+            style="@style/label"
+            android:text="Jednostka"
+            />
+
+        <TextView
+            android:id="@+id/course_fac"
+            tools:text='Wydział "Artes Liberales", Nowy Świat 69, 00-046 Warszawa (Śródmieście), tel.: 123266516,123266517'
+            style="@style/entry"/>
+
+        <TextView
+            android:text="Język prowadzenia"
+            style="@style/label"/>
+
+        <TextView
+            android:id="@+id/course_lang"
+            tools:text='Lorem ipsum'
+            style="@style/entry"/>
+
+        <TextView
+            android:text="Czy jest prowadzony"
+            style="@style/label"/>
+
+        <TextView
+            android:id="@+id/course_is_conducted"
+            tools:text='Lorem ipsum'
+            style="@style/entry"/>
+
+        <TextView
+            android:text="Opis"
+            style="@style/label"/>
+
+        <TextView
+            android:id="@+id/description"
+            tools:text='Lorem ipsum'
+            style="@style/entry"/>
+
+        <TextView
+            android:text="Bibliografia"
+            style="@style/label"/>
+
+        <TextView
+            android:id="@+id/bibliography"
+            tools:text='Lorem ipsum'
+            style="@style/entry"/>
+
+        <TextView
+            android:text="Kryteria oceny"
+            style="@style/label"/>
+
+        <TextView
+            android:id="@+id/assessment_criteria"
+            tools:text='Lorem ipsum'
+            style="@style/entry"/>
+
+        <TextView
+            android:text="Zajęcia w cyklu"
+            style="@style/label"/>
+
+        <TextView
+            android:id="@+id/course_term_name"
+            tools:text='Lorem ipsum'
+            style="@style/entry"/>
+
+        <TextView
+            android:text="Okres"
+            style="@style/label"/>
+
+        <TextView
+            android:id="@+id/course_term_dates"
+            tools:text='Lorem ipsum'
+            style="@style/entry"/>
+
+        <TextView
+            android:text="Prowadzący grup"
+            style="@style/label"/>
+
+        <TextView
+            android:id="@+id/course_lecturers"
+            tools:text='Lorem ipsum'
+            style="@style/entry"/>
+
+        <TextView
+            android:text="Koordynatorzy"
+            style="@style/label"/>
+
+        <TextView
+            android:id="@+id/course_coordinators"
+            tools:text='Lorem ipsum'
+            style="@style/entry"/>
+
+        <TextView
+            android:text="Typ zajęć"
+            style="@style/label"/>
+
+        <TextView
+            android:id="@+id/course_class_type"
+            tools:text='Lorem ipsum'
+            style="@style/entry"/>
+
+        <TextView
+            android:text="Studenci"
+            style="@style/label"/>
+
+        <TextView
+            android:id="@+id/course_students"
+            tools:text='Lorem ipsum'
+            style="@style/entry"/>
+
+    </LinearLayout>
+
+</ScrollView>

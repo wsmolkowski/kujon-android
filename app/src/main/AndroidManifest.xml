@@ -27,6 +27,7 @@
         <activity android:name=".activities.UsosesActivity"/>
         <activity android:name=".activities.UsoswebLoginActivity"/>
         <activity android:name=".activities.UserProfileActivity"/>
+        <activity android:name=".activities.CourseDetailsActivity"/>
     </application>
 
 </manifest>

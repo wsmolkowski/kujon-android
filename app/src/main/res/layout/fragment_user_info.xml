@@ -19,7 +19,8 @@
         android:layout_margin="8dp"
         android:id="@+id/picture"
         android:layout_width="match_parent"
-        android:layout_height="160dp"/>
+        android:layout_height="160dp"
+        android:src="@drawable/user_placeholder"/>
 
     <TextView
         android:id="@+id/usosName"

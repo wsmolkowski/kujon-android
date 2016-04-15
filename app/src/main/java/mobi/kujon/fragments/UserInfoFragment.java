@@ -33,14 +33,10 @@ public class UserInfoFragment extends Fragment {
     @Bind(R.id.index) TextView index;
     @Bind(R.id.picture) ImageView picture;
 
-    @Override public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        kujonBackendApi = KujonBackendService.getInstance().getKujonBackendApi();
-    }
-
     @Nullable @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_user_info, container, false);
         ButterKnife.bind(this, rootView);
+        kujonBackendApi = KujonBackendService.getInstance().getKujonBackendApi();
         return rootView;
     }
 
@@ -48,12 +44,13 @@ public class UserInfoFragment extends Fragment {
         super.onStart();
         kujonBackendApi.users().enqueue(new Callback<KujonResponse<User>>() {
             @Override public void onResponse(Call<KujonResponse<User>> call, Response<KujonResponse<User>> response) {
+                // TODO handle error
                 User user = response.body().data;
                 userName.setText(user.name);
                 usosName.setText(user.usos_name);
                 index.setText(user.student_number);
                 firstLastName.setText(user.first_name + " " + user.last_name);
-                Picasso.with(getActivity()).load(user.picture).fit().centerInside().into(picture);
+                Picasso.with(getActivity()).load(user.picture).fit().centerInside().placeholder(R.drawable.user_placeholder).into(picture);
             }
 
             @Override public void onFailure(Call<KujonResponse<User>> call, Throwable t) {

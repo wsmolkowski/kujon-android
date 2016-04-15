@@ -12,6 +12,7 @@ import android.support.v7.app.ActionBar;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mobi.kujon.R;
+import mobi.kujon.fragments.CoursesFragment;
 import mobi.kujon.fragments.PlanFragment;
 import mobi.kujon.fragments.UserInfoFragment;
 import mobi.kujon.ui.CustomViewPager;
@@ -73,7 +74,7 @@ public class UserProfileActivity extends BaseActivity {
     private class PagerAdapter extends FragmentStatePagerAdapter {
 
         public String[] TITLES = new String[]{"Użytkownik", "Plan", "Przedmioty", "Oceny", "Nauczyciele", "Uczelnia"};
-        public Fragment[] FRAGMENTS = new Fragment[]{new UserInfoFragment(), new PlanFragment(), new UserInfoFragment(), new UserInfoFragment(), new UserInfoFragment(), new UserInfoFragment()};
+        public Fragment[] FRAGMENTS = new Fragment[]{new UserInfoFragment(), new PlanFragment(), new CoursesFragment(), new UserInfoFragment(), new UserInfoFragment(), new UserInfoFragment()};
 
         public PagerAdapter(FragmentManager fm) {
             super(fm);
