@@ -11,8 +11,6 @@ import com.github.underscore.$;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mobi.kujon.R;
-import mobi.kujon.network.KujonBackendApi;
-import mobi.kujon.network.KujonBackendService;
 import mobi.kujon.network.json.CourseDetails;
 import mobi.kujon.network.json.KujonResponse;
 import retrofit2.Call;
@@ -46,8 +44,7 @@ public class CourseDetailsActivity extends BaseActivity {
         String courseId = getIntent().getStringExtra(COURSE_ID);
         String termId = getIntent().getStringExtra(TERM_ID);
 
-        KujonBackendApi backendApi = KujonBackendService.getInstance().getKujonBackendApi();
-        backendApi.courseDetails(courseId, termId).enqueue(new Callback<KujonResponse<CourseDetails>>() {
+        kujonBackendApi.courseDetails(courseId, termId).enqueue(new Callback<KujonResponse<CourseDetails>>() {
             @Override public void onResponse(Call<KujonResponse<CourseDetails>> call, Response<KujonResponse<CourseDetails>> response) {
                 CourseDetails data = response.body().data;
                 courseFac.setText(data.facId.name + ", " + data.facId.postalAddress);

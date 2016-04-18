@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  xmlns:tools="http://schemas.android.com/tools"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:orientation="vertical"
+                  android:padding="16dp">
+
+        <TextView
+            android:id="@+id/lecturer_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            tools:text="Jan Kowalski"/>
+
+        <ImageView
+            android:id="@+id/picture"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:layout_margin="8dp"
+            android:src="@drawable/user_placeholder"/>
+
+        <TextView
+            style="@style/label"
+            android:text="Tytuł"
+            />
+
+        <TextView
+            android:id="@+id/lecurerTitle"
+            style="@style/entry"
+            tools:text='prof. dr hab.'/>
+
+        <TextView
+            style="@style/label"
+            android:text="Status pracownika"/>
+
+        <TextView
+            android:id="@+id/lecturer_status"
+            style="@style/entry"
+            tools:text='Lorem ipsum'/>
+
+        <TextView
+            style="@style/label"
+            android:text="Pokój"/>
+
+        <TextView
+            android:id="@+id/lecturer_room"
+            style="@style/entry"
+            tools:text='Lorem ipsum'/>
+
+        <TextView
+            style="@style/label"
+            android:text="Email"/>
+
+        <TextView
+            android:id="@+id/lecturer_email"
+            style="@style/entry"
+            tools:text='Lorem ipsum'/>
+
+        <TextView
+            style="@style/label"
+            android:text="Prowadzone przedmioty"/>
+
+        <TextView
+            android:id="@+id/lecturer_courses"
+            style="@style/entry"
+            tools:text='Lorem ipsum'/>
+
+    </LinearLayout>
+
+</ScrollView>

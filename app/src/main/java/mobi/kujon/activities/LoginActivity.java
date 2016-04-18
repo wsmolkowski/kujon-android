@@ -14,15 +14,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
-import mobi.kujon.network.KujonBackendApi;
-import mobi.kujon.network.KujonBackendService;
 
 
 public class LoginActivity extends BaseActivity {
 
     public static final int RC_SIGN_IN = 1;
-
-    private KujonBackendApi kujonBackendApi;
 
     @Bind(R.id.sign_in_button) SignInButton signIn;
     @Bind(R.id.progressBar) ProgressBar progressBar;
@@ -32,7 +28,6 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-        kujonBackendApi = KujonBackendService.getInstance().getKujonBackendApi();
     }
 
     @OnClick(R.id.sign_in_button)

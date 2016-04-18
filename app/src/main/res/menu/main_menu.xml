@@ -3,7 +3,12 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/logout"
-        android:title="Logout"
+        android:title="@string/logout"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/delete_account"
+        android:title="@string/delete_account"
         app:showAsAction="never"/>
 
 </menu>

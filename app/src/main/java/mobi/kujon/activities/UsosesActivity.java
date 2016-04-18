@@ -20,8 +20,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
-import mobi.kujon.network.KujonBackendApi;
-import mobi.kujon.network.KujonBackendService;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.network.json.Usos;
 import retrofit2.Call;
@@ -32,13 +30,11 @@ public class UsosesActivity extends BaseActivity {
 
     @Bind(R.id.recyclerView) RecyclerView recyclerView;
     private UsosesAdapter adapter;
-    private KujonBackendApi kujonBackendApi;
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_usoses);
         ButterKnife.bind(this);
-        kujonBackendApi = KujonBackendService.getInstance().getKujonBackendApi();
 
         requestUsoses();
 

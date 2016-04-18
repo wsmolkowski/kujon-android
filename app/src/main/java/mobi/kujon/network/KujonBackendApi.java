@@ -8,6 +8,8 @@ import mobi.kujon.network.json.CourseDetails;
 import mobi.kujon.network.json.Event;
 import mobi.kujon.network.json.Grade;
 import mobi.kujon.network.json.KujonResponse;
+import mobi.kujon.network.json.Lecturer;
+import mobi.kujon.network.json.LecturerLong;
 import mobi.kujon.network.json.User;
 import mobi.kujon.network.json.Usos;
 import retrofit2.Call;
@@ -27,9 +29,16 @@ public interface KujonBackendApi {
 
     @GET("grades") Call<KujonResponse<List<Grade>>> grades();
 
+    @GET("lecturers") Call<KujonResponse<List<Lecturer>>> lecturers();
+
+    @GET("lecturers/{lecturerId}") Call<KujonResponse<LecturerLong>> lecturer(@Path("lecturerId") String lecturerId);
+
     @GET("courseseditions") Call<KujonResponse<List<Course>>> coursesEditions();
 
-    @GET("courseseditions/{courseId}/{termId}") Call<KujonResponse<CourseDetails>> courseDetails(@Path("courseId") String courseId, @Path("termId") String termId);
+    @GET("courseseditions/{courseId}/{termId}")
+    Call<KujonResponse<CourseDetails>> courseDetails(@Path("courseId") String courseId, @Path("termId") String termId);
 
     @GET("tt/2016-04-10") Call<KujonResponse<List<Event>>> plan();
+
+    @GET("authentication/archive") Call deleteAccount();
 }

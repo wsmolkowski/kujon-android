@@ -12,6 +12,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
@@ -19,9 +20,16 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
+import com.jakewharton.picasso.OkHttp3Downloader;
+import com.squareup.picasso.Picasso;
 
 import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
+import mobi.kujon.network.KujonBackendApi;
+import mobi.kujon.network.KujonBackendService;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public abstract class BaseActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
@@ -30,6 +38,8 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
 
     protected SharedPreferences kujonPreferences;
     protected GoogleApiClient apiClient;
+    protected KujonBackendApi kujonBackendApi;
+    protected Picasso picasso;
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +54,12 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
         apiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
+
+        kujonBackendApi = KujonBackendService.getInstance().getKujonBackendApi();
+
+        picasso = new Picasso.Builder(this)
+                .downloader(new OkHttp3Downloader(KujonBackendService.getInstance().getHttpClient()))
                 .build();
     }
 
@@ -63,6 +79,19 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
         switch (item.getItemId()) {
             case R.id.logout:
                 logout();
+                return true;
+            case R.id.delete_account:
+                kujonBackendApi.deleteAccount().enqueue(new Callback() {
+                    @Override public void onResponse(Call call, Response response) {
+                        System.out.println("call = [" + call + "], response = [" + response + "]");
+                        logout();
+                    }
+
+                    @Override public void onFailure(Call call, Throwable t) {
+                        Crashlytics.logException(t);
+                        logout();
+                    }
+                });
                 return true;
             default:
                 return true;

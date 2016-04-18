@@ -1,0 +1,4 @@
+<resources>
+    <string name="logout">Wyloguj</string>
+    <string name="delete_account">Skasuj konto</string>
+</resources>
