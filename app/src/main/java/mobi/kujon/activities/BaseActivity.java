@@ -84,13 +84,13 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
                 logout();
                 return true;
             case R.id.delete_account:
-                kujonBackendApi.deleteAccount().enqueue(new Callback() {
-                    @Override public void onResponse(Call call, Response response) {
+                kujonBackendApi.deleteAccount().enqueue(new Callback<Object>() {
+                    @Override public void onResponse(Call<Object> call, Response<Object> response) {
                         System.out.println("call = [" + call + "], response = [" + response + "]");
                         logout();
                     }
 
-                    @Override public void onFailure(Call call, Throwable t) {
+                    @Override public void onFailure(Call<Object> call, Throwable t) {
                         Crashlytics.logException(t);
                         logout();
                     }
