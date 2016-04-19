@@ -71,6 +71,7 @@ dependencies {
     compile 'com.github.alamkanak:android-week-view:1.2.6'
     compile 'com.github.javadev:underscore:1.13'
     compile 'com.jakewharton.picasso:picasso2-okhttp3-downloader:1.0.2'
+    compile 'net.danlew:android.joda:2.9.3'
 }
 
 if (project.properties.keySet().containsAll(['storeFile', 'storePassword', 'keyAlias', 'keyPassword'])) {

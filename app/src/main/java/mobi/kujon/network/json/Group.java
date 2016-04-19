@@ -5,10 +5,6 @@ import com.google.gson.annotations.SerializedName;
 
 public class Group {
 
-    @SerializedName("class_type_id")
-    @Expose
-    public String classTypeId;
-
     @SerializedName("class_type")
     @Expose
     public String classType;
