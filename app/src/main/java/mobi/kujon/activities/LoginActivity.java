@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.SignInButton;
@@ -14,6 +15,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
+import mobi.kujon.network.json.Config;
+import mobi.kujon.network.json.KujonResponse;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class LoginActivity extends BaseActivity {
@@ -52,24 +58,24 @@ public class LoginActivity extends BaseActivity {
             progressBar.setVisibility(View.VISIBLE);
             KujonApplication.getApplication().setLoginStatus(result);
             // FIXME
-            startActivity(new Intent(LoginActivity.this, UserProfileActivity.class));
-            finish();
-//            kujonBackendApi.config().enqueue(new Callback<KujonResponse<Config>>() {
-//                @Override public void onResponse(Call<KujonResponse<Config>> call, Response<KujonResponse<Config>> response) {
-//                    Config data = response.body().data;
-//                    System.out.println("### " + data);
-//                    if (data.usosPaired) {
-//                        startActivity(new Intent(LoginActivity.this, UserProfileActivity.class));
-//                    } else {
-//                        startActivity(new Intent(LoginActivity.this, UsosesActivity.class));
-//                    }
-//                    finish();
-//                }
-//
-//                @Override public void onFailure(Call<KujonResponse<Config>> call, Throwable t) {
-//                    Crashlytics.logException(t);
-//                }
-//            });
+//            startActivity(new Intent(LoginActivity.this, UserProfileActivity.class));
+//            finish();
+            kujonBackendApi.config().enqueue(new Callback<KujonResponse<Config>>() {
+                @Override public void onResponse(Call<KujonResponse<Config>> call, Response<KujonResponse<Config>> response) {
+                    Config data = response.body().data;
+                    System.out.println("### " + data);
+                    if (data.usosPaired) {
+                        startActivity(new Intent(LoginActivity.this, UserProfileActivity.class));
+                    } else {
+                        startActivity(new Intent(LoginActivity.this, UsosesActivity.class));
+                    }
+                    finish();
+                }
+
+                @Override public void onFailure(Call<KujonResponse<Config>> call, Throwable t) {
+                    Crashlytics.logException(t);
+                }
+            });
         }
     }
 }
