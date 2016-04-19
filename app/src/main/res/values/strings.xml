@@ -2,4 +2,6 @@
     <string name="app_name">Kujon</string>
     <string name="logout">Logout</string>
     <string name="delete_account">Delete account</string>
+    <string name="contact_us">Contact us</string>
+    <string name="contact_email">"wojciech.smolkowski@gmail.com "</string>
 </resources>

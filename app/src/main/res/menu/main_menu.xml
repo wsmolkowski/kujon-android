@@ -11,4 +11,9 @@
         android:title="@string/delete_account"
         app:showAsAction="never"/>
 
+    <item
+        android:id="@+id/contact_us"
+        android:title="@string/contact_us"
+        app:showAsAction="never"/>
+
 </menu>
