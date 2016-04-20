@@ -1,27 +1,51 @@
 package mobi.kujon.network;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.util.Log;
+
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 
+import java.io.File;
 import java.io.IOException;
 
 import mobi.kujon.KujonApplication;
+import okhttp3.Cache;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class KujonBackendService {
 
+    private static final String TAG = "KujonBackendService";
+
     private final OkHttpClient httpClient;
     private KujonBackendApi kujonBackendApi;
     private static KujonBackendService instance;
 
+    private Context context = KujonApplication.getApplication();
+
     private KujonBackendService() {
+
+        File httpCacheDirectory = new File(context.getCacheDir(), "responses");
+        int cacheSize = 10 * 1024 * 1024; // 10 MiB
+        Cache cache = new Cache(httpCacheDirectory, cacheSize);
+
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.HEADERS);
+
         httpClient = new OkHttpClient.Builder()
+                .addNetworkInterceptor(REWRITE_RESPONSE_INTERCEPTOR)
                 .addNetworkInterceptor(new AuthenticationInterceptor())
+//                .addInterceptor(logging)
+                .addInterceptor(OFFLINE_INTERCEPTOR)
+                .cache(cache)
                 .build();
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -29,7 +53,6 @@ public class KujonBackendService {
                 .client(httpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-
 
         kujonBackendApi = retrofit.create(KujonBackendApi.class);
     }
@@ -53,11 +76,12 @@ public class KujonBackendService {
     private static class AuthenticationInterceptor implements Interceptor {
 
         @Override public Response intercept(Chain chain) throws IOException {
+            Log.i(TAG, "AuthenticationInterceptor");
 
             GoogleSignInResult loginStatus = KujonApplication.getApplication().getLoginStatus();
 
             Request originalRequest = chain.request();
-            System.out.println("### modifying request" + originalRequest.url());
+            Log.i(TAG, "AuthenticationInterceptor: modifying request" + originalRequest.url());
             GoogleSignInAccount account = loginStatus.getSignInAccount();
 
             String email = account != null ? account.getEmail() : "";
@@ -69,15 +93,57 @@ public class KujonBackendService {
                     .header("X-Kujonmobitoken", token)
                     .build();
 
-            long t1 = System.nanoTime();
-            System.out.println(String.format("Sending request %s on %s%n%s", request.url(), chain.connection(), request.headers()));
+//            long t1 = System.nanoTime();
+//            System.out.println(String.format("Sending request %s on %s%n%s", request.url(), chain.connection(), request.headers()));
 
             Response response = chain.proceed(request);
 
-            long t2 = System.nanoTime();
-            System.out.println(String.format("Received response for %s in %.1fms%n%s", response.request().url(), (t2 - t1) / 1e6d, response.headers()));
+//            long t2 = System.nanoTime();
+//            System.out.println(String.format("Received response for %s in %.1fms%n%s", response.request().url(), (t2 - t1) / 1e6d, response.headers()));
 
             return response;
         }
+    }
+
+    private static final Interceptor REWRITE_RESPONSE_INTERCEPTOR = chain -> {
+        Log.i(TAG, "REWRITE_RESPONSE_INTERCEPTOR");
+
+        Response originalResponse = chain.proceed(chain.request());
+        String cacheControl = originalResponse.header("Cache-Control");
+
+        if (cacheControl == null || cacheControl.contains("no-store") || cacheControl.contains("no-cache") ||
+                cacheControl.contains("must-revalidate") || cacheControl.contains("max-age=0")) {
+            return originalResponse.newBuilder()
+                    .header("Cache-Control", "public, max-age=" + 60)
+                    .build();
+        } else {
+            return originalResponse;
+        }
+
+    };
+
+    private static final Interceptor OFFLINE_INTERCEPTOR = chain -> {
+        boolean online = isOnline();
+        Log.i(TAG, "OFFLINE_INTERCEPTOR online=" + online);
+
+        Request request = chain.request();
+
+        if (!online) {
+            Log.d(TAG, "rewriting request");
+
+            int maxStale = 60 * 60 * 24 * 28; // tolerate 4-weeks stale
+            request = request.newBuilder()
+                    .header("Cache-Control", "public, only-if-cached, max-stale=" + maxStale)
+                    .build();
+        }
+
+        return chain.proceed(request);
+    };
+
+
+    public static boolean isOnline() {
+        ConnectivityManager cm = (ConnectivityManager) KujonApplication.getApplication().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 }
