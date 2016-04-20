@@ -10,6 +10,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Iterator;
 
 import mobi.kujon.KujonApplication;
 import okhttp3.Cache;
@@ -145,5 +146,21 @@ public class KujonBackendService {
         ConnectivityManager cm = (ConnectivityManager) KujonApplication.getApplication().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         return netInfo != null && netInfo.isConnectedOrConnecting();
+    }
+
+
+    public void invalidateEntry(String urlToInvalidate) {
+        try {
+            Cache cache = httpClient.cache();
+            Iterator<String> urls = cache.urls();
+            while (urls.hasNext()) {
+                String url = urls.next();
+                if (url.contains(urlToInvalidate)) {
+                    urls.remove();
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
