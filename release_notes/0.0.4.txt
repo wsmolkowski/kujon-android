@@ -1,0 +1,6 @@
+* lectures screen
+* lecturer details
+* delete account (menu item)
+* contact us (menu item)
+* plan screen
+* email/token authentication

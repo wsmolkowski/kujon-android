@@ -10,8 +10,8 @@ android {
         applicationId "mobi.kujon"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 3
-        versionName "0.0.3"
+        versionCode 4
+        versionName "0.0.4"
     }
 
     signingConfigs {
@@ -51,6 +51,10 @@ android {
             output.outputFile = new File(output.outputFile.parent, newApkName)
         }
     }
+
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
@@ -72,6 +76,7 @@ dependencies {
     compile 'com.github.javadev:underscore:1.13'
     compile 'com.jakewharton.picasso:picasso2-okhttp3-downloader:1.0.2'
     compile 'net.danlew:android.joda:2.9.3'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.2.0'
 }
 
 if (project.properties.keySet().containsAll(['storeFile', 'storePassword', 'keyAlias', 'keyPassword'])) {
