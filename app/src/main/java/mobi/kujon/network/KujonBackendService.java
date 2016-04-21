@@ -31,10 +31,11 @@ public class KujonBackendService {
     private static KujonBackendService instance;
 
     private Context context = KujonApplication.getApplication();
+    private final File httpCacheDirectory;
 
     private KujonBackendService() {
 
-        File httpCacheDirectory = new File(context.getCacheDir(), "responses");
+        httpCacheDirectory = new File(context.getCacheDir(),  "responses");
         int cacheSize = 10 * 1024 * 1024; // 10 MiB
         Cache cache = new Cache(httpCacheDirectory, cacheSize);
 
@@ -162,5 +163,9 @@ public class KujonBackendService {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public File getHttpCacheDirectory() {
+        return httpCacheDirectory;
     }
 }
