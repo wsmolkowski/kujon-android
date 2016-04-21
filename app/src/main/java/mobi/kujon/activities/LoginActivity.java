@@ -2,6 +2,7 @@ package mobi.kujon.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -23,6 +24,8 @@ import retrofit2.Response;
 
 
 public class LoginActivity extends BaseActivity {
+
+    private static final String TAG = "LoginActivity";
 
     public static final int RC_SIGN_IN = 1;
 
@@ -54,6 +57,7 @@ public class LoginActivity extends BaseActivity {
 
     @Override public void handle(GoogleSignInResult result) {
         if (result.isSuccess()) {
+            Log.i(TAG, "handle: Login successfull. Checking usos paired status");
             signIn.setVisibility(View.GONE);
             progressBar.setVisibility(View.VISIBLE);
             KujonApplication.getApplication().setLoginStatus(result);
@@ -75,6 +79,8 @@ public class LoginActivity extends BaseActivity {
                     ErrorHandlerFragment.handleError(t);
                 }
             });
+        } else {
+            Log.e(TAG, "Login error: " + result.getStatus().getStatusMessage());
         }
     }
 }
