@@ -1,0 +1,2 @@
+* offline mode; cache
+* error handling - show Toast
