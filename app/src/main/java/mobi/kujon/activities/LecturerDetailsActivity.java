@@ -5,12 +5,12 @@ import android.support.annotation.Nullable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.crashlytics.android.Crashlytics;
 import com.github.underscore.$;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mobi.kujon.R;
+import mobi.kujon.fragments.ErrorHandlerFragment;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.network.json.LecturerLong;
 import retrofit2.Call;
@@ -38,18 +38,20 @@ public class LecturerDetailsActivity extends BaseActivity {
 
         kujonBackendApi.lecturer(lecturerId).enqueue(new Callback<KujonResponse<LecturerLong>>() {
             @Override public void onResponse(Call<KujonResponse<LecturerLong>> call, Response<KujonResponse<LecturerLong>> response) {
-                LecturerLong lecturer = response.body().data;
-                lecturerName.setText(lecturer.firstName + " " + lecturer.lastName);
-                lecurerTitle.setText(lecturer.titles.before);
-                lecturerStatus.setText(lecturer.staffStatus);
-                lecturerRoom.setText(lecturer.room);
-                lecturerEmail.setText(lecturer.emailUrl);
-                lecturerCourses.setText($.join($.collect(lecturer.courseEditionsConducted, it -> it.courseName), "\n"));
-                picasso.load(lecturer.hasPhoto).placeholder(R.drawable.user_placeholder).into(picture);
+                if (ErrorHandlerFragment.handleResponse(response)) {
+                    LecturerLong lecturer = response.body().data;
+                    lecturerName.setText(lecturer.firstName + " " + lecturer.lastName);
+                    lecurerTitle.setText(lecturer.titles.before);
+                    lecturerStatus.setText(lecturer.staffStatus);
+                    lecturerRoom.setText(lecturer.room);
+                    lecturerEmail.setText(lecturer.emailUrl);
+                    lecturerCourses.setText($.join($.collect(lecturer.courseEditionsConducted, it -> it.courseName), "\n"));
+                    picasso.load(lecturer.hasPhoto).placeholder(R.drawable.user_placeholder).into(picture);
+                }
             }
 
             @Override public void onFailure(Call<KujonResponse<LecturerLong>> call, Throwable t) {
-                Crashlytics.logException(t);
+                ErrorHandlerFragment.handleError(t);
             }
         });
     }

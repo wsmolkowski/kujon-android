@@ -10,8 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.crashlytics.android.Crashlytics;
-
 import java.util.LinkedList;
 import java.util.List;
 
@@ -35,12 +33,14 @@ public class GradesFragment extends ListFragment {
         recyclerView.setAdapter(adapter);
         backendApi.grades().enqueue(new Callback<KujonResponse<List<Grade>>>() {
             @Override public void onResponse(Call<KujonResponse<List<Grade>>> call, Response<KujonResponse<List<Grade>>> response) {
-                List<Grade> data = response.body().data;
-                adapter.setData(data);
+                if (handleResponse(response)) {
+                    List<Grade> data = response.body().data;
+                    adapter.setData(data);
+                }
             }
 
             @Override public void onFailure(Call<KujonResponse<List<Grade>>> call, Throwable t) {
-                Crashlytics.logException(t);
+                handleError(t);
             }
         });
     }

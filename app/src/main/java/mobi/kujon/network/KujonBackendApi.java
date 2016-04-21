@@ -10,6 +10,8 @@ import mobi.kujon.network.json.Grade;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.network.json.Lecturer;
 import mobi.kujon.network.json.LecturerLong;
+import mobi.kujon.network.json.Programme;
+import mobi.kujon.network.json.Term2;
 import mobi.kujon.network.json.User;
 import mobi.kujon.network.json.Usos;
 import retrofit2.Call;
@@ -28,6 +30,10 @@ public interface KujonBackendApi {
     @GET("users") Call<KujonResponse<User>> users();
 
     @GET("grades") Call<KujonResponse<List<Grade>>> grades();
+
+    @GET("terms") Call<KujonResponse<List<Term2>>> terms();
+
+    @GET("programmes") Call<KujonResponse<List<Programme>>> programmes();
 
     @GET("lecturers") Call<KujonResponse<List<Lecturer>>> lecturers();
 

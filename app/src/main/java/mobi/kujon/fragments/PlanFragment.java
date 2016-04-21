@@ -2,7 +2,6 @@ package mobi.kujon.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +10,6 @@ import android.view.ViewGroup;
 import com.alamkanak.weekview.MonthLoader;
 import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
-import com.crashlytics.android.Crashlytics;
 import com.github.underscore.$;
 
 import org.joda.time.DateTime;
@@ -37,7 +35,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class PlanFragment extends Fragment implements MonthLoader.MonthChangeListener {
+public class PlanFragment extends ErrorHandlerFragment implements MonthLoader.MonthChangeListener {
 
     public static final SimpleDateFormat REST_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -115,14 +113,16 @@ public class PlanFragment extends Fragment implements MonthLoader.MonthChangeLis
 
             backendApi.plan(restSuffix).enqueue(new Callback<KujonResponse<List<CalendarEvent>>>() {
                 @Override public void onResponse(Call<KujonResponse<List<CalendarEvent>>> call, Response<KujonResponse<List<CalendarEvent>>> response) {
-                    List<CalendarEvent> data = response.body().data;
-                    List<WeekViewEvent> events = $.map(data, EventConverter::from);
-                    getEvents(year, month).addAll(events);
-                    weekView.notifyDatasetChanged();
+                    if (handleResponse(response)) {
+                        List<CalendarEvent> data = response.body().data;
+                        List<WeekViewEvent> events = $.map(data, EventConverter::from);
+                        getEvents(year, month).addAll(events);
+                        weekView.notifyDatasetChanged();
+                    }
                 }
 
                 @Override public void onFailure(Call<KujonResponse<List<CalendarEvent>>> call, Throwable t) {
-                    Crashlytics.logException(t);
+                    handleError(t);
                 }
             });
         }

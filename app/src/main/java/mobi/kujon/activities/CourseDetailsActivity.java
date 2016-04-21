@@ -5,12 +5,12 @@ import android.support.annotation.Nullable;
 import android.text.Html;
 import android.widget.TextView;
 
-import com.crashlytics.android.Crashlytics;
 import com.github.underscore.$;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mobi.kujon.R;
+import mobi.kujon.fragments.ErrorHandlerFragment;
 import mobi.kujon.network.json.CourseDetails;
 import mobi.kujon.network.json.KujonResponse;
 import retrofit2.Call;
@@ -46,24 +46,26 @@ public class CourseDetailsActivity extends BaseActivity {
 
         kujonBackendApi.courseDetails(courseId, termId).enqueue(new Callback<KujonResponse<CourseDetails>>() {
             @Override public void onResponse(Call<KujonResponse<CourseDetails>> call, Response<KujonResponse<CourseDetails>> response) {
-                CourseDetails data = response.body().data;
-                courseFac.setText(data.facId.name + ", " + data.facId.postalAddress);
-                courseLang.setText(data.langId);
-                courseIsConducted.setText(data.isCurrentlyConducted);
-                description.setText(Html.fromHtml(data.description));
-                courseName.setText(String.format("%s, (%s)", data.name, data.courseId));
-                bibliography.setText(data.bibliography);
-                assessmentCriteria.setText(data.assessmentCriteria);
-                courseTermName.setText(data.term.name);
-                courseTermDates.setText(String.format("%s - %s", data.term.startDate, data.term.endDate));
-                courseLecturers.setText($.join($.collect(data.lecturers, it -> it.firstName + " " + it.lastName), "\n"));
-                courseCoordinators.setText($.join($.collect(data.coordinators, it -> it.firstName + " " + it.lastName), "\n"));
-                courseStudents.setText($.join($.collect(data.participants, it -> it.firstName + " " + it.lastName), "\n"));
-                courseClassType.setText($.join($.collect(data.groups, it -> it.classType + ", numer grupy: " + it.groupNumber), "\n"));
+                if (ErrorHandlerFragment.handleResponse(response)) {
+                    CourseDetails data = response.body().data;
+                    courseFac.setText(data.facId.name + ", " + data.facId.postalAddress);
+                    courseLang.setText(data.langId);
+                    courseIsConducted.setText(data.isCurrentlyConducted);
+                    description.setText(Html.fromHtml(data.description));
+                    courseName.setText(String.format("%s, (%s)", data.name, data.courseId));
+                    bibliography.setText(data.bibliography);
+                    assessmentCriteria.setText(data.assessmentCriteria);
+                    courseTermName.setText(data.term.name);
+                    courseTermDates.setText(String.format("%s - %s", data.term.startDate, data.term.endDate));
+                    courseLecturers.setText($.join($.collect(data.lecturers, it -> it.firstName + " " + it.lastName), "\n"));
+                    courseCoordinators.setText($.join($.collect(data.coordinators, it -> it.firstName + " " + it.lastName), "\n"));
+                    courseStudents.setText($.join($.collect(data.participants, it -> it.firstName + " " + it.lastName), "\n"));
+                    courseClassType.setText($.join($.collect(data.groups, it -> it.classType + ", numer grupy: " + it.groupNumber), "\n"));
+                }
             }
 
             @Override public void onFailure(Call<KujonResponse<CourseDetails>> call, Throwable t) {
-                Crashlytics.logException(t);
+                ErrorHandlerFragment.handleError(t);
             }
         });
     }

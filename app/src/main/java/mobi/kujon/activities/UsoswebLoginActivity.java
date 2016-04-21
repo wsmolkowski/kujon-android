@@ -76,7 +76,7 @@ public class UsoswebLoginActivity extends BaseActivity {
                             String responseString = response.body().string();
                             System.out.println("#### " + responseString);
                             KujonResponse kujonResponse = gson.fromJson(responseString, KujonResponse.class);
-                            if ("success".equals(kujonResponse.status)) {
+                            if (kujonResponse.isSuccessful()) {
                                 runOnUiThread(() -> {
                                     Toast.makeText(UsoswebLoginActivity.this, "Successful login", Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(UsoswebLoginActivity.this, UserProfileActivity.class));
