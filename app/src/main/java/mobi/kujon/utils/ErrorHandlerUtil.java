@@ -10,11 +10,11 @@ import retrofit2.Response;
 
 public class ErrorHandlerUtil {
     public static void handleError(String message) {
-        Toast.makeText(KujonApplication.getApplication(), "Error: " + message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(KujonApplication.getApplication(), "Error: " + message, Toast.LENGTH_LONG).show();
     }
 
     public static void handleError(Throwable throwable) {
-        Toast.makeText(KujonApplication.getApplication(), "Error: " + throwable.getMessage(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(KujonApplication.getApplication(), "Error: " + throwable.getMessage(), Toast.LENGTH_LONG).show();
         Crashlytics.logException(throwable);
     }
 

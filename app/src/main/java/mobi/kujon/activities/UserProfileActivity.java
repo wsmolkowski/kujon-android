@@ -16,6 +16,7 @@ import mobi.kujon.fragments.CoursesFragment;
 import mobi.kujon.fragments.GradesFragment;
 import mobi.kujon.fragments.LecturersFragment;
 import mobi.kujon.fragments.PlanFragment;
+import mobi.kujon.fragments.ProgrammesFragment;
 import mobi.kujon.fragments.UserInfoFragment;
 import mobi.kujon.ui.CustomViewPager;
 
@@ -75,8 +76,8 @@ public class UserProfileActivity extends BaseActivity {
 
     private class PagerAdapter extends FragmentStatePagerAdapter {
 
-        public String[] TITLES = new String[]{"Użytkownik", "Plan", "Przedmioty", "Oceny", "Nauczyciele", "Uczelnia"};
-        public Fragment[] FRAGMENTS = new Fragment[]{new UserInfoFragment(), new PlanFragment(), new CoursesFragment(), new GradesFragment(), new LecturersFragment(), new UserInfoFragment()};
+        public String[] TITLES = new String[]{"Użytkownik", "Plan", "Przedmioty", "Oceny", "Nauczyciele", "Kierunki"};
+        public Fragment[] FRAGMENTS = new Fragment[]{new UserInfoFragment(), new PlanFragment(), new CoursesFragment(), new GradesFragment(), new LecturersFragment(), new ProgrammesFragment()};
 
         public PagerAdapter(FragmentManager fm) {
             super(fm);
