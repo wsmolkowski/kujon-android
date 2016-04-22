@@ -12,6 +12,10 @@ android {
         targetSdkVersion 22
         versionCode 5
         versionName "0.0.5"
+
+        manifestPlaceholders = [manifestApplicationId: "${applicationId}",
+                                onesignal_app_id: "50e558f1-b575-4554-9517-d1ea7b143a03",
+                                onesignal_google_project_number: "774265221464"]
     }
 
     signingConfigs {
@@ -77,6 +81,10 @@ dependencies {
     compile 'com.jakewharton.picasso:picasso2-okhttp3-downloader:1.0.2'
     compile 'net.danlew:android.joda:2.9.3'
     compile 'com.squareup.okhttp3:logging-interceptor:3.2.0'
+    compile 'com.onesignal:OneSignal:2.+@aar'
+    compile 'com.google.android.gms:play-services-gcm:8.4.0'
+    compile 'com.google.android.gms:play-services-analytics:8.4.0'
+    compile "com.google.android.gms:play-services-location:8.4.0"
 }
 
 if (project.properties.keySet().containsAll(['storeFile', 'storePassword', 'keyAlias', 'keyPassword'])) {

@@ -151,6 +151,7 @@ public class KujonBackendService {
 
 
     public void invalidateEntry(String urlToInvalidate) {
+        Log.d(TAG, "invalidateEntry() called with: " + "urlToInvalidate = [" + urlToInvalidate + "]");
         try {
             Cache cache = httpClient.cache();
             Iterator<String> urls = cache.urls();
