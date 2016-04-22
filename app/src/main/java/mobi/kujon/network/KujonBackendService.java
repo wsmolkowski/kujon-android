@@ -142,13 +142,11 @@ public class KujonBackendService {
         return chain.proceed(request);
     };
 
-
     public static boolean isOnline() {
         ConnectivityManager cm = (ConnectivityManager) KujonApplication.getApplication().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         return netInfo != null && netInfo.isConnectedOrConnecting();
     }
-
 
     public void invalidateEntry(String urlToInvalidate) {
         Log.d(TAG, "invalidateEntry() called with: " + "urlToInvalidate = [" + urlToInvalidate + "]");

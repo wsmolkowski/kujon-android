@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
@@ -39,33 +40,42 @@ public class LoginActivity extends BaseActivity {
         ButterKnife.bind(this);
     }
 
+    @Override protected void onStart() {
+        super.onStart();
+        progress(true);
+    }
+
     @OnClick(R.id.sign_in_button)
     public void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(apiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
+        progress(true);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == RC_SIGN_IN && resultCode == RESULT_OK) {
-            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            handle(result);
+        if (requestCode == RC_SIGN_IN) {
+            progress(false);
+            if (resultCode == RESULT_OK) {
+                GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+                handle(result);
+            } else {
+                Toast.makeText(LoginActivity.this, "Błąd logowania", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
     @Override public void handle(GoogleSignInResult result) {
         if (result.isSuccess()) {
             Log.i(TAG, "handle: Login successfull. Checking usos paired status");
-            signIn.setVisibility(View.GONE);
-            progressBar.setVisibility(View.VISIBLE);
+            progress(true);
             KujonApplication.getApplication().setLoginStatus(result);
             kujonBackendApi.config().enqueue(new Callback<KujonResponse<Config>>() {
                 @Override public void onResponse(Call<KujonResponse<Config>> call, Response<KujonResponse<Config>> response) {
                     if (ErrorHandlerUtil.handleResponse(response)) {
                         Config data = response.body().data;
-                        System.out.println("### " + data);
                         if (data.usosPaired) {
                             startActivity(new Intent(LoginActivity.this, UserProfileActivity.class));
                         } else {
@@ -80,7 +90,13 @@ public class LoginActivity extends BaseActivity {
                 }
             });
         } else {
-            Log.e(TAG, "Login error: " + result.getStatus().getStatusMessage());
+            progress(false);
+            Log.i(TAG, "Login not successful: " + result.getStatus().getStatusMessage());
         }
+    }
+
+    private void progress(boolean show) {
+        signIn.setVisibility(show ? View.GONE : View.VISIBLE);
+        progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
     }
 }
