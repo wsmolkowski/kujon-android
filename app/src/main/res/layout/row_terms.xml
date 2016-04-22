@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/label"
+                android:layout_marginTop="0dp"
+                android:text="Nazwa"
+                />
+
+            <TextView
+                android:id="@+id/name"
+                style="@style/entry"
+                tools:text='Rok akademicki 2015/16'/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/label"
+                android:layout_marginTop="0dp"
+                android:text="Numer"
+                />
+
+            <TextView
+                android:id="@+id/term_id"
+                style="@style/entry"
+                tools:text='2015'/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/label"
+                android:layout_marginTop="0dp"
+                android:text="Aktuwny"
+                />
+
+            <TextView
+                android:id="@+id/actie"
+                style="@style/entry"
+                tools:text='TAK'/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/label"
+                android:layout_marginTop="0dp"
+                android:text="Data początkowa"
+                />
+
+            <TextView
+                android:id="@+id/start_date"
+                style="@style/entry"
+                tools:text="2015-10-01"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/label"
+                android:layout_marginTop="0dp"
+                android:text="Data końcowa"
+                />
+
+            <TextView
+                android:id="@+id/end_date"
+                style="@style/entry"
+                tools:text='2016-06-08'/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/label"
+                android:layout_marginTop="0dp"
+                android:text="Data zakończenia"
+                />
+
+            <TextView
+                android:id="@+id/finish_date"
+                style="@style/entry"
+                tools:text='2016-09-30'/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

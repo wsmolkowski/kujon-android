@@ -17,6 +17,7 @@ import mobi.kujon.fragments.GradesFragment;
 import mobi.kujon.fragments.LecturersFragment;
 import mobi.kujon.fragments.PlanFragment;
 import mobi.kujon.fragments.ProgrammesFragment;
+import mobi.kujon.fragments.TermsFragment;
 import mobi.kujon.fragments.UserInfoFragment;
 import mobi.kujon.ui.CustomViewPager;
 
@@ -59,7 +60,6 @@ public class UserProfileActivity extends BaseActivity {
 
         pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
             }
 
             @Override public void onPageSelected(int position) {
@@ -68,16 +68,15 @@ public class UserProfileActivity extends BaseActivity {
             }
 
             @Override public void onPageScrollStateChanged(int state) {
-
             }
         });
-
     }
 
     private class PagerAdapter extends FragmentStatePagerAdapter {
 
-        public String[] TITLES = new String[]{"Użytkownik", "Plan", "Przedmioty", "Oceny", "Nauczyciele", "Kierunki"};
-        public Fragment[] FRAGMENTS = new Fragment[]{new UserInfoFragment(), new PlanFragment(), new CoursesFragment(), new GradesFragment(), new LecturersFragment(), new ProgrammesFragment()};
+        public String[] TITLES = new String[]{"Użytkownik", "Plan", "Przedmioty", "Oceny", "Nauczyciele", "Kierunki", "Cykle"};
+        public Fragment[] FRAGMENTS = new Fragment[]{
+                new UserInfoFragment(), new PlanFragment(), new CoursesFragment(), new GradesFragment(), new LecturersFragment(), new ProgrammesFragment(), new TermsFragment()};
 
         public PagerAdapter(FragmentManager fm) {
             super(fm);
@@ -90,7 +89,7 @@ public class UserProfileActivity extends BaseActivity {
 
         @Override
         public int getCount() {
-            return 6;
+            return FRAGMENTS.length;
         }
     }
 }
