@@ -20,6 +20,7 @@ import mobi.kujon.R;
 import mobi.kujon.activities.LecturerDetailsActivity;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.network.json.Lecturer;
+import mobi.kujon.utils.ErrorHandlerUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -34,14 +35,14 @@ public class LecturersFragment extends ListFragment {
         recyclerView.setAdapter(adapter);
         backendApi.lecturers().enqueue(new Callback<KujonResponse<List<Lecturer>>>() {
             @Override public void onResponse(Call<KujonResponse<List<Lecturer>>> call, Response<KujonResponse<List<Lecturer>>> response) {
-                if (handleResponse(response)) {
+                if (ErrorHandlerUtil.handleResponse(response)) {
                     List<Lecturer> data = response.body().data;
                     adapter.setData(data);
                 }
             }
 
             @Override public void onFailure(Call<KujonResponse<List<Lecturer>>> call, Throwable t) {
-                handleError(t);
+                ErrorHandlerUtil.handleError(t);
             }
         });
     }

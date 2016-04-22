@@ -20,9 +20,9 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
-import mobi.kujon.fragments.ErrorHandlerFragment;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.network.json.Usos;
+import mobi.kujon.utils.ErrorHandlerUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -47,13 +47,13 @@ public class UsosesActivity extends BaseActivity {
     private void requestUsoses() {
         kujonBackendApi.usoses().enqueue(new Callback<KujonResponse<List<Usos>>>() {
             @Override public void onResponse(Call<KujonResponse<List<Usos>>> call, Response<KujonResponse<List<Usos>>> response) {
-                if (ErrorHandlerFragment.handleResponse(response)) {
+                if (ErrorHandlerUtil.handleResponse(response)) {
                     adapter.setItems(response.body().data);
                 }
             }
 
             @Override public void onFailure(Call<KujonResponse<List<Usos>>> call, Throwable t) {
-                ErrorHandlerFragment.handleError(t);
+                ErrorHandlerUtil.handleError(t);
             }
         });
     }

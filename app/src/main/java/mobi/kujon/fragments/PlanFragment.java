@@ -2,6 +2,7 @@ package mobi.kujon.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,12 +31,13 @@ import mobi.kujon.network.converters.EventConverter;
 import mobi.kujon.network.converters.KujonWeekViewEvent;
 import mobi.kujon.network.json.CalendarEvent;
 import mobi.kujon.network.json.KujonResponse;
+import mobi.kujon.utils.ErrorHandlerUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class PlanFragment extends ErrorHandlerFragment implements MonthLoader.MonthChangeListener {
+public class PlanFragment extends Fragment implements MonthLoader.MonthChangeListener {
 
     public static final SimpleDateFormat REST_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -113,7 +115,7 @@ public class PlanFragment extends ErrorHandlerFragment implements MonthLoader.Mo
 
             backendApi.plan(restSuffix).enqueue(new Callback<KujonResponse<List<CalendarEvent>>>() {
                 @Override public void onResponse(Call<KujonResponse<List<CalendarEvent>>> call, Response<KujonResponse<List<CalendarEvent>>> response) {
-                    if (handleResponse(response)) {
+                    if (ErrorHandlerUtil.handleResponse(response)) {
                         List<CalendarEvent> data = response.body().data;
                         List<WeekViewEvent> events = $.map(data, EventConverter::from);
                         getEvents(year, month).addAll(events);
@@ -122,7 +124,7 @@ public class PlanFragment extends ErrorHandlerFragment implements MonthLoader.Mo
                 }
 
                 @Override public void onFailure(Call<KujonResponse<List<CalendarEvent>>> call, Throwable t) {
-                    handleError(t);
+                    ErrorHandlerUtil.handleError(t);
                 }
             });
         }

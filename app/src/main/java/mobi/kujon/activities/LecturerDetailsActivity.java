@@ -10,9 +10,9 @@ import com.github.underscore.$;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mobi.kujon.R;
-import mobi.kujon.fragments.ErrorHandlerFragment;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.network.json.LecturerLong;
+import mobi.kujon.utils.ErrorHandlerUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -38,7 +38,7 @@ public class LecturerDetailsActivity extends BaseActivity {
 
         kujonBackendApi.lecturer(lecturerId).enqueue(new Callback<KujonResponse<LecturerLong>>() {
             @Override public void onResponse(Call<KujonResponse<LecturerLong>> call, Response<KujonResponse<LecturerLong>> response) {
-                if (ErrorHandlerFragment.handleResponse(response)) {
+                if (ErrorHandlerUtil.handleResponse(response)) {
                     LecturerLong lecturer = response.body().data;
                     lecturerName.setText(lecturer.firstName + " " + lecturer.lastName);
                     lecurerTitle.setText(lecturer.titles.before);
@@ -51,7 +51,7 @@ public class LecturerDetailsActivity extends BaseActivity {
             }
 
             @Override public void onFailure(Call<KujonResponse<LecturerLong>> call, Throwable t) {
-                ErrorHandlerFragment.handleError(t);
+                ErrorHandlerUtil.handleError(t);
             }
         });
     }

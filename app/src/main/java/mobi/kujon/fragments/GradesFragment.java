@@ -19,6 +19,7 @@ import mobi.kujon.R;
 import mobi.kujon.activities.CourseDetailsActivity;
 import mobi.kujon.network.json.Grade;
 import mobi.kujon.network.json.KujonResponse;
+import mobi.kujon.utils.ErrorHandlerUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -33,14 +34,14 @@ public class GradesFragment extends ListFragment {
         recyclerView.setAdapter(adapter);
         backendApi.grades().enqueue(new Callback<KujonResponse<List<Grade>>>() {
             @Override public void onResponse(Call<KujonResponse<List<Grade>>> call, Response<KujonResponse<List<Grade>>> response) {
-                if (handleResponse(response)) {
+                if (ErrorHandlerUtil.handleResponse(response)) {
                     List<Grade> data = response.body().data;
                     adapter.setData(data);
                 }
             }
 
             @Override public void onFailure(Call<KujonResponse<List<Grade>>> call, Throwable t) {
-                handleError(t);
+                ErrorHandlerUtil.handleError(t);
             }
         });
     }

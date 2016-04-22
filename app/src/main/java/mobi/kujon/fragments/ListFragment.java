@@ -2,6 +2,7 @@ package mobi.kujon.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,7 +15,7 @@ import mobi.kujon.R;
 import mobi.kujon.network.KujonBackendApi;
 import mobi.kujon.network.KujonBackendService;
 
-public class ListFragment extends ErrorHandlerFragment {
+public class ListFragment extends Fragment {
 
     protected @Bind(R.id.recyclerView) RecyclerView recyclerView;
     protected KujonBackendApi backendApi;

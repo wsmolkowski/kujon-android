@@ -1,6 +1,5 @@
-package mobi.kujon.fragments;
+package mobi.kujon.utils;
 
-import android.support.v4.app.Fragment;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
@@ -9,8 +8,7 @@ import mobi.kujon.KujonApplication;
 import mobi.kujon.network.json.KujonResponse;
 import retrofit2.Response;
 
-public abstract class ErrorHandlerFragment extends Fragment {
-
+public class ErrorHandlerUtil {
     public static void handleError(String message) {
         Toast.makeText(KujonApplication.getApplication(), "Error: " + message, Toast.LENGTH_SHORT).show();
     }
@@ -43,5 +41,4 @@ public abstract class ErrorHandlerFragment extends Fragment {
 
         return true;
     }
-
 }

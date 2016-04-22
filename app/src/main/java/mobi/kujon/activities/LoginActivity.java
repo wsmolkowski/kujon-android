@@ -15,9 +15,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
-import mobi.kujon.fragments.ErrorHandlerFragment;
 import mobi.kujon.network.json.Config;
 import mobi.kujon.network.json.KujonResponse;
+import mobi.kujon.utils.ErrorHandlerUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -63,7 +63,7 @@ public class LoginActivity extends BaseActivity {
             KujonApplication.getApplication().setLoginStatus(result);
             kujonBackendApi.config().enqueue(new Callback<KujonResponse<Config>>() {
                 @Override public void onResponse(Call<KujonResponse<Config>> call, Response<KujonResponse<Config>> response) {
-                    if (ErrorHandlerFragment.handleResponse(response)) {
+                    if (ErrorHandlerUtil.handleResponse(response)) {
                         Config data = response.body().data;
                         System.out.println("### " + data);
                         if (data.usosPaired) {
@@ -76,7 +76,7 @@ public class LoginActivity extends BaseActivity {
                 }
 
                 @Override public void onFailure(Call<KujonResponse<Config>> call, Throwable t) {
-                    ErrorHandlerFragment.handleError(t);
+                    ErrorHandlerUtil.handleError(t);
                 }
             });
         } else {

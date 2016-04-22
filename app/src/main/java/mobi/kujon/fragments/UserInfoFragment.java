@@ -2,6 +2,7 @@ package mobi.kujon.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,11 +19,12 @@ import mobi.kujon.network.KujonBackendApi;
 import mobi.kujon.network.KujonBackendService;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.network.json.User;
+import mobi.kujon.utils.ErrorHandlerUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class UserInfoFragment extends ErrorHandlerFragment {
+public class UserInfoFragment extends Fragment {
 
     @Bind(R.id.student_status) TextView studentStatus;
     @Bind(R.id.student_account_number) TextView studentAccountNumber;
@@ -46,7 +48,7 @@ public class UserInfoFragment extends ErrorHandlerFragment {
         super.onStart();
         kujonBackendApi.users().enqueue(new Callback<KujonResponse<User>>() {
             @Override public void onResponse(Call<KujonResponse<User>> call, Response<KujonResponse<User>> response) {
-                if (handleResponse(response)) {
+                if (ErrorHandlerUtil.handleResponse(response)) {
                     User user = response.body().data;
                     userName.setText(user.name);
                     usosName.setText(user.usos_name);
@@ -60,7 +62,7 @@ public class UserInfoFragment extends ErrorHandlerFragment {
             }
 
             @Override public void onFailure(Call<KujonResponse<User>> call, Throwable t) {
-                handleError(t);
+                ErrorHandlerUtil.handleError(t);
             }
         });
     }
