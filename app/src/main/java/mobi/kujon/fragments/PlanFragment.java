@@ -2,11 +2,13 @@ package mobi.kujon.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.alamkanak.weekview.MonthLoader;
 import com.alamkanak.weekview.WeekView;
@@ -42,6 +44,7 @@ public class PlanFragment extends Fragment implements MonthLoader.MonthChangeLis
     public static final SimpleDateFormat REST_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
     @Bind(R.id.weekView) WeekView weekView;
+    @Bind(R.id.fab) FloatingActionButton fab;
 
     private Map<String, List<WeekViewEvent>> eventsForDate = new HashMap<>();
     private List<String> downloaded = new ArrayList<>();
@@ -54,7 +57,7 @@ public class PlanFragment extends Fragment implements MonthLoader.MonthChangeLis
 
         weekView.setMonthChangeListener(this);
         weekView.setFirstDayOfWeek(Calendar.MONDAY);
-
+        weekView.setShowNowLine(true);
         weekView.setOnEventClickListener((event, eventRect) -> {
             KujonWeekViewEvent viewEvent = (KujonWeekViewEvent) event;
             AlertDialog.Builder dlgAlert = new AlertDialog.Builder(getActivity());
@@ -66,6 +69,12 @@ public class PlanFragment extends Fragment implements MonthLoader.MonthChangeLis
             dlgAlert.setCancelable(true);
             alertDialog = dlgAlert.create();
             alertDialog.show();
+        });
+
+        fab.setOnClickListener(v -> gotoNow());
+        fab.setOnLongClickListener(v -> {
+            Toast.makeText(getActivity(), "Wróć do \"dzisiaj\"", Toast.LENGTH_SHORT).show();
+            return true;
         });
 
         return rootView;
@@ -132,11 +141,13 @@ public class PlanFragment extends Fragment implements MonthLoader.MonthChangeLis
 
     @Override public void onStart() {
         super.onStart();
-        DateTime now = DateTime.now();
+        gotoNow();
+    }
 
+    private void gotoNow() {
+        DateTime now = DateTime.now();
         weekView.goToToday();
         weekView.goToHour(now.getHourOfDay());
-        weekView.setShowNowLine(true);
     }
 
     @Override public void onPause() {
