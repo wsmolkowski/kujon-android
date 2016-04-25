@@ -102,8 +102,8 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
             case R.id.contact_us:
                 String uriText = String.format("mailto:%s?subject=%s&body=%s",
                         getString(R.string.contact_email),
-                        Uri.encode("Kujon Team - Aplikacja Android"),
-                        Uri.encode("Prześlij nam swój komentarz lub opinię\n\nKujon Team"));
+                        Uri.encode(getString(R.string.email_subject)),
+                        Uri.encode(getString(R.string.email_body)));
 
                 Intent sendIntent = new Intent(Intent.ACTION_SENDTO);
                 sendIntent.setData(Uri.parse(uriText));
