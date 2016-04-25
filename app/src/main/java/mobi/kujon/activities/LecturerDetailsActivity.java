@@ -1,5 +1,7 @@
 package mobi.kujon.activities;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -65,5 +67,11 @@ public class LecturerDetailsActivity extends BaseActivity {
                 ErrorHandlerUtil.handleError(t);
             }
         });
+    }
+
+    public static void showLecturerDatails(Activity activity, String lecturerId) {
+        Intent intent = new Intent(activity, LecturerDetailsActivity.class);
+        intent.putExtra(LECTURER_ID, lecturerId);
+        activity.startActivity(intent);
     }
 }

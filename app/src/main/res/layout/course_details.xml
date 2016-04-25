@@ -98,7 +98,7 @@
             android:text="Prowadzący grup"
             style="@style/label"/>
 
-        <TextView
+        <ListView
             android:id="@+id/course_lecturers"
             tools:text='Lorem ipsum'
             style="@style/entry"/>
@@ -107,7 +107,7 @@
             android:text="Koordynatorzy"
             style="@style/label"/>
 
-        <TextView
+        <ListView
             android:id="@+id/course_coordinators"
             tools:text='Lorem ipsum'
             style="@style/entry"/>
