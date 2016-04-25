@@ -27,6 +27,7 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mobi.kujon.R;
+import mobi.kujon.activities.CourseDetailsActivity;
 import mobi.kujon.network.KujonBackendApi;
 import mobi.kujon.network.KujonBackendService;
 import mobi.kujon.network.converters.EventConverter;
@@ -55,6 +56,9 @@ public class PlanFragment extends Fragment implements MonthLoader.MonthChangeLis
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_plan, container, false);
         ButterKnife.bind(this, rootView);
 
+        DateTime now = DateTime.now();
+        String term = "" + (now.getMonthOfYear() > 9 ? now.getYear() : now.getYear() - 1);
+
         weekView.setMonthChangeListener(this);
         weekView.setFirstDayOfWeek(Calendar.MONDAY);
         weekView.setShowNowLine(true);
@@ -65,7 +69,10 @@ public class PlanFragment extends Fragment implements MonthLoader.MonthChangeLis
             dlgAlert.setMessage(String.format("Sala: %s\nBudynek: %s\nGrupa: %s\nTyp: %s",
                     calendarEvent.roomNumber, calendarEvent.buildingName, calendarEvent.groupNumber, calendarEvent.type));
             dlgAlert.setTitle(calendarEvent.name);
-            dlgAlert.setPositiveButton("OK", null);
+            dlgAlert.setNeutralButton("OK", null);
+            dlgAlert.setPositiveButton("Zobacz przedmiot", (dialog, which) -> {
+                CourseDetailsActivity.showCourseDetails(getActivity(), calendarEvent.courseId, term);
+            });
             dlgAlert.setCancelable(true);
             alertDialog = dlgAlert.create();
             alertDialog.show();
