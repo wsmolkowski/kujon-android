@@ -3,10 +3,12 @@ package mobi.kujon.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.text.Html;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.github.underscore.$;
@@ -43,11 +45,14 @@ public class CourseDetailsActivity extends BaseActivity {
     @Bind(R.id.course_coordinators) ListView courseCoordinators;
     @Bind(R.id.course_class_type) TextView courseClassType;
     @Bind(R.id.course_students) TextView courseStudents;
+    @Bind(R.id.scrollView) ScrollView scrollView;
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.course_details);
         ButterKnife.bind(this);
+
+        Handler handler = new Handler();
 
         String courseId = getIntent().getStringExtra(COURSE_ID);
         String termId = getIntent().getStringExtra(TERM_ID);
@@ -81,6 +86,8 @@ public class CourseDetailsActivity extends BaseActivity {
                         Coordinator coordinator = data.coordinators.get(position);
                         LecturerDetailsActivity.showLecturerDatails(CourseDetailsActivity.this, coordinator.userId);
                     });
+
+                    handler.post(() -> scrollView.scrollTo(0, 0));
 
                     courseStudents.setText($.join($.collect(data.participants, it -> it.firstName + " " + it.lastName), "\n"));
                     courseClassType.setText($.join($.collect(data.groups, it -> it.classType + ", numer grupy: " + it.groupNumber), "\n"));
