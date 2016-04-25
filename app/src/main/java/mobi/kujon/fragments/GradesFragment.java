@@ -58,7 +58,7 @@ public class GradesFragment extends ListFragment {
         @Override public void onBindViewHolder(ViewHolder holder, int position) {
             Grade grade = data.get(position);
             holder.title.setText(grade.courseName + " - " + grade.termId);
-            holder.desc.setText(Html.fromHtml(String.format("Ocena %s, termin: %s", grade.classType, grade.valueSymbol, grade.valueDescription, grade.examSessionNumber)));
+            holder.desc.setText(Html.fromHtml(String.format("Ocena %s, termin: %s", grade.classType, grade.examSessionNumber)));
             holder.gradeDesc.setText(grade.valueDescription);
             holder.gradeSymbol.setText(grade.valueSymbol);
             holder.courseId = grade.courseId;
