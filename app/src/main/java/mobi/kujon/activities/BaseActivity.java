@@ -6,7 +6,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -45,6 +47,7 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
     protected GoogleApiClient apiClient;
     protected KujonBackendApi kujonBackendApi;
     protected Picasso picasso;
+    private AlertDialog alertDialog;
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,10 +76,20 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
         checkLoggingStatus(this::handle);
     }
 
+    @Override protected void onDestroy() {
+        super.onDestroy();
+        if (alertDialog != null && alertDialog.isShowing()) {
+            alertDialog.dismiss();
+            alertDialog = null;
+        }
+    }
+
     @Override public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
         menu.findItem(R.id.logout).setVisible(!(this instanceof LoginActivity));
+        GoogleSignInResult loginStatus = KujonApplication.getApplication().getLoginStatus();
+        menu.findItem(R.id.delete_account).setVisible(loginStatus != null);
         return true;
     }
 
@@ -86,17 +99,29 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
                 logout();
                 return true;
             case R.id.delete_account:
-                kujonBackendApi.deleteAccount().enqueue(new Callback<Object>() {
-                    @Override public void onResponse(Call<Object> call, Response<Object> response) {
-                        System.out.println("call = [" + call + "], response = [" + response + "]");
-                        logout();
-                    }
+                AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);
+                String email = KujonApplication.getApplication().getLoginStatus().getSignInAccount().getEmail();
+                dlgAlert.setMessage(Html.fromHtml(getString(R.string.delete_confirm, email)));
+                dlgAlert.setTitle(R.string.delete_account);
+                dlgAlert.setPositiveButton("OK", (dialog, which) -> {
+                    kujonBackendApi.deleteAccount().enqueue(new Callback<Object>() {
+                        @Override public void onResponse(Call<Object> call, Response<Object> response) {
+                            System.out.println("call = [" + call + "], response = [" + response + "]");
+                            logout();
+                        }
 
-                    @Override public void onFailure(Call<Object> call, Throwable t) {
-                        Crashlytics.logException(t);
-                        logout();
-                    }
+                        @Override public void onFailure(Call<Object> call, Throwable t) {
+                            Crashlytics.logException(t);
+                            logout();
+                        }
+                    });
                 });
+                dlgAlert.setNegativeButton(getString(R.string.cancel), (dialog, which) -> {
+                    dialog.dismiss();
+                });
+                dlgAlert.setCancelable(false);
+                alertDialog = dlgAlert.create();
+                alertDialog.show();
                 return true;
 
             case R.id.contact_us:

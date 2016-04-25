@@ -6,4 +6,6 @@
     <string name="contact_email">"kujon@kujon.mobi"</string>
     <string name="email_subject">Uwaga do Kujona</string>
     <string name="email_body">moja uwaga:</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete_confirm"><![CDATA[Czy na pewno chcesz usunąć konto <b>%s</b>?]]></string>
 </resources>
