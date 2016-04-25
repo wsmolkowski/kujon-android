@@ -2,6 +2,7 @@ package mobi.kujon.activities;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,7 +23,6 @@ public class LecturerDetailsActivity extends BaseActivity {
     public static final String LECTURER_ID = "LECTURER_ID";
 
     @Bind(R.id.lecturer_name) TextView lecturerName;
-    @Bind(R.id.lecurerTitle) TextView lecurerTitle;
     @Bind(R.id.lecturer_status) TextView lecturerStatus;
     @Bind(R.id.lecturer_room) TextView lecturerRoom;
     @Bind(R.id.lecturer_email) TextView lecturerEmail;
@@ -40,8 +40,8 @@ public class LecturerDetailsActivity extends BaseActivity {
             @Override public void onResponse(Call<KujonResponse<LecturerLong>> call, Response<KujonResponse<LecturerLong>> response) {
                 if (ErrorHandlerUtil.handleResponse(response)) {
                     LecturerLong lecturer = response.body().data;
-                    lecturerName.setText(lecturer.firstName + " " + lecturer.lastName);
-                    lecurerTitle.setText(lecturer.titles.before);
+                    String title = TextUtils.isEmpty(lecturer.titles.before) ? "" : lecturer.titles.before;
+                    lecturerName.setText(title + " " + lecturer.firstName + " " + lecturer.lastName);
                     lecturerStatus.setText(lecturer.staffStatus);
                     lecturerRoom.setText(lecturer.room);
                     lecturerEmail.setText(lecturer.emailUrl);

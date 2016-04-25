@@ -31,16 +31,6 @@
 
         <TextView
             style="@style/label"
-            android:text="Tytuł"
-            />
-
-        <TextView
-            android:id="@+id/lecurerTitle"
-            style="@style/entry"
-            tools:text='prof. dr hab.'/>
-
-        <TextView
-            style="@style/label"
             android:text="Status pracownika"/>
 
         <TextView
