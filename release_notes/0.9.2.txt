@@ -1,0 +1,15 @@
+* Fix #10 plan modal - po lewej stronie na dole na wysokości OK dodać przycisk zobacz przedmiot
+* Fix #9 plan modal - dodanie godziny rozpoczęcia i zakończenia zajęć
+* Fix #13 plan - dodać przycisk dziś (dzisiaj) przesuwajcy to dziś
+* Fix #14 skasuj konto niech wyświetla potwierdzenie czy na pewno chcesz skasować konto
+* Fix #4 podlgąd nauczycieli - wyjątek
+* Fix #19 email - do nauczyciela zamiast pokazdywać link - zrobić przycisk sprawdź w USOS
+* Fix #17 przedmioty - umożliwienie kliknięcia w wykładowcę - przeniesienie do activity inforamcji o wykładowcy
+* Fix #20 nauczyciel - prowadzone przedmioty - umożliwić kliknięcie i przeniesienie do infroamcji o danym przedmiocie
+* Fix #21 nauczyciel - tytuł dawać przed imieniem i nazwiskiem
+* Fix #11 polozenie telefonu horyzontalne - menu nie jest na belce tylko zwija się do drop-down
+* Fix #7 kolorowanie wierszy na zmianę
+* Fix #15 przy wyświetlaniu spisu uczelni - wyświetlić tosta “Wybierz swoją uczelnię..”
+* Fix #22 wysłanie opini - zmaina adresu i treści
+* Fix #3 oceny w polu termin wyświeltana jest ocena
+* Wojciech Fabric account keys
