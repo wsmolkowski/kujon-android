@@ -1,6 +1,5 @@
 package mobi.kujon.fragments;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -61,9 +60,7 @@ public class TermsFragment extends ListFragment {
             holder.startDate.setText(term.startDate);
             holder.endDate.setText(term.endDate);
             holder.finishDate.setText(term.finishDate);
-            if (position % 2 == 1) {
-                holder.itemView.setBackgroundColor(Color.parseColor("#EEEEEE"));
-            }
+            holder.itemView.setBackgroundResource(position % 2 == 1 ? R.color.grey : android.R.color.white);
         }
 
         @Override public int getItemCount() {

@@ -60,6 +60,7 @@ public class LecturersFragment extends ListFragment {
             Lecturer lecturer = data.get(position);
             holder.lecturerName.setText(lecturer.firstName + " " + lecturer.lastName);
             holder.lecturerId = lecturer.userId;
+            holder.itemView.setBackgroundResource(position % 2 == 1 ? R.color.grey : android.R.color.white);
         }
 
         @Override public int getItemCount() {

@@ -63,6 +63,7 @@ public class GradesFragment extends ListFragment {
             holder.gradeSymbol.setText(grade.valueSymbol);
             holder.courseId = grade.courseId;
             holder.termId = grade.termId;
+            holder.itemView.setBackgroundResource(position % 2 == 1 ? R.color.grey : android.R.color.white);
         }
 
         @Override public int getItemCount() {

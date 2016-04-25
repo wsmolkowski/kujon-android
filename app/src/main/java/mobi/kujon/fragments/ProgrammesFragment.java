@@ -59,6 +59,7 @@ public class ProgrammesFragment extends ListFragment {
             holder.levelOfStudies.setText(programme.programme.levelOfStudies);
             holder.modeOfStudies.setText(programme.programme.modeOfStudies);
             holder.duration.setText(programme.programme.duration);
+            holder.itemView.setBackgroundResource(position % 2 == 1 ? R.color.grey : android.R.color.white);
         }
 
         @Override public int getItemCount() {
