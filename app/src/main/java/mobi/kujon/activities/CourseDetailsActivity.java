@@ -1,5 +1,7 @@
 package mobi.kujon.activities;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Html;
@@ -51,12 +53,14 @@ public class CourseDetailsActivity extends BaseActivity {
                     courseFac.setText(data.facId.name + ", " + data.facId.postalAddress);
                     courseLang.setText(data.langId);
                     courseIsConducted.setText(data.isCurrentlyConducted);
-                    description.setText(Html.fromHtml(data.description));
+                    description.setText(Html.fromHtml(data.description.replace("\n", "<br>")));
                     courseName.setText(String.format("%s, (%s)", data.name, data.courseId));
-                    bibliography.setText(data.bibliography);
-                    assessmentCriteria.setText(data.assessmentCriteria);
-                    courseTermName.setText(data.term.name);
-                    courseTermDates.setText(String.format("%s - %s", data.term.startDate, data.term.endDate));
+                    bibliography.setText(data.bibliography.replace("\n", "\n\n"));
+                    assessmentCriteria.setText(data.assessmentCriteria.replace("\n", "\n\n"));
+                    if (data.term != null) {
+                        courseTermName.setText(data.term.name);
+                        courseTermDates.setText(String.format("%s - %s", data.term.startDate, data.term.endDate));
+                    }
                     courseLecturers.setText($.join($.collect(data.lecturers, it -> it.firstName + " " + it.lastName), "\n"));
                     courseCoordinators.setText($.join($.collect(data.coordinators, it -> it.firstName + " " + it.lastName), "\n"));
                     courseStudents.setText($.join($.collect(data.participants, it -> it.firstName + " " + it.lastName), "\n"));
@@ -68,5 +72,12 @@ public class CourseDetailsActivity extends BaseActivity {
                 ErrorHandlerUtil.handleError(t);
             }
         });
+    }
+
+    public static void showCourseDetails(Activity activity, String courseId, String termId) {
+        Intent intent = new Intent(activity, CourseDetailsActivity.class);
+        intent.putExtra(COURSE_ID, courseId);
+        intent.putExtra(TERM_ID, termId);
+        activity.startActivity(intent);
     }
 }

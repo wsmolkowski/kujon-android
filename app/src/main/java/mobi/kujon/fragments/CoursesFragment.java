@@ -1,6 +1,5 @@
 package mobi.kujon.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -84,11 +83,9 @@ public class CoursesFragment extends ListFragment {
             super(itemView);
             ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(v -> {
-                Intent intent = new Intent(getActivity(), CourseDetailsActivity.class);
-                intent.putExtra(CourseDetailsActivity.COURSE_ID, courseId);
-                intent.putExtra(CourseDetailsActivity.TERM_ID, termId);
-                startActivity(intent);
+                CourseDetailsActivity.showCourseDetails(getActivity(), courseId, termId);
             });
         }
     }
+
 }

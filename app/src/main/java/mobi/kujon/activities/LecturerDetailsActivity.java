@@ -3,14 +3,19 @@ package mobi.kujon.activities;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.github.underscore.$;
 
+import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mobi.kujon.R;
+import mobi.kujon.network.json.CourseEditionsConducted;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.network.json.LecturerLong;
 import mobi.kujon.utils.ErrorHandlerUtil;
@@ -26,7 +31,7 @@ public class LecturerDetailsActivity extends BaseActivity {
     @Bind(R.id.lecturer_status) TextView lecturerStatus;
     @Bind(R.id.lecturer_room) TextView lecturerRoom;
     @Bind(R.id.lecturer_email) TextView lecturerEmail;
-    @Bind(R.id.lecturer_courses) TextView lecturerCourses;
+    @Bind(R.id.lecturer_courses) ListView lecturerCourses;
     @Bind(R.id.picture) ImageView picture;
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,7 +50,13 @@ public class LecturerDetailsActivity extends BaseActivity {
                     lecturerStatus.setText(lecturer.staffStatus);
                     lecturerRoom.setText(lecturer.room);
                     lecturerEmail.setText(lecturer.emailUrl);
-                    lecturerCourses.setText($.join($.collect(lecturer.courseEditionsConducted, it -> it.courseName), "\n"));
+                    List<String> courses = $.collect(lecturer.courseEditionsConducted, it -> it.courseName);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(LecturerDetailsActivity.this, android.R.layout.simple_list_item_1, courses);
+                    lecturerCourses.setAdapter(adapter);
+                    lecturerCourses.setOnItemClickListener((parent, view, position, id) -> {
+                        CourseEditionsConducted course = lecturer.courseEditionsConducted.get(position);
+                        CourseDetailsActivity.showCourseDetails(LecturerDetailsActivity.this, course.courseId, course.termId);
+                    });
                     picasso.load(lecturer.hasPhoto).placeholder(R.drawable.user_placeholder).into(picture);
                 }
             }

@@ -60,10 +60,10 @@
             style="@style/label"
             android:text="Prowadzone przedmioty"/>
 
-        <TextView
+        <ListView
             android:id="@+id/lecturer_courses"
-            style="@style/entry"
-            tools:text='Lorem ipsum'/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 
