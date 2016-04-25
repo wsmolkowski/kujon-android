@@ -116,7 +116,7 @@ public class KujonBackendService {
         if (cacheControl == null || cacheControl.contains("no-store") || cacheControl.contains("no-cache") ||
                 cacheControl.contains("must-revalidate") || cacheControl.contains("max-age=0")) {
             return originalResponse.newBuilder()
-                    .header("Cache-Control", "public, max-age=" + 60)
+                    .header("Cache-Control", "public, max-age=" + 5)
                     .build();
         } else {
             return originalResponse;
