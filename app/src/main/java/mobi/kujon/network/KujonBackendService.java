@@ -145,7 +145,7 @@ public class KujonBackendService {
     public static boolean isOnline() {
         ConnectivityManager cm = (ConnectivityManager) KujonApplication.getApplication().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        return netInfo != null && netInfo.isConnectedOrConnecting();
+        return netInfo != null && netInfo.isConnected();
     }
 
     public void invalidateEntry(String urlToInvalidate) {
