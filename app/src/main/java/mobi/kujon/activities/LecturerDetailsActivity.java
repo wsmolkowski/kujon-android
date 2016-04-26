@@ -7,14 +7,12 @@ import android.support.annotation.Nullable;
 import android.text.Html;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
-import android.widget.ArrayAdapter;
+import android.view.LayoutInflater;
 import android.widget.ImageView;
-import android.widget.ListView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.underscore.$;
-
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -35,15 +33,17 @@ public class LecturerDetailsActivity extends BaseActivity {
     @Bind(R.id.lecturer_status) TextView lecturerStatus;
     @Bind(R.id.lecturer_room) TextView lecturerRoom;
     @Bind(R.id.lecturer_email) TextView lecturerEmail;
-    @Bind(R.id.lecturer_courses) ListView lecturerCourses;
+    @Bind(R.id.lecturer_courses) LinearLayout lecturerCourses;
     @Bind(R.id.picture) ImageView picture;
     @Bind(R.id.lecturer_homepage) TextView lecturerHomepage;
     @Bind(R.id.lecturer_employment_positions) TextView lecturerEmploymentPositions;
+    private LayoutInflater layoutInflater;
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lecturer_details);
         ButterKnife.bind(this);
+        layoutInflater = getLayoutInflater();
 
         String lecturerId = getIntent().getStringExtra(LECTURER_ID);
 
@@ -60,13 +60,13 @@ public class LecturerDetailsActivity extends BaseActivity {
                     String email = String.format("<a href=\"%s\">Sprawdź w USOS</a>", lecturer.emailUrl);
                     lecturerEmail.setText(Html.fromHtml(email));
                     lecturerEmail.setMovementMethod(LinkMovementMethod.getInstance());
-                    List<String> courses = $.collect(lecturer.courseEditionsConducted, it -> it.courseName);
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(LecturerDetailsActivity.this, android.R.layout.simple_list_item_1, courses);
-                    lecturerCourses.setAdapter(adapter);
-                    lecturerCourses.setOnItemClickListener((parent, view, position, id) -> {
-                        CourseEditionsConducted course = lecturer.courseEditionsConducted.get(position);
-                        CourseDetailsActivity.showCourseDetails(LecturerDetailsActivity.this, course.courseId, course.termId);
-                    });
+                    for (CourseEditionsConducted course : lecturer.courseEditionsConducted) {
+                        TextView row = (TextView) layoutInflater.inflate(android.R.layout.simple_list_item_1, null);
+                        row.setText(course.courseName);
+                        row.setOnClickListener(v -> CourseDetailsActivity.showCourseDetails(LecturerDetailsActivity.this, course.courseId, course.termId));
+                        lecturerCourses.addView(row);
+                    }
+
                     picasso.load(lecturer.hasPhoto).placeholder(R.drawable.user_placeholder).into(picture);
 
                     lecturerHomepage.setText(lecturer.homepageUrl);

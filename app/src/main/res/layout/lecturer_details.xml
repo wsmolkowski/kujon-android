@@ -79,10 +79,11 @@
             style="@style/label"
             android:text="Prowadzone przedmioty"/>
 
-        <ListView
+        <LinearLayout
             android:id="@+id/lecturer_courses"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:orientation="vertical"/>
 
     </LinearLayout>
 
