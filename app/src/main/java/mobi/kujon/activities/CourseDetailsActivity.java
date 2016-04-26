@@ -17,11 +17,13 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import mobi.kujon.R;
 import mobi.kujon.network.json.Coordinator;
 import mobi.kujon.network.json.CourseDetails;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.network.json.Lecturer;
+import mobi.kujon.utils.CommonUtils;
 import mobi.kujon.utils.ErrorHandlerUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -105,5 +107,10 @@ public class CourseDetailsActivity extends BaseActivity {
         intent.putExtra(COURSE_ID, courseId);
         intent.putExtra(TERM_ID, termId);
         activity.startActivity(intent);
+    }
+
+    @OnClick(R.id.course_fac)
+    public void navigate() {
+        CommonUtils.showOnMap(this, courseFac.getText().toString());
     }
 }

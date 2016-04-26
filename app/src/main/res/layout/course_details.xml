@@ -30,7 +30,8 @@
         <TextView
             android:id="@+id/course_fac"
             tools:text='Wydział "Artes Liberales", Nowy Świat 69, 00-046 Warszawa (Śródmieście), tel.: 123266516,123266517'
-            style="@style/entry"/>
+            style="@style/entry"
+            android:drawableRight="@drawable/place_black"/>
 
         <TextView
             android:text="Język prowadzenia"

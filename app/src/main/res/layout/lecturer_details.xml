@@ -45,6 +45,7 @@
         <TextView
             android:id="@+id/lecturer_room"
             style="@style/entry"
+            android:drawableRight="@drawable/place_black"
             tools:text='Lorem ipsum'/>
 
         <TextView

@@ -69,6 +69,10 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
         picasso = new Picasso.Builder(this)
                 .downloader(new OkHttp3Downloader(KujonBackendService.getInstance().getHttpClient()))
                 .build();
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     @Override protected void onStart() {
@@ -95,9 +99,14 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
 
     @Override public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+
             case R.id.logout:
                 logout();
                 return true;
+
             case R.id.delete_account:
                 AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);
                 String email = KujonApplication.getApplication().getLoginStatus().getSignInAccount().getEmail();

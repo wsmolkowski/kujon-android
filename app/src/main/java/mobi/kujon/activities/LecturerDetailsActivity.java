@@ -11,15 +11,18 @@ import android.view.LayoutInflater;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.underscore.$;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import mobi.kujon.R;
 import mobi.kujon.network.json.CourseEditionsConducted;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.network.json.LecturerLong;
+import mobi.kujon.utils.CommonUtils;
 import mobi.kujon.utils.ErrorHandlerUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -84,5 +87,14 @@ public class LecturerDetailsActivity extends BaseActivity {
         Intent intent = new Intent(activity, LecturerDetailsActivity.class);
         intent.putExtra(LECTURER_ID, lecturerId);
         activity.startActivity(intent);
+    }
+
+    @OnClick(R.id.lecturer_room)
+    public void navigate() {
+        if (TextUtils.isEmpty(lecturerRoom.getText().toString())) {
+            Toast.makeText(LecturerDetailsActivity.this, "Brak adresu", Toast.LENGTH_SHORT).show();
+        } else {
+            CommonUtils.showOnMap(this, lecturerRoom.getText().toString());
+        }
     }
 }
