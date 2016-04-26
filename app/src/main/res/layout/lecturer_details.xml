@@ -49,10 +49,29 @@
 
         <TextView
             style="@style/label"
+            android:text="Strona domowa"/>
+
+        <TextView
+            android:id="@+id/lecturer_homepage"
+            style="@style/entry"
+            android:autoLink="web"
+            tools:text='Lorem ipsum'/>
+
+        <TextView
+            style="@style/label"
             android:text="Email"/>
 
         <TextView
             android:id="@+id/lecturer_email"
+            style="@style/entry"
+            tools:text='Lorem ipsum'/>
+
+        <TextView
+            style="@style/label"
+            android:text="Zatrudnienie"/>
+
+        <TextView
+            android:id="@+id/lecturer_employment_positions"
             style="@style/entry"
             tools:text='Lorem ipsum'/>
 

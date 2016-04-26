@@ -22,7 +22,7 @@ public class LecturerLong {
     public String lastName;
     @SerializedName("employment_positions")
     @Expose
-    public List<Object> employmentPositions = new ArrayList<Object>();
+    public List<EmploymentPosition> employmentPositions = new ArrayList<>();
     @SerializedName("room")
     @Expose
     public Room room;

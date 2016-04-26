@@ -37,6 +37,8 @@ public class LecturerDetailsActivity extends BaseActivity {
     @Bind(R.id.lecturer_email) TextView lecturerEmail;
     @Bind(R.id.lecturer_courses) ListView lecturerCourses;
     @Bind(R.id.picture) ImageView picture;
+    @Bind(R.id.lecturer_homepage) TextView lecturerHomepage;
+    @Bind(R.id.lecturer_employment_positions) TextView lecturerEmploymentPositions;
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +68,9 @@ public class LecturerDetailsActivity extends BaseActivity {
                         CourseDetailsActivity.showCourseDetails(LecturerDetailsActivity.this, course.courseId, course.termId);
                     });
                     picasso.load(lecturer.hasPhoto).placeholder(R.drawable.user_placeholder).into(picture);
+
+                    lecturerHomepage.setText(lecturer.homepageUrl);
+                    lecturerEmploymentPositions.setText($.join($.collect(lecturer.employmentPositions, it -> it.faculty.name + ", " + it.position.name), "\n\n"));
                 }
             }
 
