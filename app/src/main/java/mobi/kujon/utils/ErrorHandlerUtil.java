@@ -4,13 +4,27 @@ import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import mobi.kujon.KujonApplication;
 import mobi.kujon.network.json.KujonResponse;
 import retrofit2.Response;
 
 public class ErrorHandlerUtil {
+
+    private static Map<String, String> errorTranslations = new HashMap<String, String>() {{
+        put("only-if-cached", "Tryb offline. Nie wszystkie dane są dostępne");
+    }};
+
     public static void handleError(String message) {
-        Toast.makeText(KujonApplication.getApplication(), "Error: " + message, Toast.LENGTH_LONG).show();
+        String finalMessage = "Error: " + message;
+        for (String key : errorTranslations.keySet()) {
+            if (message.contains(key)) {
+                finalMessage = errorTranslations.get(key);
+            }
+        }
+        Toast.makeText(KujonApplication.getApplication(), finalMessage, Toast.LENGTH_LONG).show();
     }
 
     public static void handleError(Throwable throwable) {
