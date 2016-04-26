@@ -1,13 +1,15 @@
 package mobi.kujon.activities;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
+
+import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -19,77 +21,44 @@ import mobi.kujon.fragments.PlanFragment;
 import mobi.kujon.fragments.ProgrammesFragment;
 import mobi.kujon.fragments.TermsFragment;
 import mobi.kujon.fragments.UserInfoFragment;
-import mobi.kujon.ui.CustomViewPager;
 
 public class UserProfileActivity extends BaseActivity {
 
-    @Bind(R.id.viewPager) CustomViewPager pager;
-    private PagerAdapter adapter;
+    @Bind(R.id.toolbar) Toolbar toolbar;
+    Handler handler = new Handler();
+
+    public String[] TITLES = new String[]{"Użytkownik", "Plan", "Przedmioty", "Oceny", "Nauczyciele", "Kierunki", "Cykle"};
+    public Fragment[] FRAGMENTS = new Fragment[]{
+            new UserInfoFragment(), new PlanFragment(), new CoursesFragment(), new GradesFragment(), new LecturersFragment(), new ProgrammesFragment(), new TermsFragment()};
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
         ButterKnife.bind(this);
+        setSupportActionBar(toolbar);
 
-        adapter = new PagerAdapter(getSupportFragmentManager());
-        pager.setAdapter(adapter);
+        Drawer drawer = new DrawerBuilder()
+                .withActivity(this)
+                .withToolbar(toolbar)
+                .withCloseOnClick(true)
+                .build();
 
-        final ActionBar actionBar = getSupportActionBar();
-
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-
-        ActionBar.TabListener tabListener = new ActionBar.TabListener() {
-            @Override public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
-                System.out.println("" + tab.getPosition());
-                pager.setCurrentItem(tab.getPosition());
-            }
-
-            @Override public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
-            }
-
-            @Override public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
-            }
-        };
-
-        for (int i = 0; i < adapter.getCount(); i++) {
-            actionBar.addTab(
-                    actionBar.newTab()
-                            .setText(adapter.TITLES[i])
-                            .setTabListener(tabListener));
+        for (String title : TITLES) {
+            drawer.addItem(new PrimaryDrawerItem().withName(title));
         }
 
-        pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
-
-            @Override public void onPageSelected(int position) {
-                getSupportActionBar().setSelectedNavigationItem(position);
-                pager.setPagingEnabled(position != 1);
-            }
-
-            @Override public void onPageScrollStateChanged(int state) {
-            }
+        drawer.setOnDrawerItemClickListener((view, position, drawerItem) -> {
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.placeholder, FRAGMENTS[position]);
+            fragmentTransaction.commit();
+            drawer.closeDrawer();
+            toolbar.setTitle(TITLES[position]);
+            return true;
         });
-    }
 
-    private class PagerAdapter extends FragmentStatePagerAdapter {
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        drawer.getActionBarDrawerToggle().setDrawerIndicatorEnabled(true);
 
-        public String[] TITLES = new String[]{"Użytkownik", "Plan", "Przedmioty", "Oceny", "Nauczyciele", "Kierunki", "Cykle"};
-        public Fragment[] FRAGMENTS = new Fragment[]{
-                new UserInfoFragment(), new PlanFragment(), new CoursesFragment(), new GradesFragment(), new LecturersFragment(), new ProgrammesFragment(), new TermsFragment()};
-
-        public PagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return FRAGMENTS[position];
-        }
-
-        @Override
-        public int getCount() {
-            return FRAGMENTS.length;
-        }
+        handler.post(() -> drawer.setSelectionAtPosition(0));
     }
 }

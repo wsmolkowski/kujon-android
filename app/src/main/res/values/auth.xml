@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="serverClientId">774265221464-1v0trui5rbc375cea793r1dposo7tkan.apps.googleusercontent.com</string>
+    <string translatable="false" name="serverClientId">774265221464-1v0trui5rbc375cea793r1dposo7tkan.apps.googleusercontent.com</string>
 </resources>
