@@ -1,0 +1,6 @@
+* Fix #5 przy wyłączonym wifi pokazuje się Network error: Unsatisfaiable request (only-if-cached)
+* Fix #18 studenci przeniesienie do zakładki informacji o studencie danym
+* Fix #30 Nauczyciele pokój oraz przedmioty jednostka
+* Fix #20 nauczyciel - prowadzone przedmioty - umożliwić kliknięcie i przeniesienie do infroamcji o danym przedmiocie
+* Fix #31 nauczyciele - nie pojawia się strona domowa i zatrudnienie
+* navigation drawer
