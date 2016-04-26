@@ -100,18 +100,20 @@
             android:text="Prowadzący grup"
             style="@style/label"/>
 
-        <ListView
+        <LinearLayout
             android:id="@+id/course_lecturers"
             tools:text='Lorem ipsum'
-            style="@style/entry"/>
+            style="@style/entry"
+            android:orientation="vertical"/>
 
         <TextView
             android:text="Koordynatorzy"
             style="@style/label"/>
 
-        <ListView
+        <LinearLayout
             android:id="@+id/course_coordinators"
             tools:text='Lorem ipsum'
+            android:orientation="vertical"
             style="@style/entry"/>
 
         <TextView
@@ -127,9 +129,10 @@
             android:text="Studenci"
             style="@style/label"/>
 
-        <TextView
+        <LinearLayout
             android:id="@+id/course_students"
             tools:text='Lorem ipsum'
+            android:orientation="vertical"
             style="@style/entry"/>
 
     </LinearLayout>

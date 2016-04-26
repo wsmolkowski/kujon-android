@@ -26,6 +26,7 @@ import retrofit2.Response;
 
 public class UserInfoFragment extends Fragment {
 
+    public static final String USER_ID = "USER_ID";
     @Bind(R.id.student_status) TextView studentStatus;
     @Bind(R.id.student_account_number) TextView studentAccountNumber;
     @Bind(R.id.student_programmes) TextView studentProgrammes;
@@ -37,6 +38,14 @@ public class UserInfoFragment extends Fragment {
 
     private KujonBackendApi kujonBackendApi;
 
+    public static UserInfoFragment getFragment(String userId) {
+        Bundle bundle = new Bundle();
+        bundle.putString(USER_ID, userId);
+        UserInfoFragment fragment = new UserInfoFragment();
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
     @Nullable @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_user_info, container, false);
         ButterKnife.bind(this, rootView);
@@ -46,7 +55,8 @@ public class UserInfoFragment extends Fragment {
 
     @Override public void onStart() {
         super.onStart();
-        kujonBackendApi.users().enqueue(new Callback<KujonResponse<User>>() {
+        Call<KujonResponse<User>> users = getArguments() != null && getArguments().getString(USER_ID) != null ? kujonBackendApi.users(getArguments().getString(USER_ID)) : kujonBackendApi.users();
+        users.enqueue(new Callback<KujonResponse<User>>() {
             @Override public void onResponse(Call<KujonResponse<User>> call, Response<KujonResponse<User>> response) {
                 if (ErrorHandlerUtil.handleResponse(response)) {
                     User user = response.body().data;

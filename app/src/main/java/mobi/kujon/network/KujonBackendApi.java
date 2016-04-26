@@ -29,6 +29,8 @@ public interface KujonBackendApi {
 
     @GET("users") Call<KujonResponse<User>> users();
 
+    @GET("users/{userId}") Call<KujonResponse<User>> users(@Path("userId") String userId);
+
     @GET("grades") Call<KujonResponse<List<Grade>>> grades();
 
     @GET("terms") Call<KujonResponse<List<Term2>>> terms();

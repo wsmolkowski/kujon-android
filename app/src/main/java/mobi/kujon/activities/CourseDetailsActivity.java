@@ -6,8 +6,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.text.Html;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.view.LayoutInflater;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -29,6 +29,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static mobi.kujon.utils.CommonUtils.showList;
+
 public class CourseDetailsActivity extends BaseActivity {
 
     public static final String COURSE_ID = "COURSE_ID";
@@ -43,16 +45,19 @@ public class CourseDetailsActivity extends BaseActivity {
     @Bind(R.id.assessment_criteria) TextView assessmentCriteria;
     @Bind(R.id.course_term_name) TextView courseTermName;
     @Bind(R.id.course_term_dates) TextView courseTermDates;
-    @Bind(R.id.course_lecturers) ListView courseLecturers;
-    @Bind(R.id.course_coordinators) ListView courseCoordinators;
+    @Bind(R.id.course_lecturers) LinearLayout courseLecturers;
+    @Bind(R.id.course_coordinators) LinearLayout courseCoordinators;
     @Bind(R.id.course_class_type) TextView courseClassType;
-    @Bind(R.id.course_students) TextView courseStudents;
+    @Bind(R.id.course_students) LinearLayout courseStudents;
     @Bind(R.id.scrollView) ScrollView scrollView;
+
+    private LayoutInflater layoutInflater;
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.course_details);
         ButterKnife.bind(this);
+        layoutInflater = getLayoutInflater();
 
         Handler handler = new Handler();
 
@@ -76,22 +81,23 @@ public class CourseDetailsActivity extends BaseActivity {
                     }
 
                     List<String> lecturers = $.collect(data.lecturers, it -> it.firstName + " " + it.lastName);
-                    courseLecturers.setAdapter(new ArrayAdapter<>(CourseDetailsActivity.this, android.R.layout.simple_list_item_1, lecturers));
-                    courseLecturers.setOnItemClickListener((parent, view, position, id) -> {
+                    showList(CourseDetailsActivity.this.layoutInflater, courseLecturers, lecturers, position -> {
                         Lecturer lecturer = data.lecturers.get(position);
                         LecturerDetailsActivity.showLecturerDatails(CourseDetailsActivity.this, lecturer.userId);
                     });
 
                     List<String> coordinators = $.collect(data.coordinators, it -> it.firstName + " " + it.lastName);
-                    courseCoordinators.setAdapter(new ArrayAdapter<>(CourseDetailsActivity.this, android.R.layout.simple_list_item_1, coordinators));
-                    courseCoordinators.setOnItemClickListener((parent, view, position, id) -> {
+                    showList(CourseDetailsActivity.this.layoutInflater, courseCoordinators, coordinators, position -> {
                         Coordinator coordinator = data.coordinators.get(position);
                         LecturerDetailsActivity.showLecturerDatails(CourseDetailsActivity.this, coordinator.userId);
                     });
 
                     handler.post(() -> scrollView.scrollTo(0, 0));
 
-                    courseStudents.setText($.join($.collect(data.participants, it -> it.firstName + " " + it.lastName), "\n"));
+                    List<String> participants = $.collect(data.participants, participant -> participant.firstName + " " + participant.lastName);
+                    showList(CourseDetailsActivity.this.layoutInflater, courseStudents, participants,
+                            position -> StudentDetailsActivity.showStudentDetails(CourseDetailsActivity.this, data.participants.get(position).userId));
+
                     courseClassType.setText($.join($.collect(data.groups, it -> it.classType + ", numer grupy: " + it.groupNumber), "\n"));
                 }
             }

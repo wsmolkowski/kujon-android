@@ -33,14 +33,18 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".activities.UserProfileActivity"
-            android:theme="@style/ToolbarAppTheme"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/ToolbarAppTheme"/>
         <activity
             android:name=".activities.CourseDetailsActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".activities.LecturerDetailsActivity"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activities.StudentDetailsActivity"
+            android:screenOrientation="portrait"/>
+
     </application>
 
 </manifest>
