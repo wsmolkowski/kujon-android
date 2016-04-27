@@ -1,5 +1,6 @@
 package mobi.kujon.utils;
 
+import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
@@ -20,7 +21,7 @@ public class ErrorHandlerUtil {
     public static void handleError(String message) {
         String finalMessage = "Error: " + message;
         for (String key : errorTranslations.keySet()) {
-            if (message.contains(key)) {
+            if (!TextUtils.isEmpty(message) && message.contains(key)) {
                 finalMessage = errorTranslations.get(key);
             }
         }

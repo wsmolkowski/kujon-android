@@ -52,3 +52,5 @@
 }
 
 -dontwarn okio.**
+
+-keep class mobi.kujon.network.json.** { *; }
