@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -19,6 +20,7 @@ public class ListFragment extends Fragment {
 
     protected @Bind(R.id.recyclerView) RecyclerView recyclerView;
     protected KujonBackendApi backendApi;
+    @Bind(R.id.empty_info) TextView emptyInfo;
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_list, container, false);

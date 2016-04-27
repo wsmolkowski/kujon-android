@@ -9,4 +9,5 @@
 
     <string name="email_subject">Uwaga do Kujona</string>
     <string name="email_body">moja uwaga:</string>
+    <string name="no_date">No data</string>
 </resources>

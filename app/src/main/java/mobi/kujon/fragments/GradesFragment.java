@@ -32,6 +32,13 @@ public class GradesFragment extends ListFragment {
         super.onActivityCreated(savedInstanceState);
         adapter = new Adapter();
         recyclerView.setAdapter(adapter);
+
+        adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override public void onChanged() {
+                boolean haveData = adapter.data != null && adapter.data.size() > 0;
+                emptyInfo.setVisibility(haveData ? View.GONE : View.VISIBLE);
+            }
+        });
         backendApi.grades().enqueue(new Callback<KujonResponse<List<Grade>>>() {
             @Override public void onResponse(Call<KujonResponse<List<Grade>>> call, Response<KujonResponse<List<Grade>>> response) {
                 if (ErrorHandlerUtil.handleResponse(response)) {
