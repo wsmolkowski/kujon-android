@@ -92,9 +92,7 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
     @Override public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
-        menu.findItem(R.id.logout).setVisible(!(this instanceof LoginActivity));
         GoogleSignInResult loginStatus = KujonApplication.getApplication().getLoginStatus();
-        menu.findItem(R.id.delete_account).setVisible(loginStatus != null);
         return true;
     }
 
@@ -104,50 +102,46 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
                 finish();
                 return true;
 
-            case R.id.logout:
-                logout();
-                return true;
-
-            case R.id.delete_account:
-                AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);
-                String email = KujonApplication.getApplication().getLoginStatus().getSignInAccount().getEmail();
-                dlgAlert.setMessage(Html.fromHtml(getString(R.string.delete_confirm, email)));
-                dlgAlert.setTitle(R.string.delete_account);
-                dlgAlert.setPositiveButton("OK", (dialog, which) -> {
-                    kujonBackendApi.deleteAccount().enqueue(new Callback<Object>() {
-                        @Override public void onResponse(Call<Object> call, Response<Object> response) {
-                            System.out.println("call = [" + call + "], response = [" + response + "]");
-                            logout();
-                        }
-
-                        @Override public void onFailure(Call<Object> call, Throwable t) {
-                            Crashlytics.logException(t);
-                            logout();
-                        }
-                    });
-                });
-                dlgAlert.setNegativeButton(getString(R.string.cancel), (dialog, which) -> {
-                    dialog.dismiss();
-                });
-                dlgAlert.setCancelable(false);
-                alertDialog = dlgAlert.create();
-                alertDialog.show();
-                return true;
-
-            case R.id.contact_us:
-                String uriText = String.format("mailto:%s?subject=%s&body=%s",
-                        getString(R.string.contact_email),
-                        Uri.encode(getString(R.string.email_subject)),
-                        Uri.encode(getString(R.string.email_body)));
-
-                Intent sendIntent = new Intent(Intent.ACTION_SENDTO);
-                sendIntent.setData(Uri.parse(uriText));
-                startActivity(createChooser(sendIntent, "Select an email client"));
-                return true;
-
             default:
                 return true;
         }
+    }
+
+    protected void contactUs() {
+        String uriText = String.format("mailto:%s?subject=%s&body=%s",
+                getString(R.string.contact_email),
+                Uri.encode(getString(R.string.email_subject)),
+                Uri.encode(getString(R.string.email_body)));
+
+        Intent sendIntent = new Intent(Intent.ACTION_SENDTO);
+        sendIntent.setData(Uri.parse(uriText));
+        startActivity(createChooser(sendIntent, "Select an email client"));
+    }
+
+    protected void deleteAccount() {
+        AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);
+        String email = KujonApplication.getApplication().getLoginStatus().getSignInAccount().getEmail();
+        dlgAlert.setMessage(Html.fromHtml(getString(R.string.delete_confirm, email)));
+        dlgAlert.setTitle(R.string.delete_account);
+        dlgAlert.setPositiveButton("OK", (dialog, which) -> {
+            kujonBackendApi.deleteAccount().enqueue(new Callback<Object>() {
+                @Override public void onResponse(Call<Object> call, Response<Object> response) {
+                    System.out.println("call = [" + call + "], response = [" + response + "]");
+                    logout();
+                }
+
+                @Override public void onFailure(Call<Object> call, Throwable t) {
+                    Crashlytics.logException(t);
+                    logout();
+                }
+            });
+        });
+        dlgAlert.setNegativeButton(getString(R.string.cancel), (dialog, which) -> {
+            dialog.dismiss();
+        });
+        dlgAlert.setCancelable(false);
+        alertDialog = dlgAlert.create();
+        alertDialog.show();
     }
 
     public void checkLoggingStatus(ResultCallback<GoogleSignInResult> resultCallback) {

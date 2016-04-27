@@ -13,6 +13,7 @@ import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 
@@ -63,22 +64,43 @@ public class UserProfileActivity extends BaseActivity {
                 .withAccountHeader(headerResult)
                 .build();
 
-        for (String title : TITLES) {
-            drawer.addItem(new PrimaryDrawerItem().withName(title));
+        for (int i = 0; i < TITLES.length; i++) {
+            final int finalI = i;
+            drawer.addItem(new PrimaryDrawerItem().withName(TITLES[i]).withOnDrawerItemClickListener((view, position, drawerItem) -> {
+                showFragment(drawer, FRAGMENTS[finalI], TITLES[finalI]);
+                return true;
+            }));
         }
 
-        drawer.setOnDrawerItemClickListener((view, position, drawerItem) -> {
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.placeholder, FRAGMENTS[position - 1]);
-            fragmentTransaction.commit();
-            drawer.closeDrawer();
-            toolbar.setTitle(TITLES[position - 1]);
+        drawer.addItem(new DividerDrawerItem());
+        drawer.addItem(
+                new PrimaryDrawerItem()
+                        .withName("Wyloguj")
+                        .withSelectable(false)
+                        .withOnDrawerItemClickListener((view, position, drawerItem) -> {
+                            logout();
+                            return true;
+                        }));
+        drawer.addItem(new PrimaryDrawerItem().withName("Skasuj").withOnDrawerItemClickListener((view, position, drawerItem) -> {
+            deleteAccount();
             return true;
-        });
+        }));
+        drawer.addItem(new PrimaryDrawerItem().withName("Prześlij opinię").withOnDrawerItemClickListener((view, position, drawerItem) -> {
+            contactUs();
+            return true;
+        }));
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         drawer.getActionBarDrawerToggle().setDrawerIndicatorEnabled(true);
 
-        handler.post(() -> drawer.setSelectionAtPosition(1));
+        showFragment(drawer, FRAGMENTS[0], TITLES[0]);
+    }
+
+    private void showFragment(Drawer drawer, Fragment fragment, String title) {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.placeholder, fragment);
+        fragmentTransaction.commit();
+        drawer.closeDrawer();
+        toolbar.setTitle(title);
     }
 }
