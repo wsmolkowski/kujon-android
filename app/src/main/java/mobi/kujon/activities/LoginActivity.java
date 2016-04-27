@@ -91,6 +91,7 @@ public class LoginActivity extends BaseActivity {
             });
         } else {
             progress(false);
+            signIn();
             Log.i(TAG, "Login not successful: " + result.getStatus().getStatusMessage());
         }
     }
