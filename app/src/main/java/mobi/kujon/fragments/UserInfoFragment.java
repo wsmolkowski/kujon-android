@@ -16,10 +16,12 @@ import com.squareup.picasso.Picasso;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mobi.kujon.R;
+import mobi.kujon.activities.ImageActivity;
 import mobi.kujon.network.KujonBackendApi;
 import mobi.kujon.network.KujonBackendService;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.network.json.User;
+import mobi.kujon.ui.CircleTransform;
 import mobi.kujon.utils.ErrorHandlerUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,7 +33,6 @@ public class UserInfoFragment extends Fragment {
     @Bind(R.id.student_status) TextView studentStatus;
     @Bind(R.id.student_account_number) TextView studentAccountNumber;
     @Bind(R.id.student_programmes) TextView studentProgrammes;
-    @Bind(R.id.userName) TextView userName;
     @Bind(R.id.usosName) TextView usosName;
     @Bind(R.id.firstLastName) TextView firstLastName;
     @Bind(R.id.index) TextView index;
@@ -61,13 +62,18 @@ public class UserInfoFragment extends Fragment {
             @Override public void onResponse(Call<KujonResponse<User>> call, Response<KujonResponse<User>> response) {
                 if (ErrorHandlerUtil.handleResponse(response)) {
                     User user = response.body().data;
-                    userName.setText(user.name);
                     usosName.setText(user.usos_name);
                     index.setText(user.student_number);
                     String name = user.first_name + " " + user.last_name;
                     firstLastName.setText(name);
                     ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(name);
-                    Picasso.with(getActivity()).load(user.picture).fit().centerInside().placeholder(R.drawable.user_placeholder).into(picture);
+                    Picasso.with(getActivity()).load(user.picture)
+                            .transform(new CircleTransform())
+                            .fit()
+                            .centerInside()
+                            .placeholder(R.drawable.user_placeholder)
+                            .into(picture);
+                    picture.setOnClickListener(v -> ImageActivity.show(getActivity(), user.picture, name));
                     studentStatus.setText(user.student_status);
                     studentAccountNumber.setText(user.student_number);
                     studentProgrammes.setText($.join($.collect(user.student_programmes, it -> String.format("%s - %s (%s)", it.id, it.programme.description, it.programme.id)), "\n\n"));

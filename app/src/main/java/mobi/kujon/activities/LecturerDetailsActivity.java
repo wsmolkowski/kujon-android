@@ -22,6 +22,7 @@ import mobi.kujon.R;
 import mobi.kujon.network.json.CourseEditionsConducted;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.network.json.LecturerLong;
+import mobi.kujon.ui.CircleTransform;
 import mobi.kujon.utils.CommonUtils;
 import mobi.kujon.utils.ErrorHandlerUtil;
 import retrofit2.Call;
@@ -72,7 +73,14 @@ public class LecturerDetailsActivity extends BaseActivity {
                         lecturerCourses.addView(row);
                     }
 
-                    picasso.load(lecturer.hasPhoto).placeholder(R.drawable.user_placeholder).into(picture);
+                    picasso.load(lecturer.hasPhoto)
+                            .transform(new CircleTransform())
+                            .fit()
+                            .centerInside()
+                            .placeholder(R.drawable.user_placeholder)
+                            .into(picture);
+
+                    picture.setOnClickListener(v -> ImageActivity.show(LecturerDetailsActivity.this, lecturer.hasPhoto, name));
 
                     lecturerHomepage.setText(lecturer.homepageUrl);
                     lecturerEmploymentPositions.setText($.join($.collect(lecturer.employmentPositions, it -> it.faculty.name + ", " + it.position.name), "\n\n"));
