@@ -35,6 +35,7 @@ public class UserProfileActivity extends BaseActivity {
     Handler handler = new Handler();
 
     public String[] TITLES = new String[]{"Użytkownik", "Plan", "Przedmioty", "Oceny", "Nauczyciele", "Kierunki", "Cykle"};
+    public int[] ICONS = new int[]{R.drawable.user, R.drawable.plan, R.drawable.courses, R.drawable.grades, R.drawable.teachers, R.drawable.terms, R.drawable.programmes};
     public Fragment[] FRAGMENTS = new Fragment[]{
             new UserInfoFragment(), new PlanFragment(), new CoursesFragment(), new GradesFragment(), new LecturersFragment(), new ProgrammesFragment(), new TermsFragment()};
 
@@ -49,11 +50,16 @@ public class UserProfileActivity extends BaseActivity {
         String displayName = loginStatus.getSignInAccount().getDisplayName();
         String email = loginStatus.getSignInAccount().getEmail();
         Uri photoUrl = loginStatus.getSignInAccount().getPhotoUrl();
-        ProfileDrawerItem profileDrawerItem = new ProfileDrawerItem().withName(displayName).withEmail(email).withIcon(photoUrl);
+        ProfileDrawerItem profileDrawerItem = new ProfileDrawerItem()
+                .withName(displayName)
+                .withEmail(email)
+                .withIcon(photoUrl);
 
         AccountHeader headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
                 .withHeaderBackground(R.color.colorPrimaryDark)
+//                .withHeaderBackground(new ImageHolder(Uri.parse("https://kujon.mobi/static/img/logo/logo-demo-64x64.jpg")))
+//                .withHeaderBackgroundScaleType(ImageView.ScaleType.CENTER)
                 .addProfiles(profileDrawerItem)
                 .build();
 
@@ -66,29 +72,43 @@ public class UserProfileActivity extends BaseActivity {
 
         for (int i = 0; i < TITLES.length; i++) {
             final int finalI = i;
-            drawer.addItem(new PrimaryDrawerItem().withName(TITLES[i]).withOnDrawerItemClickListener((view, position, drawerItem) -> {
-                showFragment(drawer, FRAGMENTS[finalI], TITLES[finalI]);
-                return true;
-            }));
+            drawer.addItem(new PrimaryDrawerItem()
+                    .withName(TITLES[i])
+                    .withIcon(ICONS[i])
+                    .withOnDrawerItemClickListener((view, position, drawerItem) -> {
+                        showFragment(drawer, FRAGMENTS[finalI], TITLES[finalI]);
+                        return true;
+                    }));
         }
 
         drawer.addItem(new DividerDrawerItem());
-        drawer.addItem(
-                new PrimaryDrawerItem()
-                        .withName("Wyloguj")
-                        .withSelectable(false)
-                        .withOnDrawerItemClickListener((view, position, drawerItem) -> {
-                            logout();
-                            return true;
-                        }));
-        drawer.addItem(new PrimaryDrawerItem().withName("Skasuj").withOnDrawerItemClickListener((view, position, drawerItem) -> {
-            deleteAccount();
-            return true;
-        }));
-        drawer.addItem(new PrimaryDrawerItem().withName("Prześlij opinię").withOnDrawerItemClickListener((view, position, drawerItem) -> {
-            contactUs();
-            return true;
-        }));
+        drawer.addItem(new PrimaryDrawerItem()
+                .withName("Wyloguj")
+                .withSelectable(false)
+                .withIcon(R.drawable.logout)
+                .withOnDrawerItemClickListener((view, position, drawerItem) -> {
+                    logout();
+                    drawer.closeDrawer();
+                    return true;
+                }));
+        drawer.addItem(new PrimaryDrawerItem()
+                .withName("Skasuj")
+                .withSelectable(false)
+                .withIcon(R.drawable.remove_account)
+                .withOnDrawerItemClickListener((view, position, drawerItem) -> {
+                    deleteAccount();
+                    drawer.closeDrawer();
+                    return true;
+                }));
+        drawer.addItem(new PrimaryDrawerItem()
+                .withName("Prześlij opinię")
+                .withSelectable(false)
+                .withIcon(R.drawable.contact_us)
+                .withOnDrawerItemClickListener((view, position, drawerItem) -> {
+                    contactUs();
+                    drawer.closeDrawer();
+                    return true;
+                }));
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         drawer.getActionBarDrawerToggle().setDrawerIndicatorEnabled(true);

@@ -92,7 +92,6 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
     @Override public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
-        GoogleSignInResult loginStatus = KujonApplication.getApplication().getLoginStatus();
         return true;
     }
 
