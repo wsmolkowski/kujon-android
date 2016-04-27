@@ -68,6 +68,9 @@ public class CourseDetailsActivity extends BaseActivity {
             @Override public void onResponse(Call<KujonResponse<CourseDetails>> call, Response<KujonResponse<CourseDetails>> response) {
                 if (ErrorHandlerUtil.handleResponse(response)) {
                     CourseDetails data = response.body().data;
+
+                    getSupportActionBar().setTitle(data.name);
+
                     courseFac.setText(data.facId.name + ", " + data.facId.postalAddress);
                     courseLang.setText(data.langId);
                     courseIsConducted.setText(data.isCurrentlyConducted);

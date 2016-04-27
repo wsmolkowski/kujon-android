@@ -72,6 +72,7 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle("");
         }
     }
 

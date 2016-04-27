@@ -3,6 +3,7 @@ package mobi.kujon.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,7 +64,9 @@ public class UserInfoFragment extends Fragment {
                     userName.setText(user.name);
                     usosName.setText(user.usos_name);
                     index.setText(user.student_number);
-                    firstLastName.setText(user.first_name + " " + user.last_name);
+                    String name = user.first_name + " " + user.last_name;
+                    firstLastName.setText(name);
+                    ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(name);
                     Picasso.with(getActivity()).load(user.picture).fit().centerInside().placeholder(R.drawable.user_placeholder).into(picture);
                     studentStatus.setText(user.student_status);
                     studentAccountNumber.setText(user.student_number);
