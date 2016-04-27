@@ -1,0 +1,8 @@
+* Fix #10 plan modal - po lewej stronie na dole na wysokości OK dodać przycisk zobacz przedmiot
+* Fix #27 poleć znajomym - dodanie do menu
+* Fix #33 dodanie strzałek do przejścia do kolejnego activity
+* Fix #23 zdjęcia użytkownika/ nauczyciela/ studenta
+* Fix #32 oceny jak nie ma ocen wyśweitlić że oceny nie zostały wystawione w activity
+* Fix #34 ikonki do menu
+* #24 move "wyloguj skasuj i prześlij opinię" to navigation drawer
+* action bar title
