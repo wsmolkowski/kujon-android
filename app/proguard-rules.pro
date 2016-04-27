@@ -37,3 +37,18 @@
 -keep class retrofit2.** { *; }
 -keepattributes Signature
 -keepattributes Exceptions
+
+-keep class org.apache.http.** { *; }
+-dontwarn org.apache.http.**
+-dontnote org.apache.http.**
+-keep class android.net.http.** { *; }
+-dontwarn android.net.http.**
+-dontnote android.net.http.**
+
+-keepattributes SourceFile,LineNumberTable
+-dontwarn com.squareup.picasso.**
+-keepclasseswithmembernames class * {
+    native <methods>;
+}
+
+-dontwarn okio.**
