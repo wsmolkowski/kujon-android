@@ -8,4 +8,6 @@
     <string name="delete_confirm"><![CDATA[Czy na pewno chcesz usunąć konto <b>%s</b>?]]></string>
     <string name="no_date">Brak danych do wyświetlenia</string>
     <string name="no_photo">Brak zdjęcia</string>
+    <string name="app_link">Sprawdź nową aplikację: https://play.google.com/store/apps/details?id=mobi.kujon</string>
+    <string name="share_app">Podziel się apką</string>
 </resources>

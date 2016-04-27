@@ -1,5 +1,6 @@
 package mobi.kujon.activities;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -109,6 +110,22 @@ public class UserProfileActivity extends BaseActivity {
                     drawer.closeDrawer();
                     return true;
                 }));
+
+        drawer.addItem(new PrimaryDrawerItem()
+                .withName(R.string.share_app)
+                .withSelectable(false)
+                .withIcon(R.drawable.share)
+                .withOnDrawerItemClickListener((view, position, drawerItem) -> {
+                    Intent sendIntent = new Intent();
+                    sendIntent.setAction(Intent.ACTION_SEND);
+                    sendIntent.putExtra(Intent.EXTRA_TEXT,
+                            getString(R.string.app_link));
+                    sendIntent.setType("text/plain");
+                    startActivity(sendIntent);
+                    drawer.closeDrawer();
+                    return true;
+                }));
+
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         drawer.getActionBarDrawerToggle().setDrawerIndicatorEnabled(true);
