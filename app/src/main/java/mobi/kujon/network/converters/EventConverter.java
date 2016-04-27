@@ -10,7 +10,6 @@ import mobi.kujon.network.json.CalendarEvent;
 public class EventConverter {
 
     public static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    public static final SimpleDateFormat HOURS = new SimpleDateFormat("HH:mm");
 
     public static KujonWeekViewEvent from(CalendarEvent calendarEvent) {
         Date startDate = getDate(calendarEvent.startTime);
@@ -19,12 +18,12 @@ public class EventConverter {
         Calendar end = Calendar.getInstance();
         start.setTime(startDate);
         end.setTime(endDate);
-        String desc = String.format("%s - %s\n%s", HOURS.format(startDate), HOURS.format(endDate), calendarEvent.name);
+        String desc = String.format("%s\n%s", calendarEvent.getTime(), calendarEvent.name);
         KujonWeekViewEvent event = new KujonWeekViewEvent(startDate.getTime(), desc, start, end, calendarEvent);
         return event;
     }
 
-    static Date getDate(String date) {
+    public static Date getDate(String date) {
         try {
             return SIMPLE_DATE_FORMAT.parse(date);
         } catch (ParseException e) {

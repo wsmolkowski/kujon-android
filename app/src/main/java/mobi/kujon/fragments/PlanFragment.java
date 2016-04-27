@@ -66,11 +66,11 @@ public class PlanFragment extends Fragment implements MonthLoader.MonthChangeLis
             KujonWeekViewEvent viewEvent = (KujonWeekViewEvent) event;
             AlertDialog.Builder dlgAlert = new AlertDialog.Builder(getActivity());
             CalendarEvent calendarEvent = viewEvent.getCalendarEvent();
-            dlgAlert.setMessage(String.format("Sala: %s\nBudynek: %s\nGrupa: %s\nTyp: %s",
-                    calendarEvent.roomNumber, calendarEvent.buildingName, calendarEvent.groupNumber, calendarEvent.type));
+            dlgAlert.setMessage(String.format("%s\nSala: %s\nBudynek: %s\nGrupa: %s\nTyp: %s",
+                    calendarEvent.getTime(), calendarEvent.roomNumber, calendarEvent.buildingName, calendarEvent.groupNumber, calendarEvent.type));
             dlgAlert.setTitle(calendarEvent.name);
-            dlgAlert.setNeutralButton("OK", null);
-            dlgAlert.setPositiveButton("Zobacz przedmiot", (dialog, which) -> {
+            dlgAlert.setPositiveButton("OK", null);
+            dlgAlert.setNeutralButton("Zobacz przedmiot", (dialog, which) -> {
                 CourseDetailsActivity.showCourseDetails(getActivity(), calendarEvent.courseId, term);
             });
             dlgAlert.setCancelable(true);
