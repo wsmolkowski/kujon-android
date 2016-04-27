@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import com.github.underscore.$;
 
+import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -66,12 +68,12 @@ public class LecturerDetailsActivity extends BaseActivity {
                     String email = String.format("<a href=\"%s\">Sprawdź w USOS</a>", lecturer.emailUrl);
                     lecturerEmail.setText(Html.fromHtml(email));
                     lecturerEmail.setMovementMethod(LinkMovementMethod.getInstance());
-                    for (CourseEditionsConducted course : lecturer.courseEditionsConducted) {
-                        TextView row = (TextView) layoutInflater.inflate(android.R.layout.simple_list_item_1, null);
-                        row.setText(course.courseName);
-                        row.setOnClickListener(v -> CourseDetailsActivity.showCourseDetails(LecturerDetailsActivity.this, course.courseId, course.termId));
-                        lecturerCourses.addView(row);
-                    }
+
+                    List<String> data = $.collect(lecturer.courseEditionsConducted, it -> it.courseName);
+                    CommonUtils.showList(layoutInflater, lecturerCourses, data, position -> {
+                        CourseEditionsConducted course = lecturer.courseEditionsConducted.get(position);
+                        CourseDetailsActivity.showCourseDetails(LecturerDetailsActivity.this, course.courseId, course.termId);
+                    });
 
                     picasso.load(lecturer.hasPhoto)
                             .transform(new CircleTransform())
