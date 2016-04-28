@@ -45,6 +45,9 @@ public class KujonApplication extends Application implements OneSignal.Notificat
 
         DEVICE_ID = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
         MDC.put("deviceId", DEVICE_ID);
+        MDC.put("applicationId", BuildConfig.APPLICATION_ID);
+        MDC.put("versionCode", "" + BuildConfig.VERSION_CODE);
+        MDC.put("versionName", BuildConfig.VERSION_NAME);
         log.info("Application started");
         Fabric.with(this, new Crashlytics());
 //         Fabric.with(this, new Crashlytics.Builder().core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build()).build());
@@ -117,6 +120,9 @@ public class KujonApplication extends Application implements OneSignal.Notificat
 
     public void setLoginStatus(GoogleSignInResult loginStatus) {
         this.loginStatus = loginStatus;
+        if (loginStatus != null && loginStatus.getSignInAccount() != null) {
+            OneSignal.sendTag("user_email", loginStatus.getSignInAccount().getEmail());
+        }
     }
 
     @Override public void notificationOpened(String message, JSONObject additionalData, boolean isActive) {

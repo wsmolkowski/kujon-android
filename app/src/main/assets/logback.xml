@@ -10,7 +10,7 @@
 
     <appender name="syslog-tls" class="com.papertrailapp.logback.Syslog4jAppender">
         <layout class="ch.qos.logback.classic.PatternLayout">
-            <pattern>%d{MMM dd HH:mm:ss} Kujon. Device ID: %X{deviceId} %-5level %logger{35} %m%n</pattern>
+            <pattern>%d{MMM dd HH:mm:ss} %-5level Kujon. Device ID: %X{deviceId} %X{applicationId} %X{versionName} %X{versionCode} %logger{35} %m%n</pattern>
         </layout>
 
         <syslogConfig class="org.productivity.java.syslog4j.impl.net.tcp.ssl.SSLTCPNetSyslogConfig">
@@ -23,12 +23,12 @@
     </appender>
 
     <appender name="async" class="ch.qos.logback.classic.AsyncAppender">
-        <appender-ref ref="syslog-tls" />
+        <appender-ref ref="syslog-tls"/>
     </appender>
 
     <root level="DEBUG">
-        <appender-ref ref="logcat" />
-        <appender-ref ref="async" />
+        <appender-ref ref="logcat"/>
+        <appender-ref ref="async"/>
     </root>
 
 </configuration>
