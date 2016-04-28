@@ -93,7 +93,7 @@ public class UserProfileActivity extends BaseActivity {
                     return true;
                 }));
         drawer.addItem(new PrimaryDrawerItem()
-                .withName("Skasuj")
+                .withName("Skasuj konto")
                 .withSelectable(false)
                 .withIcon(R.drawable.remove_account)
                 .withOnDrawerItemClickListener((view, position, drawerItem) -> {
