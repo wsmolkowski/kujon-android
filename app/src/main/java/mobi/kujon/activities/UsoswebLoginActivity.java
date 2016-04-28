@@ -15,6 +15,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.gson.Gson;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 
 import butterknife.Bind;
@@ -31,6 +34,7 @@ import okhttp3.Response;
 public class UsoswebLoginActivity extends BaseActivity {
 
     public static final String USOS_ID = "USOS_ID";
+    public static final Logger log = LoggerFactory.getLogger(UsoswebLoginActivity.class);
 
     @Bind(R.id.webView) WebView webView;
     @Bind(R.id.progressBar) ProgressBar progressBar;
@@ -52,7 +56,7 @@ public class UsoswebLoginActivity extends BaseActivity {
             }
 
             @Override public void onPageFinished(WebView view, String url) {
-                System.out.println("### Finished loading: " + url);
+                log.debug("onPageFinished: " + url);
                 progressBar.setVisibility(View.GONE);
                 super.onPageFinished(view, url);
             }
@@ -74,14 +78,15 @@ public class UsoswebLoginActivity extends BaseActivity {
 
                         @Override public void onResponse(Call call, Response response) throws IOException {
                             String responseString = response.body().string();
-                            System.out.println("#### " + responseString);
+                            log.debug("Got response from server: " + responseString);
                             KujonResponse kujonResponse = gson.fromJson(responseString, KujonResponse.class);
                             if (kujonResponse.isSuccessful()) {
                                 runOnUiThread(() -> {
                                     Toast.makeText(UsoswebLoginActivity.this, "Successful login", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(UsoswebLoginActivity.this, UserProfileActivity.class));
+                                    startActivity(new Intent(UsoswebLoginActivity.this, CongratulationsActivity.class));
                                 });
                             } else {
+                                log.error("Login error");
                                 Toast.makeText(UsoswebLoginActivity.this, "Login error", Toast.LENGTH_SHORT).show();
                             }
                             finish();

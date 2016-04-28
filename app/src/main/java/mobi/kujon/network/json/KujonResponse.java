@@ -8,4 +8,12 @@ public class KujonResponse<T> {
     public boolean isSuccessful() {
         return "success".equals(status);
     }
+
+    @Override public String toString() {
+        return "KujonResponse{" +
+                "status='" + status + '\'' +
+                ", message='" + message + '\'' +
+                ", data=" + data +
+                '}';
+    }
 }

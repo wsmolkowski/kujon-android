@@ -49,6 +49,11 @@
             android:name=".activities.ImageActivity"
             android:screenOrientation="portrait"/>
 
+        <activity
+            android:name=".activities.CongratulationsActivity"
+            android:screenOrientation="portrait"/>
+
+
 
     </application>
 
