@@ -11,7 +11,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.underscore.$;
+import com.github.underscore.Optional;
 import com.squareup.picasso.Picasso;
+
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -21,11 +24,14 @@ import mobi.kujon.network.KujonBackendApi;
 import mobi.kujon.network.KujonBackendService;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.network.json.User;
+import mobi.kujon.network.json.Usos;
 import mobi.kujon.ui.CircleTransform;
 import mobi.kujon.utils.ErrorHandlerUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static android.text.TextUtils.isEmpty;
 
 public class UserInfoFragment extends Fragment {
 
@@ -37,6 +43,7 @@ public class UserInfoFragment extends Fragment {
     @Bind(R.id.firstLastName) TextView firstLastName;
     @Bind(R.id.index) TextView index;
     @Bind(R.id.picture) ImageView picture;
+    @Bind(R.id.usosLogo) ImageView usosLogo;
 
     private KujonBackendApi kujonBackendApi;
 
@@ -73,6 +80,7 @@ public class UserInfoFragment extends Fragment {
                             .centerInside()
                             .placeholder(R.drawable.user_placeholder)
                             .into(picture);
+                    showUsosLogo(user.usos_id, usosLogo);
                     picture.setOnClickListener(v -> ImageActivity.show(getActivity(), user.picture, name));
                     studentStatus.setText(user.student_status);
                     studentAccountNumber.setText(user.student_number);
@@ -84,5 +92,29 @@ public class UserInfoFragment extends Fragment {
                 ErrorHandlerUtil.handleError(t);
             }
         });
+    }
+
+    private void showUsosLogo(String usosId, ImageView imageView) {
+        if (!isEmpty(usosId)) {
+            kujonBackendApi.usoses().enqueue(new Callback<KujonResponse<List<Usos>>>() {
+                @Override public void onResponse(Call<KujonResponse<List<Usos>>> call, Response<KujonResponse<List<Usos>>> response) {
+                    if (ErrorHandlerUtil.handleResponse(response)) {
+                        List<Usos> usoses = response.body().data;
+                        Optional<Usos> usosOpt = $.find(usoses, it -> usosId.equals(it.usosId));
+                        if (usosOpt.isPresent()) {
+                            Usos usos = usosOpt.get();
+                            Picasso.with(getActivity()).load(usos.logo)
+                                    .fit()
+                                    .centerInside()
+                                    .into(imageView);
+                        }
+                    }
+                }
+
+                @Override public void onFailure(Call<KujonResponse<List<Usos>>> call, Throwable t) {
+                    ErrorHandlerUtil.handleError(t);
+                }
+            });
+        }
     }
 }
