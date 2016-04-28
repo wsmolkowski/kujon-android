@@ -54,3 +54,16 @@
 -dontwarn okio.**
 
 -keep class mobi.kujon.network.json.** { *; }
+
+-keep class ch.qos.** { *; }
+-keep class org.slf4j.** { *; }
+-keep class org.apache.** { *; }
+-keep class com.sun.jna.** { *; }
+-keep class com.papertrailapp.logback.** { *; }
+-keep class org.productivity.java.syslog4j.impl.** { *; }
+-dontwarn org.slf4j.**
+-keepattributes *Annotation*
+-dontwarn ch.qos.logback.core.net.*
+-dontwarn org.apache.**
+-dontwarn com.sun.jna.**
+-dontwarn org.productivity.java.syslog4j.impl.**
