@@ -40,8 +40,10 @@ public class GradesFragment extends ListFragment {
                 emptyInfo.setVisibility(haveData ? View.GONE : View.VISIBLE);
             }
         });
+        activity.showProgress(true);
         backendApi.grades().enqueue(new Callback<KujonResponse<List<Grade>>>() {
             @Override public void onResponse(Call<KujonResponse<List<Grade>>> call, Response<KujonResponse<List<Grade>>> response) {
+                activity.showProgress(false);
                 if (ErrorHandlerUtil.handleResponse(response)) {
                     List<Grade> data = response.body().data;
                     adapter.setData(data);
@@ -49,6 +51,7 @@ public class GradesFragment extends ListFragment {
             }
 
             @Override public void onFailure(Call<KujonResponse<List<Grade>>> call, Throwable t) {
+                activity.showProgress(false);
                 ErrorHandlerUtil.handleError(t);
             }
         });

@@ -28,6 +28,7 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mobi.kujon.R;
+import mobi.kujon.activities.BaseActivity;
 import mobi.kujon.activities.CourseDetailsActivity;
 import mobi.kujon.network.KujonBackendApi;
 import mobi.kujon.network.KujonBackendService;
@@ -52,6 +53,7 @@ public class PlanFragment extends Fragment implements MonthLoader.MonthChangeLis
     private List<String> downloaded = new ArrayList<>();
     private KujonBackendApi backendApi;
     private AlertDialog alertDialog;
+    private BaseActivity activity;
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_plan, container, false);
@@ -91,6 +93,7 @@ public class PlanFragment extends Fragment implements MonthLoader.MonthChangeLis
     @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         backendApi = KujonBackendService.getInstance().getKujonBackendApi();
+        activity = ((BaseActivity) getActivity());
     }
 
     @Override public List<? extends WeekViewEvent> onMonthChange(int year, int month) {
@@ -130,8 +133,10 @@ public class PlanFragment extends Fragment implements MonthLoader.MonthChangeLis
 
             downloaded.add(weekKey);
 
+            activity.showProgress(true);
             backendApi.plan(restSuffix).enqueue(new Callback<KujonResponse<List<CalendarEvent>>>() {
                 @Override public void onResponse(Call<KujonResponse<List<CalendarEvent>>> call, Response<KujonResponse<List<CalendarEvent>>> response) {
+                    activity.showProgress(false);
                     if (ErrorHandlerUtil.handleResponse(response)) {
                         List<CalendarEvent> data = response.body().data;
                         List<WeekViewEvent> events = $.map(data, EventConverter::from);
@@ -141,6 +146,7 @@ public class PlanFragment extends Fragment implements MonthLoader.MonthChangeLis
                 }
 
                 @Override public void onFailure(Call<KujonResponse<List<CalendarEvent>>> call, Throwable t) {
+                    activity.showProgress(false);
                     ErrorHandlerUtil.handleError(t);
                 }
             });

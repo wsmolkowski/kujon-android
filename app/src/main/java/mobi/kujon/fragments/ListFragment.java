@@ -13,6 +13,7 @@ import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mobi.kujon.R;
+import mobi.kujon.activities.BaseActivity;
 import mobi.kujon.network.KujonBackendApi;
 import mobi.kujon.network.KujonBackendService;
 
@@ -21,6 +22,7 @@ public class ListFragment extends Fragment {
     protected @Bind(R.id.recyclerView) RecyclerView recyclerView;
     protected KujonBackendApi backendApi;
     @Bind(R.id.empty_info) TextView emptyInfo;
+    protected BaseActivity activity;
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_list, container, false);
@@ -30,6 +32,7 @@ public class ListFragment extends Fragment {
 
     @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        activity = (BaseActivity) getActivity();
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         backendApi = KujonBackendService.getInstance().getKujonBackendApi();
     }

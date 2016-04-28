@@ -64,8 +64,10 @@ public class CourseDetailsActivity extends BaseActivity {
         String courseId = getIntent().getStringExtra(COURSE_ID);
         String termId = getIntent().getStringExtra(TERM_ID);
 
+        showProgress(true);
         kujonBackendApi.courseDetails(courseId, termId).enqueue(new Callback<KujonResponse<CourseDetails>>() {
             @Override public void onResponse(Call<KujonResponse<CourseDetails>> call, Response<KujonResponse<CourseDetails>> response) {
+                showProgress(false);
                 if (ErrorHandlerUtil.handleResponse(response)) {
                     CourseDetails data = response.body().data;
 
@@ -106,6 +108,7 @@ public class CourseDetailsActivity extends BaseActivity {
             }
 
             @Override public void onFailure(Call<KujonResponse<CourseDetails>> call, Throwable t) {
+                showProgress(false);
                 ErrorHandlerUtil.handleError(t);
             }
         });

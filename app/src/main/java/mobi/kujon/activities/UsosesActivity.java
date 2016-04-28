@@ -49,14 +49,17 @@ public class UsosesActivity extends BaseActivity {
     }
 
     private void requestUsoses() {
+        showProgress(true);
         kujonBackendApi.usoses().enqueue(new Callback<KujonResponse<List<Usos>>>() {
             @Override public void onResponse(Call<KujonResponse<List<Usos>>> call, Response<KujonResponse<List<Usos>>> response) {
+                showProgress(false);
                 if (ErrorHandlerUtil.handleResponse(response)) {
                     adapter.setItems(response.body().data);
                 }
             }
 
             @Override public void onFailure(Call<KujonResponse<List<Usos>>> call, Throwable t) {
+                showProgress(false);
                 ErrorHandlerUtil.handleError(t);
             }
         });

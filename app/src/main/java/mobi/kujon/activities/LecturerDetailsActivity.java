@@ -55,8 +55,10 @@ public class LecturerDetailsActivity extends BaseActivity {
 
         String lecturerId = getIntent().getStringExtra(LECTURER_ID);
 
+        showProgress(true);
         kujonBackendApi.lecturer(lecturerId).enqueue(new Callback<KujonResponse<LecturerLong>>() {
             @Override public void onResponse(Call<KujonResponse<LecturerLong>> call, Response<KujonResponse<LecturerLong>> response) {
+                showProgress(false);
                 if (ErrorHandlerUtil.handleResponse(response)) {
                     LecturerLong lecturer = response.body().data;
                     String title = TextUtils.isEmpty(lecturer.titles.before) ? "" : lecturer.titles.before;
@@ -94,6 +96,7 @@ public class LecturerDetailsActivity extends BaseActivity {
             }
 
             @Override public void onFailure(Call<KujonResponse<LecturerLong>> call, Throwable t) {
+                showProgress(false);
                 ErrorHandlerUtil.handleError(t);
             }
         });

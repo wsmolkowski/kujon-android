@@ -3,7 +3,6 @@ package mobi.kujon.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +18,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mobi.kujon.R;
+import mobi.kujon.activities.BaseActivity;
 import mobi.kujon.activities.ImageActivity;
 import mobi.kujon.network.KujonBackendApi;
 import mobi.kujon.network.KujonBackendService;
@@ -46,6 +46,7 @@ public class UserInfoFragment extends Fragment {
     @Bind(R.id.usosLogo) ImageView usosLogo;
 
     private KujonBackendApi kujonBackendApi;
+    private BaseActivity activity;
 
     public static UserInfoFragment getFragment(String userId) {
         Bundle bundle = new Bundle();
@@ -62,12 +63,19 @@ public class UserInfoFragment extends Fragment {
         return rootView;
     }
 
+    @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        activity = (BaseActivity) getActivity();
+    }
+
     @Override public void onStart() {
         super.onStart();
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.app_name);
+        activity.getSupportActionBar().setTitle(R.string.app_name);
+        activity.showProgress(true);
         Call<KujonResponse<User>> users = getArguments() != null && getArguments().getString(USER_ID) != null ? kujonBackendApi.users(getArguments().getString(USER_ID)) : kujonBackendApi.users();
         users.enqueue(new Callback<KujonResponse<User>>() {
             @Override public void onResponse(Call<KujonResponse<User>> call, Response<KujonResponse<User>> response) {
+                activity.showProgress(false);
                 if (ErrorHandlerUtil.handleResponse(response)) {
                     User user = response.body().data;
                     usosName.setText(user.usos_name);
@@ -89,6 +97,7 @@ public class UserInfoFragment extends Fragment {
             }
 
             @Override public void onFailure(Call<KujonResponse<User>> call, Throwable t) {
+                activity.showProgress(true);
                 ErrorHandlerUtil.handleError(t);
             }
         });

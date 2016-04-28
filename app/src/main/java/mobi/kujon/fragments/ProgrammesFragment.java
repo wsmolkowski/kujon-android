@@ -2,7 +2,6 @@ package mobi.kujon.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,8 +29,10 @@ public class ProgrammesFragment extends ListFragment {
         super.onActivityCreated(savedInstanceState);
         adapter = new Adapter();
         recyclerView.setAdapter(adapter);
+        activity.showProgress(true);
         backendApi.programmes().enqueue(new Callback<KujonResponse<List<Programme>>>() {
             @Override public void onResponse(Call<KujonResponse<List<Programme>>> call, Response<KujonResponse<List<Programme>>> response) {
+                activity.showProgress(false);
                 if (ErrorHandlerUtil.handleResponse(response)) {
                     List<Programme> data = response.body().data;
                     adapter.setData(data);
@@ -39,6 +40,7 @@ public class ProgrammesFragment extends ListFragment {
             }
 
             @Override public void onFailure(Call<KujonResponse<List<Programme>>> call, Throwable t) {
+                activity.showProgress(false);
                 ErrorHandlerUtil.handleError(t);
             }
         });
@@ -46,7 +48,7 @@ public class ProgrammesFragment extends ListFragment {
 
     @Override public void onStart() {
         super.onStart();
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Kierunki");
+        activity.getSupportActionBar().setTitle("Kierunki");
     }
 
     protected class Adapter extends RecyclerView.Adapter<ViewHolder> {

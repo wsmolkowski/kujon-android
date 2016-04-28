@@ -10,9 +10,13 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
@@ -48,6 +52,8 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
     protected KujonBackendApi kujonBackendApi;
     protected Picasso picasso;
     private AlertDialog alertDialog;
+    private ProgressBar progressBar;
+    private FrameLayout content;
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +79,21 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle("");
+        }
+
+        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        layoutParams.gravity = Gravity.CENTER;
+        progressBar = new ProgressBar(this);
+        progressBar.setLayoutParams(layoutParams);
+        content = (FrameLayout) findViewById(android.R.id.content);
+    }
+
+    public void showProgress(boolean show) {
+        if (show) {
+            content.removeView(progressBar);
+            content.addView(progressBar);
+        } else {
+            content.removeView(progressBar);
         }
     }
 
