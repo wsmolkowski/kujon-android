@@ -6,6 +6,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.widget.ImageView;
 
 import com.crashlytics.android.Crashlytics;
@@ -18,6 +19,9 @@ import com.onesignal.OneSignal;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +31,8 @@ import mobi.kujon.network.KujonBackendService;
 
 public class KujonApplication extends Application implements OneSignal.NotificationOpenedHandler {
 
-    private static final String TAG = "KujonApplication";
+    private static final Logger log = LoggerFactory.getLogger(KujonApplication.class);
+    public static String DEVICE_ID;
 
     private List<Activity> stack = new ArrayList<>();
 
@@ -37,6 +42,10 @@ public class KujonApplication extends Application implements OneSignal.Notificat
     @Override public void onCreate() {
         super.onCreate();
         instance = this;
+
+        DEVICE_ID = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+        MDC.put("deviceId", DEVICE_ID);
+        log.info("Application started");
         Fabric.with(this, new Crashlytics());
 //         Fabric.with(this, new Crashlytics.Builder().core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build()).build());
 

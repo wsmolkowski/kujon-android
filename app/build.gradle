@@ -89,6 +89,16 @@ dependencies {
     compile('com.mikepenz:materialdrawer:5.2.0@aar') {
         transitive = true
     }
+    compile 'org.slf4j:slf4j-api:1.7.21'
+    compile 'com.github.tony19:logback-android-core:1.1.1-5'
+    compile('com.github.tony19:logback-android-classic:1.1.1-5') {
+        // workaround issue #73
+        exclude group: 'com.google.android', module: 'android'
+    }
+
+    compile ('com.papertrailapp:logback-syslog4j:1.0.0'){
+        exclude group: 'ch.qos.logback'
+    }
 }
 
 if (project.properties.keySet().containsAll(['storeFile', 'storePassword', 'keyAlias', 'keyPassword'])) {
