@@ -58,6 +58,16 @@
 
         <TextView
             style="@style/label"
+            android:text="Konsultacje"/>
+
+        <TextView
+            android:id="@+id/lecturer_office_hours"
+            style="@style/entry"
+            android:autoLink="web"
+            tools:text='Lorem ipsum'/>
+
+        <TextView
+            style="@style/label"
             android:text="Strona domowa"/>
 
         <TextView
@@ -81,6 +91,15 @@
 
         <TextView
             android:id="@+id/lecturer_employment_positions"
+            style="@style/entry"
+            tools:text='Lorem ipsum'/>
+
+        <TextView
+            style="@style/label"
+            android:text="Zainteresowania"/>
+
+        <TextView
+            android:id="@+id/lecturer_interests"
             style="@style/entry"
             tools:text='Lorem ipsum'/>
 

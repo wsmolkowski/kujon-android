@@ -43,6 +43,8 @@ public class LecturerDetailsActivity extends BaseActivity {
     @Bind(R.id.picture) ImageView picture;
     @Bind(R.id.lecturer_homepage) TextView lecturerHomepage;
     @Bind(R.id.lecturer_employment_positions) TextView lecturerEmploymentPositions;
+    @Bind(R.id.lecturer_office_hours) TextView lecturerOfficeHours;
+    @Bind(R.id.lecturer_interests) TextView lecturerInterests;
     private LayoutInflater layoutInflater;
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -68,6 +70,8 @@ public class LecturerDetailsActivity extends BaseActivity {
                     String email = String.format("<a href=\"%s\">Sprawdź w USOS</a>", lecturer.emailUrl);
                     lecturerEmail.setText(Html.fromHtml(email));
                     lecturerEmail.setMovementMethod(LinkMovementMethod.getInstance());
+                    lecturerInterests.setText(lecturer.interests);
+                    lecturerOfficeHours.setText(lecturer.officeHours);
 
                     List<String> data = $.collect(lecturer.courseEditionsConducted, it -> it.courseName);
                     CommonUtils.showList(layoutInflater, lecturerCourses, data, position -> {
