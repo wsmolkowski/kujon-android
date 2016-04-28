@@ -57,6 +57,7 @@ public class UserInfoFragment extends Fragment {
 
     @Override public void onStart() {
         super.onStart();
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.app_name);
         Call<KujonResponse<User>> users = getArguments() != null && getArguments().getString(USER_ID) != null ? kujonBackendApi.users(getArguments().getString(USER_ID)) : kujonBackendApi.users();
         users.enqueue(new Callback<KujonResponse<User>>() {
             @Override public void onResponse(Call<KujonResponse<User>> call, Response<KujonResponse<User>> response) {
@@ -66,7 +67,6 @@ public class UserInfoFragment extends Fragment {
                     index.setText(user.student_number);
                     String name = user.first_name + " " + user.last_name;
                     firstLastName.setText(name);
-                    ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(name);
                     Picasso.with(getActivity()).load(user.picture)
                             .transform(new CircleTransform())
                             .fit()
