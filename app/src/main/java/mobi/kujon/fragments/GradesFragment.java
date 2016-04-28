@@ -3,6 +3,7 @@ package mobi.kujon.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -51,6 +52,11 @@ public class GradesFragment extends ListFragment {
                 ErrorHandlerUtil.handleError(t);
             }
         });
+    }
+
+    @Override public void onStart() {
+        super.onStart();
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Oceny");
     }
 
     protected class Adapter extends RecyclerView.Adapter<ViewHolder> {

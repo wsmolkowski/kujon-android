@@ -71,13 +71,13 @@ public class UserProfileActivity extends BaseActivity {
                 .withAccountHeader(headerResult)
                 .build();
 
-        for (int i = 0; i < TITLES.length; i++) {
+        for (int i = 0; i < FRAGMENTS.length; i++) {
             final int finalI = i;
             drawer.addItem(new PrimaryDrawerItem()
                     .withName(TITLES[i])
                     .withIcon(ICONS[i])
                     .withOnDrawerItemClickListener((view, position, drawerItem) -> {
-                        showFragment(drawer, FRAGMENTS[finalI], TITLES[finalI]);
+                        showFragment(drawer, FRAGMENTS[finalI], true);
                         return true;
                     }));
         }
@@ -130,14 +130,16 @@ public class UserProfileActivity extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         drawer.getActionBarDrawerToggle().setDrawerIndicatorEnabled(true);
 
-        showFragment(drawer, FRAGMENTS[0], TITLES[0]);
+        showFragment(drawer, FRAGMENTS[0], false);
     }
 
-    private void showFragment(Drawer drawer, Fragment fragment, String title) {
+    private void showFragment(Drawer drawer, Fragment fragment, boolean addToBackStack) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.placeholder, fragment);
+        if (addToBackStack) {
+            fragmentTransaction.addToBackStack(null);
+        }
         fragmentTransaction.commit();
         drawer.closeDrawer();
-        toolbar.setTitle(title);
     }
 }

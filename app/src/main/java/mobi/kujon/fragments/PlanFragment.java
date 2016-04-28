@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -149,6 +150,7 @@ public class PlanFragment extends Fragment implements MonthLoader.MonthChangeLis
     @Override public void onStart() {
         super.onStart();
         gotoNow();
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Plan");
     }
 
     private void gotoNow() {
