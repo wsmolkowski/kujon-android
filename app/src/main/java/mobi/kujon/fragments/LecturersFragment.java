@@ -49,7 +49,7 @@ public class LecturersFragment extends ListFragment {
 
     @Override public void onStart() {
         super.onStart();
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Nauczyciele");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Wykładowcy");
     }
 
     protected class Adapter extends RecyclerView.Adapter<ViewHolder> {
