@@ -1,0 +1,6 @@
+* logging
+* usunięte kierunki
+* Fix #16 zakładka kierunki
+* Fix #36 jednostki - dodanie wyświetlania
+* literówki
+* error handling
