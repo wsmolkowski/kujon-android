@@ -3,10 +3,12 @@ package mobi.kujon.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.underscore.$;
@@ -23,9 +25,12 @@ import mobi.kujon.activities.ImageActivity;
 import mobi.kujon.network.KujonBackendApi;
 import mobi.kujon.network.KujonBackendService;
 import mobi.kujon.network.json.KujonResponse;
+import mobi.kujon.network.json.Programme;
+import mobi.kujon.network.json.StudentProgramme;
 import mobi.kujon.network.json.User;
 import mobi.kujon.network.json.Usos;
 import mobi.kujon.ui.CircleTransform;
+import mobi.kujon.utils.CommonUtils;
 import mobi.kujon.utils.ErrorHandlerUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -38,7 +43,7 @@ public class UserInfoFragment extends Fragment {
     public static final String USER_ID = "USER_ID";
     @Bind(R.id.student_status) TextView studentStatus;
     @Bind(R.id.student_account_number) TextView studentAccountNumber;
-    @Bind(R.id.student_programmes) TextView studentProgrammes;
+    @Bind(R.id.student_programmes) LinearLayout studentProgrammes;
     @Bind(R.id.usosName) TextView usosName;
     @Bind(R.id.firstLastName) TextView firstLastName;
     @Bind(R.id.index) TextView index;
@@ -47,6 +52,8 @@ public class UserInfoFragment extends Fragment {
 
     private KujonBackendApi kujonBackendApi;
     private BaseActivity activity;
+    private AlertDialog alertDialog;
+    private Programme programme;
 
     public static UserInfoFragment getFragment(String userId) {
         Bundle bundle = new Bundle();
@@ -92,7 +99,16 @@ public class UserInfoFragment extends Fragment {
                     picture.setOnClickListener(v -> ImageActivity.show(getActivity(), user.picture, name));
                     studentStatus.setText(user.student_status);
                     studentAccountNumber.setText(user.student_number);
-                    studentProgrammes.setText($.join($.collect(user.student_programmes, it -> String.format("%s - %s (%s)", it.id, it.programme.description, it.programme.id)), "\n\n"));
+                    CommonUtils.showList(activity.getLayoutInflater(), studentProgrammes, $.collect(user.student_programmes, it -> it.programme.description), position -> {
+                        StudentProgramme studentProgramme = user.student_programmes.get(position);
+                        programme = studentProgramme.programme;
+                        AlertDialog.Builder dlgAlert = new AlertDialog.Builder(getActivity());
+                        dlgAlert.setMessage(String.format("%s\n\n%s", programme.description, programme.id));
+                        dlgAlert.setTitle(studentProgramme.id);
+                        dlgAlert.setCancelable(true);
+                        alertDialog = dlgAlert.create();
+                        alertDialog.show();
+                    });
                 }
             }
 
