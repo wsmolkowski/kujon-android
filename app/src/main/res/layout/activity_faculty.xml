@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    android:id="@+id/scrollView"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  xmlns:tools="http://schemas.android.com/tools"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:orientation="vertical"
+                  android:padding="16dp">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/faculty_name"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textSize="20sp"
+                android:layout_gravity="center_vertical"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:layout_height="wrap_content"
+                tools:text="Katedra Hungarystyki"/>
+
+            <ImageView
+                android:id="@+id/logo"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_margin="8dp"
+                tools:src="@drawable/user_placeholder"/>
+
+        </LinearLayout>
+
+        <TextView
+            style="@style/label"
+            android:text="Adres"
+            />
+
+        <TextView
+            android:id="@+id/postal_address"
+            tools:text='Dobra 55, 00-312 Warszawa (\u015ar\u00f3dmie\u015bcie)"'
+            style="@style/entry"
+            android:drawableRight="@drawable/place_black"/>
+
+        <TextView
+            android:text="Telefon"
+            style="@style/label"/>
+
+        <TextView
+            android:id="@+id/phone"
+            tools:text='123456789'
+            android:autoLink="phone"
+            style="@style/entry"/>
+
+        <TextView
+            android:text="Strona"
+            style="@style/label"/>
+
+        <TextView
+            android:id="@+id/homepage"
+            android:autoLink="web"
+            tools:text='http://www.hungarystyka.uw.edu.pl/'
+            style="@style/entry"/>
+
+    </LinearLayout>
+
+</ScrollView>

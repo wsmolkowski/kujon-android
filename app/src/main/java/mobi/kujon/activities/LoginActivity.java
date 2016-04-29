@@ -77,7 +77,7 @@ public class LoginActivity extends BaseActivity {
                     if (ErrorHandlerUtil.handleResponse(response)) {
                         Config data = response.body().data;
                         if (data.usosPaired) {
-                            startActivity(new Intent(LoginActivity.this, UserProfileActivity.class));
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         } else {
                             startActivity(new Intent(LoginActivity.this, UsosesActivity.class));
                         }

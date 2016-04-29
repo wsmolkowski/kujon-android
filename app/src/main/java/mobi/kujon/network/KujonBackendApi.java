@@ -6,6 +6,7 @@ import mobi.kujon.network.json.CalendarEvent;
 import mobi.kujon.network.json.Config;
 import mobi.kujon.network.json.Course;
 import mobi.kujon.network.json.CourseDetails;
+import mobi.kujon.network.json.Faculty2;
 import mobi.kujon.network.json.Grade;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.network.json.Lecturer;
@@ -36,6 +37,10 @@ public interface KujonBackendApi {
     @GET("terms") Call<KujonResponse<List<Term2>>> terms();
 
     @GET("programmes") Call<KujonResponse<List<Programme>>> programmes();
+
+    @GET("faculties") Call<KujonResponse<List<Faculty2>>> faculties();
+
+    @GET("faculties/{facultyId}") Call<KujonResponse<Faculty2>> faculty(@Path("facultyId") String facultyId);
 
     @GET("lecturers") Call<KujonResponse<List<Lecturer>>> lecturers();
 

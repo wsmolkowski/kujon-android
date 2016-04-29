@@ -8,23 +8,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.github.underscore.$;
-
 import java.util.LinkedList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mobi.kujon.R;
-import mobi.kujon.activities.LecturerDetailsActivity;
+import mobi.kujon.activities.FacultyDetailsActivity;
+import mobi.kujon.network.json.Faculty2;
 import mobi.kujon.network.json.KujonResponse;
-import mobi.kujon.network.json.Lecturer;
 import mobi.kujon.utils.ErrorHandlerUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LecturersFragment extends ListFragment {
+public class FacultiesFragment extends ListFragment {
 
     private Adapter adapter;
 
@@ -33,16 +31,16 @@ public class LecturersFragment extends ListFragment {
         adapter = new Adapter();
         recyclerView.setAdapter(adapter);
         activity.showProgress(true);
-        backendApi.lecturers().enqueue(new Callback<KujonResponse<List<Lecturer>>>() {
-            @Override public void onResponse(Call<KujonResponse<List<Lecturer>>> call, Response<KujonResponse<List<Lecturer>>> response) {
+        backendApi.faculties().enqueue(new Callback<KujonResponse<List<Faculty2>>>() {
+            @Override public void onResponse(Call<KujonResponse<List<Faculty2>>> call, Response<KujonResponse<List<Faculty2>>> response) {
                 activity.showProgress(false);
                 if (ErrorHandlerUtil.handleResponse(response)) {
-                    List<Lecturer> data = response.body().data;
+                    List<Faculty2> data = response.body().data;
                     adapter.setData(data);
                 }
             }
 
-            @Override public void onFailure(Call<KujonResponse<List<Lecturer>>> call, Throwable t) {
+            @Override public void onFailure(Call<KujonResponse<List<Faculty2>>> call, Throwable t) {
                 activity.showProgress(false);
                 ErrorHandlerUtil.handleError(t);
             }
@@ -51,12 +49,12 @@ public class LecturersFragment extends ListFragment {
 
     @Override public void onStart() {
         super.onStart();
-        activity.getSupportActionBar().setTitle("Wykładowcy");
+        activity.getSupportActionBar().setTitle("Jednostki");
     }
 
     protected class Adapter extends RecyclerView.Adapter<ViewHolder> {
 
-        List<Lecturer> data = new LinkedList<>();
+        List<Faculty2> data = new LinkedList<>();
 
         @Override public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_textview, parent, false);
@@ -64,9 +62,9 @@ public class LecturersFragment extends ListFragment {
         }
 
         @Override public void onBindViewHolder(ViewHolder holder, int position) {
-            Lecturer lecturer = data.get(position);
-            holder.lecturerName.setText(lecturer.firstName + " " + lecturer.lastName);
-            holder.lecturerId = lecturer.userId;
+            Faculty2 faculty = data.get(position);
+            holder.name.setText(faculty.name.pl);
+            holder.facultyId = faculty.facId;
             holder.itemView.setBackgroundResource(position % 2 == 1 ? R.color.grey : android.R.color.white);
         }
 
@@ -74,23 +72,21 @@ public class LecturersFragment extends ListFragment {
             return data.size();
         }
 
-        public void setData(List<Lecturer> data) {
-            this.data = $.sortBy(data, it -> it.lastName);
+        public void setData(List<Faculty2> data) {
+            this.data = data;
             notifyDataSetChanged();
         }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.name) TextView lecturerName;
-        String lecturerId;
+        @Bind(R.id.name) TextView name;
+        String facultyId;
 
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            itemView.setOnClickListener(v -> {
-                LecturerDetailsActivity.showLecturerDatails(getActivity(), lecturerId);
-            });
+            itemView.setOnClickListener(v -> FacultyDetailsActivity.showFacultyDetails(getActivity(), facultyId));
         }
     }
 
