@@ -42,21 +42,25 @@ public class ErrorHandlerUtil {
 
     public static <T> boolean handleResponse(Response<KujonResponse<T>> response) {
         if (!response.isSuccessful()) {
+            log.error(response.raw().toString());
             handleError("Network error " + response.message());
             return false;
         }
 
         if (response.body() == null) {
+            log.error(response.raw().toString());
             handleError("Network error");
             return false;
         }
 
         if (!response.body().isSuccessful()) {
+            log.error(response.raw().toString());
             handleError(response.body().message);
             return false;
         }
 
         if (response.body().data == null) {
+            log.error(response.raw().toString());
             handleError("Brak danych");
             return false;
         }
