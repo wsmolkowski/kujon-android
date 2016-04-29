@@ -1,7 +1,6 @@
 package mobi.kujon;
 
 import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -16,6 +15,8 @@ import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader;
 import com.mikepenz.materialdrawer.util.DrawerImageLoader;
 import com.mikepenz.materialdrawer.util.DrawerUIUtils;
 import com.onesignal.OneSignal;
+import com.percolate.foam.FoamApiKeys;
+import com.percolate.foam.FoamApplication;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
@@ -29,7 +30,10 @@ import java.util.List;
 import io.fabric.sdk.android.Fabric;
 import mobi.kujon.network.KujonBackendService;
 
-public class KujonApplication extends Application implements OneSignal.NotificationOpenedHandler {
+@FoamApiKeys(
+        papertrail = "logs3.papertrailapp.com:22247" // Server URL
+)
+public class KujonApplication extends FoamApplication implements OneSignal.NotificationOpenedHandler {
 
     private static final Logger log = LoggerFactory.getLogger(KujonApplication.class);
     public static String DEVICE_ID;
