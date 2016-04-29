@@ -67,3 +67,7 @@
 -dontwarn org.apache.**
 -dontwarn com.sun.jna.**
 -dontwarn org.productivity.java.syslog4j.impl.**
+
+-dontwarn retrofit.**
+-dontwarn com.flurry.sdk.**
+-keep class retrofit.** { *; }
