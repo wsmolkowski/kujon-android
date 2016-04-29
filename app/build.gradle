@@ -15,8 +15,8 @@ android {
         versionName "0.9.4"
 
         manifestPlaceholders = [manifestApplicationId: "${applicationId}",
-                                onesignal_app_id: "50e558f1-b575-4554-9517-d1ea7b143a03",
-                                onesignal_google_project_number: "774265221464"]
+                                onesignal_app_id: "f01a20f9-bbe7-4c89-a017-bf8930c61cf4",
+                                onesignal_google_project_number: "896765768628"]
     }
 
     signingConfigs {
