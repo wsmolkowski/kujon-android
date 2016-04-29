@@ -119,6 +119,14 @@ public class UserInfoFragment extends Fragment {
         });
     }
 
+    @Override public void onStop() {
+        super.onStop();
+        if (alertDialog != null && alertDialog.isShowing()) {
+            alertDialog.dismiss();
+            alertDialog = null;
+        }
+    }
+
     private void showUsosLogo(String usosId, ImageView imageView) {
         if (!isEmpty(usosId)) {
             kujonBackendApi.usoses().enqueue(new Callback<KujonResponse<List<Usos>>>() {
