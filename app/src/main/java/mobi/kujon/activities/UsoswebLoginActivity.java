@@ -44,6 +44,7 @@ public class UsoswebLoginActivity extends BaseActivity {
     Gson gson = new Gson();
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
+        log.info("UsoswebLoginActivity");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_usos_login);
         ButterKnife.bind(this);
@@ -51,6 +52,7 @@ public class UsoswebLoginActivity extends BaseActivity {
         String usosId = getIntent().getStringExtra(USOS_ID);
         webView.setWebViewClient(new WebViewClient() {
             @Override public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                log.info("onPageStarted: " + url);
                 progressBar.setVisibility(View.VISIBLE);
                 super.onPageStarted(view, url, favicon);
             }
@@ -62,8 +64,9 @@ public class UsoswebLoginActivity extends BaseActivity {
             }
 
             @Override public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                System.out.println("### Trying to load " + url);
+                log.info("shouldOverrideUrlLoading: " + url);
                 if (url.contains("https://api.kujon.mobi/authentication/verifymobi")) {
+                    log.info("Got URL to kujon. Making request: " + url);
 
                     Request request = new Request.Builder()
                             .url(url)
@@ -71,8 +74,9 @@ public class UsoswebLoginActivity extends BaseActivity {
 
                     client.newCall(request).enqueue(new Callback() {
                         @Override public void onFailure(Call call, IOException e) {
-                            Toast.makeText(UsoswebLoginActivity.this, "Network rrror", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(UsoswebLoginActivity.this, "Network error", Toast.LENGTH_SHORT).show();
                             Crashlytics.logException(e);
+                            log.error("Network error:" + e.getMessage());
                             finish();
                         }
 
@@ -101,7 +105,7 @@ public class UsoswebLoginActivity extends BaseActivity {
         GoogleSignInResult loginStatus = KujonApplication.getApplication().getLoginStatus();
         GoogleSignInAccount account = loginStatus.getSignInAccount();
         String url = String.format("https:/api.kujon.mobi/authentication/mobi?email=%s&token=%s&usos_id=%s", account.getEmail(), account.getIdToken(), usosId);
-        System.out.println("url = " + url);
+        log.info("Loading urs: " + url);
         webView.loadUrl(url);
     }
 }

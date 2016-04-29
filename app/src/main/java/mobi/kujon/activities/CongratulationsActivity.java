@@ -18,7 +18,7 @@ public class CongratulationsActivity extends BaseActivity {
 
     @OnClick(R.id.next)
     public void next() {
-        startActivity(new Intent(this, UserProfileActivity.class));
+        startActivity(new Intent(this, MainActivity.class));
         finish();
     }
 }

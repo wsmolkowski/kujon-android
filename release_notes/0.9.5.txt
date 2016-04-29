@@ -1,0 +1,10 @@
+* Fix #48 Jak się docjągają dane - wyświetlać spinner
+* Fix #41 rejestracja - dodatkowa formatka po udanej rejestracji
+* new colors
+* Fix #45 Nauczyciele -> zmienić na Wykładowcy i dodać strzałkę w prawo na Activity
+* Fix #47 wykładowcy - dodanie pola zainteresowania i godziny konsultacji
+* papertrail, logback, onesignal configuration
+* Fix #37 zakładka - użytkownik - dodanie logo uniwersytetu
+* Fix #43 główne activity - na belce napis Kujon
+* FIx #39 Wyjście z aplikacji
+* Fix #12 na starcie pojawia się przycisk zaloguj się - wyrzucić go i dodać wywołanie tej akcji na początku

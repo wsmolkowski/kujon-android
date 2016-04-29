@@ -58,7 +58,7 @@
             <TextView
                 style="@style/label"
                 android:layout_marginTop="0dp"
-                android:text="Aktuwny"
+                android:text="Aktywny"
                 />
 
             <TextView

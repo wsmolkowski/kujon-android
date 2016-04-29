@@ -67,8 +67,8 @@ public class PlanFragment extends Fragment implements MonthLoader.MonthChangeLis
         weekView.setShowNowLine(true);
         weekView.setOnEventClickListener((event, eventRect) -> {
             KujonWeekViewEvent viewEvent = (KujonWeekViewEvent) event;
-            AlertDialog.Builder dlgAlert = new AlertDialog.Builder(getActivity());
             CalendarEvent calendarEvent = viewEvent.getCalendarEvent();
+            AlertDialog.Builder dlgAlert = new AlertDialog.Builder(getActivity());
             dlgAlert.setMessage(String.format("%s\nSala: %s\nBudynek: %s\nGrupa: %s\nTyp: %s",
                     calendarEvent.getTime(), calendarEvent.roomNumber, calendarEvent.buildingName, calendarEvent.groupNumber, calendarEvent.type));
             dlgAlert.setTitle(calendarEvent.name);

@@ -11,8 +11,8 @@ android {
         applicationId "mobi.kujon"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 10
-        versionName "0.9.4"
+        versionCode 11
+        versionName "0.9.5"
 
         manifestPlaceholders = [manifestApplicationId: "${applicationId}",
                                 onesignal_app_id: "f01a20f9-bbe7-4c89-a017-bf8930c61cf4",
@@ -62,8 +62,15 @@ android {
     }
 }
 
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile(name:'foam-release', ext:'aar')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.3.0'
     compile 'com.android.support:design:23.3.0'
@@ -99,6 +106,8 @@ dependencies {
     compile ('com.papertrailapp:logback-syslog4j:1.0.0'){
         exclude group: 'ch.qos.logback'
     }
+//    compile 'com.percolate:foam:0.9.4'
+    compile 'com.squareup.retrofit:retrofit:1.9.0'
 }
 
 if (project.properties.keySet().containsAll(['storeFile', 'storePassword', 'keyAlias', 'keyPassword'])) {

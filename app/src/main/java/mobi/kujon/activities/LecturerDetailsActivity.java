@@ -35,7 +35,7 @@ public class LecturerDetailsActivity extends BaseActivity {
 
     public static final String LECTURER_ID = "LECTURER_ID";
 
-    @Bind(R.id.lecturer_name) TextView lecturerName;
+    @Bind(R.id.name) TextView lecturerName;
     @Bind(R.id.lecturer_status) TextView lecturerStatus;
     @Bind(R.id.lecturer_room) TextView lecturerRoom;
     @Bind(R.id.lecturer_email) TextView lecturerEmail;
