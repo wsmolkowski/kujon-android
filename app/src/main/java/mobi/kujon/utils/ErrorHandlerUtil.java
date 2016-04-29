@@ -5,6 +5,9 @@ import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,6 +16,8 @@ import mobi.kujon.network.json.KujonResponse;
 import retrofit2.Response;
 
 public class ErrorHandlerUtil {
+
+    private static final Logger log = LoggerFactory.getLogger(ErrorHandlerUtil.class);
 
     private static Map<String, String> errorTranslations = new HashMap<String, String>() {{
         put("only-if-cached", "Tryb offline. Nie wszystkie dane są dostępne");
@@ -25,10 +30,12 @@ public class ErrorHandlerUtil {
                 finalMessage = errorTranslations.get(key);
             }
         }
+        log.error(finalMessage);
         Toast.makeText(KujonApplication.getApplication(), finalMessage, Toast.LENGTH_LONG).show();
     }
 
     public static void handleError(Throwable throwable) {
+        log.error(throwable.getMessage());
         Toast.makeText(KujonApplication.getApplication(), "Error: " + throwable.getMessage(), Toast.LENGTH_LONG).show();
         Crashlytics.logException(throwable);
     }
