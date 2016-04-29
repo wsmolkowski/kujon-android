@@ -23,7 +23,6 @@ import mobi.kujon.network.json.Coordinator;
 import mobi.kujon.network.json.CourseDetails;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.network.json.Lecturer;
-import mobi.kujon.utils.CommonUtils;
 import mobi.kujon.utils.ErrorHandlerUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -52,6 +51,7 @@ public class CourseDetailsActivity extends BaseActivity {
     @Bind(R.id.scrollView) ScrollView scrollView;
 
     private LayoutInflater layoutInflater;
+    private CourseDetails courseDetails;
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,41 +69,41 @@ public class CourseDetailsActivity extends BaseActivity {
             @Override public void onResponse(Call<KujonResponse<CourseDetails>> call, Response<KujonResponse<CourseDetails>> response) {
                 showProgress(false);
                 if (ErrorHandlerUtil.handleResponse(response)) {
-                    CourseDetails data = response.body().data;
+                    courseDetails = response.body().data;
 
-                    getSupportActionBar().setTitle(data.name);
+                    getSupportActionBar().setTitle(courseDetails.name);
 
-                    courseFac.setText(data.facId.name + ", " + data.facId.postalAddress);
-                    courseLang.setText(data.langId);
-                    courseIsConducted.setText(data.isCurrentlyConducted);
-                    description.setText(Html.fromHtml(data.description.replace("\n", "<br>")));
-                    courseName.setText(String.format("%s, (%s)", data.name, data.courseId));
-                    bibliography.setText(data.bibliography.replace("\n", "\n\n"));
-                    assessmentCriteria.setText(data.assessmentCriteria.replace("\n", "\n\n"));
-                    if (data.term != null) {
-                        courseTermName.setText(data.term.name);
-                        courseTermDates.setText(String.format("%s - %s", data.term.startDate, data.term.endDate));
+                    courseFac.setText(courseDetails.facId.name);
+                    courseLang.setText(courseDetails.langId);
+                    courseIsConducted.setText(courseDetails.isCurrentlyConducted);
+                    description.setText(Html.fromHtml(courseDetails.description.replace("\n", "<br>")));
+                    courseName.setText(String.format("%s, (%s)", courseDetails.name, courseDetails.courseId));
+                    bibliography.setText(courseDetails.bibliography.replace("\n", "\n\n"));
+                    assessmentCriteria.setText(courseDetails.assessmentCriteria.replace("\n", "\n\n"));
+                    if (courseDetails.term != null) {
+                        courseTermName.setText(courseDetails.term.name);
+                        courseTermDates.setText(String.format("%s - %s", courseDetails.term.startDate, courseDetails.term.endDate));
                     }
 
-                    List<String> lecturers = $.collect(data.lecturers, it -> it.firstName + " " + it.lastName);
+                    List<String> lecturers = $.collect(courseDetails.lecturers, it -> it.firstName + " " + it.lastName);
                     showList(CourseDetailsActivity.this.layoutInflater, courseLecturers, lecturers, position -> {
-                        Lecturer lecturer = data.lecturers.get(position);
+                        Lecturer lecturer = courseDetails.lecturers.get(position);
                         LecturerDetailsActivity.showLecturerDatails(CourseDetailsActivity.this, lecturer.userId);
                     });
 
-                    List<String> coordinators = $.collect(data.coordinators, it -> it.firstName + " " + it.lastName);
+                    List<String> coordinators = $.collect(courseDetails.coordinators, it -> it.firstName + " " + it.lastName);
                     showList(CourseDetailsActivity.this.layoutInflater, courseCoordinators, coordinators, position -> {
-                        Coordinator coordinator = data.coordinators.get(position);
+                        Coordinator coordinator = courseDetails.coordinators.get(position);
                         LecturerDetailsActivity.showLecturerDatails(CourseDetailsActivity.this, coordinator.userId);
                     });
 
                     handler.post(() -> scrollView.scrollTo(0, 0));
 
-                    List<String> participants = $.collect(data.participants, participant -> participant.firstName + " " + participant.lastName);
+                    List<String> participants = $.collect(courseDetails.participants, participant -> participant.firstName + " " + participant.lastName);
                     showList(CourseDetailsActivity.this.layoutInflater, courseStudents, participants,
-                            position -> StudentDetailsActivity.showStudentDetails(CourseDetailsActivity.this, data.participants.get(position).userId));
+                            position -> StudentDetailsActivity.showStudentDetails(CourseDetailsActivity.this, courseDetails.participants.get(position).userId));
 
-                    courseClassType.setText($.join($.collect(data.groups, it -> it.classType + ", numer grupy: " + it.groupNumber), "\n"));
+                    courseClassType.setText($.join($.collect(courseDetails.groups, it -> it.classType + ", numer grupy: " + it.groupNumber), "\n"));
                 }
             }
 
@@ -123,6 +123,8 @@ public class CourseDetailsActivity extends BaseActivity {
 
     @OnClick(R.id.course_fac)
     public void navigate() {
-        CommonUtils.showOnMap(this, courseFac.getText().toString());
+        if (courseDetails != null && courseDetails.facId != null) {
+            FacultyDetailsActivity.showFacultyDetails(this, courseDetails.facId.facId);
+        }
     }
 }

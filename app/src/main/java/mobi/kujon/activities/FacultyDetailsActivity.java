@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,6 +15,7 @@ import com.github.underscore.$;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
 import mobi.kujon.network.json.Faculty2;
 import mobi.kujon.network.json.KujonResponse;
@@ -24,6 +24,8 @@ import mobi.kujon.utils.ErrorHandlerUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static android.text.TextUtils.isEmpty;
 
 public class FacultyDetailsActivity extends BaseActivity {
 
@@ -71,14 +73,18 @@ public class FacultyDetailsActivity extends BaseActivity {
     }
 
     public static void showFacultyDetails(Activity activity, String facultyId) {
-        Intent intent = new Intent(activity, FacultyDetailsActivity.class);
-        intent.putExtra(FACULTY_ID, facultyId);
-        activity.startActivity(intent);
+        if (!isEmpty(facultyId)) {
+            Intent intent = new Intent(activity, FacultyDetailsActivity.class);
+            intent.putExtra(FACULTY_ID, facultyId);
+            activity.startActivity(intent);
+        } else {
+            Toast.makeText(KujonApplication.getApplication(), "Brak danych", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @OnClick(R.id.postal_address)
     public void navigate() {
-        if (TextUtils.isEmpty(postalAddress.getText().toString())) {
+        if (isEmpty(postalAddress.getText().toString())) {
             Toast.makeText(FacultyDetailsActivity.this, "Brak adresu", Toast.LENGTH_SHORT).show();
         } else {
             CommonUtils.showOnMap(this, postalAddress.getText().toString());
