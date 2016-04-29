@@ -11,6 +11,9 @@ import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.SignInButton;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -25,6 +28,8 @@ import retrofit2.Response;
 
 
 public class LoginActivity extends BaseActivity {
+
+    private static final Logger log = LoggerFactory.getLogger(LoginActivity.class);
 
     private static final String TAG = "LoginActivity";
 
@@ -62,6 +67,7 @@ public class LoginActivity extends BaseActivity {
                 GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
                 handle(result);
             } else {
+                log.error(String.format("Login error requestCode=%s, resultCode=%s, data=%s", requestCode, resultCode, data));
                 Toast.makeText(LoginActivity.this, "Błąd logowania", Toast.LENGTH_SHORT).show();
             }
         }
@@ -69,13 +75,14 @@ public class LoginActivity extends BaseActivity {
 
     @Override public void handle(GoogleSignInResult result) {
         if (result.isSuccess()) {
-            Log.i(TAG, "handle: Login successfull. Checking usos paired status");
+            log.info("handle: Login successfull. Checking usos paired status");
             progress(true);
             KujonApplication.getApplication().setLoginStatus(result);
             kujonBackendApi.config().enqueue(new Callback<KujonResponse<Config>>() {
                 @Override public void onResponse(Call<KujonResponse<Config>> call, Response<KujonResponse<Config>> response) {
                     if (ErrorHandlerUtil.handleResponse(response)) {
                         Config data = response.body().data;
+                        log.debug("Response: " + data);
                         if (data.usosPaired) {
                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         } else {
