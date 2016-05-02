@@ -103,9 +103,12 @@ public class UserInfoFragment extends Fragment {
                         StudentProgramme studentProgramme = user.student_programmes.get(position);
                         programme = studentProgramme.programme;
                         AlertDialog.Builder dlgAlert = new AlertDialog.Builder(getActivity());
-                        dlgAlert.setMessage(String.format("%s\n\n%s", programme.description, programme.id));
-                        dlgAlert.setTitle(studentProgramme.id);
+                        dlgAlert.setMessage(String.format("%s (%s)", programme.description, programme.id));
+                        dlgAlert.setTitle("Kierunek:");
                         dlgAlert.setCancelable(true);
+                        dlgAlert.setNegativeButton("OK", (dialog, which) -> {
+                            dialog.dismiss();
+                        });
                         alertDialog = dlgAlert.create();
                         alertDialog.show();
                     });

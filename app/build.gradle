@@ -11,8 +11,8 @@ android {
         applicationId "mobi.kujon"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 12
-        versionName "0.9.6"
+        versionCode 13
+        versionName "0.9.7"
 
         manifestPlaceholders = [manifestApplicationId: "${applicationId}",
                                 onesignal_app_id: "f01a20f9-bbe7-4c89-a017-bf8930c61cf4",
@@ -33,7 +33,7 @@ android {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             ext.betaDistributionReleaseNotesFilePath = "release_notes/${android.defaultConfig.versionName}.txt"
-            ext.betaDistributionEmails = "akonior@gmail.com"
+            ext.betaDistributionEmails = "akonior@gmail.com, wojciech.smolkowski@gmail.com, dzizes451@gmail.com"
             signingConfig signingConfigs.release
         }
     }

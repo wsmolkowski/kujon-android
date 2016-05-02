@@ -1,5 +1,6 @@
 package mobi.kujon.fragments;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -65,7 +66,12 @@ public class TermsFragment extends ListFragment {
             Term2 term = data.get(position);
             holder.name.setText(term.name.pl);
             holder.termId.setText(term.termId);
-            holder.actie.setText(term.active ? "TAK" : "NIE");
+            holder.active.setText(term.active ? "TAK" : "NIE");
+            if (term.active) {
+                holder.name.setTypeface(null, Typeface.BOLD);
+                holder.termId.setTypeface(null, Typeface.BOLD);
+                holder.active.setTypeface(null, Typeface.BOLD);
+            }
             holder.startDate.setText(term.startDate);
             holder.endDate.setText(term.endDate);
             holder.finishDate.setText(term.finishDate);
@@ -86,7 +92,7 @@ public class TermsFragment extends ListFragment {
 
         @Bind(R.id.name) TextView name;
         @Bind(R.id.term_id) TextView termId;
-        @Bind(R.id.actie) TextView actie;
+        @Bind(R.id.active) TextView active;
         @Bind(R.id.start_date) TextView startDate;
         @Bind(R.id.end_date) TextView endDate;
         @Bind(R.id.finish_date) TextView finishDate;

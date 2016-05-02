@@ -83,7 +83,7 @@
 
         <TextView
             style="@style/label"
-            android:text="Numer indexu"/>
+            android:text="Numer indeksu"/>
 
         <TextView
             android:id="@+id/index"

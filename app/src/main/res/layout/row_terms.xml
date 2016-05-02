@@ -26,7 +26,7 @@
             <TextView
                 android:id="@+id/name"
                 style="@style/entry"
-                tools:text='Rok akademicki 2015/16'/>
+                tools:text='Rok akademicki 2015/16' />
         </LinearLayout>
 
         <LinearLayout
@@ -62,7 +62,7 @@
                 />
 
             <TextView
-                android:id="@+id/actie"
+                android:id="@+id/active"
                 style="@style/entry"
                 tools:text='TAK'/>
         </LinearLayout>
