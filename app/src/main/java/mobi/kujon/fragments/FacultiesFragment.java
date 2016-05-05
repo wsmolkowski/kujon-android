@@ -63,7 +63,7 @@ public class FacultiesFragment extends ListFragment {
 
         @Override public void onBindViewHolder(ViewHolder holder, int position) {
             Faculty2 faculty = data.get(position);
-            holder.name.setText(faculty.name.pl);
+            holder.name.setText(faculty.name);
             holder.facultyId = faculty.facId;
             holder.itemView.setBackgroundResource(position % 2 == 1 ? R.color.grey : android.R.color.white);
         }

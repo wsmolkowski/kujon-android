@@ -19,7 +19,7 @@ public class Faculty2 {
     public LogoUrls logoUrls;
     @SerializedName("name")
     @Expose
-    public Name name;
+    public String name;
     @SerializedName("phone_numbers")
     @Expose
     public List<String> phoneNumbers = new ArrayList<String>();

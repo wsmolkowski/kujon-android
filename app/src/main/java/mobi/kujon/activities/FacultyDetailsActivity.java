@@ -55,9 +55,9 @@ public class FacultyDetailsActivity extends BaseActivity {
                 showProgress(false);
                 if (ErrorHandlerUtil.handleResponse(response)) {
                     Faculty2 faculty = response.body().data;
-                    getSupportActionBar().setTitle(faculty.name.pl);
+                    getSupportActionBar().setTitle(faculty.name);
 
-                    facultyName.setText(faculty.name.pl);
+                    facultyName.setText(faculty.name);
                     postalAddress.setText(faculty.postalAddress);
                     phone.setText($.join(faculty.phoneNumbers, ", "));
                     homepage.setText(faculty.homepageUrl);
