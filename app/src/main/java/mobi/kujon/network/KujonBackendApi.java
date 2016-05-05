@@ -1,6 +1,7 @@
 package mobi.kujon.network;
 
 import java.util.List;
+import java.util.SortedMap;
 
 import mobi.kujon.network.json.CalendarEvent;
 import mobi.kujon.network.json.Config;
@@ -47,6 +48,8 @@ public interface KujonBackendApi {
     @GET("lecturers/{lecturerId}") Call<KujonResponse<LecturerLong>> lecturer(@Path("lecturerId") String lecturerId);
 
     @GET("courseseditions") Call<KujonResponse<List<Course>>> coursesEditions();
+
+    @GET("courseseditionsbyterm") Call<KujonResponse<SortedMap<String, List<Course>>>> coursesEditionsByTerm();
 
     @GET("courseseditions/{courseId}/{termId}")
     Call<KujonResponse<CourseDetails>> courseDetails(@Path("courseId") String courseId, @Path("termId") String termId);

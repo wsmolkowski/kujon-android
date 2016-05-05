@@ -3,26 +3,46 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:padding="16dp"
-              android:orientation="horizontal">
+              android:orientation="vertical">
 
     <TextView
-        android:id="@+id/course_name"
-        android:layout_width="0dp"
+        android:id="@+id/section"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_weight="1"
-        android:layout_marginRight="16dp"
-        android:textColor="@android:color/black"
-        android:textSize="14sp"
-        tools:text="Historia kościołów i wyznań chrześcijańskich w XIX w. Religia a modernizacja. (blok Historia Kościołów chrześcijańskich) "/>
+        android:background="@color/accent"
+        android:gravity="center"
+        android:padding="8dp"
+        android:textColor="@android:color/white"
+        android:textSize="22dp"
+        tools:text="2015"/>
 
-    <TextView
-        android:id="@+id/course_term"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/courseLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textColor="@android:color/black"
-        android:textSize="14sp"
-        tools:text="2011L"/>
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/course_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="16dp"
+            android:layout_weight="1"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"
+            tools:text="Historia kościołów i wyznań chrześcijańskich w XIX w. Religia a modernizacja. (blok Historia Kościołów chrześcijańskich) "/>
+
+        <TextView
+            android:id="@+id/course_term"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"
+            tools:text="2011L"/>
+    </LinearLayout>
+
+
 </LinearLayout>
