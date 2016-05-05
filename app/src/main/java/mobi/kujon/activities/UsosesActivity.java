@@ -95,6 +95,7 @@ public class UsosesActivity extends BaseActivity {
             Usos usos = items.get(position);
             holder.name.setText(usos.name);
             holder.usosId = usos.usosId;
+            holder.usosName = usos.name;
             Picasso.with(KujonApplication.getApplication()).load(usos.logo).into(holder.logo);
         }
 
@@ -115,6 +116,7 @@ public class UsosesActivity extends BaseActivity {
         @Bind(R.id.usos_name) TextView name;
         @Bind(R.id.usos_logo) ImageView logo;
         String usosId;
+        String usosName;
 
         public UsosViewHolder(View itemView) {
             super(itemView);
@@ -122,6 +124,7 @@ public class UsosesActivity extends BaseActivity {
             itemView.setOnClickListener(v -> {
                 Intent intent = new Intent(UsosesActivity.this, UsoswebLoginActivity.class);
                 intent.putExtra(UsoswebLoginActivity.USOS_ID, usosId);
+                intent.putExtra(UsoswebLoginActivity.USOS_NAME, usosName);
                 startActivity(intent);
                 finish();
             });

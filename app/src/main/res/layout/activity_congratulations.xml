@@ -5,12 +5,13 @@
               android:orientation="vertical">
 
     <TextView
+        android:id="@+id/congratulations"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_margin="16dp"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="Gratulacje udało ci się zalogować do Twojego konta na Uniwersytecie Warszawskim.\n\nTeraz możesz przeglądać swoje przedmioty oceny plan zadań itd.."
+        android:text="@string/congratulations"
         android:textColor="@android:color/black"
         android:textSize="22dp"/>
 

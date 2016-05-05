@@ -34,6 +34,7 @@ import okhttp3.Response;
 public class UsoswebLoginActivity extends BaseActivity {
 
     public static final String USOS_ID = "USOS_ID";
+    public static final String USOS_NAME = "USOS_NAME";
     public static final Logger log = LoggerFactory.getLogger(UsoswebLoginActivity.class);
 
     @Bind(R.id.webView) WebView webView;
@@ -50,6 +51,7 @@ public class UsoswebLoginActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         String usosId = getIntent().getStringExtra(USOS_ID);
+        String usosName = getIntent().getStringExtra(USOS_NAME);
         webView.setWebViewClient(new WebViewClient() {
             @Override public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 log.info("onPageStarted: " + url);
@@ -87,7 +89,9 @@ public class UsoswebLoginActivity extends BaseActivity {
                             if (kujonResponse.isSuccessful()) {
                                 runOnUiThread(() -> {
                                     Toast.makeText(UsoswebLoginActivity.this, "Successful login", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(UsoswebLoginActivity.this, CongratulationsActivity.class));
+                                    Intent intent = new Intent(UsoswebLoginActivity.this, CongratulationsActivity.class);
+                                    intent.putExtra(USOS_NAME, usosName);
+                                    startActivity(intent);
                                 });
                             } else {
                                 log.error("Login error");
