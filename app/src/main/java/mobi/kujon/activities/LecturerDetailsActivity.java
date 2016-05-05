@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Html;
-import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
@@ -30,6 +29,8 @@ import mobi.kujon.utils.ErrorHandlerUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static android.text.TextUtils.isEmpty;
 
 public class LecturerDetailsActivity extends BaseActivity {
 
@@ -61,7 +62,7 @@ public class LecturerDetailsActivity extends BaseActivity {
                 showProgress(false);
                 if (ErrorHandlerUtil.handleResponse(response)) {
                     LecturerLong lecturer = response.body().data;
-                    String title = TextUtils.isEmpty(lecturer.titles.before) ? "" : lecturer.titles.before;
+                    String title = isEmpty(lecturer.titles.before) ? "" : lecturer.titles.before;
                     String name = title + " " + lecturer.firstName + " " + lecturer.lastName;
                     lecturerName.setText(name);
                     getSupportActionBar().setTitle(name);
@@ -88,7 +89,13 @@ public class LecturerDetailsActivity extends BaseActivity {
                             .placeholder(R.drawable.user_placeholder)
                             .into(picture);
 
-                    picture.setOnClickListener(v -> ImageActivity.show(LecturerDetailsActivity.this, lecturer.hasPhoto, name));
+                    picture.setOnClickListener(v -> {
+                        if (!isEmpty(lecturer.hasPhoto) && lecturer.hasPhoto.startsWith("http")) {
+                            ImageActivity.show(LecturerDetailsActivity.this, lecturer.hasPhoto, name);
+                        } else {
+                            Toast.makeText(LecturerDetailsActivity.this, "Brak zdjęcia", Toast.LENGTH_SHORT).show();
+                        }
+                    });
 
                     lecturerHomepage.setText(lecturer.homepageUrl);
                     lecturerEmploymentPositions.setText($.join($.collect(lecturer.employmentPositions, it -> it.faculty.name + ", " + it.position.name), "\n\n"));
@@ -110,7 +117,7 @@ public class LecturerDetailsActivity extends BaseActivity {
 
     @OnClick(R.id.lecturer_room)
     public void navigate() {
-        if (TextUtils.isEmpty(lecturerRoom.getText().toString())) {
+        if (isEmpty(lecturerRoom.getText().toString())) {
             Toast.makeText(LecturerDetailsActivity.this, "Brak adresu", Toast.LENGTH_SHORT).show();
         } else {
             CommonUtils.showOnMap(this, lecturerRoom.getText().toString());
