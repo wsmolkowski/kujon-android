@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.underscore.$;
 import com.github.underscore.Optional;
@@ -19,6 +20,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
 import mobi.kujon.activities.BaseActivity;
 import mobi.kujon.activities.ImageActivity;
@@ -26,6 +28,7 @@ import mobi.kujon.network.KujonBackendApi;
 import mobi.kujon.network.KujonBackendService;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.network.json.Programme;
+import mobi.kujon.network.json.Programme_;
 import mobi.kujon.network.json.StudentProgramme;
 import mobi.kujon.network.json.User;
 import mobi.kujon.network.json.Usos;
@@ -53,7 +56,6 @@ public class UserInfoFragment extends Fragment {
     private KujonBackendApi kujonBackendApi;
     private BaseActivity activity;
     private AlertDialog alertDialog;
-    private Programme programme;
 
     public static UserInfoFragment getFragment(String userId) {
         Bundle bundle = new Bundle();
@@ -100,17 +102,39 @@ public class UserInfoFragment extends Fragment {
                     studentStatus.setText(user.student_status);
                     studentAccountNumber.setText(user.student_number);
                     CommonUtils.showList(activity.getLayoutInflater(), studentProgrammes, $.collect(user.student_programmes, it -> it.programme.description), position -> {
+                        activity.showProgress(true);
                         StudentProgramme studentProgramme = user.student_programmes.get(position);
-                        programme = studentProgramme.programme;
-                        AlertDialog.Builder dlgAlert = new AlertDialog.Builder(getActivity());
-                        dlgAlert.setMessage(String.format("%s (%s)", programme.description, programme.id));
-                        dlgAlert.setTitle("Kierunek:");
-                        dlgAlert.setCancelable(true);
-                        dlgAlert.setNegativeButton("OK", (dialog, which) -> {
-                            dialog.dismiss();
+                        Programme programme = studentProgramme.programme;
+                        kujonBackendApi.programmes().enqueue(new Callback<KujonResponse<List<Programme>>>() {
+                            @Override public void onResponse(Call<KujonResponse<List<Programme>>> call, Response<KujonResponse<List<Programme>>> response) {
+                                activity.showProgress(false);
+                                if (ErrorHandlerUtil.handleResponse(response)) {
+                                    List<Programme> data = response.body().data;
+                                    Optional<Programme> programmeOptional = $.find(data, it -> it.programme.id.equals(programme.id));
+                                    if (!programmeOptional.isPresent()) {
+                                        Toast.makeText(KujonApplication.getApplication(), "Brak opisu programu", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Programme prog = programmeOptional.get();
+                                        Programme_ programmeFull = prog.programme;
+                                        AlertDialog.Builder dlgAlert = new AlertDialog.Builder(getActivity());
+                                        dlgAlert.setTitle("Kierunek: " + programmeFull.description);
+                                        dlgAlert.setMessage(String.format("%s\n%s\n%s\n%s\n%s",
+                                                programmeFull.id, programmeFull.modeOfStudies, programmeFull.duration, programmeFull.levelOfStudies, programmeFull.description));
+                                        dlgAlert.setCancelable(false);
+                                        dlgAlert.setNegativeButton("OK", (dialog, which) -> {
+                                            dialog.dismiss();
+                                        });
+                                        alertDialog = dlgAlert.create();
+                                        alertDialog.show();
+                                    }
+                                }
+                            }
+
+                            @Override public void onFailure(Call<KujonResponse<List<Programme>>> call, Throwable t) {
+                                activity.showProgress(true);
+                                ErrorHandlerUtil.handleError(t);
+                            }
                         });
-                        alertDialog = dlgAlert.create();
-                        alertDialog.show();
                     });
                 }
             }
