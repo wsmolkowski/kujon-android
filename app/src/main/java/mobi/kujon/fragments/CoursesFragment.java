@@ -37,11 +37,22 @@ public class CoursesFragment extends ListFragment {
         adapter = new Adapter();
         recyclerView.setAdapter(adapter);
         activity.showProgress(true);
+        swipeContainer.setRefreshing(true);
 
+        loadData();
+    }
+
+    @Override public void onStart() {
+        super.onStart();
+        activity.getSupportActionBar().setTitle("Przedmioty");
+    }
+
+    @Override protected void loadData() {
         backendApi.coursesEditionsByTerm().enqueue(new Callback<KujonResponse<SortedMap<String, List<Course>>>>() {
             @Override
             public void onResponse(Call<KujonResponse<SortedMap<String, List<Course>>>> call, Response<KujonResponse<SortedMap<String, List<Course>>>> response) {
                 activity.showProgress(false);
+                swipeContainer.setRefreshing(false);
                 if (ErrorHandlerUtil.handleResponse(response)) {
                     SortedMap<String, List<Course>> data = response.body().data;
                     adapter.setData(data);
@@ -50,14 +61,10 @@ public class CoursesFragment extends ListFragment {
 
             @Override public void onFailure(Call<KujonResponse<SortedMap<String, List<Course>>>> call, Throwable t) {
                 activity.showProgress(false);
+                swipeContainer.setRefreshing(false);
                 ErrorHandlerUtil.handleError(t);
             }
         });
-    }
-
-    @Override public void onStart() {
-        super.onStart();
-        activity.getSupportActionBar().setTitle("Przedmioty");
     }
 
     protected class Adapter extends SectionedRecyclerViewAdapter<ViewHolder> {

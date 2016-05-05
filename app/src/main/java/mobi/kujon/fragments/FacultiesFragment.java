@@ -31,9 +31,15 @@ public class FacultiesFragment extends ListFragment {
         adapter = new Adapter();
         recyclerView.setAdapter(adapter);
         activity.showProgress(true);
+
+        loadData();
+    }
+
+    @Override protected void loadData() {
         backendApi.faculties().enqueue(new Callback<KujonResponse<List<Faculty2>>>() {
             @Override public void onResponse(Call<KujonResponse<List<Faculty2>>> call, Response<KujonResponse<List<Faculty2>>> response) {
                 activity.showProgress(false);
+                swipeContainer.setRefreshing(false);
                 if (ErrorHandlerUtil.handleResponse(response)) {
                     List<Faculty2> data = response.body().data;
                     adapter.setData(data);
@@ -42,6 +48,7 @@ public class FacultiesFragment extends ListFragment {
 
             @Override public void onFailure(Call<KujonResponse<List<Faculty2>>> call, Throwable t) {
                 activity.showProgress(false);
+                swipeContainer.setRefreshing(false);
                 ErrorHandlerUtil.handleError(t);
             }
         });

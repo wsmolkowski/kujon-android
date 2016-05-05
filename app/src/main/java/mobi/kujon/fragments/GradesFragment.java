@@ -44,10 +44,16 @@ public class GradesFragment extends ListFragment {
             }
         });
         activity.showProgress(true);
+
+        loadData();
+    }
+
+    @Override protected void loadData() {
         backendApi.gradesByTerm().enqueue(new Callback<KujonResponse<SortedMap<String, List<Grade>>>>() {
             @Override
             public void onResponse(Call<KujonResponse<SortedMap<String, List<Grade>>>> call, Response<KujonResponse<SortedMap<String, List<Grade>>>> response) {
                 activity.showProgress(false);
+                swipeContainer.setRefreshing(false);
                 if (ErrorHandlerUtil.handleResponse(response)) {
                     SortedMap<String, List<Grade>> data = response.body().data;
                     adapter.setData(data);
@@ -56,6 +62,7 @@ public class GradesFragment extends ListFragment {
 
             @Override public void onFailure(Call<KujonResponse<SortedMap<String, List<Grade>>>> call, Throwable t) {
                 activity.showProgress(false);
+                swipeContainer.setRefreshing(false);
                 ErrorHandlerUtil.handleError(t);
             }
         });

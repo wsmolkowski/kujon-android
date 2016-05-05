@@ -32,9 +32,15 @@ public class TermsFragment extends ListFragment {
         adapter = new Adapter();
         recyclerView.setAdapter(adapter);
         activity.showProgress(true);
+
+        loadData();
+    }
+
+    @Override protected void loadData() {
         backendApi.terms().enqueue(new Callback<KujonResponse<List<Term2>>>() {
             @Override public void onResponse(Call<KujonResponse<List<Term2>>> call, Response<KujonResponse<List<Term2>>> response) {
                 activity.showProgress(false);
+                swipeContainer.setRefreshing(false);
                 if (ErrorHandlerUtil.handleResponse(response)) {
                     List<Term2> data = response.body().data;
                     adapter.setData(data);
@@ -43,9 +49,11 @@ public class TermsFragment extends ListFragment {
 
             @Override public void onFailure(Call<KujonResponse<List<Term2>>> call, Throwable t) {
                 activity.showProgress(false);
+                swipeContainer.setRefreshing(false);
                 ErrorHandlerUtil.handleError(t);
             }
         });
+
     }
 
     @Override public void onStart() {

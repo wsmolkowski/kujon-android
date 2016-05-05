@@ -33,9 +33,15 @@ public class LecturersFragment extends ListFragment {
         adapter = new Adapter();
         recyclerView.setAdapter(adapter);
         activity.showProgress(true);
+
+        loadData();
+    }
+
+    @Override protected void loadData() {
         backendApi.lecturers().enqueue(new Callback<KujonResponse<List<Lecturer>>>() {
             @Override public void onResponse(Call<KujonResponse<List<Lecturer>>> call, Response<KujonResponse<List<Lecturer>>> response) {
                 activity.showProgress(false);
+                swipeContainer.setRefreshing(false);
                 if (ErrorHandlerUtil.handleResponse(response)) {
                     List<Lecturer> data = response.body().data;
                     adapter.setData(data);
@@ -44,6 +50,7 @@ public class LecturersFragment extends ListFragment {
 
             @Override public void onFailure(Call<KujonResponse<List<Lecturer>>> call, Throwable t) {
                 activity.showProgress(false);
+                swipeContainer.setRefreshing(false);
                 ErrorHandlerUtil.handleError(t);
             }
         });

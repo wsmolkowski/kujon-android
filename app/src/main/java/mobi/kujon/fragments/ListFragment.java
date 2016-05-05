@@ -3,6 +3,7 @@ package mobi.kujon.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,9 +18,11 @@ import mobi.kujon.activities.BaseActivity;
 import mobi.kujon.network.KujonBackendApi;
 import mobi.kujon.network.KujonBackendService;
 
-public class ListFragment extends Fragment {
+public abstract class ListFragment extends Fragment {
 
     protected @Bind(R.id.recyclerView) RecyclerView recyclerView;
+    protected @Bind(R.id.swipeContainer) SwipeRefreshLayout swipeContainer;
+
     protected KujonBackendApi backendApi;
     @Bind(R.id.empty_info) TextView emptyInfo;
     protected BaseActivity activity;
@@ -35,5 +38,9 @@ public class ListFragment extends Fragment {
         activity = (BaseActivity) getActivity();
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         backendApi = KujonBackendService.getInstance().getKujonBackendApi();
+
+        swipeContainer.setOnRefreshListener(() -> loadData());
     }
+
+    protected abstract void loadData();
 }
