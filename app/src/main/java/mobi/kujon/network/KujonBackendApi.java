@@ -35,6 +35,8 @@ public interface KujonBackendApi {
 
     @GET("grades") Call<KujonResponse<List<Grade>>> grades();
 
+    @GET("gradesbyterm") Call<KujonResponse<SortedMap<String, List<Grade>>>> gradesByTerm();
+
     @GET("terms") Call<KujonResponse<List<Term2>>> terms();
 
     @GET("programmes") Call<KujonResponse<List<Programme>>> programmes();

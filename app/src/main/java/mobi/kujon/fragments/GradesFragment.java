@@ -11,8 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.LinkedList;
+import com.afollestad.sectionedrecyclerview.SectionedRecyclerViewAdapter;
+
 import java.util.List;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -41,16 +44,17 @@ public class GradesFragment extends ListFragment {
             }
         });
         activity.showProgress(true);
-        backendApi.grades().enqueue(new Callback<KujonResponse<List<Grade>>>() {
-            @Override public void onResponse(Call<KujonResponse<List<Grade>>> call, Response<KujonResponse<List<Grade>>> response) {
+        backendApi.gradesByTerm().enqueue(new Callback<KujonResponse<SortedMap<String, List<Grade>>>>() {
+            @Override
+            public void onResponse(Call<KujonResponse<SortedMap<String, List<Grade>>>> call, Response<KujonResponse<SortedMap<String, List<Grade>>>> response) {
                 activity.showProgress(false);
                 if (ErrorHandlerUtil.handleResponse(response)) {
-                    List<Grade> data = response.body().data;
+                    SortedMap<String, List<Grade>> data = response.body().data;
                     adapter.setData(data);
                 }
             }
 
-            @Override public void onFailure(Call<KujonResponse<List<Grade>>> call, Throwable t) {
+            @Override public void onFailure(Call<KujonResponse<SortedMap<String, List<Grade>>>> call, Throwable t) {
                 activity.showProgress(false);
                 ErrorHandlerUtil.handleError(t);
             }
@@ -62,31 +66,52 @@ public class GradesFragment extends ListFragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Oceny");
     }
 
-    protected class Adapter extends RecyclerView.Adapter<ViewHolder> {
+    protected class Adapter extends SectionedRecyclerViewAdapter<ViewHolder> {
 
-        List<Grade> data = new LinkedList<>();
+        SortedMap<String, List<Grade>> data = new TreeMap<>();
 
         @Override public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_grade, parent, false);
             return new ViewHolder(v);
         }
 
-        @Override public void onBindViewHolder(ViewHolder holder, int position) {
-            Grade grade = data.get(position);
-            holder.title.setText(grade.courseName + " - " + grade.termId);
-            holder.desc.setText(Html.fromHtml(String.format("Ocena %s, termin: %s", grade.classType, grade.examSessionNumber)));
+        @Override public int getSectionCount() {
+            return data.keySet().size();
+        }
+
+        @Override public int getItemCount(int section) {
+            return gradesInSection(section).size();
+        }
+
+        @Override public void onBindHeaderViewHolder(ViewHolder holder, int section) {
+            holder.section.setText(sectionName(section));
+            holder.section.setVisibility(View.VISIBLE);
+            holder.dataLayout.setVisibility(View.GONE);
+        }
+
+        @Override public void onBindViewHolder(ViewHolder holder, int section, int relativePosition, int absolutePosition) {
+            Grade grade = gradesInSection(section).get(relativePosition);
+            holder.title.setText(grade.courseName);
+            holder.desc.setText(Html.fromHtml(String.format("%s, termin: %s", grade.classType, grade.examSessionNumber)));
             holder.gradeDesc.setText(grade.valueDescription);
             holder.gradeSymbol.setText(grade.valueSymbol);
             holder.courseId = grade.courseId;
             holder.termId = grade.termId;
-            holder.itemView.setBackgroundResource(position % 2 == 1 ? R.color.grey : android.R.color.white);
+            holder.itemView.setBackgroundResource(relativePosition % 2 == 1 ? R.color.grey : android.R.color.white);
+            holder.section.setVisibility(View.GONE);
+            holder.dataLayout.setVisibility(View.VISIBLE);
         }
 
-        @Override public int getItemCount() {
-            return data.size();
+        List<Grade> gradesInSection(int section) {
+            List<Grade>[] courses = data.values().toArray(new List[0]);
+            return courses[section];
         }
 
-        public void setData(List<Grade> data) {
+        String sectionName(int section) {
+            return ((String) data.keySet().toArray()[section]);
+        }
+
+        public void setData(SortedMap<String, List<Grade>> data) {
             this.data = data;
             notifyDataSetChanged();
         }
@@ -98,6 +123,8 @@ public class GradesFragment extends ListFragment {
         @Bind(R.id.desc) TextView desc;
         @Bind(R.id.grade_value_symbol) TextView gradeSymbol;
         @Bind(R.id.grade_value_desc) TextView gradeDesc;
+        @Bind(R.id.section) TextView section;
+        @Bind(R.id.dataLayout) View dataLayout;
         String courseId;
         String termId;
 
