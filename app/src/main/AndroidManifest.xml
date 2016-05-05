@@ -27,7 +27,8 @@
 
         <activity
             android:name=".activities.UsosesActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/ToolbarAppTheme"/>
         <activity
             android:name=".activities.UsoswebLoginActivity"
             android:screenOrientation="portrait"/>

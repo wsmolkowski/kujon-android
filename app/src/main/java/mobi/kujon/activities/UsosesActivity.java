@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,13 +16,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.underscore.$;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
 import mobi.kujon.network.json.KujonResponse;
@@ -33,13 +37,20 @@ import retrofit2.Response;
 
 public class UsosesActivity extends BaseActivity {
 
+    public static final int NUMBER_OF_CLICKS = 5;
+    public static final int CLICKS_TIME = 2 * 1000;
+    @Bind(R.id.toolbar) Toolbar toolbar;
     @Bind(R.id.recyclerView) RecyclerView recyclerView;
+    List<Long> toolbarClickTimestamps = new ArrayList<>();
     private UsosesAdapter adapter;
+
+    private boolean demoEnabled = false;
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_usoses);
         ButterKnife.bind(this);
+        setSupportActionBar(toolbar);
 
         requestUsoses();
 
@@ -92,7 +103,7 @@ public class UsosesActivity extends BaseActivity {
         }
 
         @Override public void onBindViewHolder(UsosViewHolder holder, int position) {
-            Usos usos = items.get(position);
+            Usos usos = filteredUsoses().get(position);
             holder.name.setText(usos.name);
             holder.usosId = usos.usosId;
             holder.usosName = usos.name;
@@ -100,13 +111,21 @@ public class UsosesActivity extends BaseActivity {
         }
 
         @Override public int getItemCount() {
-            return items.size();
+            return filteredUsoses().size();
         }
 
         public void setItems(List<Usos> items) {
             if (items != null) {
                 this.items = items;
                 notifyDataSetChanged();
+            }
+        }
+
+        private List<Usos> filteredUsoses() {
+            if (demoEnabled) {
+                return items;
+            } else {
+                return $.filter(items, it -> !"DEMO".equals(it.usosId));
             }
         }
     }
@@ -134,5 +153,28 @@ public class UsosesActivity extends BaseActivity {
     @Override protected void onStart() {
         super.onStart();
         Toast.makeText(UsosesActivity.this, "Wybierz swoją uczelnię", Toast.LENGTH_SHORT).show();
+    }
+
+    @OnClick(R.id.toolbar)
+    public void toolbarClick() {
+        if (!demoEnabled) {
+            System.out.println(toolbarClickTimestamps);
+
+            Long timestamp = new Date().getTime();
+            if (toolbarClickTimestamps.size() >= NUMBER_OF_CLICKS && timestamp - toolbarClickTimestamps.get(0) < CLICKS_TIME) {
+                // 5 subsequent clicks within 2 seconds detected
+                toolbarClickTimestamps.clear();
+                Toast.makeText(UsosesActivity.this, "Dodatkowa uczelnia dodana do listy", Toast.LENGTH_SHORT).show();
+                demoEnabled = true;
+                adapter.notifyDataSetChanged();
+                return;
+            }
+
+            if (toolbarClickTimestamps.size() > 5) {
+                toolbarClickTimestamps.remove(0);
+            }
+
+            toolbarClickTimestamps.add(timestamp);
+        }
     }
 }
