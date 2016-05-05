@@ -1,0 +1,8 @@
+* #50 Przedmioty, oceny, wykładowcy, cykle i jednostki - odświeżanie danych
+* #36 jednostki - dodanie wyświetlania
+* #55 spis uczelni - schowanie demo
+* #51 Główna strona modal kierunki
+* #53 Oceny grupowanie po semestrze
+* #52 Przedmioty - grupowanie po semestrze
+* #46 zdjęcia nauczycieli / studentów
+* #41 rejestracja - dodatkowa formatka po udanej rejestracji
