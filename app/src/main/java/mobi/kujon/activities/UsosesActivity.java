@@ -3,6 +3,7 @@ package mobi.kujon.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -45,12 +46,15 @@ public class UsosesActivity extends BaseActivity {
     private UsosesAdapter adapter;
 
     private boolean demoEnabled = false;
+    private AlertDialog alertDialog;
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_usoses);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
+
+        getSupportActionBar().setTitle("Wybierz uczelnię");
 
         requestUsoses();
 
@@ -88,8 +92,35 @@ public class UsosesActivity extends BaseActivity {
                 logout();
                 return true;
 
+            case R.id.help:
+                help();
+                return true;
+
             default:
                 return true;
+        }
+    }
+
+    private void help() {
+        AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);
+        dlgAlert.setTitle("Wybierz swoją uczelnię");
+        dlgAlert.setMessage("Jeżeli Twojej Uczelni nie ma na liście to oznacza że nie korzysta ona z wspieranego systemu obsługi studentów (USOS)");
+        dlgAlert.setCancelable(false);
+        dlgAlert.setPositiveButton("OK", (dialog, which) -> {
+            dialog.dismiss();
+        });
+        dlgAlert.setNeutralButton("Prześlij opinię", (dialog, which) -> {
+            contactUs();
+        });
+        alertDialog = dlgAlert.create();
+        alertDialog.show();
+    }
+
+    @Override protected void onDestroy() {
+        super.onDestroy();
+        if (alertDialog != null && alertDialog.isShowing()) {
+            alertDialog.dismiss();
+            alertDialog = null;
         }
     }
 
@@ -141,11 +172,21 @@ public class UsosesActivity extends BaseActivity {
             super(itemView);
             ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(v -> {
-                Intent intent = new Intent(UsosesActivity.this, UsoswebLoginActivity.class);
-                intent.putExtra(UsoswebLoginActivity.USOS_ID, usosId);
-                intent.putExtra(UsoswebLoginActivity.USOS_NAME, usosName);
-                startActivity(intent);
-                finish();
+                AlertDialog.Builder dlgAlert = new AlertDialog.Builder(UsosesActivity.this);
+                dlgAlert.setMessage("Zostaniesz teraz przekierowany do strony " + usosName + ", aby zalogować się na Twoje konto");
+                dlgAlert.setCancelable(false);
+                dlgAlert.setPositiveButton("OK", (dialog, which) -> {
+                    Intent intent = new Intent(UsosesActivity.this, UsoswebLoginActivity.class);
+                    intent.putExtra(UsoswebLoginActivity.USOS_ID, usosId);
+                    intent.putExtra(UsoswebLoginActivity.USOS_NAME, usosName);
+                    startActivity(intent);
+                    finish();
+                });
+                dlgAlert.setNegativeButton("Cofnij", (dialog, which) -> {
+                    dialog.dismiss();
+                });
+                alertDialog = dlgAlert.create();
+                alertDialog.show();
             });
         }
     }
@@ -176,5 +217,9 @@ public class UsosesActivity extends BaseActivity {
 
             toolbarClickTimestamps.add(timestamp);
         }
+    }
+
+    @Override public void onBackPressed() {
+        logout();
     }
 }
