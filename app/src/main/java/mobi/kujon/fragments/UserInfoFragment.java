@@ -23,9 +23,11 @@ import butterknife.ButterKnife;
 import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
 import mobi.kujon.activities.BaseActivity;
+import mobi.kujon.activities.FacultyDetailsActivity;
 import mobi.kujon.activities.ImageActivity;
 import mobi.kujon.network.KujonBackendApi;
 import mobi.kujon.network.KujonBackendService;
+import mobi.kujon.network.json.Faculty2;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.network.json.Programme;
 import mobi.kujon.network.json.Programme_;
@@ -52,6 +54,7 @@ public class UserInfoFragment extends Fragment {
     @Bind(R.id.index) TextView index;
     @Bind(R.id.picture) ImageView picture;
     @Bind(R.id.usosLogo) ImageView usosLogo;
+    @Bind(R.id.student_faculties) LinearLayout studentFaculties;
 
     private KujonBackendApi kujonBackendApi;
     private BaseActivity activity;
@@ -101,7 +104,9 @@ public class UserInfoFragment extends Fragment {
                     picture.setOnClickListener(v -> ImageActivity.show(getActivity(), user.picture, name));
                     studentStatus.setText(user.student_status);
                     studentAccountNumber.setText(user.student_number);
-                    CommonUtils.showList(activity.getLayoutInflater(), studentProgrammes, $.collect(user.student_programmes, it -> it.programme.description), position -> {
+                    List<String> collect = $.collect(user.student_programmes, it -> it.programme.description.split(",")[0]);
+                    studentProgrammes.removeAllViews();
+                    CommonUtils.showList(activity.getLayoutInflater(), studentProgrammes, collect, position -> {
                         activity.showProgress(true);
                         StudentProgramme studentProgramme = user.student_programmes.get(position);
                         Programme programme = studentProgramme.programme;
@@ -117,7 +122,7 @@ public class UserInfoFragment extends Fragment {
                                         Programme prog = programmeOptional.get();
                                         Programme_ programmeFull = prog.programme;
                                         AlertDialog.Builder dlgAlert = new AlertDialog.Builder(getActivity());
-                                        dlgAlert.setTitle("Kierunek: " + programmeFull.description);
+                                        dlgAlert.setTitle("Kierunek: " + programmeFull.description.split(",")[0]);
                                         dlgAlert.setMessage(String.format("%s\n%s\n%s\n%s\n%s",
                                                 programmeFull.id, programmeFull.modeOfStudies, programmeFull.duration, programmeFull.levelOfStudies, programmeFull.description));
                                         dlgAlert.setCancelable(false);
@@ -144,6 +149,27 @@ public class UserInfoFragment extends Fragment {
                 ErrorHandlerUtil.handleError(t);
             }
         });
+
+        kujonBackendApi.faculties().enqueue(new Callback<KujonResponse<List<Faculty2>>>() {
+            @Override public void onResponse(Call<KujonResponse<List<Faculty2>>> call, Response<KujonResponse<List<Faculty2>>> response) {
+//                activity.showProgress(false);
+                if (ErrorHandlerUtil.handleResponse(response)) {
+                    List<Faculty2> data = response.body().data;
+                    List<String> facultyNames = $.collect(data, it -> it.name);
+                    studentFaculties.removeAllViews();
+                    CommonUtils.showList(activity.getLayoutInflater(), studentFaculties, facultyNames, position -> {
+                        FacultyDetailsActivity.showFacultyDetails(getActivity(), data.get(position).facId);
+                    });
+
+                }
+            }
+
+            @Override public void onFailure(Call<KujonResponse<List<Faculty2>>> call, Throwable t) {
+//                activity.showProgress(false);
+                ErrorHandlerUtil.handleError(t);
+            }
+        });
+
     }
 
     @Override public void onStop() {
@@ -176,5 +202,10 @@ public class UserInfoFragment extends Fragment {
                 }
             });
         }
+    }
+
+    @Override public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 }

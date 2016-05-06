@@ -32,7 +32,16 @@
                     android:id="@+id/firstLastName"
                     style="@style/entry"
                     android:textSize="22sp"
-                    tools:text='Lorem ipsum'/>
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textStyle="bold"
+                    tools:text='Jan Kowalski'/>
+
+                <TextView
+                    android:id="@+id/student_status"
+                    style="@style/entry"
+                    android:alpha="0.87"
+                    android:textSize="14sp"
+                    tools:text='aktywny student'/>
 
             </LinearLayout>
 
@@ -81,32 +90,48 @@
 
         </LinearLayout>
 
-        <TextView
-            style="@style/label"
-            android:text="Numer indeksu"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/index"
-            style="@style/entry"
-            tools:text='Lorem ipsum'/>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-        <TextView
-            style="@style/label"
-            android:text="Status studenta"/>
+                <TextView
+                    style="@style/label"
+                    android:layout_marginTop="0dp"
+                    android:text="Numer indeksu"/>
 
-        <TextView
-            android:id="@+id/student_status"
-            style="@style/entry"
-            tools:text='Lorem ipsum'/>
+                <TextView
+                    android:id="@+id/index"
+                    style="@style/entry"
+                    tools:text='1234567890'/>
 
-        <TextView
-            style="@style/label"
-            android:text="Numer konta"/>
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/student_account_number"
-            style="@style/entry"
-            tools:text='Lorem ipsum'/>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/label"
+                    android:layout_marginTop="0dp"
+                    android:text="Numer konta"/>
+
+                <TextView
+                    android:id="@+id/student_account_number"
+                    style="@style/entry"
+                    tools:text='987654321'/>
+            </LinearLayout>
+
+        </LinearLayout>
 
         <TextView
             style="@style/label"
@@ -114,6 +139,18 @@
 
         <LinearLayout
             android:id="@+id/student_programmes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical"
+            />
+
+        <TextView
+            style="@style/label"
+            android:text="Jednostki"/>
+
+        <LinearLayout
+            android:id="@+id/student_faculties"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"

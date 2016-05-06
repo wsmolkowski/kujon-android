@@ -23,7 +23,6 @@ import butterknife.ButterKnife;
 import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
 import mobi.kujon.fragments.CoursesFragment;
-import mobi.kujon.fragments.FacultiesFragment;
 import mobi.kujon.fragments.GradesFragment;
 import mobi.kujon.fragments.LecturersFragment;
 import mobi.kujon.fragments.PlanFragment;
@@ -35,10 +34,10 @@ public class MainActivity extends BaseActivity {
     @Bind(R.id.toolbar) Toolbar toolbar;
     Handler handler = new Handler();
 
-    public String[] TITLES = new String[]{"Użytkownik", "Plan", "Przedmioty", "Oceny", "Wykładowcy", "Cykle", "Jednostki"};
-    public int[] ICONS = new int[]{R.drawable.user, R.drawable.plan, R.drawable.courses, R.drawable.grades, R.drawable.teachers, R.drawable.terms, R.drawable.faculties};
+    public String[] TITLES = new String[]{"Użytkownik", "Plan", "Przedmioty", "Oceny", "Wykładowcy", "Cykle"};
+    public int[] ICONS = new int[]{R.drawable.user, R.drawable.plan, R.drawable.courses, R.drawable.grades, R.drawable.teachers, R.drawable.terms};
     public Fragment[] FRAGMENTS = new Fragment[]{
-            new UserInfoFragment(), new PlanFragment(), new CoursesFragment(), new GradesFragment(), new LecturersFragment(), new TermsFragment(), new FacultiesFragment()};
+            new UserInfoFragment(), new PlanFragment(), new CoursesFragment(), new GradesFragment(), new LecturersFragment(), new TermsFragment()};
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
