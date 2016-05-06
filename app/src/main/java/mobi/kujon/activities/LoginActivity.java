@@ -66,11 +66,14 @@ public class LoginActivity extends BaseActivity {
             if (resultCode == RESULT_OK) {
                 GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
                 handle(result);
+                return;
             } else {
                 log.error(String.format("Login error requestCode=%s, resultCode=%s, data=%s", requestCode, resultCode, data));
                 Toast.makeText(LoginActivity.this, "Błąd logowania", Toast.LENGTH_SHORT).show();
             }
         }
+
+        signIn();
     }
 
     @Override public void handle(GoogleSignInResult result) {
