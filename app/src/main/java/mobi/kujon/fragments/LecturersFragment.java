@@ -37,6 +37,10 @@ public class LecturersFragment extends ListFragment {
         loadData();
     }
 
+    @Override protected String getRequestUrl() {
+        return backendApi.lecturers().request().url().toString();
+    }
+
     @Override protected void loadData() {
         backendApi.lecturers().enqueue(new Callback<KujonResponse<List<Lecturer>>>() {
             @Override public void onResponse(Call<KujonResponse<List<Lecturer>>> call, Response<KujonResponse<List<Lecturer>>> response) {

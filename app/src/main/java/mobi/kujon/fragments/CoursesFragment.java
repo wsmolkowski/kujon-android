@@ -42,6 +42,10 @@ public class CoursesFragment extends ListFragment {
         loadData();
     }
 
+    @Override protected String getRequestUrl() {
+        return backendApi.coursesEditionsByTerm().request().url().toString();
+    }
+
     @Override public void onStart() {
         super.onStart();
         activity.getSupportActionBar().setTitle("Przedmioty");
@@ -93,7 +97,6 @@ public class CoursesFragment extends ListFragment {
         @Override public void onBindViewHolder(ViewHolder holder, int section, int relativePosition, int absolutePosition) {
             Course course = coursesInSection(section).get(relativePosition);
             holder.courseName.setText(course.courseName);
-            holder.courseTerm.setText(course.termId);
             holder.courseId = course.courseId;
             holder.termId = sectionName(section);
             holder.itemView.setBackgroundResource(relativePosition % 2 == 1 ? R.color.grey : android.R.color.white);
@@ -119,7 +122,6 @@ public class CoursesFragment extends ListFragment {
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         @Bind(R.id.course_name) TextView courseName;
-        @Bind(R.id.course_term) TextView courseTerm;
         @Bind(R.id.section) TextView section;
         @Bind(R.id.courseLayout) LinearLayout courseLayout;
         String courseId;

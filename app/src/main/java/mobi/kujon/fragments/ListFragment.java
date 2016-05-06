@@ -39,8 +39,18 @@ public abstract class ListFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         backendApi = KujonBackendService.getInstance().getKujonBackendApi();
 
-        swipeContainer.setOnRefreshListener(() -> loadData());
+        swipeContainer.setOnRefreshListener(() -> {
+            invalidate();
+            loadData();
+        });
     }
+
+    private void invalidate() {
+        String requestUrl = getRequestUrl();
+        KujonBackendService.getInstance().invalidateEntry(requestUrl);
+    }
+
+    protected abstract String getRequestUrl();
 
     protected abstract void loadData();
 }

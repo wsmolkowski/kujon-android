@@ -36,6 +36,10 @@ public class TermsFragment extends ListFragment {
         loadData();
     }
 
+    @Override protected String getRequestUrl() {
+        return backendApi.terms().request().url().toString();
+    }
+
     @Override protected void loadData() {
         backendApi.terms().enqueue(new Callback<KujonResponse<List<Term2>>>() {
             @Override public void onResponse(Call<KujonResponse<List<Term2>>> call, Response<KujonResponse<List<Term2>>> response) {

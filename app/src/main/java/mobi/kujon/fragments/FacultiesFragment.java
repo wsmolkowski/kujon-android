@@ -35,6 +35,10 @@ public class FacultiesFragment extends ListFragment {
         loadData();
     }
 
+    @Override protected String getRequestUrl() {
+        return backendApi.faculties().request().url().toString();
+    }
+
     @Override protected void loadData() {
         backendApi.faculties().enqueue(new Callback<KujonResponse<List<Faculty2>>>() {
             @Override public void onResponse(Call<KujonResponse<List<Faculty2>>> call, Response<KujonResponse<List<Faculty2>>> response) {

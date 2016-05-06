@@ -48,6 +48,10 @@ public class GradesFragment extends ListFragment {
         loadData();
     }
 
+    @Override protected String getRequestUrl() {
+        return backendApi.gradesByTerm().request().url().toString();
+    }
+
     @Override protected void loadData() {
         backendApi.gradesByTerm().enqueue(new Callback<KujonResponse<SortedMap<String, List<Grade>>>>() {
             @Override
