@@ -1,0 +1,5 @@
+* Fix #42 Wybór USOSa z listy - nie ma Twojej uczelni?
+* #54 auto login dialog
+* links color
+* Fix #56 Zmiana strony głównej
+* #52 colors, invalidate
