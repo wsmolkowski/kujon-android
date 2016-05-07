@@ -77,7 +77,7 @@ public class CourseDetailsActivity extends BaseActivity {
                     courseLang.setText(courseDetails.langId);
                     courseIsConducted.setText(courseDetails.isCurrentlyConducted);
                     description.setText(Html.fromHtml(courseDetails.description.replace("\n", "<br>")));
-                    courseName.setText(String.format("%s, (%s)", courseDetails.name, courseDetails.courseId));
+                    courseName.setText(String.format("%s (%s)", courseDetails.name, courseDetails.courseId));
                     bibliography.setText(courseDetails.bibliography.replace("\n", "\n\n"));
                     assessmentCriteria.setText(courseDetails.assessmentCriteria.replace("\n", "\n\n"));
                     if (courseDetails.term != null) {

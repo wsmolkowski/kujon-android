@@ -123,7 +123,7 @@ public class UserInfoFragment extends Fragment {
                                         Programme_ programmeFull = prog.programme;
                                         AlertDialog.Builder dlgAlert = new AlertDialog.Builder(getActivity());
                                         dlgAlert.setTitle("Kierunek: " + programmeFull.description.split(",")[0]);
-                                        dlgAlert.setMessage(String.format("%s\n%s\n%s\n%s\n%s",
+                                        dlgAlert.setMessage(String.format("identyfikator: %s\ntryb: %s\nczas trwania: %s\npoziom: %s\nopis: %s",
                                                 programmeFull.id, programmeFull.modeOfStudies, programmeFull.duration, programmeFull.levelOfStudies, programmeFull.description));
                                         dlgAlert.setCancelable(false);
                                         dlgAlert.setNegativeButton("OK", (dialog, which) -> {

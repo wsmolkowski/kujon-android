@@ -173,7 +173,7 @@ public class UsosesActivity extends BaseActivity {
             ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(v -> {
                 AlertDialog.Builder dlgAlert = new AlertDialog.Builder(UsosesActivity.this);
-                dlgAlert.setMessage("Zostaniesz teraz przekierowany do strony " + usosName + ", aby zalogować się na Twoje konto");
+                dlgAlert.setMessage("Zostaniesz teraz przekierowany do strony " + usosName + ", aby zalogować się na Twoje konto w USOS");
                 dlgAlert.setCancelable(false);
                 dlgAlert.setPositiveButton("OK", (dialog, which) -> {
                     Intent intent = new Intent(UsosesActivity.this, UsoswebLoginActivity.class);

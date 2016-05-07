@@ -156,7 +156,7 @@ public class PlanFragment extends Fragment implements MonthLoader.MonthChangeLis
     @Override public void onStart() {
         super.onStart();
         gotoNow();
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Plan");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Plan zajęć");
     }
 
     private void gotoNow() {
