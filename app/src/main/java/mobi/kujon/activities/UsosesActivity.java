@@ -104,7 +104,7 @@ public class UsosesActivity extends BaseActivity {
     private void help() {
         AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);
         dlgAlert.setTitle("Wybierz swoją uczelnię");
-        dlgAlert.setMessage("Jeżeli Twojej Uczelni nie ma na liście to oznacza że nie korzysta ona z wspieranego systemu obsługi studentów (USOS)");
+        dlgAlert.setMessage("Jeżeli Twojej Uczelni nie ma na liście to znacza że nie korzysta z wspieranego przez Kujona systemu USOS. Jeżeli masz uwagi - napisz do nas :)");
         dlgAlert.setCancelable(false);
         dlgAlert.setPositiveButton("OK", (dialog, which) -> {
             dialog.dismiss();
