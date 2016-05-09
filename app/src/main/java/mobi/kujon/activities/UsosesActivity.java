@@ -40,6 +40,7 @@ public class UsosesActivity extends BaseActivity {
 
     public static final int NUMBER_OF_CLICKS = 5;
     public static final int CLICKS_TIME = 2 * 1000;
+    public static final int USOS_LOGIN_REQUEST_CODE = 1;
     @Bind(R.id.toolbar) Toolbar toolbar;
     @Bind(R.id.recyclerView) RecyclerView recyclerView;
     List<Long> toolbarClickTimestamps = new ArrayList<>();
@@ -179,8 +180,7 @@ public class UsosesActivity extends BaseActivity {
                     Intent intent = new Intent(UsosesActivity.this, UsoswebLoginActivity.class);
                     intent.putExtra(UsoswebLoginActivity.USOS_ID, usosId);
                     intent.putExtra(UsoswebLoginActivity.USOS_NAME, usosName);
-                    startActivity(intent);
-                    finish();
+                    startActivityForResult(intent, USOS_LOGIN_REQUEST_CODE);
                 });
                 dlgAlert.setNegativeButton("Cofnij", (dialog, which) -> {
                     dialog.dismiss();
@@ -194,6 +194,17 @@ public class UsosesActivity extends BaseActivity {
     @Override protected void onStart() {
         super.onStart();
         Toast.makeText(UsosesActivity.this, "Wybierz swoją uczelnię", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        System.out.println("requestCode = [" + requestCode + "], resultCode = [" + resultCode + "], data = [" + data + "]");
+        if (requestCode == USOS_LOGIN_REQUEST_CODE && resultCode == RESULT_OK) {
+            Intent intent = new Intent(this, CongratulationsActivity.class);
+            String usosName = data.getStringExtra(UsoswebLoginActivity.USOS_NAME);
+            intent.putExtra(UsoswebLoginActivity.USOS_NAME, usosName);
+            startActivity(intent);
+            finish();
+        }
     }
 
     @OnClick(R.id.toolbar)

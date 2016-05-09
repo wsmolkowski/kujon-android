@@ -49,6 +49,7 @@ public class UsoswebLoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_usos_login);
         ButterKnife.bind(this);
+        getSupportActionBar().setTitle(R.string.login_title);
 
         String usosId = getIntent().getStringExtra(USOS_ID);
         String usosName = getIntent().getStringExtra(USOS_NAME);
@@ -89,15 +90,17 @@ public class UsoswebLoginActivity extends BaseActivity {
                             if (kujonResponse.isSuccessful()) {
                                 runOnUiThread(() -> {
                                     Toast.makeText(UsoswebLoginActivity.this, "Successful login", Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(UsoswebLoginActivity.this, CongratulationsActivity.class);
-                                    intent.putExtra(USOS_NAME, usosName);
-                                    startActivity(intent);
+                                    Intent data = new Intent();
+                                    data.putExtra(USOS_NAME, usosName);
+                                    setResult(RESULT_OK, data);
+                                    System.out.println("###" + getParent());
+                                    finish();
                                 });
                             } else {
                                 log.error("Login error");
                                 Toast.makeText(UsoswebLoginActivity.this, "Login error", Toast.LENGTH_SHORT).show();
+                                finish();
                             }
-                            finish();
                         }
                     });
 

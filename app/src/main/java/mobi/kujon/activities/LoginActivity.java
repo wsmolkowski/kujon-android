@@ -43,6 +43,7 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        getSupportActionBar().setTitle(R.string.main_login_title);
     }
 
     @Override protected void onStart() {
@@ -69,7 +70,7 @@ public class LoginActivity extends BaseActivity {
                 return;
             } else {
                 log.error(String.format("Login error requestCode=%s, resultCode=%s, data=%s", requestCode, resultCode, data));
-                Toast.makeText(LoginActivity.this, "Błąd logowania", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, R.string.login_error, Toast.LENGTH_SHORT).show();
             }
         }
 

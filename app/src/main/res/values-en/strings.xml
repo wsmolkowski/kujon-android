@@ -1,0 +1,12 @@
+<resources>
+    <string name="logout">Logout</string>
+    <string name="help">Help</string>
+    <string name="delete_account">Delete account</string>
+    <string name="contact_us">Contact us</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete_confirm"><![CDATA[Are you sure to delete Kujon account <b>%s</b>?]]></string>
+    <string name="no_date">No data</string>
+    <string name="no_photo">Empty photo</string>
+    <string name="app_link">Hey check out this new app: https://play.google.com/store/apps/details?id=mobi.kujon</string>
+    <string name="share_app">Share the app</string>
+</resources>
