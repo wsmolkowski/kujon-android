@@ -1,0 +1,3 @@
+* Fix #57 wykładowcy - prowadzone kursy i building name
+* Fix #58 Logowanie do uczelni
+* launcher icon
