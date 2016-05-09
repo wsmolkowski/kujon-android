@@ -87,20 +87,20 @@ public class UsoswebLoginActivity extends BaseActivity {
                             String responseString = response.body().string();
                             log.debug("Got response from server: " + responseString);
                             KujonResponse kujonResponse = gson.fromJson(responseString, KujonResponse.class);
-                            if (kujonResponse.isSuccessful()) {
-                                runOnUiThread(() -> {
+                            runOnUiThread(() -> {
+                                if (kujonResponse.isSuccessful()) {
                                     Toast.makeText(UsoswebLoginActivity.this, "Successful login", Toast.LENGTH_SHORT).show();
                                     Intent data = new Intent();
                                     data.putExtra(USOS_NAME, usosName);
                                     setResult(RESULT_OK, data);
-                                    System.out.println("###" + getParent());
                                     finish();
-                                });
-                            } else {
-                                log.error("Login error");
-                                Toast.makeText(UsoswebLoginActivity.this, "Login error", Toast.LENGTH_SHORT).show();
-                                finish();
-                            }
+
+                                } else {
+                                    log.error("Login error");
+                                    Toast.makeText(UsoswebLoginActivity.this, "Login error", Toast.LENGTH_SHORT).show();
+                                    finish();
+                                }
+                            });
                         }
                     });
 
