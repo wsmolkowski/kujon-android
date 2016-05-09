@@ -18,7 +18,6 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import mobi.kujon.R;
 import mobi.kujon.network.json.CourseEditionsConducted;
 import mobi.kujon.network.json.KujonResponse;
@@ -113,14 +112,5 @@ public class LecturerDetailsActivity extends BaseActivity {
         Intent intent = new Intent(activity, LecturerDetailsActivity.class);
         intent.putExtra(LECTURER_ID, lecturerId);
         activity.startActivity(intent);
-    }
-
-    @OnClick(R.id.lecturer_room)
-    public void navigate() {
-        if (isEmpty(lecturerRoom.getText().toString())) {
-            Toast.makeText(LecturerDetailsActivity.this, "Brak adresu", Toast.LENGTH_SHORT).show();
-        } else {
-            CommonUtils.showOnMap(this, lecturerRoom.getText().toString());
-        }
     }
 }
