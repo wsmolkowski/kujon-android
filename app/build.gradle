@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'io.fabric'
 apply plugin: 'com.getkeepsafe.dexcount'
+apply plugin: "androidsvgdrawable"
 
 android {
     compileSdkVersion 23
@@ -17,6 +18,11 @@ android {
         manifestPlaceholders = [manifestApplicationId: "${applicationId}",
                                 onesignal_app_id: "f01a20f9-bbe7-4c89-a017-bf8930c61cf4",
                                 onesignal_google_project_number: "896765768628"]
+    }
+
+    sourceSets{
+        main.res.srcDirs = [main.res.srcDirs, "build/generated/res/main"]
+        main.assets.srcDirs = [main.assets.srcDirs, "build/generated/assets/main"]
     }
 
     signingConfigs {
@@ -123,3 +129,26 @@ if (project.properties.keySet().containsAll(['storeFile', 'storePassword', 'keyA
 }
 
 apply plugin: 'com.google.gms.google-services'
+
+task svgToDrawablePng(type: fr.avianey.androidsvgdrawable.gradle.SvgDrawableTask) {
+    from = files('src/main/svg-png')
+    to = file('build/generated/res/main')
+    createMissingDirectories = true
+    overwriteMode = 'ifModified'
+    targetedDensities = ['ldpi', 'hdpi', 'mdpi', 'xhdpi', 'xxhdpi', 'xxxhdpi']
+    ninePatchConfig = file('src/main/svg-png/9patch.json')
+    outputFormat = 'PNG'
+    outputType = 'drawable'
+    svgMaskFiles = files('src/main/svg-png/mask')
+    svgMaskResourceFiles = files('src/main/svg-png/mask/svg')
+}
+
+task svgToMipmapPng(type: fr.avianey.androidsvgdrawable.gradle.SvgDrawableTask) {
+    from = files('src/main/svg-mipmap')
+    to = file('build/generated/res/main')
+    createMissingDirectories = true
+    overwriteMode = 'ifModified'
+    targetedDensities = ['ldpi', 'hdpi', 'mdpi', 'xhdpi', 'xxhdpi', 'xxxhdpi']
+    outputFormat = 'PNG'
+    outputType = 'mipmap'
+}
