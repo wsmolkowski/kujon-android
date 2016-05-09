@@ -27,7 +27,7 @@ public class CommonUtils {
         KujonApplication application = KujonApplication.getApplication();
         for (int i = 0; i < data.size(); i++) {
             String rowData = data.get(i);
-            TextView row = (TextView) layoutInflater.inflate(android.R.layout.simple_list_item_1, null);
+            TextView row = (TextView) layoutInflater.inflate(R.layout.list_row, null);
             row.setText(rowData);
             final int finalI = i;
             row.setOnClickListener(v -> listener.onClick(finalI));

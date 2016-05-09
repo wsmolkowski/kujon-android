@@ -76,7 +76,7 @@ public class LecturerDetailsActivity extends BaseActivity {
                     lecturerInterests.setText(lecturer.interests);
                     lecturerOfficeHours.setText(lecturer.officeHours);
 
-                    List<String> data = $.collect(lecturer.courseEditionsConducted, it -> it.courseName);
+                    List<String> data = $.collect(lecturer.courseEditionsConducted, it -> String.format("%s (%s)", it.courseName, it.termId));
                     CommonUtils.showList(layoutInflater, lecturerCourses, data, position -> {
                         CourseEditionsConducted course = lecturer.courseEditionsConducted.get(position);
                         CourseDetailsActivity.showCourseDetails(LecturerDetailsActivity.this, course.courseId, course.termId);
