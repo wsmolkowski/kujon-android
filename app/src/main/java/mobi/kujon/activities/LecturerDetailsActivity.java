@@ -52,6 +52,7 @@ public class LecturerDetailsActivity extends BaseActivity {
         setContentView(R.layout.lecturer_details);
         ButterKnife.bind(this);
         layoutInflater = getLayoutInflater();
+        getSupportActionBar().setTitle(R.string.lecturer_title);
 
         String lecturerId = getIntent().getStringExtra(LECTURER_ID);
 
@@ -64,7 +65,6 @@ public class LecturerDetailsActivity extends BaseActivity {
                     String title = isEmpty(lecturer.titles.before) ? "" : lecturer.titles.before;
                     String name = title + " " + lecturer.firstName + " " + lecturer.lastName;
                     lecturerName.setText(name);
-                    getSupportActionBar().setTitle(name);
                     lecturerStatus.setText(lecturer.staffStatus);
                     if (lecturer.room != null) {
                         lecturerRoom.setText(lecturer.room.buildingName.pl + ", pokój " + lecturer.room.number);

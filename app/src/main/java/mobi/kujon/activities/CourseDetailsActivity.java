@@ -58,6 +58,7 @@ public class CourseDetailsActivity extends BaseActivity {
         setContentView(R.layout.course_details);
         ButterKnife.bind(this);
         layoutInflater = getLayoutInflater();
+        getSupportActionBar().setTitle(R.string.course_title);
 
         Handler handler = new Handler();
 
@@ -70,8 +71,6 @@ public class CourseDetailsActivity extends BaseActivity {
                 showProgress(false);
                 if (ErrorHandlerUtil.handleResponse(response)) {
                     courseDetails = response.body().data;
-
-                    getSupportActionBar().setTitle(courseDetails.name);
 
                     courseFac.setText(courseDetails.facId.name);
                     courseLang.setText(courseDetails.langId);

@@ -17,4 +17,6 @@
     <string name="login_title">Logowanie do uczelni</string>
     <string name="main_login_title">Logowanie</string>
     <string name="login_error">Błąd logowania</string>
+    <string name="lecturer_title">Wykładowca</string>
+    <string name="course_title">Przedmiot</string>
 </resources>
