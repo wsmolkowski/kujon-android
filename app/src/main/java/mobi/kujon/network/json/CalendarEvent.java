@@ -7,11 +7,12 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import mobi.kujon.network.converters.EventConverter;
+import mobi.kujon.utils.EventUtils;
 
 public class CalendarEvent {
 
     public static final SimpleDateFormat HOURS = new SimpleDateFormat("HH:mm");
+    public static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @SerializedName("course_name")
     @Expose
@@ -41,13 +42,46 @@ public class CalendarEvent {
     @Expose
     public String buildingName;
 
-    public String getTime() {
-        Date startDate = EventConverter.getDate(startTime);
-        Date endDate = EventConverter.getDate(endTime);
+    public String getHoursFromTo(String separator) {
+        Date startDate = getStartDate();
+        Date endDate = getEndDate();
         Calendar start = Calendar.getInstance();
         Calendar end = Calendar.getInstance();
         start.setTime(startDate);
         end.setTime(endDate);
-        return String.format("%s - %s", HOURS.format(startDate), HOURS.format(endDate));
+        return String.format("%s%s%s", HOURS.format(startDate), separator, HOURS.format(endDate));
+    }
+
+    public String getHoursFromTo() {
+        return getHoursFromTo(" - ");
+    }
+
+    public Date getEndDate() {
+        return EventUtils.getDate(endTime);
+    }
+
+    public Date getStartDate() {
+        return EventUtils.getDate(startTime);
+    }
+
+    public String getStartDateFormatted() {
+        Date startDate = getStartDate();
+        Calendar start = Calendar.getInstance();
+        start.setTime(startDate);
+        return HOURS.format(startDate);
+    }
+
+    @Override public String toString() {
+        return "CalendarEvent{" +
+                "courseName='" + courseName + '\'' +
+                ", name='" + name + '\'' +
+                ", startTime='" + startTime + '\'' +
+                ", groupNumber=" + groupNumber +
+                ", roomNumber='" + roomNumber + '\'' +
+                ", endTime='" + endTime + '\'' +
+                ", courseId='" + courseId + '\'' +
+                ", type='" + type + '\'' +
+                ", buildingName='" + buildingName + '\'' +
+                '}';
     }
 }

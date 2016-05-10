@@ -1,4 +1,4 @@
-package mobi.kujon.network.converters;
+package mobi.kujon.utils;
 
 import com.alamkanak.weekview.WeekViewEvent;
 

@@ -3,11 +3,11 @@ package mobi.kujon.network.converters;
 import org.junit.Assert;
 import org.junit.Test;
 
-import static mobi.kujon.network.converters.EventConverter.getDate;
+import static mobi.kujon.utils.EventUtils.getDate;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
 
-public class EventConverterTest {
+public class EventUtilsTest {
 
     @Test
     public void testGetDate() throws Exception {

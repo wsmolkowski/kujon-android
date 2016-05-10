@@ -44,6 +44,7 @@ public class LoginActivity extends BaseActivity {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         getSupportActionBar().setTitle(R.string.main_login_title);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
     }
 
     @Override protected void onStart() {

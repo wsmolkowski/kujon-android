@@ -18,7 +18,6 @@ import com.github.underscore.$;
 
 import org.joda.time.DateTime;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -29,22 +28,20 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import mobi.kujon.R;
 import mobi.kujon.activities.BaseActivity;
-import mobi.kujon.activities.CourseDetailsActivity;
 import mobi.kujon.network.KujonBackendApi;
 import mobi.kujon.network.KujonBackendService;
-import mobi.kujon.network.converters.EventConverter;
-import mobi.kujon.network.converters.KujonWeekViewEvent;
 import mobi.kujon.network.json.CalendarEvent;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.utils.ErrorHandlerUtil;
+import mobi.kujon.utils.EventUtils;
+import mobi.kujon.utils.KujonWeekViewEvent;
+import mobi.kujon.utils.PlanEventsDownloader;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 
 public class PlanFragment extends Fragment implements MonthLoader.MonthChangeListener {
-
-    public static final SimpleDateFormat REST_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
     @Bind(R.id.weekView) WeekView weekView;
     @Bind(R.id.fab) FloatingActionButton fab;
@@ -59,8 +56,7 @@ public class PlanFragment extends Fragment implements MonthLoader.MonthChangeLis
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_plan, container, false);
         ButterKnife.bind(this, rootView);
 
-        DateTime now = DateTime.now();
-        String term = "" + (now.getMonthOfYear() > 9 ? now.getYear() : now.getYear() - 1);
+
 
         weekView.setMonthChangeListener(this);
         weekView.setFirstDayOfWeek(Calendar.MONDAY);
@@ -68,16 +64,8 @@ public class PlanFragment extends Fragment implements MonthLoader.MonthChangeLis
         weekView.setOnEventClickListener((event, eventRect) -> {
             KujonWeekViewEvent viewEvent = (KujonWeekViewEvent) event;
             CalendarEvent calendarEvent = viewEvent.getCalendarEvent();
-            AlertDialog.Builder dlgAlert = new AlertDialog.Builder(getActivity());
-            dlgAlert.setMessage(String.format("%s\nSala: %s\nBudynek: %s\nGrupa: %s\nTyp: %s",
-                    calendarEvent.getTime(), calendarEvent.roomNumber, calendarEvent.buildingName, calendarEvent.groupNumber, calendarEvent.type));
-            dlgAlert.setTitle(calendarEvent.name);
-            dlgAlert.setPositiveButton("OK", null);
-            dlgAlert.setNeutralButton("Zobacz przedmiot", (dialog, which) -> {
-                CourseDetailsActivity.showCourseDetails(getActivity(), calendarEvent.courseId, term);
-            });
-            dlgAlert.setCancelable(true);
-            alertDialog = dlgAlert.create();
+
+            alertDialog = EventUtils.getEventDialog(getActivity(), calendarEvent);
             alertDialog.show();
         });
 
@@ -123,7 +111,7 @@ public class PlanFragment extends Fragment implements MonthLoader.MonthChangeLis
 
         DateTime day = new DateTime(year, month, 1, 12, 0, 0);
         while (day.getMonthOfYear() == month) {
-            String restSuffix = REST_DATE_FORMAT.format(day.toDate());
+            String restSuffix = PlanEventsDownloader.REST_DATE_FORMAT.format(day.toDate());
             System.out.println(restSuffix);
             day = day.plusDays(7);
             String weekKey = "" + year + day.getWeekOfWeekyear();
@@ -139,7 +127,7 @@ public class PlanFragment extends Fragment implements MonthLoader.MonthChangeLis
                     activity.showProgress(false);
                     if (ErrorHandlerUtil.handleResponse(response)) {
                         List<CalendarEvent> data = response.body().data;
-                        List<WeekViewEvent> events = $.map(data, EventConverter::from);
+                        List<WeekViewEvent> events = $.map(data, EventUtils::from);
                         getEvents(year, month).addAll(events);
                         weekView.notifyDatasetChanged();
                     }
