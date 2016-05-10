@@ -18,7 +18,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.underscore.$;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -27,7 +26,6 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.network.json.Usos;
@@ -137,9 +135,8 @@ public class UsosesActivity extends BaseActivity {
         @Override public void onBindViewHolder(UsosViewHolder holder, int position) {
             Usos usos = filteredUsoses().get(position);
             holder.name.setText(usos.name);
-            holder.usosId = usos.usosId;
-            holder.usosName = usos.name;
-            Picasso.with(KujonApplication.getApplication()).load(usos.logo).into(holder.logo);
+            holder.usos = usos;
+            picasso.load(usos.logo).into(holder.logo);
         }
 
         @Override public int getItemCount() {
@@ -166,20 +163,18 @@ public class UsosesActivity extends BaseActivity {
 
         @Bind(R.id.usos_name) TextView name;
         @Bind(R.id.usos_logo) ImageView logo;
-        String usosId;
-        String usosName;
+        Usos usos;
 
         public UsosViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(v -> {
                 AlertDialog.Builder dlgAlert = new AlertDialog.Builder(UsosesActivity.this);
-                dlgAlert.setMessage("Zostaniesz teraz przekierowany do strony " + usosName + ", aby zalogować się na Twoje konto w USOS");
+                dlgAlert.setMessage("Zostaniesz teraz przekierowany do strony " + usos.name + ", aby zalogować się na Twoje konto w USOS");
                 dlgAlert.setCancelable(false);
                 dlgAlert.setPositiveButton("OK", (dialog, which) -> {
                     Intent intent = new Intent(UsosesActivity.this, UsoswebLoginActivity.class);
-                    intent.putExtra(UsoswebLoginActivity.USOS_ID, usosId);
-                    intent.putExtra(UsoswebLoginActivity.USOS_NAME, usosName);
+                    intent.putExtra(UsoswebLoginActivity.USOS_POJO, gson.toJson(usos));
                     startActivityForResult(intent, USOS_LOGIN_REQUEST_CODE);
                 });
                 dlgAlert.setNegativeButton("Cofnij", (dialog, which) -> {
@@ -200,8 +195,8 @@ public class UsosesActivity extends BaseActivity {
         System.out.println("requestCode = [" + requestCode + "], resultCode = [" + resultCode + "], data = [" + data + "]");
         if (requestCode == USOS_LOGIN_REQUEST_CODE && resultCode == RESULT_OK) {
             Intent intent = new Intent(this, CongratulationsActivity.class);
-            String usosName = data.getStringExtra(UsoswebLoginActivity.USOS_NAME);
-            intent.putExtra(UsoswebLoginActivity.USOS_NAME, usosName);
+            String usosPojo = data.getStringExtra(UsoswebLoginActivity.USOS_POJO);
+            intent.putExtra(UsoswebLoginActivity.USOS_POJO, usosPojo);
             startActivity(intent);
             finish();
         }

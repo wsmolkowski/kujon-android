@@ -13,7 +13,6 @@ import android.widget.Toast;
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
-import com.google.gson.Gson;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +24,7 @@ import butterknife.ButterKnife;
 import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
 import mobi.kujon.network.json.KujonResponse;
+import mobi.kujon.network.json.Usos;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -33,16 +33,13 @@ import okhttp3.Response;
 
 public class UsoswebLoginActivity extends BaseActivity {
 
-    public static final String USOS_ID = "USOS_ID";
-    public static final String USOS_NAME = "USOS_NAME";
+    public static final String USOS_POJO = "USOS_POJO";
     public static final Logger log = LoggerFactory.getLogger(UsoswebLoginActivity.class);
 
     @Bind(R.id.webView) WebView webView;
     @Bind(R.id.progressBar) ProgressBar progressBar;
 
     OkHttpClient client = new OkHttpClient();
-
-    Gson gson = new Gson();
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         log.info("UsoswebLoginActivity");
@@ -51,8 +48,8 @@ public class UsoswebLoginActivity extends BaseActivity {
         ButterKnife.bind(this);
         getSupportActionBar().setTitle(R.string.login_title);
 
-        String usosId = getIntent().getStringExtra(USOS_ID);
-        String usosName = getIntent().getStringExtra(USOS_NAME);
+        String usosPojo = getIntent().getStringExtra(USOS_POJO);
+        Usos usos = gson.fromJson(usosPojo, Usos.class);
         webView.setWebViewClient(new WebViewClient() {
             @Override public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 log.info("onPageStarted: " + url);
@@ -91,7 +88,7 @@ public class UsoswebLoginActivity extends BaseActivity {
                                 if (kujonResponse.isSuccessful()) {
                                     Toast.makeText(UsoswebLoginActivity.this, "Successful login", Toast.LENGTH_SHORT).show();
                                     Intent data = new Intent();
-                                    data.putExtra(USOS_NAME, usosName);
+                                    data.putExtra(USOS_POJO, usosPojo);
                                     setResult(RESULT_OK, data);
                                     finish();
 
@@ -111,7 +108,7 @@ public class UsoswebLoginActivity extends BaseActivity {
         });
         GoogleSignInResult loginStatus = KujonApplication.getApplication().getLoginStatus();
         GoogleSignInAccount account = loginStatus.getSignInAccount();
-        String url = String.format("https:/api.kujon.mobi/authentication/mobi?email=%s&token=%s&usos_id=%s", account.getEmail(), account.getIdToken(), usosId);
+        String url = String.format("https:/api.kujon.mobi/authentication/mobi?email=%s&token=%s&usos_id=%s", account.getEmail(), account.getIdToken(), usos.usosId);
         log.info("Loading urs: " + url);
         webView.loadUrl(url);
     }
