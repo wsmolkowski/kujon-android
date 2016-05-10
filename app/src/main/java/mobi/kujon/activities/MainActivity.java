@@ -88,23 +88,15 @@ public class MainActivity extends BaseActivity {
 
         drawer.addItem(new DividerDrawerItem());
         drawer.addItem(new PrimaryDrawerItem()
-                .withName("Wyloguj")
+                .withName(R.string.settings)
                 .withSelectable(false)
-                .withIcon(R.drawable.logout)
+                .withIcon(R.drawable.settings)
                 .withOnDrawerItemClickListener((view, position, drawerItem) -> {
-                    logout();
                     drawer.closeDrawer();
+                    startActivity(new Intent(this, PreferencesActivity.class));
                     return true;
                 }));
-        drawer.addItem(new PrimaryDrawerItem()
-                .withName("Skasuj konto")
-                .withSelectable(false)
-                .withIcon(R.drawable.remove_account)
-                .withOnDrawerItemClickListener((view, position, drawerItem) -> {
-                    deleteAccount();
-                    drawer.closeDrawer();
-                    return true;
-                }));
+
         drawer.addItem(new PrimaryDrawerItem()
                 .withName("Prześlij opinię")
                 .withSelectable(false)

@@ -31,12 +31,12 @@ public class ErrorHandlerUtil {
             }
         }
         log.error(finalMessage);
-        Toast.makeText(KujonApplication.getApplication(), finalMessage, Toast.LENGTH_LONG).show();
+        Toast.makeText(KujonApplication.getApplication(), finalMessage, Toast.LENGTH_SHORT).show();
     }
 
     public static void handleError(Throwable throwable) {
         log.error(throwable.getMessage());
-        Toast.makeText(KujonApplication.getApplication(), "Error: " + throwable.getMessage(), Toast.LENGTH_LONG).show();
+        Toast.makeText(KujonApplication.getApplication(), "Error: " + throwable.getMessage(), Toast.LENGTH_SHORT).show();
         Crashlytics.logException(throwable);
     }
 

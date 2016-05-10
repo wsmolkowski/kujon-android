@@ -20,4 +20,5 @@
     <string name="lecturer_title">Wykładowca</string>
     <string name="course_title">Przedmiot</string>
     <string name="faculty_title">Jednostka</string>
+    <string name="settings">Ustawienia</string>
 </resources>

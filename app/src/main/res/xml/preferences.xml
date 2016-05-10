@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <Preference
+        android:key="logout"
+        android:icon="@drawable/logout"
+        android:title="@string/logout"/>
+
+    <Preference
+        android:key="delete_account"
+        android:icon="@drawable/remove_account"
+        android:title="@string/delete_account"/>
+
+</PreferenceScreen>
