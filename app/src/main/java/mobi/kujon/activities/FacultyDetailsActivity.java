@@ -3,7 +3,6 @@ package mobi.kujon.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
@@ -44,8 +43,7 @@ public class FacultyDetailsActivity extends BaseActivity {
         setContentView(R.layout.activity_faculty);
         ButterKnife.bind(this);
         layoutInflater = getLayoutInflater();
-
-        Handler handler = new Handler();
+        getSupportActionBar().setTitle(R.string.faculty_title);
 
         String facultyId = getIntent().getStringExtra(FACULTY_ID);
 
@@ -55,7 +53,6 @@ public class FacultyDetailsActivity extends BaseActivity {
                 showProgress(false);
                 if (ErrorHandlerUtil.handleResponse(response)) {
                     Faculty2 faculty = response.body().data;
-                    getSupportActionBar().setTitle(faculty.name);
 
                     facultyName.setText(faculty.name);
                     postalAddress.setText(faculty.postalAddress);
