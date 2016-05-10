@@ -8,6 +8,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.mikepenz.materialdrawer.AccountHeader;
@@ -26,18 +28,21 @@ import mobi.kujon.fragments.CoursesFragment;
 import mobi.kujon.fragments.GradesFragment;
 import mobi.kujon.fragments.LecturersFragment;
 import mobi.kujon.fragments.PlanFragment;
+import mobi.kujon.fragments.PlanListFragment;
 import mobi.kujon.fragments.TermsFragment;
 import mobi.kujon.fragments.UserInfoFragment;
 
 public class MainActivity extends BaseActivity {
 
+    public static final int CALENDAR_POSITION = 1;
     @Bind(R.id.toolbar) Toolbar toolbar;
     Handler handler = new Handler();
 
     public String[] TITLES = new String[]{"Użytkownik", "Plan zajęć", "Przedmioty", "Oceny", "Wykładowcy", "Cykle"};
     public int[] ICONS = new int[]{R.drawable.user, R.drawable.plan, R.drawable.courses, R.drawable.grades, R.drawable.teachers, R.drawable.terms};
     public Fragment[] FRAGMENTS = new Fragment[]{
-            new UserInfoFragment(), new PlanFragment(), new CoursesFragment(), new GradesFragment(), new LecturersFragment(), new TermsFragment()};
+            new UserInfoFragment(), new PlanListFragment(), new CoursesFragment(), new GradesFragment(), new LecturersFragment(), new TermsFragment()};
+    private Drawer drawer;
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +68,7 @@ public class MainActivity extends BaseActivity {
                 .addProfiles(profileDrawerItem)
                 .build();
 
-        Drawer drawer = new DrawerBuilder()
+        drawer = new DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(toolbar)
                 .withCloseOnClick(true)
@@ -76,7 +81,7 @@ public class MainActivity extends BaseActivity {
                     .withName(TITLES[i])
                     .withIcon(ICONS[i])
                     .withOnDrawerItemClickListener((view, position, drawerItem) -> {
-                        showFragment(drawer, FRAGMENTS[finalI], true);
+                        showFragment(FRAGMENTS[finalI], true);
                         return true;
                     }));
         }
@@ -129,16 +134,33 @@ public class MainActivity extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         drawer.getActionBarDrawerToggle().setDrawerIndicatorEnabled(true);
 
-        showFragment(drawer, FRAGMENTS[0], false);
+        showFragment(FRAGMENTS[0], false);
     }
 
-    private void showFragment(Drawer drawer, Fragment fragment, boolean addToBackStack) {
+    private void showFragment(Fragment fragment, boolean addToBackStack) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.placeholder, fragment);
         if (addToBackStack) {
             fragmentTransaction.addToBackStack(null);
         }
         fragmentTransaction.commit();
-        drawer.closeDrawer();
+        this.drawer.closeDrawer();
     }
+
+    @Override public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.switch_to_calendar:
+                FRAGMENTS[CALENDAR_POSITION] = new PlanFragment();
+                showFragment(FRAGMENTS[CALENDAR_POSITION], true);
+                return true;
+            case R.id.switch_to_list:
+                FRAGMENTS[CALENDAR_POSITION] = new PlanListFragment();
+                showFragment(FRAGMENTS[CALENDAR_POSITION], true);
+                return true;
+            default:
+                Toast.makeText(MainActivity.this, "" + item.getTitle(), Toast.LENGTH_SHORT).show();
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
 }

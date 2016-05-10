@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -72,6 +74,8 @@ public class PlanFragment extends Fragment implements MonthLoader.MonthChangeLis
             Toast.makeText(getActivity(), "Wróć do \"dzisiaj\"", Toast.LENGTH_SHORT).show();
             return true;
         });
+
+        setHasOptionsMenu(true);
 
         return rootView;
     }
@@ -157,5 +161,10 @@ public class PlanFragment extends Fragment implements MonthLoader.MonthChangeLis
             alertDialog.dismiss();
             alertDialog = null;
         }
+    }
+
+    @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.calendar_plan_menu, menu);
+        super.onCreateOptionsMenu(menu,inflater);
     }
 }

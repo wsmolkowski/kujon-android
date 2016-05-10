@@ -7,6 +7,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -45,6 +47,7 @@ public class PlanListFragment extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_plan_list, container, false);
         ButterKnife.bind(this, rootView);
         adapter = new Adapter();
+        setHasOptionsMenu(true);
         return rootView;
     }
 
@@ -68,6 +71,7 @@ public class PlanListFragment extends Fragment {
                 SortedMap<LocalDate, List<CalendarEvent>> localDateListMap = planEventsDownloader.groupEvents(result);
                 System.out.println(localDateListMap);
                 adapter.setData(localDateListMap);
+                fab();
             } else {
                 Toast.makeText(activity, "Error", Toast.LENGTH_SHORT).show();
             }
@@ -88,6 +92,11 @@ public class PlanListFragment extends Fragment {
             }
         }
         layoutManager.scrollToPositionWithOffset(index, 0);
+    }
+
+    @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.plan_list_menu, menu);
+        super.onCreateOptionsMenu(menu,inflater);
     }
 
     protected class Adapter extends SectionedRecyclerViewAdapter<ViewHolder> {
