@@ -10,4 +10,10 @@
         android:icon="@drawable/remove_account"
         android:title="@string/delete_account"/>
 
+    <Preference
+        android:key="regulations"
+        android:icon="@drawable/web"
+        android:title="@string/regulations"/>
+
+
 </PreferenceScreen>

@@ -21,4 +21,6 @@
     <string name="course_title">Przedmiot</string>
     <string name="faculty_title">Jednostka</string>
     <string name="settings">Ustawienia</string>
+    <string name="regulations">Regulamin</string>
+    <string name="regulations_url">https://kujon.mobi/#disclaimer</string>
 </resources>
