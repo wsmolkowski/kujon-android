@@ -103,7 +103,7 @@ public class UserInfoFragment extends Fragment {
                     showUsosLogo(user.usos_id, usosLogo);
                     picture.setOnClickListener(v -> ImageActivity.show(getActivity(), user.picture, name));
                     studentStatus.setText(user.student_status);
-                    studentAccountNumber.setText(user.student_number);
+                    studentAccountNumber.setText(user.id);
                     List<String> collect = $.collect(user.student_programmes, it -> it.programme.description.split(",")[0]);
                     studentProgrammes.removeAllViews();
                     CommonUtils.showList(activity.getLayoutInflater(), studentProgrammes, collect, position -> {
