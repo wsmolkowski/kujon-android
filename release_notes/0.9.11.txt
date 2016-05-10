@@ -1,0 +1,9 @@
+* Fix #57 wykładowcy - prowadzone kursy i building name
+* Fix #44 W menu na końcu Dodać Ustawienia
+* Fix #65 jednostka zmiana na górnej belce wyświetlanie Jednostka a nie nazwa jednostki
+* #40 plan - dodanie listy jako defaultowy widok
+* #64 numer indeksu i numer konta - wyświetla się ta sama informacja tj. numer indeksu
+* Fix #61 gratulacje udało się zalogować - dodać na belce Logowanie do uczelni
+* Fix #62 bleka górna - wykładowca i przedmiot
+* bug fix https://fabric.io/wojciech-smolkowskis-projects/android/apps/mobi.kujon/issues/572dd623ffcdc042507b968f
+* typo
