@@ -7,6 +7,7 @@ import org.joda.time.LocalDate;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
@@ -63,6 +64,20 @@ public class PlanEventsDownloader {
 
         return Task.whenAllResult(tasks).onSuccess(task -> $.flatten(task.getResult()));
     }
+
+    public Task<List<CalendarEvent>> downloadEventsForThreeMonths() {
+        DateTime now = DateTime.now();
+        Task<List<CalendarEvent>> events0 = downloadEventsFor(now.getYear(), now.getMonthOfYear());
+        DateTime nextMonth = now.plusMonths(1);
+        Task<List<CalendarEvent>> events1 = downloadEventsFor(nextMonth.getYear(), nextMonth.getMonthOfYear());
+        DateTime another = nextMonth.plusMonths(1);
+        Task<List<CalendarEvent>> events2 = downloadEventsFor(another.getYear(), another.getMonthOfYear());
+
+        Task<List<CalendarEvent>> listTask = Task.whenAllResult(Arrays.asList(events0, events1, events2))
+                .onSuccess(task -> $.flatten(task.getResult()));
+        return listTask.onSuccess(task -> $.uniq(task.getResult()));
+    }
+
 
     public SortedMap<LocalDate, List<CalendarEvent>> groupEvents(List<CalendarEvent> events) {
         Map<LocalDate, List<CalendarEvent>> map = $.groupBy(events, it -> {

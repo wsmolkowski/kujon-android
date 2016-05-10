@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.afollestad.sectionedrecyclerview.SectionedRecyclerViewAdapter;
 
+import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 
 import java.util.List;
@@ -23,6 +24,7 @@ import java.util.TreeMap;
 import bolts.Task;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import mobi.kujon.R;
 import mobi.kujon.activities.BaseActivity;
 import mobi.kujon.network.json.CalendarEvent;
@@ -37,6 +39,7 @@ public class PlanListFragment extends Fragment {
     @Bind(R.id.recyclerView) RecyclerView recyclerView;
     private BaseActivity activity;
     private Adapter adapter;
+    private LinearLayoutManager layoutManager;
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_plan_list, container, false);
@@ -49,14 +52,15 @@ public class PlanListFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         activity = ((BaseActivity) getActivity());
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(activity));
+        layoutManager = new LinearLayoutManager(activity);
+        recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
     }
 
     @Override public void onStart() {
         super.onStart();
         activity.showProgress(true);
-        planEventsDownloader.downloadEventsFor(2016, 5).continueWith(task -> {
+        planEventsDownloader.downloadEventsForThreeMonths().continueWith(task -> {
             activity.showProgress(false);
             if ((task.getError() == null)) {
                 List<CalendarEvent> result = task.getResult();
@@ -69,6 +73,21 @@ public class PlanListFragment extends Fragment {
             }
             return null;
         }, Task.UI_THREAD_EXECUTOR);
+    }
+
+    @OnClick(R.id.fab) public void fab() {
+        int index = 0;
+        DateTime now = DateTime.now();
+        for (Object key : adapter.data.keySet().toArray()) {
+            LocalDate localDate = (LocalDate) key;
+            if (now.toLocalDate().isAfter(localDate)) {
+                index += 1;
+                index += adapter.data.get(localDate).size();
+            } else {
+                break;
+            }
+        }
+        layoutManager.scrollToPositionWithOffset(index, 0);
     }
 
     protected class Adapter extends SectionedRecyclerViewAdapter<ViewHolder> {

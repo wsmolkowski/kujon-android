@@ -56,8 +56,6 @@ public class PlanFragment extends Fragment implements MonthLoader.MonthChangeLis
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_plan, container, false);
         ButterKnife.bind(this, rootView);
 
-
-
         weekView.setMonthChangeListener(this);
         weekView.setFirstDayOfWeek(Calendar.MONDAY);
         weekView.setShowNowLine(true);

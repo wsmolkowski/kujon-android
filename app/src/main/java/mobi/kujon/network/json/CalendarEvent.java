@@ -84,4 +84,25 @@ public class CalendarEvent {
                 ", buildingName='" + buildingName + '\'' +
                 '}';
     }
+
+    @Override public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CalendarEvent that = (CalendarEvent) o;
+
+        if (!name.equals(that.name)) return false;
+        if (!startTime.equals(that.startTime)) return false;
+        if (!endTime.equals(that.endTime)) return false;
+        return courseId.equals(that.courseId);
+
+    }
+
+    @Override public int hashCode() {
+        int result = name.hashCode();
+        result = 31 * result + startTime.hashCode();
+        result = 31 * result + endTime.hashCode();
+        result = 31 * result + courseId.hashCode();
+        return result;
+    }
 }
