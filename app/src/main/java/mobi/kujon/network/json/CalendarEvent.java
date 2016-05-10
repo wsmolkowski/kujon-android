@@ -6,6 +6,7 @@ import com.google.gson.annotations.SerializedName;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import mobi.kujon.utils.EventUtils;
 
@@ -41,6 +42,8 @@ public class CalendarEvent {
     @SerializedName("building_name")
     @Expose
     public String buildingName;
+
+    @SerializedName("lecturers") @Expose public List<LecturerLong> lecturers;
 
     public String getHoursFromTo(String separator) {
         Date startDate = getStartDate();

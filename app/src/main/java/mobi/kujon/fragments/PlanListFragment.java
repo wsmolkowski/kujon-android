@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.sectionedrecyclerview.SectionedRecyclerViewAdapter;
+import com.github.underscore.$;
 
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -30,6 +31,7 @@ import butterknife.OnClick;
 import mobi.kujon.R;
 import mobi.kujon.activities.BaseActivity;
 import mobi.kujon.network.json.CalendarEvent;
+import mobi.kujon.network.json.LecturerLong;
 import mobi.kujon.utils.EventUtils;
 import mobi.kujon.utils.PlanEventsDownloader;
 
@@ -96,7 +98,7 @@ public class PlanListFragment extends Fragment {
 
     @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.plan_list_menu, menu);
-        super.onCreateOptionsMenu(menu,inflater);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     protected class Adapter extends SectionedRecyclerViewAdapter<ViewHolder> {
@@ -125,7 +127,8 @@ public class PlanListFragment extends Fragment {
 
         @Override public void onBindViewHolder(ViewHolder holder, int section, int relativePosition, int absolutePosition) {
             CalendarEvent event = coursesInSection(section).get(relativePosition);
-            holder.eventName.setText(event.name);
+            String lecturers = $.join($.collect(event.lecturers, (LecturerLong it) -> String.format("%s %s %s", it.titles.before, it.firstName, it.lastName)), ", ");
+            holder.eventName.setText(event.name + "\n" + lecturers);
             holder.time.setText(event.getStartDateFormatted() + "\ns. " + event.roomNumber);
             holder.section.setVisibility(View.GONE);
             holder.dataLayout.setVisibility(View.VISIBLE);
