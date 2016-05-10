@@ -10,7 +10,7 @@ public class Room {
     public String buildingId;
     @SerializedName("building_name")
     @Expose
-    public BuildingName buildingName;
+    public String buildingName;
     @SerializedName("number")
     @Expose
     public String number;

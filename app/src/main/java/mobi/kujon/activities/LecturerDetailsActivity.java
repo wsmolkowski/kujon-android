@@ -67,7 +67,7 @@ public class LecturerDetailsActivity extends BaseActivity {
                     lecturerName.setText(name);
                     lecturerStatus.setText(lecturer.staffStatus);
                     if (lecturer.room != null) {
-                        lecturerRoom.setText(lecturer.room.buildingName.pl + ", pokój " + lecturer.room.number);
+                        lecturerRoom.setText(lecturer.room.buildingName + ", pokój " + lecturer.room.number);
                     }
                     String email = String.format("<a href=\"%s\">Sprawdź w USOS</a>", lecturer.emailUrl);
                     lecturerEmail.setText(Html.fromHtml(email));
