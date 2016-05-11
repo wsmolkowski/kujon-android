@@ -56,6 +56,7 @@ public class PlanListFragment extends Fragment {
     @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         activity = ((BaseActivity) getActivity());
+        activity.getSupportActionBar().setTitle(R.string.plan_title);
 
         layoutManager = new LinearLayoutManager(activity);
         recyclerView.setLayoutManager(layoutManager);

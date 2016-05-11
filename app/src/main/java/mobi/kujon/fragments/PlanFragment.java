@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -146,7 +145,7 @@ public class PlanFragment extends Fragment implements MonthLoader.MonthChangeLis
     @Override public void onStart() {
         super.onStart();
         gotoNow();
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Plan zajęć");
+        activity.getSupportActionBar().setTitle(R.string.plan_title);
     }
 
     private void gotoNow() {
