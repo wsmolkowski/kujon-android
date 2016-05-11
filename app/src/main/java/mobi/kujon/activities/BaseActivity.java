@@ -28,7 +28,6 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.gson.Gson;
-import com.jakewharton.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -74,9 +73,7 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
 
         kujonBackendApi = KujonBackendService.getInstance().getKujonBackendApi();
 
-        picasso = new Picasso.Builder(this)
-                .downloader(new OkHttp3Downloader(KujonBackendService.getInstance().getHttpClient()))
-                .build();
+        picasso = KujonBackendService.getInstance().getPicasso();
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
