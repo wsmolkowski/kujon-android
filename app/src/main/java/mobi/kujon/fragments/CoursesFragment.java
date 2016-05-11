@@ -11,9 +11,9 @@ import android.widget.TextView;
 
 import com.afollestad.sectionedrecyclerview.SectionedRecyclerViewAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedMap;
-import java.util.TreeMap;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -52,18 +52,18 @@ public class CoursesFragment extends ListFragment {
     }
 
     @Override protected void loadData() {
-        backendApi.coursesEditionsByTerm().enqueue(new Callback<KujonResponse<SortedMap<String, List<Course>>>>() {
+        backendApi.coursesEditionsByTerm().enqueue(new Callback<KujonResponse<List<SortedMap<String, List<Course>>>>>() {
             @Override
-            public void onResponse(Call<KujonResponse<SortedMap<String, List<Course>>>> call, Response<KujonResponse<SortedMap<String, List<Course>>>> response) {
+            public void onResponse(Call<KujonResponse<List<SortedMap<String, List<Course>>>>> call, Response<KujonResponse<List<SortedMap<String, List<Course>>>>> response) {
                 activity.showProgress(false);
                 swipeContainer.setRefreshing(false);
                 if (ErrorHandlerUtil.handleResponse(response)) {
-                    SortedMap<String, List<Course>> data = response.body().data;
+                    List<SortedMap<String, List<Course>>> data = response.body().data;
                     adapter.setData(data);
                 }
             }
 
-            @Override public void onFailure(Call<KujonResponse<SortedMap<String, List<Course>>>> call, Throwable t) {
+            @Override public void onFailure(Call<KujonResponse<List<SortedMap<String, List<Course>>>>> call, Throwable t) {
                 activity.showProgress(false);
                 swipeContainer.setRefreshing(false);
                 ErrorHandlerUtil.handleError(t);
@@ -73,7 +73,7 @@ public class CoursesFragment extends ListFragment {
 
     protected class Adapter extends SectionedRecyclerViewAdapter<ViewHolder> {
 
-        SortedMap<String, List<Course>> data = new TreeMap<>();
+        List<SortedMap<String, List<Course>>> data = new ArrayList<>();
 
         @Override public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_course, parent, false);
@@ -81,7 +81,7 @@ public class CoursesFragment extends ListFragment {
         }
 
         @Override public int getSectionCount() {
-            return data.keySet().size();
+            return data.size();
         }
 
         @Override public int getItemCount(int section) {
@@ -104,18 +104,18 @@ public class CoursesFragment extends ListFragment {
             holder.courseLayout.setVisibility(View.VISIBLE);
         }
 
-        public void setData(SortedMap<String, List<Course>> data) {
+        public void setData(List<SortedMap<String, List<Course>>> data) {
             this.data = data;
             notifyDataSetChanged();
         }
 
         List<Course> coursesInSection(int section) {
-            List<Course>[] courses = data.values().toArray(new List[0]);
-            return courses[section];
+            List<Course> courses = data.get(section).get(data.get(section).firstKey());
+            return courses;
         }
 
         String sectionName(int section) {
-            return ((String) data.keySet().toArray()[section]);
+            return data.get(section).firstKey();
         }
     }
 

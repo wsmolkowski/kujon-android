@@ -51,7 +51,7 @@ public interface KujonBackendApi {
 
     @GET("courseseditions") Call<KujonResponse<List<Course>>> coursesEditions();
 
-    @GET("courseseditionsbyterm") Call<KujonResponse<SortedMap<String, List<Course>>>> coursesEditionsByTerm();
+    @GET("courseseditionsbyterm") Call<KujonResponse<List<SortedMap<String, List<Course>>>>> coursesEditionsByTerm();
 
     @GET("courseseditions/{courseId}/{termId}")
     Call<KujonResponse<CourseDetails>> courseDetails(@Path("courseId") String courseId, @Path("termId") String termId);
