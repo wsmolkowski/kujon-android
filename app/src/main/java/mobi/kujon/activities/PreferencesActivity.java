@@ -1,7 +1,5 @@
 package mobi.kujon.activities;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
@@ -43,9 +41,7 @@ public class PreferencesActivity extends BaseActivity {
             Preference regulations = findPreference("regulations");
             regulations.setOnPreferenceClickListener(preference -> {
                 String url = activity.getString(R.string.regulations_url);
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse(url));
-                startActivity(intent);
+                WebViewAcitivty.showUrl(activity, url);
                 return true;
             });
         }

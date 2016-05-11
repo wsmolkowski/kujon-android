@@ -24,7 +24,6 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
         <activity
             android:name=".activities.UsosesActivity"
             android:screenOrientation="portrait"
@@ -45,23 +44,20 @@
         <activity
             android:name=".activities.StudentDetailsActivity"
             android:screenOrientation="portrait"/>
-
         <activity
             android:name=".activities.ImageActivity"
             android:screenOrientation="portrait"/>
-
         <activity
             android:name=".activities.CongratulationsActivity"
             android:screenOrientation="portrait"/>
-
         <activity
             android:name=".activities.FacultyDetailsActivity"
             android:screenOrientation="portrait"/>
-
         <activity
             android:name=".activities.PreferencesActivity"
             android:screenOrientation="portrait"/>
-
+        <activity android:name=".activities.WebViewAcitivty">
+        </activity>
     </application>
 
 </manifest>
