@@ -29,7 +29,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="60dp"
+            android:minHeight="80dp"
             android:orientation="horizontal"
             >
 
@@ -40,7 +40,7 @@
                 android:layout_margin="4dp"
                 android:background="@color/colorPrimaryDark"
                 android:gravity="center"
-                android:text="8:00\ns. 1050"
+                android:text="8:00\n10:00\ns. 1050"
                 android:textColor="@android:color/white"/>
 
             <TextView

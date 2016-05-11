@@ -130,7 +130,7 @@ public class PlanListFragment extends Fragment {
             CalendarEvent event = coursesInSection(section).get(relativePosition);
             String lecturers = $.join($.collect(event.lecturers, (LecturerLong it) -> String.format("%s %s %s", it.titles.before, it.firstName, it.lastName)), ", ");
             holder.eventName.setText(event.name + "\n" + lecturers);
-            holder.time.setText(event.getStartDateFormatted() + "\ns. " + event.roomNumber);
+            holder.time.setText(event.getHoursFromTo("\n") + "\ns. " + event.roomNumber);
             holder.section.setVisibility(View.GONE);
             holder.dataLayout.setVisibility(View.VISIBLE);
             holder.event = event;
