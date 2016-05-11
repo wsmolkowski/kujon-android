@@ -114,6 +114,12 @@ public class KujonApplication extends FoamApplication implements OneSignal.Notif
         });
     }
 
+    public void finishAllAcitities(){
+        for (Activity activity : stack) {
+            activity.finish();
+        }
+    }
+
     public static KujonApplication getApplication() {
         return instance;
     }

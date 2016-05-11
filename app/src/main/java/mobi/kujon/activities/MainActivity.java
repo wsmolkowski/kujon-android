@@ -3,7 +3,6 @@ package mobi.kujon.activities;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -36,7 +35,6 @@ public class MainActivity extends BaseActivity {
 
     public static final int CALENDAR_POSITION = 1;
     @Bind(R.id.toolbar) Toolbar toolbar;
-    Handler handler = new Handler();
 
     public String[] TITLES = new String[]{"Użytkownik", "Plan zajęć", "Przedmioty", "Oceny", "Wykładowcy", "Cykle"};
     public int[] ICONS = new int[]{R.drawable.user, R.drawable.plan, R.drawable.courses, R.drawable.grades, R.drawable.teachers, R.drawable.terms};

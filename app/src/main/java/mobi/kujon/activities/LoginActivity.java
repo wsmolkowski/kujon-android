@@ -19,6 +19,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
+import mobi.kujon.network.KujonBackendService;
 import mobi.kujon.network.json.Config;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.utils.ErrorHandlerUtil;
@@ -83,6 +84,7 @@ public class LoginActivity extends BaseActivity {
             log.info("handle: Login successfull. Checking usos paired status");
             progress(true);
             KujonApplication.getApplication().setLoginStatus(result);
+            KujonBackendService.getInstance().clearCache();
             kujonBackendApi.config().enqueue(new Callback<KujonResponse<Config>>() {
                 @Override public void onResponse(Call<KujonResponse<Config>> call, Response<KujonResponse<Config>> response) {
                     if (ErrorHandlerUtil.handleResponse(response)) {

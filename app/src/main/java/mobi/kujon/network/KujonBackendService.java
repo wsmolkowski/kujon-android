@@ -37,12 +37,13 @@ public class KujonBackendService {
 
     private Context context = KujonApplication.getApplication();
     private final File httpCacheDirectory;
+    private final Cache cache;
 
     private KujonBackendService() {
 
         httpCacheDirectory = new File(context.getCacheDir(), "responses");
         int cacheSize = 10 * 1024 * 1024; // 10 MiB
-        Cache cache = new Cache(httpCacheDirectory, cacheSize);
+        cache = new Cache(httpCacheDirectory, cacheSize);
 
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         logging.setLevel(HttpLoggingInterceptor.Level.HEADERS);
@@ -65,7 +66,7 @@ public class KujonBackendService {
         kujonBackendApi = retrofit.create(KujonBackendApi.class);
 
         picasso = new Picasso.Builder(context)
-                .downloader(new OkHttp3Downloader(KujonBackendService.getInstance().getHttpClient()))
+                .downloader(new OkHttp3Downloader(httpClient))
                 .build();
 
         picasso.setIndicatorsEnabled(BuildConfig.DEBUG);
@@ -172,6 +173,14 @@ public class KujonBackendService {
 
     public Picasso getPicasso() {
         return picasso;
+    }
+
+    public void clearCache(){
+        try {
+            cache.evictAll();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public File getHttpCacheDirectory() {

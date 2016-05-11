@@ -30,8 +30,6 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
-import java.io.File;
-
 import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
 import mobi.kujon.network.KujonBackendApi;
@@ -98,6 +96,11 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
 
     @Override protected void onStart() {
         super.onStart();
+        checkLoggingStatus(this::handle);
+    }
+
+    @Override protected void onRestart() {
+        super.onRestart();
         checkLoggingStatus(this::handle);
     }
 
@@ -187,20 +190,12 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
     public void logout() {
         Log.d(TAG, "logout() called with: " + "");
         Auth.GoogleSignInApi.signOut(apiClient).setResultCallback(status -> checkLoggingStatus(this::handle));
-        deleteRecursive(KujonBackendService.getInstance().getHttpCacheDirectory());
+        KujonBackendService.getInstance().clearCache();
+        KujonApplication.getApplication().finishAllAcitities();
+        startActivity(new Intent(this, LoginActivity.class));
     }
 
     @Override public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Toast.makeText(this, "Connection failed", Toast.LENGTH_SHORT).show();
-    }
-
-    private void deleteRecursive(File fileOrDirectory) {
-        if (fileOrDirectory.isDirectory()) {
-            for (File child : fileOrDirectory.listFiles()) {
-                deleteRecursive(child);
-            }
-        }
-
-        fileOrDirectory.delete();
     }
 }
