@@ -1,0 +1,8 @@
+* plan hours
+* Fix #59 Pierwsze uruchomienie aplikacji - ekran powitalny?
+* jsonschema2pojo integration
+* courseseditionsbyterm new schema
+* Fix #44 W menu na końcu Dodać Ustawienia
+* Fix #67 login 2x request - logout 1x extra request
+* picasso config, network interceptor
+* titles
