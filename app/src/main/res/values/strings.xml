@@ -25,4 +25,5 @@
     <string name="regulations_url">https://kujon.mobi/#disclaimer</string>
     <string name="plan_title">Plan zajęć</string>
     <string name="regulations_activity_title">Regulamin i polityka prywatnosci</string>
+    <string name="regulations_info">Rejestrując się zgadzasz się na<![CDATA[<br/><u><font color=#2196F3>następujące warunki</u>]]></string>
 </resources>

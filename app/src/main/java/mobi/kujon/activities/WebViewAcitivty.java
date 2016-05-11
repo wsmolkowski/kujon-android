@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.api.ResultCallback;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mobi.kujon.R;
@@ -28,6 +31,9 @@ public class WebViewAcitivty extends BaseActivity {
 
         String url = getIntent().getStringExtra(URL);
         webView.loadUrl(url);
+    }
+
+    @Override public void checkLoggingStatus(ResultCallback<GoogleSignInResult> resultCallback) {
     }
 
     public static void showUrl(Activity activity, String url) {

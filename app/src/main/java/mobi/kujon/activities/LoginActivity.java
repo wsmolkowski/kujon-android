@@ -2,9 +2,11 @@ package mobi.kujon.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
@@ -38,6 +40,7 @@ public class LoginActivity extends BaseActivity {
 
     @Bind(R.id.sign_in_button) SignInButton signIn;
     @Bind(R.id.progressBar) ProgressBar progressBar;
+    @Bind(R.id.regulations) TextView regulations;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +49,8 @@ public class LoginActivity extends BaseActivity {
         ButterKnife.bind(this);
         getSupportActionBar().setTitle(R.string.main_login_title);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+
+        regulations.setText(Html.fromHtml(getString(R.string.regulations_info)));
     }
 
     @Override protected void onStart() {
@@ -75,8 +80,6 @@ public class LoginActivity extends BaseActivity {
                 Toast.makeText(LoginActivity.this, R.string.login_error, Toast.LENGTH_SHORT).show();
             }
         }
-
-        signIn();
     }
 
     @Override public void handle(GoogleSignInResult result) {
@@ -105,7 +108,6 @@ public class LoginActivity extends BaseActivity {
             });
         } else {
             progress(false);
-            signIn();
             Log.i(TAG, "Login not successful: " + result.getStatus().getStatusMessage());
         }
     }
@@ -113,5 +115,11 @@ public class LoginActivity extends BaseActivity {
     private void progress(boolean show) {
         signIn.setVisibility(show ? View.GONE : View.VISIBLE);
         progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
+    }
+
+    @OnClick(R.id.regulations)
+    public void regulations(){
+        String url = getString(R.string.regulations_url);
+        WebViewAcitivty.showUrl(this, url);
     }
 }
