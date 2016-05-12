@@ -1,0 +1,6 @@
+* Fix #53 Oceny grupowanie po semestrze
+* Fix #63 cykle - przenieść do głównego menu
+* Fix #66 Przedmioty i oceny - okres
+* Fix #69 obsługa komunikatu gdy nie można się zalogować do uczelni
+* dagger dependency injection
+* Fix #59 Pierwsze uruchomienie aplikacji - ekran powitalny?
