@@ -21,9 +21,10 @@ public class ErrorHandlerUtil {
 
     private static Map<String, String> errorTranslations = new HashMap<String, String>() {{
         put("only-if-cached", "Tryb offline. Nie wszystkie dane są dostępne");
+        put("Bad Gateway", "Wystąpił błąd techniczny. Pracujemy nad rozwiązaniem. Spróbuj za chwilę");
     }};
 
-    public static void handleError(String message) {
+    public static void translateAndToastErrorMessage(String message) {
         String finalMessage = "Error: " + message;
         for (String key : errorTranslations.keySet()) {
             if (!TextUtils.isEmpty(message) && message.contains(key)) {
@@ -32,36 +33,37 @@ public class ErrorHandlerUtil {
         }
         log.error(finalMessage);
         Toast.makeText(KujonApplication.getApplication(), finalMessage, Toast.LENGTH_SHORT).show();
+        Crashlytics.logException(new Exception(finalMessage));
     }
 
     public static void handleError(Throwable throwable) {
         log.error(throwable.getMessage());
-        Toast.makeText(KujonApplication.getApplication(), "Error: " + throwable.getMessage(), Toast.LENGTH_SHORT).show();
+        translateAndToastErrorMessage(throwable.getMessage());
         Crashlytics.logException(throwable);
     }
 
     public static <T> boolean handleResponse(Response<KujonResponse<T>> response) {
         if (!response.isSuccessful()) {
             log.error(response.raw().toString());
-            handleError("Network error " + response.message());
+            translateAndToastErrorMessage("Network error " + response.message());
             return false;
         }
 
         if (response.body() == null) {
             log.error(response.raw().toString());
-            handleError("Network error");
+            translateAndToastErrorMessage("Network error");
             return false;
         }
 
         if (!response.body().isSuccessful()) {
             log.error(response.raw().toString());
-            handleError(response.body().message);
+            translateAndToastErrorMessage(response.body().message);
             return false;
         }
 
         if (response.body().data == null) {
             log.error(response.raw().toString());
-            handleError("Brak danych");
+            translateAndToastErrorMessage("Brak danych");
             return false;
         }
 
