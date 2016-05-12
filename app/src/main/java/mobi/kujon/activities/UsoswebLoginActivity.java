@@ -1,10 +1,12 @@
 package mobi.kujon.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
@@ -14,10 +16,13 @@ import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 
+import org.apache.commons.lang.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -50,6 +55,8 @@ public class UsoswebLoginActivity extends BaseActivity {
 
         String usosPojo = getIntent().getStringExtra(USOS_POJO);
         Usos usos = gson.fromJson(usosPojo, Usos.class);
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.addJavascriptInterface(new MyJavaScriptInterface(this, webView), "HtmlViewer");
         webView.setWebViewClient(new WebViewClient() {
             @Override public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 log.info("onPageStarted: " + url);
@@ -60,6 +67,8 @@ public class UsoswebLoginActivity extends BaseActivity {
             @Override public void onPageFinished(WebView view, String url) {
                 log.debug("onPageFinished: " + url);
                 progressBar.setVisibility(View.GONE);
+                webView.loadUrl("javascript:window.HtmlViewer.showHTML" +
+                        "('<html>'+document.getElementsByTagName('html')[0].innerHTML+'</html>');");
                 super.onPageFinished(view, url);
             }
 
@@ -112,4 +121,28 @@ public class UsoswebLoginActivity extends BaseActivity {
         log.info("Loading urs: " + url);
         webView.loadUrl(url);
     }
+
+    class MyJavaScriptInterface {
+
+        private Context ctx;
+        private WebView webView;
+
+        MyJavaScriptInterface(Context ctx, WebView webView) {
+            this.ctx = ctx;
+            this.webView = webView;
+        }
+
+        @JavascriptInterface
+        public void showHTML(String html) {
+            if (html.contains("\"status\": \"fail\"")) {
+                Pattern pattern = Pattern.compile("\"message\": \"(.*?)\"");
+                Matcher matcher = pattern.matcher(html);
+                String errorMessage = matcher.find() ? matcher.group(1) : "Wystąpił błąd";
+                String message = StringEscapeUtils.unescapeJava(errorMessage);
+                runOnUiThread(() -> webView.loadData(message, "text/html; charset=UTF-8", null));
+            }
+        }
+
+    }
+
 }
