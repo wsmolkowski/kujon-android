@@ -39,6 +39,8 @@ public interface KujonBackendApi {
 
     @GET("terms") Call<KujonResponse<List<Term2>>> terms();
 
+    @GET("terms/{termId}") Call<KujonResponse<Term2>> terms(@Path("termId") String termId);
+
     @GET("programmes") Call<KujonResponse<List<Programme>>> programmes();
 
     @GET("faculties") Call<KujonResponse<List<Faculty2>>> faculties();
