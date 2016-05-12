@@ -1,5 +1,6 @@
 package mobi.kujon.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -22,17 +23,20 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
 import mobi.kujon.activities.BaseActivity;
 import mobi.kujon.activities.FacultyDetailsActivity;
 import mobi.kujon.activities.ImageActivity;
+import mobi.kujon.activities.TermsActivity;
 import mobi.kujon.network.KujonBackendApi;
 import mobi.kujon.network.json.Faculty2;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.network.json.Programme;
 import mobi.kujon.network.json.Programme_;
 import mobi.kujon.network.json.StudentProgramme;
+import mobi.kujon.network.json.Term2;
 import mobi.kujon.network.json.User;
 import mobi.kujon.network.json.Usos;
 import mobi.kujon.ui.CircleTransform;
@@ -53,6 +57,7 @@ public class UserInfoFragment extends Fragment {
     @Bind(R.id.usosName) TextView usosName;
     @Bind(R.id.firstLastName) TextView firstLastName;
     @Bind(R.id.index) TextView index;
+    @Bind(R.id.terms) TextView terms;
     @Bind(R.id.picture) ImageView picture;
     @Bind(R.id.usosLogo) ImageView usosLogo;
     @Bind(R.id.student_faculties) LinearLayout studentFaculties;
@@ -171,6 +176,24 @@ public class UserInfoFragment extends Fragment {
             }
         });
 
+        kujonBackendApi.terms().enqueue(new Callback<KujonResponse<List<Term2>>>() {
+            @Override public void onResponse(Call<KujonResponse<List<Term2>>> call, Response<KujonResponse<List<Term2>>> response) {
+                if (ErrorHandlerUtil.handleResponse(response)) {
+                    List<Term2> data = response.body().data;
+                    terms.setText(String.format("Cykle (%s)", data.size()));
+                }
+            }
+
+            @Override public void onFailure(Call<KujonResponse<List<Term2>>> call, Throwable t) {
+                ErrorHandlerUtil.handleError(t);
+            }
+        });
+    }
+
+    @OnClick(R.id.terms)
+    public void terms() {
+        Intent intent = new Intent(getActivity(), TermsActivity.class);
+        startActivity(intent);
     }
 
     @Override public void onStop() {

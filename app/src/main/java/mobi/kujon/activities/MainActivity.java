@@ -28,7 +28,6 @@ import mobi.kujon.fragments.GradesFragment;
 import mobi.kujon.fragments.LecturersFragment;
 import mobi.kujon.fragments.PlanFragment;
 import mobi.kujon.fragments.PlanListFragment;
-import mobi.kujon.fragments.TermsFragment;
 import mobi.kujon.fragments.UserInfoFragment;
 
 public class MainActivity extends BaseActivity {
@@ -36,10 +35,10 @@ public class MainActivity extends BaseActivity {
     public static final int CALENDAR_POSITION = 1;
     @Bind(R.id.toolbar) Toolbar toolbar;
 
-    public String[] TITLES = new String[]{"Użytkownik", "Plan zajęć", "Przedmioty", "Oceny", "Wykładowcy", "Cykle"};
-    public int[] ICONS = new int[]{R.drawable.user, R.drawable.plan, R.drawable.courses, R.drawable.grades, R.drawable.teachers, R.drawable.terms};
+    public String[] TITLES = new String[]{"Użytkownik", "Plan zajęć", "Przedmioty", "Oceny", "Wykładowcy"};
+    public int[] ICONS = new int[]{R.drawable.user, R.drawable.plan, R.drawable.courses, R.drawable.grades, R.drawable.teachers};
     public Fragment[] FRAGMENTS = new Fragment[]{
-            new UserInfoFragment(), new PlanListFragment(), new CoursesFragment(), new GradesFragment(), new LecturersFragment(), new TermsFragment()};
+            new UserInfoFragment(), new PlanListFragment(), new CoursesFragment(), new GradesFragment(), new LecturersFragment()};
     private Drawer drawer;
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {

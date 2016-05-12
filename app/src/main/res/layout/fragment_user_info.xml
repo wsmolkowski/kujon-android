@@ -157,5 +157,16 @@
             android:orientation="vertical"
             />
 
+        <TextView
+            style="@style/label"
+            android:text="Statystyki"/>
+
+        <TextView
+            android:id="@+id/terms"
+            style="@style/entry"
+            android:gravity="center_vertical"
+            android:drawableRight="@drawable/navigate_next"
+            android:text='Cykle'/>
+
     </LinearLayout>
 </ScrollView>

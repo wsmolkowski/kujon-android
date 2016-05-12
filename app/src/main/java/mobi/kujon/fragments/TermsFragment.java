@@ -83,6 +83,9 @@ public class TermsFragment extends ListFragment {
                 holder.name.setTypeface(null, Typeface.BOLD);
                 holder.termId.setTypeface(null, Typeface.BOLD);
                 holder.active.setTypeface(null, Typeface.BOLD);
+                holder.startDate.setTypeface(null, Typeface.BOLD);
+                holder.endDate.setTypeface(null, Typeface.BOLD);
+                holder.finishDate.setTypeface(null, Typeface.BOLD);
             }
             holder.startDate.setText(term.startDate);
             holder.endDate.setText(term.endDate);
