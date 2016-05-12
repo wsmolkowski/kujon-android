@@ -18,6 +18,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mobi.kujon.KujonApplication;
@@ -26,7 +28,6 @@ import mobi.kujon.activities.BaseActivity;
 import mobi.kujon.activities.FacultyDetailsActivity;
 import mobi.kujon.activities.ImageActivity;
 import mobi.kujon.network.KujonBackendApi;
-import mobi.kujon.network.KujonBackendService;
 import mobi.kujon.network.json.Faculty2;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.network.json.Programme;
@@ -56,7 +57,7 @@ public class UserInfoFragment extends Fragment {
     @Bind(R.id.usosLogo) ImageView usosLogo;
     @Bind(R.id.student_faculties) LinearLayout studentFaculties;
 
-    private KujonBackendApi kujonBackendApi;
+    @Inject KujonBackendApi kujonBackendApi;
     private BaseActivity activity;
     private AlertDialog alertDialog;
 
@@ -71,7 +72,7 @@ public class UserInfoFragment extends Fragment {
     @Nullable @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_user_info, container, false);
         ButterKnife.bind(this, rootView);
-        kujonBackendApi = KujonBackendService.getInstance().getKujonBackendApi();
+        KujonApplication.getComponent().inject(this);
         return rootView;
     }
 

@@ -1,7 +1,6 @@
 package mobi.kujon.activities;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -30,10 +29,12 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
+import javax.inject.Inject;
+
 import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
 import mobi.kujon.network.KujonBackendApi;
-import mobi.kujon.network.KujonBackendService;
+import mobi.kujon.utils.KujonUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -45,10 +46,12 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
 
     private static final String TAG = "BaseActivity";
 
-    protected SharedPreferences kujonPreferences;
+    @Inject protected KujonBackendApi kujonBackendApi;
+    @Inject protected KujonApplication kujonApplication;
+    @Inject protected Picasso picasso;
+    @Inject protected KujonUtils utils;
+
     protected GoogleApiClient apiClient;
-    protected KujonBackendApi kujonBackendApi;
-    protected Picasso picasso;
     private AlertDialog alertDialog;
     private ProgressBar progressBar;
     private FrameLayout content;
@@ -56,7 +59,7 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        kujonPreferences = getSharedPreferences("kujon_preferences", MODE_PRIVATE);
+        KujonApplication.getComponent().inject(this);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -68,10 +71,6 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
                 .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
-
-        kujonBackendApi = KujonBackendService.getInstance().getKujonBackendApi();
-
-        picasso = KujonBackendService.getInstance().getPicasso();
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -190,8 +189,8 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
     public void logout() {
         Log.d(TAG, "logout() called with: " + "");
         Auth.GoogleSignInApi.signOut(apiClient).setResultCallback(status -> checkLoggingStatus(this::handle));
-        KujonBackendService.getInstance().clearCache();
-        KujonApplication.getApplication().finishAllAcitities();
+        utils.clearCache();
+        kujonApplication.finishAllAcitities();
         startActivity(new Intent(this, LoginActivity.class));
     }
 

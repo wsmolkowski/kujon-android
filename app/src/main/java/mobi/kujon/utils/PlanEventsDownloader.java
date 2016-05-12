@@ -13,10 +13,12 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import javax.inject.Inject;
+
 import bolts.Task;
 import bolts.TaskCompletionSource;
+import mobi.kujon.KujonApplication;
 import mobi.kujon.network.KujonBackendApi;
-import mobi.kujon.network.KujonBackendService;
 import mobi.kujon.network.json.CalendarEvent;
 import mobi.kujon.network.json.KujonResponse;
 import retrofit2.Call;
@@ -26,10 +28,10 @@ import retrofit2.Response;
 public class PlanEventsDownloader {
 
     public static final SimpleDateFormat REST_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
-    private KujonBackendApi kujonBackendApi;
+    @Inject KujonBackendApi kujonBackendApi;
 
     public PlanEventsDownloader() {
-        kujonBackendApi = KujonBackendService.getInstance().getKujonBackendApi();
+        KujonApplication.getComponent().inject(this);
     }
 
     public Task<List<CalendarEvent>> downloadEventsFor(int year, int month) {

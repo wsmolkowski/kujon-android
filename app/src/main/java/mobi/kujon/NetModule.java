@@ -1,8 +1,6 @@
-package mobi.kujon.network;
+package mobi.kujon;
 
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
+import android.app.Application;
 import android.util.Log;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -12,81 +10,70 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
 
-import mobi.kujon.BuildConfig;
-import mobi.kujon.KujonApplication;
+import javax.inject.Singleton;
+
+import dagger.Module;
+import dagger.Provides;
+import mobi.kujon.network.KujonBackendApi;
+import mobi.kujon.utils.KujonUtils;
 import okhttp3.Cache;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class KujonBackendService {
+@Module
+public class NetModule {
 
-    private static final String TAG = "KujonBackendService";
+    private static final String TAG = "NetModule";
 
-    private final OkHttpClient httpClient;
-    private final Picasso picasso;
-    private KujonBackendApi kujonBackendApi;
-    private static KujonBackendService instance;
-
-    private Context context = KujonApplication.getApplication();
-    private final File httpCacheDirectory;
-    private final Cache cache;
-
-    private KujonBackendService() {
-
-        httpCacheDirectory = new File(context.getCacheDir(), "responses");
+    @Provides @Singleton Cache provideOkHttpCache(Application application) {
+        File httpCacheDirectory = new File(application.getCacheDir(), "responses");
         int cacheSize = 10 * 1024 * 1024; // 10 MiB
-        cache = new Cache(httpCacheDirectory, cacheSize);
+        return new Cache(httpCacheDirectory, cacheSize);
+    }
 
-        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-        logging.setLevel(HttpLoggingInterceptor.Level.HEADERS);
-
-        httpClient = new OkHttpClient.Builder()
+    @Provides @Singleton OkHttpClient provideOkHttpClient(Cache cache) {
+        OkHttpClient httpClient = new OkHttpClient.Builder()
                 .addNetworkInterceptor(REWRITE_RESPONSE_INTERCEPTOR)
                 .addNetworkInterceptor(new AuthenticationInterceptor())
-//                .addInterceptor(logging)
                 .addInterceptor(OFFLINE_INTERCEPTOR)
                 .cache(cache)
                 .readTimeout(60, TimeUnit.SECONDS)
                 .build();
 
+        return httpClient;
+    }
+
+    @Provides @Singleton Retrofit provideRetrofit(OkHttpClient okHttpClient) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://api.kujon.mobi")
-                .client(httpClient)
+                .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
+        return retrofit;
+    }
 
-        kujonBackendApi = retrofit.create(KujonBackendApi.class);
+    @Provides @Singleton KujonBackendApi provideBackendApi(Retrofit retrofit) {
+        return retrofit.create(KujonBackendApi.class);
+    }
 
-        picasso = new Picasso.Builder(context)
+    @Provides @Singleton KujonUtils provideUtils() {
+        return new KujonUtils();
+    }
+
+    @Provides @Singleton Picasso providePicasso(Application application, OkHttpClient httpClient) {
+        Picasso picasso = new Picasso.Builder(application)
                 .downloader(new OkHttp3Downloader(httpClient))
                 .build();
 
         picasso.setIndicatorsEnabled(BuildConfig.DEBUG);
         picasso.setLoggingEnabled(BuildConfig.DEBUG);
-    }
-
-    public KujonBackendApi getKujonBackendApi() {
-        return kujonBackendApi;
-    }
-
-    public OkHttpClient getHttpClient() {
-        return httpClient;
-    }
-
-    public synchronized static KujonBackendService getInstance() {
-        if (instance == null) {
-            instance = new KujonBackendService();
-        }
-
-        return instance;
+        return picasso;
     }
 
     private static class AuthenticationInterceptor implements Interceptor {
@@ -132,7 +119,7 @@ public class KujonBackendService {
     };
 
     private static final Interceptor OFFLINE_INTERCEPTOR = chain -> {
-        boolean online = isOnline();
+        boolean online = KujonUtils.isOnline();
         Log.i(TAG, "OFFLINE_INTERCEPTOR online=" + online);
 
         Request request = chain.request();
@@ -148,42 +135,6 @@ public class KujonBackendService {
 
         return chain.proceed(request);
     };
-
-    public static boolean isOnline() {
-        ConnectivityManager cm = (ConnectivityManager) KujonApplication.getApplication().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        return netInfo != null && netInfo.isConnected();
-    }
-
-    public void invalidateEntry(String urlToInvalidate) {
-        Log.d(TAG, "invalidateEntry() called with: " + "urlToInvalidate = [" + urlToInvalidate + "]");
-        try {
-            Cache cache = httpClient.cache();
-            Iterator<String> urls = cache.urls();
-            while (urls.hasNext()) {
-                String url = urls.next();
-                if (url.contains(urlToInvalidate)) {
-                    urls.remove();
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public Picasso getPicasso() {
-        return picasso;
-    }
-
-    public void clearCache(){
-        try {
-            cache.evictAll();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public File getHttpCacheDirectory() {
-        return httpCacheDirectory;
-    }
 }
+
+

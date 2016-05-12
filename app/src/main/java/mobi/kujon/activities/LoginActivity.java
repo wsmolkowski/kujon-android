@@ -16,21 +16,25 @@ import com.google.android.gms.common.SignInButton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.inject.Inject;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
-import mobi.kujon.network.KujonBackendService;
 import mobi.kujon.network.json.Config;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.utils.ErrorHandlerUtil;
+import mobi.kujon.utils.KujonUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 
 public class LoginActivity extends BaseActivity {
+
+    @Inject KujonUtils utils;
 
     private static final Logger log = LoggerFactory.getLogger(LoginActivity.class);
 
@@ -49,6 +53,7 @@ public class LoginActivity extends BaseActivity {
         ButterKnife.bind(this);
         getSupportActionBar().setTitle(R.string.main_login_title);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        KujonApplication.getComponent().inject(this);
 
         regulations.setText(Html.fromHtml(getString(R.string.regulations_info)));
     }
@@ -87,7 +92,7 @@ public class LoginActivity extends BaseActivity {
             log.info("handle: Login successfull. Checking usos paired status");
             progress(true);
             KujonApplication.getApplication().setLoginStatus(result);
-            KujonBackendService.getInstance().clearCache();
+            utils.clearCache();
             kujonBackendApi.config().enqueue(new Callback<KujonResponse<Config>>() {
                 @Override public void onResponse(Call<KujonResponse<Config>> call, Response<KujonResponse<Config>> response) {
                     if (ErrorHandlerUtil.handleResponse(response)) {

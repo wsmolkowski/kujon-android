@@ -16,6 +16,7 @@ buildscript {
             exclude group: 'xerces'
         }
         classpath 'org.jsonschema2pojo:jsonschema2pojo-gradle-plugin:0.4.22'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
     }
     configurations.classpath.exclude group: 'com.android.tools.external.lombok'
 }

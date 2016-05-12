@@ -27,13 +27,17 @@ import org.slf4j.MDC;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.fabric.sdk.android.Fabric;
-import mobi.kujon.network.KujonBackendService;
+import mobi.kujon.utils.KujonUtils;
 
 @FoamApiKeys(
         papertrail = "logs3.papertrailapp.com:22247" // Server URL
 )
 public class KujonApplication extends FoamApplication implements OneSignal.NotificationOpenedHandler {
+
+    @Inject KujonUtils utils;
 
     private static final Logger log = LoggerFactory.getLogger(KujonApplication.class);
     public static String DEVICE_ID;
@@ -42,6 +46,7 @@ public class KujonApplication extends FoamApplication implements OneSignal.Notif
 
     private static KujonApplication instance;
     private GoogleSignInResult loginStatus;
+    private static KujonComponent component;
 
     @Override public void onCreate() {
         super.onCreate();
@@ -112,6 +117,13 @@ public class KujonApplication extends FoamApplication implements OneSignal.Notif
                 return super.placeholder(ctx, tag);
             }
         });
+
+        component = DaggerKujonComponent.builder()
+                .appModule(new AppModule(this))
+                .netModule(new NetModule())
+                .build();
+
+        component.inject(this);
     }
 
     public void finishAllAcitities(){
@@ -136,6 +148,10 @@ public class KujonApplication extends FoamApplication implements OneSignal.Notif
     }
 
     @Override public void notificationOpened(String message, JSONObject additionalData, boolean isActive) {
-        KujonBackendService.getInstance().invalidateEntry("grades");
+        utils.invalidateEntry("grades");
+    }
+
+    public static KujonComponent getComponent() {
+        return component;
     }
 }

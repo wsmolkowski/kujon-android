@@ -128,7 +128,10 @@ public class PlanListFragment extends Fragment {
 
         @Override public void onBindViewHolder(ViewHolder holder, int section, int relativePosition, int absolutePosition) {
             CalendarEvent event = coursesInSection(section).get(relativePosition);
-            String lecturers = $.join($.collect(event.lecturers, (LecturerLong it) -> String.format("%s %s %s", it.titles.before, it.firstName, it.lastName)), ", ");
+            String lecturers = "";
+            if (event.lecturers != null) {
+                lecturers = $.join($.collect(event.lecturers, (LecturerLong it) -> String.format("%s %s %s", it.titles.before, it.firstName, it.lastName)), ", ");
+            }
             holder.eventName.setText(event.name + "\n" + lecturers);
             holder.time.setText(event.getHoursFromTo("\n") + "\ns. " + event.roomNumber);
             holder.section.setVisibility(View.GONE);

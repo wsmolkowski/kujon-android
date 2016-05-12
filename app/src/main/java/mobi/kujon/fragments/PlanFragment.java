@@ -25,12 +25,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
 import mobi.kujon.activities.BaseActivity;
 import mobi.kujon.network.KujonBackendApi;
-import mobi.kujon.network.KujonBackendService;
 import mobi.kujon.network.json.CalendarEvent;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.utils.ErrorHandlerUtil;
@@ -49,13 +51,14 @@ public class PlanFragment extends Fragment implements MonthLoader.MonthChangeLis
 
     private Map<String, List<WeekViewEvent>> eventsForDate = new HashMap<>();
     private List<String> downloaded = new ArrayList<>();
-    private KujonBackendApi backendApi;
+    @Inject KujonBackendApi backendApi;
     private AlertDialog alertDialog;
     private BaseActivity activity;
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_plan, container, false);
         ButterKnife.bind(this, rootView);
+        KujonApplication.getComponent().inject(this);
 
         weekView.setMonthChangeListener(this);
         weekView.setFirstDayOfWeek(Calendar.MONDAY);
@@ -81,7 +84,6 @@ public class PlanFragment extends Fragment implements MonthLoader.MonthChangeLis
 
     @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        backendApi = KujonBackendService.getInstance().getKujonBackendApi();
         activity = ((BaseActivity) getActivity());
     }
 
