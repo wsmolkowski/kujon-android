@@ -2,7 +2,6 @@ package mobi.kujon.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,16 +18,12 @@ import java.util.SortedMap;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mobi.kujon.R;
-import mobi.kujon.activities.CourseDetailsActivity;
 import mobi.kujon.network.json.Course;
 import mobi.kujon.network.json.KujonResponse;
-import mobi.kujon.network.json.Term2;
 import mobi.kujon.utils.ErrorHandlerUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static android.text.TextUtils.isEmpty;
 
 public class CoursesFragment extends ListFragment {
 
@@ -133,31 +128,7 @@ public class CoursesFragment extends ListFragment {
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            itemView.setOnClickListener(v -> {
-                if (!isEmpty(courseId) && !isEmpty(termId)) {
-                    CourseDetailsActivity.showCourseDetails(getActivity(), courseId, termId);
-                } else if (!isEmpty(termId)) {
-                    backendApi.terms(termId).enqueue(new Callback<KujonResponse<Term2>>() {
-                        @Override public void onResponse(Call<KujonResponse<Term2>> call, Response<KujonResponse<Term2>> response) {
-                            if (ErrorHandlerUtil.handleResponse(response)) {
-                                Term2 term = response.body().data;
-                                AlertDialog.Builder dlgAlert = new AlertDialog.Builder(activity);
-                                dlgAlert.setMessage(String.format("Numer: %s\nData początkowa: %s\nData końcowa: %s\nData zakończenia: %s",
-                                        term.termId, term.startDate, term.endDate, term.finishDate));
-                                dlgAlert.setTitle(term.name.pl);
-                                dlgAlert.setPositiveButton("OK", null);
-                                dlgAlert.setCancelable(true);
-                                AlertDialog alertDialog = dlgAlert.create();
-                                alertDialog.show();
-                            }
-                        }
-
-                        @Override public void onFailure(Call<KujonResponse<Term2>> call, Throwable t) {
-                            ErrorHandlerUtil.handleError(t);
-                        }
-                    });
-                }
-            });
+            itemView.setOnClickListener(v -> showCourseOrTerm(courseId, termId));
         }
     }
 }

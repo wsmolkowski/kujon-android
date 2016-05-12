@@ -1,6 +1,5 @@
 package mobi.kujon.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -20,7 +19,6 @@ import java.util.TreeMap;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mobi.kujon.R;
-import mobi.kujon.activities.CourseDetailsActivity;
 import mobi.kujon.network.json.Grade;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.utils.ErrorHandlerUtil;
@@ -98,6 +96,7 @@ public class GradesFragment extends ListFragment {
             holder.section.setText(sectionName(section));
             holder.section.setVisibility(View.VISIBLE);
             holder.dataLayout.setVisibility(View.GONE);
+            holder.termId = sectionName(section);
         }
 
         @Override public void onBindViewHolder(ViewHolder holder, int section, int relativePosition, int absolutePosition) {
@@ -127,7 +126,6 @@ public class GradesFragment extends ListFragment {
             notifyDataSetChanged();
         }
     }
-
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         @Bind(R.id.title) TextView title;
@@ -142,12 +140,9 @@ public class GradesFragment extends ListFragment {
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            itemView.setOnClickListener(v -> {
-                Intent intent = new Intent(getActivity(), CourseDetailsActivity.class);
-                intent.putExtra(CourseDetailsActivity.COURSE_ID, courseId);
-                intent.putExtra(CourseDetailsActivity.TERM_ID, termId);
-                startActivity(intent);
-            });
+            itemView.setOnClickListener(v -> showCourseOrTerm(courseId, termId));
         }
+
+
     }
 }
