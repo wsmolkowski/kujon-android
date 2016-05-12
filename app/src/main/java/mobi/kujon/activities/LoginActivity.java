@@ -79,7 +79,6 @@ public class LoginActivity extends BaseActivity {
             if (resultCode == RESULT_OK) {
                 GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
                 handle(result);
-                return;
             } else {
                 log.error(String.format("Login error requestCode=%s, resultCode=%s, data=%s", requestCode, resultCode, data));
                 Toast.makeText(LoginActivity.this, R.string.login_error, Toast.LENGTH_SHORT).show();
@@ -89,7 +88,7 @@ public class LoginActivity extends BaseActivity {
 
     @Override public void handle(GoogleSignInResult result) {
         if (result.isSuccess()) {
-            log.info("handle: Login successfull. Checking usos paired status");
+            log.info("handle: Login successful. Checking usos paired status");
             progress(true);
             KujonApplication.getApplication().setLoginStatus(result);
             utils.clearCache();

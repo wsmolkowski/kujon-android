@@ -13,7 +13,7 @@ android {
     defaultConfig {
         applicationId "mobi.kujon"
         minSdkVersion 16
-        targetSdkVersion 22
+        targetSdkVersion 21
         versionCode 19
         versionName "0.9.13"
 

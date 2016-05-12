@@ -108,8 +108,7 @@ public class CoursesFragment extends ListFragment {
         }
 
         List<Course> coursesInSection(int section) {
-            List<Course> courses = data.get(section).get(data.get(section).firstKey());
-            return courses;
+            return data.get(section).get(data.get(section).firstKey());
         }
 
         String sectionName(int section) {

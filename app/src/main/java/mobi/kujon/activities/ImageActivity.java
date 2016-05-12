@@ -32,10 +32,10 @@ public class ImageActivity extends BaseActivity {
         picasso.load(uri).fit().centerInside().into(image);
     }
 
-    public static void show(Activity activity, String parh, String title) {
-        if (!isEmpty(parh)) {
+    public static void show(Activity activity, String path, String title) {
+        if (!isEmpty(path)) {
             Intent intent = new Intent(activity, ImageActivity.class);
-            intent.putExtra(URI, parh);
+            intent.putExtra(URI, path);
             intent.putExtra(TITLE, title);
             activity.startActivity(intent);
         } else {

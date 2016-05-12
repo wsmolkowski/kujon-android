@@ -22,8 +22,7 @@ public class EventUtils {
         start.setTime(startDate);
         end.setTime(endDate);
         String desc = String.format("%s\n%s", calendarEvent.getHoursFromTo(), calendarEvent.name);
-        KujonWeekViewEvent event = new KujonWeekViewEvent(startDate.getTime(), desc, start, end, calendarEvent);
-        return event;
+        return new KujonWeekViewEvent(startDate.getTime(), desc, start, end, calendarEvent);
     }
 
     public static Date getDate(String date) {
