@@ -1,0 +1,5 @@
+* Plan lista - jak nie ma danych w danym okresie - wyświeltić brak danych jak na ocenach #76
+* Fix #40 plan - dodanie listy jako defaultowy widok
+* error logging
+* Fabric Answers
+* lint issues
