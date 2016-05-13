@@ -33,7 +33,12 @@ public class ErrorHandlerUtil {
         }
         log.error(finalMessage);
         Toast.makeText(KujonApplication.getApplication(), finalMessage, Toast.LENGTH_SHORT).show();
-        Crashlytics.logException(new Exception(finalMessage));
+    }
+
+    public static <T> void handleResponseError(Response<KujonResponse<T>> response, String message) {
+        translateAndToastErrorMessage(message);
+        String detailMessage = message + " " + response.raw() + " " + response.headers() + " " + response.body();
+        Crashlytics.logException(new Exception(response.body() + " " + response.raw(), new Exception(detailMessage)));
     }
 
     public static void handleError(Throwable throwable) {
@@ -45,25 +50,25 @@ public class ErrorHandlerUtil {
     public static <T> boolean handleResponse(Response<KujonResponse<T>> response) {
         if (!response.isSuccessful()) {
             log.error(response.raw().toString());
-            translateAndToastErrorMessage("Network error " + response.message());
+            handleResponseError(response, "Network error " + response.message());
             return false;
         }
 
         if (response.body() == null) {
             log.error(response.raw().toString());
-            translateAndToastErrorMessage("Network error");
+            handleResponseError(response, "Network error");
             return false;
         }
 
         if (!response.body().isSuccessful()) {
             log.error(response.raw().toString());
-            translateAndToastErrorMessage(response.body().message);
+            handleResponseError(response, response.body().message);
             return false;
         }
 
         if (response.body().data == null) {
             log.error(response.raw().toString());
-            translateAndToastErrorMessage("Brak danych");
+            handleResponseError(response, "Brak danych");
             return false;
         }
 
