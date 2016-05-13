@@ -7,7 +7,7 @@ import org.joda.time.LocalDate;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
@@ -64,22 +64,29 @@ public class PlanEventsDownloader {
             tasks.add(tcs.getTask());
         }
 
-        return Task.whenAllResult(tasks).onSuccess(task -> $.flatten(task.getResult()));
+        return Task.whenAllResult(tasks).onSuccess(task -> {
+            List<CalendarEvent> events = $.flatten(task.getResult());
+            List<CalendarEvent> onlyThisMonthEvents = $.filter(events, it -> {
+                DateTime time = new DateTime(it.getStartDate().getTime());
+                return time.getMonthOfYear() == month;
+            });
+            return onlyThisMonthEvents;
+        });
     }
 
-    public Task<List<CalendarEvent>> downloadEventsForThreeMonths() {
-        DateTime now = DateTime.now();
-        Task<List<CalendarEvent>> events0 = downloadEventsFor(now.getYear(), now.getMonthOfYear());
-        DateTime nextMonth = now.plusMonths(1);
-        Task<List<CalendarEvent>> events1 = downloadEventsFor(nextMonth.getYear(), nextMonth.getMonthOfYear());
-        DateTime another = nextMonth.plusMonths(1);
-        Task<List<CalendarEvent>> events2 = downloadEventsFor(another.getYear(), another.getMonthOfYear());
+    public Task<SortedMap<CalendarSection, List<CalendarEvent>>> prepareMonth(int year, int month) {
+        Task<List<CalendarEvent>> monthEvents = downloadEventsFor(year, month);
+        return monthEvents.onSuccess(task -> {
+            SortedMap<CalendarSection, List<CalendarEvent>> result = new TreeMap<>();
+            result.put(new CalendarSection(new LocalDate(year, month, 1), true), Collections.emptyList());
+            SortedMap<LocalDate, List<CalendarEvent>> grouped = groupEvents(task.getResult());
 
-        Task<List<CalendarEvent>> listTask = Task.whenAllResult(Arrays.asList(events0, events1, events2))
-                .onSuccess(task -> $.flatten(task.getResult()));
-        return listTask.onSuccess(task -> $.uniq(task.getResult()));
+            for (LocalDate localDate : grouped.keySet()) {
+                result.put(new CalendarSection(localDate), grouped.get(localDate));
+            }
+            return result;
+        });
     }
-
 
     public SortedMap<LocalDate, List<CalendarEvent>> groupEvents(List<CalendarEvent> events) {
         Map<LocalDate, List<CalendarEvent>> map = $.groupBy(events, it -> {
@@ -91,5 +98,27 @@ public class PlanEventsDownloader {
         result.putAll(map);
 
         return result;
+    }
+
+    public static class CalendarSection implements Comparable<CalendarSection> {
+        public final LocalDate localDate;
+        public final boolean monthName;
+
+        public CalendarSection(LocalDate localDate) {
+            this(localDate, false);
+        }
+
+        public CalendarSection(LocalDate localDate, boolean monthName) {
+            this.localDate = localDate;
+            this.monthName = monthName;
+        }
+
+        @Override public int compareTo(CalendarSection another) {
+            return localDate.compareTo(another.localDate);
+        }
+
+        @Override public String toString() {
+            return localDate.toString();
+        }
     }
 }

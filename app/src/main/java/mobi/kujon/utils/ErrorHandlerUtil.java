@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import java.util.Map;
 
+import bolts.Continuation;
 import mobi.kujon.KujonApplication;
 import mobi.kujon.network.json.KujonResponse;
 import retrofit2.Response;
@@ -74,4 +75,15 @@ public class ErrorHandlerUtil {
 
         return true;
     }
+
+    public static final Continuation<Object, Object> ERROR_HANDLER = task1 -> {
+        Exception error = task1.getError();
+        if (error != null) {
+            System.err.println(error);
+            error.printStackTrace();
+            Crashlytics.logException(error);
+        }
+        return null;
+    };
+
 }

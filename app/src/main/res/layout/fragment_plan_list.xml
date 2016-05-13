@@ -18,4 +18,12 @@
         android:layout_margin="16dp"
         android:src="@drawable/schedule"/>
 
+    <TextView
+        android:id="@+id/empty_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/no_date"
+        android:visibility="gone"/>
+
 </FrameLayout>
