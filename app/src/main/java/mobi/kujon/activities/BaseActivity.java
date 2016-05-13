@@ -19,6 +19,8 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.ContentViewEvent;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
@@ -96,6 +98,8 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
     @Override protected void onStart() {
         super.onStart();
         checkLoggingStatus(this::handle);
+        Answers.getInstance().logContentView(new ContentViewEvent()
+                .putContentName(this.getClass().getSimpleName()));
     }
 
     @Override protected void onRestart() {

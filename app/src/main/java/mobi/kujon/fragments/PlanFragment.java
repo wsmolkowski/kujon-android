@@ -44,7 +44,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class PlanFragment extends Fragment implements MonthLoader.MonthChangeListener {
+public class PlanFragment extends BaseFragment implements MonthLoader.MonthChangeListener {
 
     @Bind(R.id.weekView) WeekView weekView;
     @Bind(R.id.fab) FloatingActionButton fab;

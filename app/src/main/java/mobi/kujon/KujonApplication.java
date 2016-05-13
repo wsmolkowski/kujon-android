@@ -9,6 +9,7 @@ import android.provider.Settings;
 import android.widget.ImageView;
 
 import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.answers.Answers;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader;
@@ -58,7 +59,7 @@ public class KujonApplication extends FoamApplication implements OneSignal.Notif
         MDC.put("versionCode", "" + BuildConfig.VERSION_CODE);
         MDC.put("versionName", BuildConfig.VERSION_NAME);
         log.info("Application started");
-        Fabric.with(this, new Crashlytics());
+        Fabric.with(this, new Crashlytics(), new Answers());
 //         Fabric.with(this, new Crashlytics.Builder().core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build()).build());
 
 //        OneSignal.setLogLevel(OneSignal.LOG_LEVEL.DEBUG, OneSignal.LOG_LEVEL.DEBUG);

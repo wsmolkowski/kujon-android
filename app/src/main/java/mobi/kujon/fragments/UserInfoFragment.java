@@ -3,7 +3,6 @@ package mobi.kujon.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,7 +47,7 @@ import retrofit2.Response;
 
 import static android.text.TextUtils.isEmpty;
 
-public class UserInfoFragment extends Fragment {
+public class UserInfoFragment extends BaseFragment {
 
     public static final String USER_ID = "USER_ID";
     @Bind(R.id.student_status) TextView studentStatus;

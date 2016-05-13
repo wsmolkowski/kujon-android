@@ -2,7 +2,6 @@ package mobi.kujon.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -36,7 +35,7 @@ import mobi.kujon.utils.EventUtils;
 import mobi.kujon.utils.PlanEventsDownloader;
 
 
-public class PlanListFragment extends Fragment {
+public class PlanListFragment extends BaseFragment {
 
     PlanEventsDownloader planEventsDownloader = new PlanEventsDownloader();
 

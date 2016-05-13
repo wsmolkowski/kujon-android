@@ -2,7 +2,6 @@ package mobi.kujon.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -31,7 +30,7 @@ import retrofit2.Response;
 
 import static android.text.TextUtils.isEmpty;
 
-public abstract class ListFragment extends Fragment {
+public abstract class ListFragment extends BaseFragment {
 
     @Inject protected KujonBackendApi backendApi;
     @Inject protected KujonUtils utils;
