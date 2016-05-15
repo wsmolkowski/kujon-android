@@ -18,7 +18,7 @@ public class CourseDetails {
     @SerializedName("bibliography")
     @Expose
     public String bibliography;
-    @SerializedName("name")
+    @SerializedName("course_name")
     @Expose
     public String name;
     @SerializedName("fac_id")
