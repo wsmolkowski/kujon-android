@@ -62,7 +62,10 @@ public class LecturerDetailsActivity extends BaseActivity {
                 showProgress(false);
                 if (ErrorHandlerUtil.handleResponse(response)) {
                     LecturerLong lecturer = response.body().data;
-                    String title = isEmpty(lecturer.titles.before) ? "" : lecturer.titles.before;
+                    String title = "";
+                    if (lecturer.titles != null) {
+                        title = isEmpty(lecturer.titles.before) ? "" : lecturer.titles.before;
+                    }
                     String name = title + " " + lecturer.firstName + " " + lecturer.lastName;
                     lecturerName.setText(name);
                     lecturerStatus.setText(lecturer.staffStatus);
