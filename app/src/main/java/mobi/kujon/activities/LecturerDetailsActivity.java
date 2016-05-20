@@ -68,7 +68,7 @@ public class LecturerDetailsActivity extends BaseActivity {
 
         lecturerId = getIntent().getStringExtra(LECTURER_ID);
         swipeContainer.setOnRefreshListener(() -> loadData(true));
-        loadData(false);
+        handler.post(() -> loadData(false));
     }
 
     private void loadData(boolean refresh) {

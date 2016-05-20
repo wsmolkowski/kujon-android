@@ -3,6 +3,7 @@ package mobi.kujon.activities;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -58,6 +59,7 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
     private ProgressBar progressBar;
     private FrameLayout content;
     protected Gson gson = new Gson();
+    protected Handler handler = new Handler();
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
