@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 
 import mobi.kujon.R;
+import mobi.kujon.fragments.StudentInfoFragment;
 import mobi.kujon.fragments.UserInfoFragment;
 
 public class StudentDetailsActivity extends BaseActivity {
@@ -15,9 +16,9 @@ public class StudentDetailsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_details);
 
-        String userId = getIntent().getStringExtra(UserInfoFragment.USER_ID);
+        String userId = getIntent().getStringExtra(StudentInfoFragment.USER_ID);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.placeholder, UserInfoFragment.getFragment(userId));
+        transaction.replace(R.id.placeholder, StudentInfoFragment.getFragment(userId));
         transaction.commit();
     }
 

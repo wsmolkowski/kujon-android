@@ -22,6 +22,7 @@ import mobi.kujon.fragments.LecturersFragment;
 import mobi.kujon.fragments.ListFragment;
 import mobi.kujon.fragments.PlanFragment;
 import mobi.kujon.fragments.PlanListFragment;
+import mobi.kujon.fragments.StudentInfoFragment;
 import mobi.kujon.fragments.TermsFragment;
 import mobi.kujon.fragments.UserInfoFragment;
 import mobi.kujon.utils.KujonUtils;
@@ -78,4 +79,5 @@ public interface KujonComponent {
     void inject(PlanEventsDownloader kujonUtils);
     void inject(KujonApplication kujonApplication);
 
+    void inject(StudentInfoFragment studentInfoFragment);
 }
