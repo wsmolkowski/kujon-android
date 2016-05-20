@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
@@ -16,8 +17,11 @@ import com.github.underscore.$;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
 import mobi.kujon.network.json.CourseEditionsConducted;
 import mobi.kujon.network.json.KujonResponse;
@@ -25,6 +29,7 @@ import mobi.kujon.network.json.LecturerLong;
 import mobi.kujon.ui.CircleTransform;
 import mobi.kujon.utils.CommonUtils;
 import mobi.kujon.utils.ErrorHandlerUtil;
+import mobi.kujon.utils.KujonUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -45,23 +50,42 @@ public class LecturerDetailsActivity extends BaseActivity {
     @Bind(R.id.lecturer_employment_positions) TextView lecturerEmploymentPositions;
     @Bind(R.id.lecturer_office_hours) TextView lecturerOfficeHours;
     @Bind(R.id.lecturer_interests) TextView lecturerInterests;
+    @Bind(R.id.swipeContainer) SwipeRefreshLayout swipeContainer;
+
+    @Inject protected KujonUtils utils;
+
     private LayoutInflater layoutInflater;
+    private String lecturerId;
+    private LecturerLong lecturer;
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lecturer_details);
         ButterKnife.bind(this);
+        KujonApplication.getComponent().inject(this);
         layoutInflater = getLayoutInflater();
         getSupportActionBar().setTitle(R.string.lecturer_title);
 
-        String lecturerId = getIntent().getStringExtra(LECTURER_ID);
+        lecturerId = getIntent().getStringExtra(LECTURER_ID);
+        swipeContainer.setOnRefreshListener(() -> loadData(true));
+        loadData(false);
+    }
 
-        showProgress(true);
+    private void loadData(boolean refresh) {
+        swipeContainer.setRefreshing(true);
+
+        if (refresh) {
+            utils.invalidateEntry("lecturers/" + lecturerId);
+            if (lecturer != null) {
+                picasso.invalidate(lecturer.hasPhoto);
+            }
+        }
+
         kujonBackendApi.lecturer(lecturerId).enqueue(new Callback<KujonResponse<LecturerLong>>() {
             @Override public void onResponse(Call<KujonResponse<LecturerLong>> call, Response<KujonResponse<LecturerLong>> response) {
-                showProgress(false);
+                swipeContainer.setRefreshing(false);
                 if (ErrorHandlerUtil.handleResponse(response)) {
-                    LecturerLong lecturer = response.body().data;
+                    lecturer = response.body().data;
                     String title = "";
                     if (lecturer.titles != null) {
                         title = isEmpty(lecturer.titles.before) ? "" : lecturer.titles.before;

@@ -1,117 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<android.support.v4.widget.SwipeRefreshLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipeContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                  xmlns:tools="http://schemas.android.com/tools"
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent"
-                  android:orientation="vertical"
-                  android:padding="16dp">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                      xmlns:tools="http://schemas.android.com/tools"
+                      android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:orientation="vertical"
+                      android:padding="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:gravity="left"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    tools:text="Jan Kowalski"/>
+
+                <ImageView
+                    android:id="@+id/picture"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_margin="8dp"
+                    android:src="@drawable/user_placeholder"/>
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/name"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:gravity="left"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                tools:text="Jan Kowalski"/>
+                style="@style/label"
+                android:text="Status pracownika"/>
 
-            <ImageView
-                android:id="@+id/picture"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:layout_margin="8dp"
-                android:src="@drawable/user_placeholder"/>
+            <TextView
+                android:id="@+id/lecturer_status"
+                style="@style/entry"
+                tools:text='Lorem ipsum'/>
+
+            <TextView
+                style="@style/label"
+                android:text="Pokój"/>
+
+            <TextView
+                android:id="@+id/lecturer_room"
+                style="@style/entry"
+                tools:text='Lorem ipsum'/>
+
+            <TextView
+                style="@style/label"
+                android:text="Konsultacje"/>
+
+            <TextView
+                android:id="@+id/lecturer_office_hours"
+                style="@style/entry"
+                android:autoLink="web"
+                tools:text='Lorem ipsum'/>
+
+            <TextView
+                style="@style/label"
+                android:text="Strona domowa"/>
+
+            <TextView
+                android:id="@+id/lecturer_homepage"
+                style="@style/entry"
+                android:autoLink="web"
+                tools:text='Lorem ipsum'/>
+
+            <TextView
+                style="@style/label"
+                android:text="Email"/>
+
+            <TextView
+                android:id="@+id/lecturer_email"
+                style="@style/entry"
+                tools:text='Lorem ipsum'/>
+
+            <TextView
+                style="@style/label"
+                android:text="Zatrudnienie"/>
+
+            <TextView
+                android:id="@+id/lecturer_employment_positions"
+                style="@style/entry"
+                tools:text='Lorem ipsum'/>
+
+            <TextView
+                style="@style/label"
+                android:text="Zainteresowania"/>
+
+            <TextView
+                android:id="@+id/lecturer_interests"
+                style="@style/entry"
+                tools:text='Lorem ipsum'/>
+
+            <TextView
+                style="@style/label"
+                android:text="Prowadzone przedmioty"/>
+
+            <LinearLayout
+                android:id="@+id/lecturer_courses"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"/>
+
         </LinearLayout>
 
-        <TextView
-            style="@style/label"
-            android:text="Status pracownika"/>
-
-        <TextView
-            android:id="@+id/lecturer_status"
-            style="@style/entry"
-            tools:text='Lorem ipsum'/>
-
-        <TextView
-            style="@style/label"
-            android:text="Pokój"/>
-
-        <TextView
-            android:id="@+id/lecturer_room"
-            style="@style/entry"
-            tools:text='Lorem ipsum'/>
-
-        <TextView
-            style="@style/label"
-            android:text="Konsultacje"/>
-
-        <TextView
-            android:id="@+id/lecturer_office_hours"
-            style="@style/entry"
-            android:autoLink="web"
-            tools:text='Lorem ipsum'/>
-
-        <TextView
-            style="@style/label"
-            android:text="Strona domowa"/>
-
-        <TextView
-            android:id="@+id/lecturer_homepage"
-            style="@style/entry"
-            android:autoLink="web"
-            tools:text='Lorem ipsum'/>
-
-        <TextView
-            style="@style/label"
-            android:text="Email"/>
-
-        <TextView
-            android:id="@+id/lecturer_email"
-            style="@style/entry"
-            tools:text='Lorem ipsum'/>
-
-        <TextView
-            style="@style/label"
-            android:text="Zatrudnienie"/>
-
-        <TextView
-            android:id="@+id/lecturer_employment_positions"
-            style="@style/entry"
-            tools:text='Lorem ipsum'/>
-
-        <TextView
-            style="@style/label"
-            android:text="Zainteresowania"/>
-
-        <TextView
-            android:id="@+id/lecturer_interests"
-            style="@style/entry"
-            tools:text='Lorem ipsum'/>
-
-        <TextView
-            style="@style/label"
-            android:text="Prowadzone przedmioty"/>
-
-        <LinearLayout
-            android:id="@+id/lecturer_courses"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"/>
-
-    </LinearLayout>
-
-</ScrollView>
+    </ScrollView>
+</android.support.v4.widget.SwipeRefreshLayout>
