@@ -74,7 +74,7 @@ public class UsoswebLoginActivity extends BaseActivity {
 
             @Override public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 log.info("shouldOverrideUrlLoading: " + url);
-                if (url.contains("https://api.kujon.mobi/authentication/verifymobi")) {
+                if (url.contains("https://api.kujon.mobi/authentication/verify")) {
                     log.info("Got URL to kujon. Making request: " + url);
 
                     Request request = new Request.Builder()
@@ -117,7 +117,7 @@ public class UsoswebLoginActivity extends BaseActivity {
         });
         GoogleSignInResult loginStatus = KujonApplication.getApplication().getLoginStatus();
         GoogleSignInAccount account = loginStatus.getSignInAccount();
-        String url = String.format("https:/api.kujon.mobi/authentication/mobi?email=%s&token=%s&usos_id=%s", account.getEmail(), account.getIdToken(), usos.usosId);
+        String url = String.format("https:/api.kujon.mobi/authentication/register?email=%s&token=%s&usos_id=%s", account.getEmail(), account.getIdToken(), usos.usosId);
         log.info("Loading urs: " + url);
         webView.loadUrl(url);
     }
