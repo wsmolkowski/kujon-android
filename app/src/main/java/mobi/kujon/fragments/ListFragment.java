@@ -79,7 +79,7 @@ public abstract class ListFragment extends BaseFragment {
                         AlertDialog.Builder dlgAlert = new AlertDialog.Builder(activity);
                         dlgAlert.setMessage(String.format("Numer: %s\nData początkowa: %s\nData końcowa: %s\nData zakończenia: %s",
                                 term.termId, term.startDate, term.endDate, term.finishDate));
-                        dlgAlert.setTitle(term.name.pl);
+                        dlgAlert.setTitle(term.name);
                         dlgAlert.setPositiveButton("OK", null);
                         dlgAlert.setCancelable(true);
                         AlertDialog alertDialog = dlgAlert.create();

@@ -18,10 +18,13 @@ import mobi.kujon.network.json.User;
 import mobi.kujon.network.json.Usos;
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface KujonBackendApi {
+
+    String X_KUJONREFRESH_TRUE = "X-Kujonrefresh: true";
 
     @GET("usoses") Call<KujonResponse<List<Usos>>> usoses();
 
@@ -31,7 +34,11 @@ public interface KujonBackendApi {
 
     @GET("users") Call<KujonResponse<User>> users();
 
+    @GET("users") @Headers(X_KUJONREFRESH_TRUE) Call<KujonResponse<User>> usersRefresh();
+
     @GET("users/{userId}") Call<KujonResponse<User>> users(@Path("userId") String userId);
+
+    @GET("users/{userId}") @Headers(X_KUJONREFRESH_TRUE) Call<KujonResponse<User>> usersRefresh(@Path("userId") String userId);
 
     @GET("grades") Call<KujonResponse<List<Grade>>> grades();
 
@@ -39,17 +46,23 @@ public interface KujonBackendApi {
 
     @GET("terms") Call<KujonResponse<List<Term2>>> terms();
 
+    @GET("terms") @Headers(X_KUJONREFRESH_TRUE) Call<KujonResponse<List<Term2>>> termsRefresh();
+
     @GET("terms/{termId}") Call<KujonResponse<Term2>> terms(@Path("termId") String termId);
 
     @GET("programmes") Call<KujonResponse<List<Programme>>> programmes();
 
     @GET("faculties") Call<KujonResponse<List<Faculty2>>> faculties();
 
+    @GET("faculties") @Headers(X_KUJONREFRESH_TRUE) Call<KujonResponse<List<Faculty2>>> facultiesRefresh();
+
     @GET("faculties/{facultyId}") Call<KujonResponse<Faculty2>> faculty(@Path("facultyId") String facultyId);
 
     @GET("lecturers") Call<KujonResponse<List<Lecturer>>> lecturers();
 
     @GET("lecturers/{lecturerId}") Call<KujonResponse<LecturerLong>> lecturer(@Path("lecturerId") String lecturerId);
+
+    @GET("lecturers/{lecturerId}") @Headers(X_KUJONREFRESH_TRUE) Call<KujonResponse<LecturerLong>> lecturerRefresh(@Path("lecturerId") String lecturerId);
 
     @GET("courseseditions") Call<KujonResponse<List<Course>>> coursesEditions();
 

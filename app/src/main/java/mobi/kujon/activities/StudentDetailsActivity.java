@@ -8,7 +8,6 @@ import android.support.v4.app.FragmentTransaction;
 
 import mobi.kujon.R;
 import mobi.kujon.fragments.StudentInfoFragment;
-import mobi.kujon.fragments.UserInfoFragment;
 
 public class StudentDetailsActivity extends BaseActivity {
 
@@ -24,7 +23,7 @@ public class StudentDetailsActivity extends BaseActivity {
 
     public static void showStudentDetails(Activity activity, String userId) {
         Intent intent = new Intent(activity, StudentDetailsActivity.class);
-        intent.putExtra(UserInfoFragment.USER_ID, userId);
+        intent.putExtra(StudentInfoFragment.USER_ID, userId);
         activity.startActivity(intent);
     }
 }

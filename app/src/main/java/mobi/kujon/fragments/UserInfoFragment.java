@@ -72,14 +72,6 @@ public class UserInfoFragment extends BaseFragment {
     private AlertDialog alertDialog;
     private User user;
 
-    public static UserInfoFragment getFragment(String userId) {
-        Bundle bundle = new Bundle();
-        bundle.putString(USER_ID, userId);
-        UserInfoFragment fragment = new UserInfoFragment();
-        fragment.setArguments(bundle);
-        return fragment;
-    }
-
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_user_info, container, false);
@@ -101,9 +93,6 @@ public class UserInfoFragment extends BaseFragment {
 
         if (refresh) {
             utils.invalidateEntry("users");
-            if (getArguments() != null && getArguments().getString(USER_ID) != null) {
-                utils.invalidateEntry("users/" + getArguments().getString(USER_ID));
-            }
             utils.invalidateEntry("faculties");
             utils.invalidateEntry("terms");
             if (user != null && user.picture != null) {
@@ -111,7 +100,7 @@ public class UserInfoFragment extends BaseFragment {
             }
         }
 
-        Call<KujonResponse<User>> users = getArguments() != null && getArguments().getString(USER_ID) != null ? kujonBackendApi.users(getArguments().getString(USER_ID)) : kujonBackendApi.users();
+        Call<KujonResponse<User>> users = refresh ? kujonBackendApi.usersRefresh() : kujonBackendApi.users();
         users.enqueue(new Callback<KujonResponse<User>>() {
             @Override
             public void onResponse(Call<KujonResponse<User>> call, Response<KujonResponse<User>> response) {
@@ -181,7 +170,8 @@ public class UserInfoFragment extends BaseFragment {
             }
         });
 
-        kujonBackendApi.faculties().enqueue(new Callback<KujonResponse<List<Faculty2>>>() {
+        Call<KujonResponse<List<Faculty2>>> faculties = refresh ? kujonBackendApi.facultiesRefresh() : kujonBackendApi.faculties();
+        faculties.enqueue(new Callback<KujonResponse<List<Faculty2>>>() {
             @Override
             public void onResponse(Call<KujonResponse<List<Faculty2>>> call, Response<KujonResponse<List<Faculty2>>> response) {
 //                activity.showProgress(false);
@@ -202,12 +192,13 @@ public class UserInfoFragment extends BaseFragment {
             }
         });
 
-        kujonBackendApi.terms().enqueue(new Callback<KujonResponse<List<Term2>>>() {
+        Call<KujonResponse<List<Term2>>> terms = refresh ? kujonBackendApi.termsRefresh() : kujonBackendApi.terms();
+        terms.enqueue(new Callback<KujonResponse<List<Term2>>>() {
             @Override
             public void onResponse(Call<KujonResponse<List<Term2>>> call, Response<KujonResponse<List<Term2>>> response) {
                 if (ErrorHandlerUtil.handleResponse(response)) {
                     List<Term2> data = response.body().data;
-                    terms.setText(String.format("Cykle (%s)", data.size()));
+                    UserInfoFragment.this.terms.setText(String.format("Cykle (%s)", data.size()));
                 }
             }
 

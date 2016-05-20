@@ -8,7 +8,7 @@ public class Term2 {
 
     @SerializedName("name")
     @Expose
-    public Name name;
+    public String name;
     @SerializedName("end_date")
     @Expose
     public String endDate;

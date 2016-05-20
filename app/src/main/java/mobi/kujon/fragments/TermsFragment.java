@@ -76,7 +76,7 @@ public class TermsFragment extends ListFragment {
 
         @Override public void onBindViewHolder(ViewHolder holder, int position) {
             Term2 term = data.get(position);
-            holder.name.setText(term.name.pl);
+            holder.name.setText(term.name);
             holder.termId.setText(term.termId);
             holder.active.setText(term.active ? "TAK" : "NIE");
             if (term.active) {

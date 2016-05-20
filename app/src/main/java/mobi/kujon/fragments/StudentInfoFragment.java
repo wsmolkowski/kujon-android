@@ -95,14 +95,13 @@ public class StudentInfoFragment extends BaseFragment {
         String userId = getArguments().getString(USER_ID);
         if (refresh) {
             utils.invalidateEntry("users/" + userId);
-            utils.invalidateEntry("faculties");
-            utils.invalidateEntry("terms");
             if (user != null && user.picture != null) {
                 picasso.invalidate(user.picture);
             }
         }
 
-        kujonBackendApi.users(userId).enqueue(new Callback<KujonResponse<User>>() {
+        Call<KujonResponse<User>> users = refresh ? kujonBackendApi.usersRefresh(userId) : kujonBackendApi.users(userId);
+        users.enqueue(new Callback<KujonResponse<User>>() {
             @Override
             public void onResponse(Call<KujonResponse<User>> call, Response<KujonResponse<User>> response) {
                 swipeContainer.setRefreshing(false);

@@ -81,7 +81,8 @@ public class LecturerDetailsActivity extends BaseActivity {
             }
         }
 
-        kujonBackendApi.lecturer(lecturerId).enqueue(new Callback<KujonResponse<LecturerLong>>() {
+        Call<KujonResponse<LecturerLong>> lecturerCall = refresh ? kujonBackendApi.lecturerRefresh(lecturerId) : kujonBackendApi.lecturer(lecturerId);
+        lecturerCall.enqueue(new Callback<KujonResponse<LecturerLong>>() {
             @Override public void onResponse(Call<KujonResponse<LecturerLong>> call, Response<KujonResponse<LecturerLong>> response) {
                 swipeContainer.setRefreshing(false);
                 if (ErrorHandlerUtil.handleResponse(response)) {
