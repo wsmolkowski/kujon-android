@@ -36,7 +36,7 @@ public class CoursesFragment extends ListFragment {
         activity.showProgress(true);
         swipeContainer.setRefreshing(true);
 
-        loadData();
+        loadData(false);
     }
 
     @Override protected String getRequestUrl() {
@@ -48,8 +48,10 @@ public class CoursesFragment extends ListFragment {
         activity.getSupportActionBar().setTitle("Przedmioty");
     }
 
-    @Override protected void loadData() {
-        backendApi.coursesEditionsByTerm().enqueue(new Callback<KujonResponse<List<SortedMap<String, List<Course>>>>>() {
+    @Override protected void loadData(boolean refresh) {
+        Call<KujonResponse<List<SortedMap<String, List<Course>>>>> kujonResponseCall =
+                refresh ? backendApi.coursesEditionsByTermRefresh() : backendApi.coursesEditionsByTerm();
+        kujonResponseCall.enqueue(new Callback<KujonResponse<List<SortedMap<String, List<Course>>>>>() {
             @Override
             public void onResponse(Call<KujonResponse<List<SortedMap<String, List<Course>>>>> call, Response<KujonResponse<List<SortedMap<String, List<Course>>>>> response) {
                 activity.showProgress(false);

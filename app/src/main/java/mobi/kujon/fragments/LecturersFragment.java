@@ -34,15 +34,16 @@ public class LecturersFragment extends ListFragment {
         recyclerView.setAdapter(adapter);
         activity.showProgress(true);
 
-        loadData();
+        loadData(false);
     }
 
     @Override protected String getRequestUrl() {
         return backendApi.lecturers().request().url().toString();
     }
 
-    @Override protected void loadData() {
-        backendApi.lecturers().enqueue(new Callback<KujonResponse<List<Lecturer>>>() {
+    @Override protected void loadData(boolean refresh) {
+        Call<KujonResponse<List<Lecturer>>> lecturers = refresh ? backendApi.lecturersRefresh() : backendApi.lecturers();
+        lecturers.enqueue(new Callback<KujonResponse<List<Lecturer>>>() {
             @Override public void onResponse(Call<KujonResponse<List<Lecturer>>> call, Response<KujonResponse<List<Lecturer>>> response) {
                 activity.showProgress(false);
                 swipeContainer.setRefreshing(false);

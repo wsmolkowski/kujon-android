@@ -33,15 +33,16 @@ public class TermsFragment extends ListFragment {
         recyclerView.setAdapter(adapter);
         activity.showProgress(true);
 
-        loadData();
+        loadData(false);
     }
 
     @Override protected String getRequestUrl() {
         return backendApi.terms().request().url().toString();
     }
 
-    @Override protected void loadData() {
-        backendApi.terms().enqueue(new Callback<KujonResponse<List<Term2>>>() {
+    @Override protected void loadData(boolean refresh) {
+        Call<KujonResponse<List<Term2>>> terms = refresh ? backendApi.termsRefresh() : backendApi.terms();
+        terms.enqueue(new Callback<KujonResponse<List<Term2>>>() {
             @Override public void onResponse(Call<KujonResponse<List<Term2>>> call, Response<KujonResponse<List<Term2>>> response) {
                 activity.showProgress(false);
                 swipeContainer.setRefreshing(false);

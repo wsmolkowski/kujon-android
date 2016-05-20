@@ -43,15 +43,16 @@ public class GradesFragment extends ListFragment {
         });
         activity.showProgress(true);
 
-        loadData();
+        loadData(false);
     }
 
     @Override protected String getRequestUrl() {
         return backendApi.gradesByTerm().request().url().toString();
     }
 
-    @Override protected void loadData() {
-        backendApi.gradesByTerm().enqueue(new Callback<KujonResponse<SortedMap<String, List<Grade>>>>() {
+    @Override protected void loadData(boolean refresh) {
+        Call<KujonResponse<SortedMap<String, List<Grade>>>> kujonResponseCall = refresh ? backendApi.gradesByTermRefresh() : backendApi.gradesByTerm();
+        kujonResponseCall.enqueue(new Callback<KujonResponse<SortedMap<String, List<Grade>>>>() {
             @Override
             public void onResponse(Call<KujonResponse<SortedMap<String, List<Grade>>>> call, Response<KujonResponse<SortedMap<String, List<Grade>>>> response) {
                 activity.showProgress(false);
@@ -126,6 +127,7 @@ public class GradesFragment extends ListFragment {
             notifyDataSetChanged();
         }
     }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         @Bind(R.id.title) TextView title;

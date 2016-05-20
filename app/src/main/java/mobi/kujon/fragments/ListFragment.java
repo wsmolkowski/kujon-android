@@ -55,7 +55,7 @@ public abstract class ListFragment extends BaseFragment {
 
         swipeContainer.setOnRefreshListener(() -> {
             invalidate();
-            loadData();
+            loadData(true);
         });
     }
 
@@ -66,7 +66,7 @@ public abstract class ListFragment extends BaseFragment {
 
     protected abstract String getRequestUrl();
 
-    protected abstract void loadData();
+    protected abstract void loadData(boolean refresh);
 
     protected void showCourseOrTerm(String courseId, String termId) {
         if (!isEmpty(courseId) && !isEmpty(termId)) {

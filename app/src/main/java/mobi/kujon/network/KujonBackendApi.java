@@ -44,6 +44,8 @@ public interface KujonBackendApi {
 
     @GET("gradesbyterm") Call<KujonResponse<SortedMap<String, List<Grade>>>> gradesByTerm();
 
+    @GET("gradesbyterm") @Headers(X_KUJONREFRESH_TRUE) Call<KujonResponse<SortedMap<String, List<Grade>>>> gradesByTermRefresh();
+
     @GET("terms") Call<KujonResponse<List<Term2>>> terms();
 
     @GET("terms") @Headers(X_KUJONREFRESH_TRUE) Call<KujonResponse<List<Term2>>> termsRefresh();
@@ -60,6 +62,8 @@ public interface KujonBackendApi {
 
     @GET("lecturers") Call<KujonResponse<List<Lecturer>>> lecturers();
 
+    @GET("lecturers") @Headers(X_KUJONREFRESH_TRUE) Call<KujonResponse<List<Lecturer>>> lecturersRefresh();
+
     @GET("lecturers/{lecturerId}") Call<KujonResponse<LecturerLong>> lecturer(@Path("lecturerId") String lecturerId);
 
     @GET("lecturers/{lecturerId}") @Headers(X_KUJONREFRESH_TRUE) Call<KujonResponse<LecturerLong>> lecturerRefresh(@Path("lecturerId") String lecturerId);
@@ -67,6 +71,8 @@ public interface KujonBackendApi {
     @GET("courseseditions") Call<KujonResponse<List<Course>>> coursesEditions();
 
     @GET("courseseditionsbyterm") Call<KujonResponse<List<SortedMap<String, List<Course>>>>> coursesEditionsByTerm();
+
+    @GET("courseseditionsbyterm") @Headers(X_KUJONREFRESH_TRUE) Call<KujonResponse<List<SortedMap<String, List<Course>>>>> coursesEditionsByTermRefresh();
 
     @GET("courseseditions/{courseId}/{termId}")
     Call<KujonResponse<CourseDetails>> courseDetails(@Path("courseId") String courseId, @Path("termId") String termId);
