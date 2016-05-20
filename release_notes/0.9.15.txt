@@ -1,0 +1,7 @@
+* Fix #81 X-Kujonrefresh header
+* terms name
+* Fix #75 activity o studencie - zrobić oddzielne a nie to na stronie głównej
+* Fix #72 Odświeżanie wykładowcy/ucznia z pociągnięciem do dołu
+* new register endpoints
+* Fix #73 strona główna z logo - dodanie napisu pod logo
+* NPE fix
