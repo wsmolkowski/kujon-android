@@ -3,6 +3,7 @@ package mobi.kujon.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,6 +42,7 @@ import mobi.kujon.network.json.Usos;
 import mobi.kujon.ui.CircleTransform;
 import mobi.kujon.utils.CommonUtils;
 import mobi.kujon.utils.ErrorHandlerUtil;
+import mobi.kujon.utils.KujonUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -60,10 +62,15 @@ public class UserInfoFragment extends BaseFragment {
     @Bind(R.id.picture) ImageView picture;
     @Bind(R.id.usosLogo) ImageView usosLogo;
     @Bind(R.id.student_faculties) LinearLayout studentFaculties;
+    @Bind(R.id.swipeContainer) SwipeRefreshLayout swipeContainer;
 
+    @Inject KujonUtils utils;
     @Inject KujonBackendApi kujonBackendApi;
+    @Inject Picasso picasso;
+
     private BaseActivity activity;
     private AlertDialog alertDialog;
+    private User user;
 
     public static UserInfoFragment getFragment(String userId) {
         Bundle bundle = new Bundle();
@@ -73,7 +80,8 @@ public class UserInfoFragment extends BaseFragment {
         return fragment;
     }
 
-    @Nullable @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    @Nullable @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_user_info, container, false);
         ButterKnife.bind(this, rootView);
         KujonApplication.getComponent().inject(this);
@@ -83,23 +91,38 @@ public class UserInfoFragment extends BaseFragment {
     @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         activity = (BaseActivity) getActivity();
+        activity.getSupportActionBar().setTitle(R.string.app_name);
+        swipeContainer.setOnRefreshListener(() -> loadData(true));
+        handler.post(() -> loadData(false));
     }
 
-    @Override public void onStart() {
-        super.onStart();
-        activity.getSupportActionBar().setTitle(R.string.app_name);
-        activity.showProgress(true);
+    private void loadData(boolean refresh) {
+        swipeContainer.setRefreshing(true);
+
+        if (refresh) {
+            utils.invalidateEntry("users");
+            if (getArguments() != null && getArguments().getString(USER_ID) != null) {
+                utils.invalidateEntry("users/" + getArguments().getString(USER_ID));
+            }
+            utils.invalidateEntry("faculties");
+            utils.invalidateEntry("terms");
+            if (user != null && user.picture != null) {
+                picasso.invalidate(user.picture);
+            }
+        }
+
         Call<KujonResponse<User>> users = getArguments() != null && getArguments().getString(USER_ID) != null ? kujonBackendApi.users(getArguments().getString(USER_ID)) : kujonBackendApi.users();
         users.enqueue(new Callback<KujonResponse<User>>() {
-            @Override public void onResponse(Call<KujonResponse<User>> call, Response<KujonResponse<User>> response) {
-                activity.showProgress(false);
+            @Override
+            public void onResponse(Call<KujonResponse<User>> call, Response<KujonResponse<User>> response) {
+                swipeContainer.setRefreshing(false);
                 if (ErrorHandlerUtil.handleResponse(response)) {
-                    User user = response.body().data;
+                    user = response.body().data;
                     usosName.setText(user.usos_name);
                     index.setText(user.student_number);
                     String name = user.first_name + " " + user.last_name;
                     firstLastName.setText(name);
-                    Picasso.with(getActivity()).load(user.picture)
+                    picasso.load(user.picture)
                             .transform(new CircleTransform())
                             .fit()
                             .centerInside()
@@ -116,7 +139,8 @@ public class UserInfoFragment extends BaseFragment {
                         StudentProgramme studentProgramme = user.student_programmes.get(position);
                         Programme programme = studentProgramme.programme;
                         kujonBackendApi.programmes().enqueue(new Callback<KujonResponse<List<Programme>>>() {
-                            @Override public void onResponse(Call<KujonResponse<List<Programme>>> call, Response<KujonResponse<List<Programme>>> response) {
+                            @Override
+                            public void onResponse(Call<KujonResponse<List<Programme>>> call, Response<KujonResponse<List<Programme>>> response) {
                                 activity.showProgress(false);
                                 if (ErrorHandlerUtil.handleResponse(response)) {
                                     List<Programme> data = response.body().data;
@@ -140,7 +164,8 @@ public class UserInfoFragment extends BaseFragment {
                                 }
                             }
 
-                            @Override public void onFailure(Call<KujonResponse<List<Programme>>> call, Throwable t) {
+                            @Override
+                            public void onFailure(Call<KujonResponse<List<Programme>>> call, Throwable t) {
                                 activity.showProgress(true);
                                 ErrorHandlerUtil.handleError(t);
                             }
@@ -151,12 +176,14 @@ public class UserInfoFragment extends BaseFragment {
 
             @Override public void onFailure(Call<KujonResponse<User>> call, Throwable t) {
                 activity.showProgress(true);
+                swipeContainer.setRefreshing(false);
                 ErrorHandlerUtil.handleError(t);
             }
         });
 
         kujonBackendApi.faculties().enqueue(new Callback<KujonResponse<List<Faculty2>>>() {
-            @Override public void onResponse(Call<KujonResponse<List<Faculty2>>> call, Response<KujonResponse<List<Faculty2>>> response) {
+            @Override
+            public void onResponse(Call<KujonResponse<List<Faculty2>>> call, Response<KujonResponse<List<Faculty2>>> response) {
 //                activity.showProgress(false);
                 if (ErrorHandlerUtil.handleResponse(response)) {
                     List<Faculty2> data = response.body().data;
@@ -176,7 +203,8 @@ public class UserInfoFragment extends BaseFragment {
         });
 
         kujonBackendApi.terms().enqueue(new Callback<KujonResponse<List<Term2>>>() {
-            @Override public void onResponse(Call<KujonResponse<List<Term2>>> call, Response<KujonResponse<List<Term2>>> response) {
+            @Override
+            public void onResponse(Call<KujonResponse<List<Term2>>> call, Response<KujonResponse<List<Term2>>> response) {
                 if (ErrorHandlerUtil.handleResponse(response)) {
                     List<Term2> data = response.body().data;
                     terms.setText(String.format("Cykle (%s)", data.size()));
@@ -201,12 +229,16 @@ public class UserInfoFragment extends BaseFragment {
             alertDialog.dismiss();
             alertDialog = null;
         }
+        swipeContainer.setRefreshing(false);
+        swipeContainer.destroyDrawingCache();
+        swipeContainer.clearAnimation();
     }
 
     private void showUsosLogo(String usosId, ImageView imageView) {
         if (!isEmpty(usosId)) {
             kujonBackendApi.usoses().enqueue(new Callback<KujonResponse<List<Usos>>>() {
-                @Override public void onResponse(Call<KujonResponse<List<Usos>>> call, Response<KujonResponse<List<Usos>>> response) {
+                @Override
+                public void onResponse(Call<KujonResponse<List<Usos>>> call, Response<KujonResponse<List<Usos>>> response) {
                     if (ErrorHandlerUtil.handleResponse(response)) {
                         List<Usos> usoses = response.body().data;
                         Optional<Usos> usosOpt = $.find(usoses, it -> usosId.equals(it.usosId));
