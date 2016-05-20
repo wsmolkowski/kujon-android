@@ -11,7 +11,7 @@ buildscript {
         classpath 'com.google.gms:google-services:2.0.0'
         classpath 'io.fabric.tools:gradle:1.+'
         classpath 'me.tatarka.retrolambda.projectlombok:lombok.ast:0.2.3.a2'
-        classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.5.1-SNAPSHOT'
+//        classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.5.1-SNAPSHOT'
         classpath('fr.avianey.androidsvgdrawable:gradle-plugin:3.0.0') {
             exclude group: 'xerces'
         }

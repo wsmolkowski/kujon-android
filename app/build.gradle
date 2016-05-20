@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'io.fabric'
-apply plugin: 'com.getkeepsafe.dexcount'
+//apply plugin: 'com.getkeepsafe.dexcount'
 apply plugin: "androidsvgdrawable"
 apply plugin: 'jsonschema2pojo'
 apply plugin: 'com.neenbedankt.android-apt'
