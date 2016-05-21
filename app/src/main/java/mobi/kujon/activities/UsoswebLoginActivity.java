@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.webkit.CookieManager;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -47,8 +48,9 @@ public class UsoswebLoginActivity extends BaseActivity {
     OkHttpClient client = new OkHttpClient();
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
-        log.info("UsoswebLoginActivity");
         super.onCreate(savedInstanceState);
+        log.info("UsoswebLoginActivity");
+        CookieManager.getInstance().setAcceptCookie(true);
         setContentView(R.layout.activity_usos_login);
         ButterKnife.bind(this);
         getSupportActionBar().setTitle(R.string.login_title);
