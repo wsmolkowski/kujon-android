@@ -71,3 +71,9 @@
 -dontwarn retrofit.**
 -dontwarn com.flurry.sdk.**
 -keep class retrofit.** { *; }
+
+-keep class okhttp3.** { *; }
+
+-keep interface okhttp3.** { *; }
+
+-dontwarn okhttp3.internal.huc.**
