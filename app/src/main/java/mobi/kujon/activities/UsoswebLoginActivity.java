@@ -25,9 +25,12 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.inject.Inject;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mobi.kujon.KujonApplication;
+import mobi.kujon.NetModule;
 import mobi.kujon.R;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.network.json.Usos;
@@ -45,11 +48,12 @@ public class UsoswebLoginActivity extends BaseActivity {
     @Bind(R.id.webView) WebView webView;
     @Bind(R.id.progressBar) ProgressBar progressBar;
 
-    OkHttpClient client = new OkHttpClient();
+    @Inject OkHttpClient client;
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         log.info("UsoswebLoginActivity");
+        KujonApplication.getComponent().inject(this);
         CookieManager.getInstance().setAcceptCookie(true);
         setContentView(R.layout.activity_usos_login);
         ButterKnife.bind(this);
@@ -79,8 +83,11 @@ public class UsoswebLoginActivity extends BaseActivity {
                 if (url.contains("https://api.kujon.mobi/authentication/verify")) {
                     log.info("Got URL to kujon. Making request: " + url);
 
+                    String cookie = CookieManager.getInstance().getCookie(NetModule.API_URL);
+
                     Request request = new Request.Builder()
                             .url(url)
+                            .addHeader("Cookie", cookie)
                             .build();
 
                     client.newCall(request).enqueue(new Callback() {

@@ -10,6 +10,7 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.CookieManager;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Singleton;
@@ -20,6 +21,7 @@ import mobi.kujon.network.KujonBackendApi;
 import mobi.kujon.utils.KujonUtils;
 import okhttp3.Cache;
 import okhttp3.Interceptor;
+import okhttp3.JavaNetCookieJar;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -30,6 +32,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class NetModule {
 
     private static final String TAG = "NetModule";
+    public static final String API_URL = "https://api.kujon.mobi";
 
     @Provides @Singleton Cache provideOkHttpCache(Application application) {
         File httpCacheDirectory = new File(application.getCacheDir(), "responses");
@@ -38,11 +41,14 @@ public class NetModule {
     }
 
     @Provides @Singleton OkHttpClient provideOkHttpClient(Cache cache) {
+
+        CookieManager cookieManager = new CookieManager();
         OkHttpClient httpClient = new OkHttpClient.Builder()
                 .addNetworkInterceptor(REWRITE_RESPONSE_INTERCEPTOR)
                 .addNetworkInterceptor(new AuthenticationInterceptor())
                 .addInterceptor(OFFLINE_INTERCEPTOR)
                 .cache(cache)
+                .cookieJar(new JavaNetCookieJar(cookieManager))
                 .readTimeout(60, TimeUnit.SECONDS)
                 .build();
 
@@ -51,7 +57,7 @@ public class NetModule {
 
     @Provides @Singleton Retrofit provideRetrofit(OkHttpClient okHttpClient) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.kujon.mobi")
+                .baseUrl(API_URL)
                 .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
