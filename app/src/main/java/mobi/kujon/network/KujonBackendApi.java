@@ -42,9 +42,9 @@ public interface KujonBackendApi {
 
     @GET("grades") Call<KujonResponse<List<Grade>>> grades();
 
-    @GET("gradesbyterm") Call<KujonResponse<SortedMap<String, List<Grade>>>> gradesByTerm();
+    @GET("gradesbyterm") Call<KujonResponse<List<SortedMap<String, List<Grade>>>>> gradesByTerm();
 
-    @GET("gradesbyterm") @Headers(X_KUJONREFRESH_TRUE) Call<KujonResponse<SortedMap<String, List<Grade>>>> gradesByTermRefresh();
+    @GET("gradesbyterm") @Headers(X_KUJONREFRESH_TRUE) Call<KujonResponse<List<SortedMap<String, List<Grade>>>>> gradesByTermRefresh();
 
     @GET("terms") Call<KujonResponse<List<Term2>>> terms();
 

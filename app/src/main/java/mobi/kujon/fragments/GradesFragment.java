@@ -12,9 +12,9 @@ import android.widget.TextView;
 
 import com.afollestad.sectionedrecyclerview.SectionedRecyclerViewAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedMap;
-import java.util.TreeMap;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -51,19 +51,19 @@ public class GradesFragment extends ListFragment {
     }
 
     @Override protected void loadData(boolean refresh) {
-        Call<KujonResponse<SortedMap<String, List<Grade>>>> kujonResponseCall = refresh ? backendApi.gradesByTermRefresh() : backendApi.gradesByTerm();
-        kujonResponseCall.enqueue(new Callback<KujonResponse<SortedMap<String, List<Grade>>>>() {
+        Call<KujonResponse<List<SortedMap<String, List<Grade>>>>> kujonResponseCall = refresh ? backendApi.gradesByTermRefresh() : backendApi.gradesByTerm();
+        kujonResponseCall.enqueue(new Callback<KujonResponse<List<SortedMap<String, List<Grade>>>>>() {
             @Override
-            public void onResponse(Call<KujonResponse<SortedMap<String, List<Grade>>>> call, Response<KujonResponse<SortedMap<String, List<Grade>>>> response) {
+            public void onResponse(Call<KujonResponse<List<SortedMap<String, List<Grade>>>>> call, Response<KujonResponse<List<SortedMap<String, List<Grade>>>>> response) {
                 activity.showProgress(false);
                 swipeContainer.setRefreshing(false);
                 if (ErrorHandlerUtil.handleResponse(response)) {
-                    SortedMap<String, List<Grade>> data = response.body().data;
+                    List<SortedMap<String, List<Grade>>> data = response.body().data;
                     adapter.setData(data);
                 }
             }
 
-            @Override public void onFailure(Call<KujonResponse<SortedMap<String, List<Grade>>>> call, Throwable t) {
+            @Override public void onFailure(Call<KujonResponse<List<SortedMap<String, List<Grade>>>>> call, Throwable t) {
                 activity.showProgress(false);
                 swipeContainer.setRefreshing(false);
                 ErrorHandlerUtil.handleError(t);
@@ -78,7 +78,7 @@ public class GradesFragment extends ListFragment {
 
     protected class Adapter extends SectionedRecyclerViewAdapter<ViewHolder> {
 
-        SortedMap<String, List<Grade>> data = new TreeMap<>();
+        List<SortedMap<String, List<Grade>>> data = new ArrayList<>();
 
         @Override public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_grade, parent, false);
@@ -86,7 +86,7 @@ public class GradesFragment extends ListFragment {
         }
 
         @Override public int getSectionCount() {
-            return data.keySet().size();
+            return data.size();
         }
 
         @Override public int getItemCount(int section) {
@@ -114,15 +114,15 @@ public class GradesFragment extends ListFragment {
         }
 
         List<Grade> gradesInSection(int section) {
-            List<Grade>[] courses = data.values().toArray(new List[0]);
-            return courses[section];
+            List<Grade> courses = data.get(section).get(data.get(section).firstKey());
+            return courses;
         }
 
         String sectionName(int section) {
-            return ((String) data.keySet().toArray()[section]);
+            return data.get(section).firstKey();
         }
 
-        public void setData(SortedMap<String, List<Grade>> data) {
+        public void setData(List<SortedMap<String, List<Grade>>> data) {
             this.data = data;
             notifyDataSetChanged();
         }
@@ -144,7 +144,5 @@ public class GradesFragment extends ListFragment {
             ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(v -> showCourseOrTerm(courseId, termId));
         }
-
-
     }
 }
