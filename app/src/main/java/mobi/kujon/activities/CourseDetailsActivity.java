@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
@@ -49,9 +50,15 @@ public class CourseDetailsActivity extends BaseActivity {
     @Bind(R.id.course_class_type) TextView courseClassType;
     @Bind(R.id.course_students) LinearLayout courseStudents;
     @Bind(R.id.scrollView) ScrollView scrollView;
+    @Bind(R.id.course_id) TextView courseIdTextView;
+    @Bind(R.id.swipeContainer) SwipeRefreshLayout swipeContainer;
 
     private LayoutInflater layoutInflater;
     private CourseDetails courseDetails;
+
+    Handler handler = new Handler();
+    private String courseId;
+    private String termId;
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,15 +67,23 @@ public class CourseDetailsActivity extends BaseActivity {
         layoutInflater = getLayoutInflater();
         getSupportActionBar().setTitle(R.string.course_title);
 
-        Handler handler = new Handler();
+        courseId = getIntent().getStringExtra(COURSE_ID);
+        termId = getIntent().getStringExtra(TERM_ID);
 
-        String courseId = getIntent().getStringExtra(COURSE_ID);
-        String termId = getIntent().getStringExtra(TERM_ID);
+        swipeContainer.setOnRefreshListener(() -> loadData(true));
+        handler.post(() -> loadData(false));
+    }
 
-        showProgress(true);
-        kujonBackendApi.courseDetails(courseId, termId).enqueue(new Callback<KujonResponse<CourseDetails>>() {
+    private void loadData(boolean refresh) {
+        if (refresh) {
+            utils.invalidateEntry("courseseditions/" + courseId + "/" + termId);
+        }
+
+        swipeContainer.setRefreshing(true);
+        Call<KujonResponse<CourseDetails>> call = refresh ? kujonBackendApi.courseDetailsRefresh(courseId, termId) : kujonBackendApi.courseDetails(courseId, termId);
+        call.enqueue(new Callback<KujonResponse<CourseDetails>>() {
             @Override public void onResponse(Call<KujonResponse<CourseDetails>> call, Response<KujonResponse<CourseDetails>> response) {
-                showProgress(false);
+                swipeContainer.setRefreshing(false);
                 if (ErrorHandlerUtil.handleResponse(response)) {
                     courseDetails = response.body().data;
 
@@ -76,7 +91,8 @@ public class CourseDetailsActivity extends BaseActivity {
                     courseLang.setText(courseDetails.langId);
                     courseIsConducted.setText(courseDetails.isCurrentlyConducted);
                     description.setText(Html.fromHtml(courseDetails.description.replace("\n", "<br>")));
-                    courseName.setText(String.format("%s (%s)", courseDetails.name, courseDetails.courseId));
+                    courseName.setText(courseDetails.name);
+                    courseIdTextView.setText(courseDetails.courseId);
                     bibliography.setText(courseDetails.bibliography.replace("\n", "\n\n"));
                     assessmentCriteria.setText(courseDetails.assessmentCriteria.replace("\n", "\n\n"));
                     if (courseDetails.term != null) {
