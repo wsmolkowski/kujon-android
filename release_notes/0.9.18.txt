@@ -1,0 +1,3 @@
+* Fix #83 Przedmiot - dodanie odświeżania na szczegółach przedmiotu + przesunięcie course_id
+* Fix #85 oceny - java.lang.IllegalStatException: Expected BEGIN_ARRAY but was BEGIN OBJECT
+* Fix #75 activity o studencie - zrobić oddzielne a nie to na stronie głównej
