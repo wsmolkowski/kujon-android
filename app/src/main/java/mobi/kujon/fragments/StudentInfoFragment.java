@@ -51,7 +51,6 @@ public class StudentInfoFragment extends BaseFragment {
     @Bind(R.id.student_programmes) LinearLayout studentProgrammes;
     @Bind(R.id.usosName) TextView usosName;
     @Bind(R.id.firstLastName) TextView firstLastName;
-    @Bind(R.id.index) TextView index;
     @Bind(R.id.picture) ImageView picture;
     @Bind(R.id.usosLogo) ImageView usosLogo;
     @Bind(R.id.swipeContainer) SwipeRefreshLayout swipeContainer;
@@ -84,7 +83,7 @@ public class StudentInfoFragment extends BaseFragment {
     @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         activity = (BaseActivity) getActivity();
-        activity.getSupportActionBar().setTitle(R.string.app_name);
+        activity.getSupportActionBar().setTitle("Student");
         swipeContainer.setOnRefreshListener(() -> loadData(true));
         handler.post(() -> loadData(false));
     }
@@ -114,7 +113,6 @@ public class StudentInfoFragment extends BaseFragment {
                         usosName.setText(user.usos_name);
                         showUsosLogo(user.usos_id, usosLogo);
                     }
-                    index.setText(user.student_number);
                     String name = user.first_name + " " + user.last_name;
                     firstLastName.setText(name);
                     picasso.load(user.picture)
