@@ -1,18 +1,16 @@
 {
   "project_info": {
-    "project_id": "kujon-942c2",
     "project_number": "774265221464",
-    "name": "Kujon"
+    "firebase_url": "https://kujon-942c2.firebaseio.com",
+    "project_id": "kujon-942c2",
+    "storage_bucket": "kujon-942c2.appspot.com"
   },
   "client": [
     {
       "client_info": {
         "mobilesdk_app_id": "1:774265221464:android:96ffee1a1f1f65f7",
-        "client_id": "android:mobi.kujon",
-        "client_type": 1,
         "android_client_info": {
-          "package_name": "mobi.kujon",
-          "certificate_hash": []
+          "package_name": "mobi.kujon"
         }
       },
       "oauth_client": [
@@ -25,25 +23,26 @@
           }
         },
         {
+          "client_id": "774265221464-fddas9u0gh4l9935rmo217avpbkrk592.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
           "client_id": "774265221464-1v0trui5rbc375cea793r1dposo7tkan.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
-      "api_key": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5sIrIqIvl5zl4hh3xRbRLLND5B0osCiQ"
+        }
+      ],
       "services": {
         "analytics_service": {
           "status": 1
         },
-        "cloud_messaging_service": {
-          "status": 2,
-          "apns_config": []
-        },
         "appinvite_service": {
           "status": 1,
           "other_platform_oauth_client": []
-        },
-        "google_signin_service": {
-          "status": 2
         },
         "ads_service": {
           "status": 1
@@ -53,11 +52,8 @@
     {
       "client_info": {
         "mobilesdk_app_id": "1:774265221464:android:2a3a888789483335",
-        "client_id": "android:mobi.kujon.debug",
-        "client_type": 1,
         "android_client_info": {
-          "package_name": "mobi.kujon.debug",
-          "certificate_hash": []
+          "package_name": "mobi.kujon.debug"
         }
       },
       "oauth_client": [
@@ -70,25 +66,26 @@
           }
         },
         {
+          "client_id": "774265221464-fddas9u0gh4l9935rmo217avpbkrk592.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
           "client_id": "774265221464-1v0trui5rbc375cea793r1dposo7tkan.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
-      "api_key": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5sIrIqIvl5zl4hh3xRbRLLND5B0osCiQ"
+        }
+      ],
       "services": {
         "analytics_service": {
           "status": 1
         },
-        "cloud_messaging_service": {
-          "status": 2,
-          "apns_config": []
-        },
         "appinvite_service": {
           "status": 1,
           "other_platform_oauth_client": []
-        },
-        "google_signin_service": {
-          "status": 2
         },
         "ads_service": {
           "status": 1
@@ -96,6 +93,5 @@
       }
     }
   ],
-  "client_info": [],
-  "ARTIFACT_VERSION": "1"
+  "configuration_version": "1"
 }
