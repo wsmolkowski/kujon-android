@@ -71,6 +71,9 @@ public class UserInfoFragment extends BaseFragment {
     private BaseActivity activity;
     private AlertDialog alertDialog;
     private User user;
+    private Call<KujonResponse<User>> usersCall;
+    private Call<KujonResponse<List<Faculty2>>> facultiesCall;
+    private Call<KujonResponse<List<Term2>>> termsCall;
 
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -85,6 +88,10 @@ public class UserInfoFragment extends BaseFragment {
         activity = (BaseActivity) getActivity();
         activity.getSupportActionBar().setTitle(R.string.app_name);
         swipeContainer.setOnRefreshListener(() -> loadData(true));
+    }
+
+    @Override public void onStart() {
+        super.onStart();
         handler.post(() -> loadData(false));
     }
 
@@ -100,8 +107,8 @@ public class UserInfoFragment extends BaseFragment {
             }
         }
 
-        Call<KujonResponse<User>> users = refresh ? kujonBackendApi.usersRefresh() : kujonBackendApi.users();
-        users.enqueue(new Callback<KujonResponse<User>>() {
+        usersCall = refresh ? kujonBackendApi.usersRefresh() : kujonBackendApi.users();
+        usersCall.enqueue(new Callback<KujonResponse<User>>() {
             @Override
             public void onResponse(Call<KujonResponse<User>> call, Response<KujonResponse<User>> response) {
                 swipeContainer.setRefreshing(false);
@@ -170,8 +177,8 @@ public class UserInfoFragment extends BaseFragment {
             }
         });
 
-        Call<KujonResponse<List<Faculty2>>> faculties = refresh ? kujonBackendApi.facultiesRefresh() : kujonBackendApi.faculties();
-        faculties.enqueue(new Callback<KujonResponse<List<Faculty2>>>() {
+        facultiesCall = refresh ? kujonBackendApi.facultiesRefresh() : kujonBackendApi.faculties();
+        facultiesCall.enqueue(new Callback<KujonResponse<List<Faculty2>>>() {
             @Override
             public void onResponse(Call<KujonResponse<List<Faculty2>>> call, Response<KujonResponse<List<Faculty2>>> response) {
 //                activity.showProgress(false);
@@ -192,8 +199,8 @@ public class UserInfoFragment extends BaseFragment {
             }
         });
 
-        Call<KujonResponse<List<Term2>>> terms = refresh ? kujonBackendApi.termsRefresh() : kujonBackendApi.terms();
-        terms.enqueue(new Callback<KujonResponse<List<Term2>>>() {
+        termsCall = refresh ? kujonBackendApi.termsRefresh() : kujonBackendApi.terms();
+        termsCall.enqueue(new Callback<KujonResponse<List<Term2>>>() {
             @Override
             public void onResponse(Call<KujonResponse<List<Term2>>> call, Response<KujonResponse<List<Term2>>> response) {
                 if (ErrorHandlerUtil.handleResponse(response)) {
@@ -223,6 +230,9 @@ public class UserInfoFragment extends BaseFragment {
         swipeContainer.setRefreshing(false);
         swipeContainer.destroyDrawingCache();
         swipeContainer.clearAnimation();
+        usersCall.cancel();
+        facultiesCall.cancel();
+        termsCall.cancel();
     }
 
     private void showUsosLogo(String usosId, ImageView imageView) {
@@ -248,10 +258,5 @@ public class UserInfoFragment extends BaseFragment {
                 }
             });
         }
-    }
-
-    @Override public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
     }
 }
