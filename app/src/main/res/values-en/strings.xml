@@ -9,4 +9,32 @@
     <string name="no_photo">Empty photo</string>
     <string name="app_link">Hey check out this new app: https://play.google.com/store/apps/details?id=mobi.kujon</string>
     <string name="share_app">Share the app</string>
+    <string name="course_title">Course</string>
+    <string name="email_body">my comment:</string>
+    <string name="faculty_title">Faculty</string>
+    <string name="lecturer_title">Lecturer</string>
+    <string name="login_title">Login</string>
+    <string name="login_error">Login error</string>
+    <string name="main_login_title">Login</string>
+    <string name="plan_title">Schedule</string>
+    <string name="regulations_activity_title">Regulations</string>
+    <string name="regulations">Regulations</string>
+    <string name="settings">Settings</string>
+    <string name="email_subject">Comment</string>
+    <string name="congratulations">Congratulations</string>
+
+    <string-array name="months">
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
+    </string-array>
 </resources>

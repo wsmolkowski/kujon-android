@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Kujon</string>
+    <string name="app_name" translatable="false">Kujon</string>
     <string name="logout">Wyloguj</string>
     <string name="help">Pomoc</string>
     <string name="delete_account">Skasuj konto</string>
@@ -22,10 +22,10 @@
     <string name="faculty_title">Jednostka</string>
     <string name="settings">Ustawienia</string>
     <string name="regulations">Regulamin</string>
-    <string name="regulations_url">https://kujon.mobi/#disclaimer</string>
+    <string name="regulations_url" translatable="false">https://kujon.mobi/#disclaimer</string>
     <string name="plan_title">Plan zajęć</string>
     <string name="regulations_activity_title">Regulamin i polityka prywatności</string>
-    <string name="regulations_info">Rejestrując się zgadzasz się na<![CDATA[<br/><u><font color=#2196F3>następujące warunki</u>]]></string>
+    <string name="regulations_info" translatable="false">Rejestrując się zgadzasz się na<![CDATA[<br/><u><font color=#2196F3>następujące warunki</u>]]></string>
 
     <string-array name="months">
         <item>Styczeń</item>
