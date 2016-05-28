@@ -3,11 +3,11 @@ package mobi.kujon.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -37,6 +37,7 @@ import mobi.kujon.network.json.CalendarEvent;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.utils.ErrorHandlerUtil;
 import mobi.kujon.utils.EventUtils;
+import mobi.kujon.utils.KujonUtils;
 import mobi.kujon.utils.KujonWeekViewEvent;
 import mobi.kujon.utils.PlanEventsDownloader;
 import retrofit2.Call;
@@ -52,8 +53,10 @@ public class PlanFragment extends BaseFragment implements MonthLoader.MonthChang
     private Map<String, List<WeekViewEvent>> eventsForDate = new HashMap<>();
     private List<String> downloaded = new ArrayList<>();
     @Inject KujonBackendApi backendApi;
+    @Inject KujonUtils utils;
     private AlertDialog alertDialog;
     private BaseActivity activity;
+    private boolean refresh;
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_plan, container, false);
@@ -125,7 +128,8 @@ public class PlanFragment extends BaseFragment implements MonthLoader.MonthChang
             downloaded.add(weekKey);
 
             activity.showProgress(true);
-            backendApi.plan(restSuffix).enqueue(new Callback<KujonResponse<List<CalendarEvent>>>() {
+            Call<KujonResponse<List<CalendarEvent>>> call = refresh ? backendApi.planRefresh(restSuffix) : backendApi.plan(restSuffix);
+            call.enqueue(new Callback<KujonResponse<List<CalendarEvent>>>() {
                 @Override public void onResponse(Call<KujonResponse<List<CalendarEvent>>> call, Response<KujonResponse<List<CalendarEvent>>> response) {
                     activity.showProgress(false);
                     if (ErrorHandlerUtil.handleResponse(response)) {
@@ -146,6 +150,7 @@ public class PlanFragment extends BaseFragment implements MonthLoader.MonthChang
 
     @Override public void onStart() {
         super.onStart();
+        refresh = false;
         gotoNow();
         activity.getSupportActionBar().setTitle(R.string.plan_title);
     }
@@ -166,6 +171,19 @@ public class PlanFragment extends BaseFragment implements MonthLoader.MonthChang
 
     @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.calendar_plan_menu, menu);
-        super.onCreateOptionsMenu(menu,inflater);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.refresh) {
+            refresh = true;
+            utils.invalidateEntry("tt");
+            downloaded.clear();
+            eventsForDate.clear();
+            gotoNow();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
     }
 }
