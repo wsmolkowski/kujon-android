@@ -1,0 +1,4 @@
+* #84 plan - lista dodanie przycisku odśwież która odświeża bieżący miesiąc + zbyt dużo zapytań
+* Fix #87 dodanie tłumaczeń angielskich
+* bugfix
+* #70 Google Analytics
