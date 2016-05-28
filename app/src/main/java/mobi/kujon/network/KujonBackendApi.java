@@ -83,5 +83,7 @@ public interface KujonBackendApi {
 
     @GET("tt/{day}") Call<KujonResponse<List<CalendarEvent>>> plan(@Path("day") String day);
 
+    @GET("tt/{day}") @Headers(X_KUJONREFRESH_TRUE) Call<KujonResponse<List<CalendarEvent>>> planRefresh(@Path("day") String day);
+
     @GET("authentication/archive") Call<Object> deleteAccount();
 }

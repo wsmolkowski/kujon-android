@@ -30,6 +30,8 @@ public class PlanEventsDownloader {
     public static final SimpleDateFormat REST_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
     @Inject KujonBackendApi kujonBackendApi;
 
+    private boolean refresh = false;
+
     public PlanEventsDownloader() {
         KujonApplication.getComponent().inject(this);
     }
@@ -46,7 +48,8 @@ public class PlanEventsDownloader {
 
             final TaskCompletionSource<List<CalendarEvent>> tcs = new TaskCompletionSource<>();
 
-            kujonBackendApi.plan(restSuffix).enqueue(new Callback<KujonResponse<List<CalendarEvent>>>() {
+            Call<KujonResponse<List<CalendarEvent>>> call = refresh ? kujonBackendApi.planRefresh(restSuffix) : kujonBackendApi.plan(restSuffix);
+            call.enqueue(new Callback<KujonResponse<List<CalendarEvent>>>() {
                 @Override public void onResponse(Call<KujonResponse<List<CalendarEvent>>> call, Response<KujonResponse<List<CalendarEvent>>> response) {
                     if (ErrorHandlerUtil.handleResponse(response)) {
                         List<CalendarEvent> data = response.body().data;
@@ -120,5 +123,9 @@ public class PlanEventsDownloader {
         @Override public String toString() {
             return localDate.toString();
         }
+    }
+
+    public void setRefresh(boolean refresh) {
+        this.refresh = refresh;
     }
 }

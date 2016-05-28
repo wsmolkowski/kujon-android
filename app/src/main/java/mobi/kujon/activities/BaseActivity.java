@@ -130,7 +130,7 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
                 return true;
 
             default:
-                return true;
+                return super.onOptionsItemSelected(item);
         }
     }
 

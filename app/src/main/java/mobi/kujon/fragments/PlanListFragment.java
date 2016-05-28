@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -40,12 +41,14 @@ import mobi.kujon.network.json.CalendarEvent;
 import mobi.kujon.network.json.LecturerLong;
 import mobi.kujon.utils.ErrorHandlerUtil;
 import mobi.kujon.utils.EventUtils;
+import mobi.kujon.utils.KujonUtils;
 import mobi.kujon.utils.PlanEventsDownloader;
 
 
 public class PlanListFragment extends BaseFragment {
 
     @Inject KujonApplication application;
+    @Inject KujonUtils utils;
 
     private static final String TAG = "PlanListFragment";
 
@@ -68,10 +71,17 @@ public class PlanListFragment extends BaseFragment {
         adapter.shouldShowHeadersForEmptySections(true);
         setHasOptionsMenu(true);
 
-        current = DateTime.now();
-        current = current.minusMonths(1);
         months = application.getResources().getStringArray(R.array.months);
         return rootView;
+    }
+
+    @Override public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.refresh) {
+            loadData(true);
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
     }
 
     private synchronized void downloadNext(boolean first) {
@@ -119,12 +129,26 @@ public class PlanListFragment extends BaseFragment {
         layoutManager = new LinearLayoutManager(activity);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+    }
+
+    private void loadData(boolean refresh) {
+        if (refresh) {
+            utils.invalidateEntry("tt");
+            planEventsDownloader.setRefresh(true);
+        }
+        readyToDownloadNext.set(true);
+        adapter.data.clear();
+        adapter.notifyDataSetChanged();
+        current = DateTime.now();
+        current = current.minusMonths(1);
         downloadNext(true);
     }
 
     @Override public void onStart() {
         super.onStart();
         activity.showProgress(true);
+        planEventsDownloader.setRefresh(false);
+        loadData(false);
     }
 
     @OnClick(R.id.fab) public void fab() {
