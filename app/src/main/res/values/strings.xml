@@ -26,6 +26,7 @@
     <string name="plan_title">Plan zajęć</string>
     <string name="regulations_activity_title">Regulamin i polityka prywatności</string>
     <string name="regulations_info" translatable="false">Rejestrując się zgadzasz się na<![CDATA[<br/><u><font color=#2196F3>następujące warunki</u>]]></string>
+    <string name="no_events">Brak zajęć</string>
 
     <string-array name="months">
         <item>Styczeń</item>

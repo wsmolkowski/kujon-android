@@ -82,7 +82,7 @@ public class PlanEventsDownloader {
         return monthEvents.onSuccess(task -> {
             SortedMap<CalendarSection, List<CalendarEvent>> result = new TreeMap<>();
             result.put(new CalendarSection(new LocalDate(year, month, 1), true), Collections.emptyList());
-            SortedMap<LocalDate, List<CalendarEvent>> grouped = groupEvents(task.getResult());
+            SortedMap<LocalDate, List<CalendarEvent>> grouped = groupEventsByDay(task.getResult());
 
             for (LocalDate localDate : grouped.keySet()) {
                 result.put(new CalendarSection(localDate), grouped.get(localDate));
@@ -91,7 +91,7 @@ public class PlanEventsDownloader {
         });
     }
 
-    public SortedMap<LocalDate, List<CalendarEvent>> groupEvents(List<CalendarEvent> events) {
+    public SortedMap<LocalDate, List<CalendarEvent>> groupEventsByDay(List<CalendarEvent> events) {
         Map<LocalDate, List<CalendarEvent>> map = $.groupBy(events, it -> {
             DateTime dateTime = new DateTime(it.getStartDate().getTime());
             return dateTime.toLocalDate();

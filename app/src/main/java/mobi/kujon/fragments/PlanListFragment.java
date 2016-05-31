@@ -18,15 +18,16 @@ import android.widget.Toast;
 import com.afollestad.sectionedrecyclerview.SectionedRecyclerViewAdapter;
 import com.crashlytics.android.Crashlytics;
 import com.github.underscore.$;
+import com.rockerhieu.rvadapter.endless.EndlessRecyclerViewAdapter;
 
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.Months;
 
 import java.util.List;
+import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.inject.Inject;
 
@@ -34,6 +35,7 @@ import bolts.Task;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import hugo.weaving.DebugLog;
 import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
 import mobi.kujon.activities.BaseActivity;
@@ -45,7 +47,7 @@ import mobi.kujon.utils.KujonUtils;
 import mobi.kujon.utils.PlanEventsDownloader;
 
 
-public class PlanListFragment extends BaseFragment {
+public class PlanListFragment extends BaseFragment implements EndlessRecyclerViewAdapter.RequestToLoadMoreListener {
 
     @Inject KujonApplication application;
     @Inject KujonUtils utils;
@@ -60,8 +62,8 @@ public class PlanListFragment extends BaseFragment {
     private Adapter adapter;
     private LinearLayoutManager layoutManager;
     private DateTime current;
-    private AtomicBoolean readyToDownloadNext = new AtomicBoolean(true);
     private String[] months;
+    private EndlessRecyclerViewAdapter endlessRecyclerViewAdapter;
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_plan_list, container, false);
@@ -84,41 +86,35 @@ public class PlanListFragment extends BaseFragment {
         }
     }
 
+    @DebugLog
     private synchronized void downloadNext(boolean first) {
-        System.out.println("downloadNext. readyToDownloadNext = " + readyToDownloadNext);
-        if (readyToDownloadNext.get()) {
-            Log.d(TAG, "downloadNext: downloading next");
-            readyToDownloadNext.set(false);
-
-            current = current.plusMonths(1);
-            int year = current.getYear();
-            int monthOfYear = current.getMonthOfYear();
-            if (Months.monthsBetween(DateTime.now(), current).getMonths() > 12) {
-                Log.d(TAG, "downloadNext: more then 12 months");
-                return;
-            }
-            if (first) activity.showProgress(true);
-            planEventsDownloader.prepareMonth(year, monthOfYear).continueWith(task -> {
-                activity.showProgress(false);
-                Exception error = task.getError();
-                if ((error == null)) {
-                    SortedMap<PlanEventsDownloader.CalendarSection, List<CalendarEvent>> result = task.getResult();
-                    System.out.println(result);
-                    adapter.addData(result);
-                    if (first) {
-                        fab();
-                        if (result.size() == 1) emptyInfo.setVisibility(View.VISIBLE);
-                    }
-                } else {
-                    System.out.println(error);
-                    error.printStackTrace();
-                    Crashlytics.logException(error);
-                    Toast.makeText(activity, "Error", Toast.LENGTH_SHORT).show();
-                }
-                readyToDownloadNext.set(true);
-                return null;
-            }, Task.UI_THREAD_EXECUTOR).continueWith(ErrorHandlerUtil.ERROR_HANDLER);
+        current = current.plusMonths(1);
+        int year = current.getYear();
+        int monthOfYear = current.getMonthOfYear();
+        if (Months.monthsBetween(DateTime.now(), current).getMonths() > 12) {
+            Log.d(TAG, "downloadNext: more then 12 months");
+            handler.post(() -> endlessRecyclerViewAdapter.onDataReady(false));
+            return;
         }
+        planEventsDownloader.prepareMonth(year, monthOfYear).continueWith(task -> {
+            endlessRecyclerViewAdapter.onDataReady(true);
+            Exception error = task.getError();
+            if ((error == null)) {
+                SortedMap<PlanEventsDownloader.CalendarSection, List<CalendarEvent>> result = task.getResult();
+                System.out.println(result);
+                adapter.addData(result);
+                if (first) {
+                    fab();
+                    if (result.size() == 1) emptyInfo.setVisibility(View.VISIBLE);
+                }
+            } else {
+                System.out.println(error);
+                error.printStackTrace();
+                Crashlytics.logException(error);
+                Toast.makeText(activity, "Error", Toast.LENGTH_SHORT).show();
+            }
+            return null;
+        }, Task.UI_THREAD_EXECUTOR).continueWith(ErrorHandlerUtil.ERROR_HANDLER);
     }
 
     @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -128,15 +124,16 @@ public class PlanListFragment extends BaseFragment {
 
         layoutManager = new LinearLayoutManager(activity);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);
+        endlessRecyclerViewAdapter = new EndlessRecyclerViewAdapter(getActivity(), this.adapter, this);
+        recyclerView.setAdapter(endlessRecyclerViewAdapter);
     }
 
+    @DebugLog
     private void loadData(boolean refresh) {
         if (refresh) {
             utils.invalidateEntry("tt");
             planEventsDownloader.setRefresh(true);
         }
-        readyToDownloadNext.set(true);
         adapter.data.clear();
         adapter.notifyDataSetChanged();
         current = DateTime.now();
@@ -146,7 +143,6 @@ public class PlanListFragment extends BaseFragment {
 
     @Override public void onStart() {
         super.onStart();
-        activity.showProgress(true);
         planEventsDownloader.setRefresh(false);
         loadData(false);
     }
@@ -172,6 +168,11 @@ public class PlanListFragment extends BaseFragment {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
+    @DebugLog
+    @Override public void onLoadMoreRequested() {
+        downloadNext(false);
+    }
+
     protected class Adapter extends SectionedRecyclerViewAdapter<ViewHolder> {
 
         SortedMap<PlanEventsDownloader.CalendarSection, List<CalendarEvent>> data = new TreeMap<>();
@@ -191,27 +192,39 @@ public class PlanListFragment extends BaseFragment {
 
         @Override public void onBindHeaderViewHolder(ViewHolder holder, int section) {
             PlanEventsDownloader.CalendarSection calendarSection = getCalendarSection(section);
+            int itemCount = getItemCount(section);
             LocalDate localDate = calendarSection.localDate;
-            if (calendarSection.monthName) {
+
+            if (localDate.dayOfMonth().get() == 1) {
                 holder.sectionMonth.setText(months[localDate.monthOfYear().get() - 1]);
                 holder.sectionMonth.setVisibility(View.VISIBLE);
-                holder.section.setVisibility(View.GONE);
+                if (emptyMonth(localDate)) {
+                    holder.noEvents.setVisibility(itemCount == 0 ? View.VISIBLE : View.GONE);
+                }
             } else {
-                holder.section.setText(localDate.dayOfWeek().getAsText() + "  " + localDate.toString());
-                holder.section.setVisibility(View.VISIBLE);
+                holder.noEvents.setVisibility(View.GONE);
                 holder.sectionMonth.setVisibility(View.GONE);
             }
+
+            if (itemCount > 0) {
+                holder.section.setText(localDate.dayOfWeek().getAsText() + "  " + localDate.toString());
+                holder.section.setVisibility(View.VISIBLE);
+            } else {
+                holder.section.setVisibility(View.GONE);
+            }
+
             holder.dataLayout.setVisibility(View.GONE);
             holder.event = null;
         }
 
+        private boolean emptyMonth(LocalDate localDate) {
+            Set<PlanEventsDownloader.CalendarSection> sections = $.filter(data.keySet(), it ->
+                    it.localDate.getMonthOfYear() == localDate.getMonthOfYear() && it.localDate.getYear() == localDate.getYear());
+            Set<List<CalendarEvent>> events = $.collect(sections, it -> data.get(it));
+            return !$.any(events, it -> it.size() > 0);
+        }
+
         @Override public void onBindViewHolder(ViewHolder holder, int section, int relativePosition, int absolutePosition) {
-            System.out.println("holder = [" + holder + "], section = [" + section + "], relativePosition = [" + relativePosition + "], absolutePosition = [" + absolutePosition + "]");
-            System.out.println("getSectionCount() = " + getSectionCount());
-            System.out.println("getItemCount = " + getItemCount());
-            if (getSectionCount() + absolutePosition + 3 > getItemCount()) {
-                downloadNext(false);
-            }
             CalendarEvent event = coursesInSection(section).get(relativePosition);
             String lecturers = "";
             if (event.lecturers != null) {
@@ -247,6 +260,7 @@ public class PlanListFragment extends BaseFragment {
         @Bind(R.id.section) TextView section;
         @Bind(R.id.sectionMonth) TextView sectionMonth;
         @Bind(R.id.dataLayout) View dataLayout;
+        @Bind(R.id.no_events) View noEvents;
         CalendarEvent event;
 
         public ViewHolder(View itemView) {
