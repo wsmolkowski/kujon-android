@@ -77,7 +77,7 @@ public class LecturersFragment extends ListFragment {
 
         @Override public void onBindViewHolder(ViewHolder holder, int position) {
             Lecturer lecturer = data.get(position);
-            holder.lecturerName.setText(lecturer.firstName + " " + lecturer.lastName);
+            holder.lecturerName.setText(lecturer.lastName + " " + lecturer.firstName);
             holder.lecturerId = lecturer.userId;
             holder.itemView.setBackgroundResource(position % 2 == 1 ? R.color.grey : android.R.color.white);
         }

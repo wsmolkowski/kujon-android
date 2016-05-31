@@ -100,13 +100,13 @@ public class CourseDetailsActivity extends BaseActivity {
                         courseTermDates.setText(String.format("%s - %s", courseDetails.term.startDate, courseDetails.term.endDate));
                     }
 
-                    List<String> lecturers = $.collect(courseDetails.lecturers, it -> it.firstName + " " + it.lastName);
+                    List<String> lecturers = $.collect(courseDetails.lecturers, it -> it.lastName + " " + it.firstName);
                     showList(CourseDetailsActivity.this.layoutInflater, courseLecturers, lecturers, position -> {
                         Lecturer lecturer = courseDetails.lecturers.get(position);
                         LecturerDetailsActivity.showLecturerDatails(CourseDetailsActivity.this, lecturer.userId);
                     });
 
-                    List<String> coordinators = $.collect(courseDetails.coordinators, it -> it.firstName + " " + it.lastName);
+                    List<String> coordinators = $.collect(courseDetails.coordinators, it -> it.lastName + " " + it.firstName);
                     showList(CourseDetailsActivity.this.layoutInflater, courseCoordinators, coordinators, position -> {
                         Coordinator coordinator = courseDetails.coordinators.get(position);
                         LecturerDetailsActivity.showLecturerDatails(CourseDetailsActivity.this, coordinator.userId);
@@ -114,7 +114,7 @@ public class CourseDetailsActivity extends BaseActivity {
 
                     handler.post(() -> scrollView.scrollTo(0, 0));
 
-                    List<String> participants = $.collect(courseDetails.participants, participant -> participant.firstName + " " + participant.lastName);
+                    List<String> participants = $.collect(courseDetails.participants, participant -> participant.lastName + " " + participant.firstName);
                     showList(CourseDetailsActivity.this.layoutInflater, courseStudents, participants,
                             position -> StudentDetailsActivity.showStudentDetails(CourseDetailsActivity.this, courseDetails.participants.get(position).userId));
 
