@@ -1,0 +1,3 @@
+* Fix #89 Przedmiot - bibliografia, kryteria oceny i opis - skrócenie pól
+* Fix #93 nazwiska - zamienić kolejność na formatce - najpierw nazwisko potem imię
+* Fix #84 plan - lista dodanie przycisku odśwież która odświeża bieżący miesiąc + zbyt dużo zapytań
