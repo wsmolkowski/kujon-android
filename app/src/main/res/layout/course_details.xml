@@ -71,7 +71,11 @@
             <TextView
                 android:id="@+id/description"
                 style="@style/entry"
-                tools:text='Lorem ipsum'/>
+                android:drawableRight="@drawable/navigate_next"
+                android:ellipsize="end"
+                android:maxLines="2"
+                tools:text="@string/lorem"
+                />
 
             <TextView
                 style="@style/label"
@@ -80,7 +84,11 @@
             <TextView
                 android:id="@+id/bibliography"
                 style="@style/entry"
-                tools:text='Lorem ipsum'/>
+                android:drawableRight="@drawable/navigate_next"
+                android:ellipsize="end"
+                android:maxLines="2"
+                tools:text="@string/lorem"
+                />
 
             <TextView
                 style="@style/label"
@@ -89,7 +97,10 @@
             <TextView
                 android:id="@+id/assessment_criteria"
                 style="@style/entry"
-                tools:text='Lorem ipsum'/>
+                android:drawableRight="@drawable/navigate_next"
+                android:ellipsize="end"
+                android:maxLines="2"
+                tools:text="@string/lorem"/>
 
             <TextView
                 style="@style/label"

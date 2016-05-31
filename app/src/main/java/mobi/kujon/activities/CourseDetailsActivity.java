@@ -142,4 +142,21 @@ public class CourseDetailsActivity extends BaseActivity {
             FacultyDetailsActivity.showFacultyDetails(this, courseDetails.facId.facId);
         }
     }
+
+    @OnClick(R.id.description)
+    public void showDesc(){
+        TextViewActivity.showText(this, "Opis", description.getText().toString());
+    }
+
+    @OnClick(R.id.bibliography)
+    public void showBibliography(){
+        TextViewActivity.showText(this, "Bibliografia", bibliography.getText().toString());
+    }
+
+    @OnClick(R.id.assessment_criteria)
+    public void showAssessmentCriteria(){
+        TextViewActivity.showText(this, "Kryteria oceny", assessmentCriteria.getText().toString());
+    }
+
 }
+
