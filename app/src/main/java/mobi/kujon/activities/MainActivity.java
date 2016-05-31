@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.mikepenz.materialdrawer.AccountHeader;
@@ -147,7 +146,6 @@ public class MainActivity extends BaseActivity {
                 showFragment(FRAGMENTS[CALENDAR_POSITION], true);
                 return true;
             default:
-                Toast.makeText(MainActivity.this, "" + item.getTitle(), Toast.LENGTH_SHORT).show();
                 return super.onOptionsItemSelected(item);
         }
     }

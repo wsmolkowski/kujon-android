@@ -29,6 +29,7 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import hugo.weaving.DebugLog;
 import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
 import mobi.kujon.activities.BaseActivity;
@@ -90,7 +91,7 @@ public class PlanFragment extends BaseFragment implements MonthLoader.MonthChang
         activity = ((BaseActivity) getActivity());
     }
 
-    @Override public List<? extends WeekViewEvent> onMonthChange(int year, int month) {
+    @DebugLog @Override public List<? extends WeekViewEvent> onMonthChange(int year, int month) {
         System.out.println("year = [" + year + "], month = [" + month + "]");
         if (!downloaded.contains(getKey(year, month))) {
             downloadEventsFor(year, month);
@@ -98,7 +99,7 @@ public class PlanFragment extends BaseFragment implements MonthLoader.MonthChang
         return getEvents(year, month);
     }
 
-    private List<WeekViewEvent> getEvents(int year, int month) {
+    @DebugLog private List<WeekViewEvent> getEvents(int year, int month) {
         String key = getKey(year, month);
         if (!eventsForDate.containsKey(key)) {
             eventsForDate.put(key, new ArrayList<>());
@@ -111,7 +112,7 @@ public class PlanFragment extends BaseFragment implements MonthLoader.MonthChang
         return "" + year + month;
     }
 
-    private void downloadEventsFor(int year, int month) {
+    @DebugLog private void downloadEventsFor(int year, int month) {
         String key = getKey(year, month);
         downloaded.add(key);
 
@@ -176,11 +177,11 @@ public class PlanFragment extends BaseFragment implements MonthLoader.MonthChang
 
     @Override public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.refresh) {
+            gotoNow();
             refresh = true;
             utils.invalidateEntry("tt");
             downloaded.clear();
             eventsForDate.clear();
-            gotoNow();
             return true;
         } else {
             return super.onOptionsItemSelected(item);
