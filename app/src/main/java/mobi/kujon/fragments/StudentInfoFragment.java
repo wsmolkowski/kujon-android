@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.underscore.$;
 import com.github.underscore.Optional;
@@ -29,7 +28,7 @@ import mobi.kujon.activities.ImageActivity;
 import mobi.kujon.network.KujonBackendApi;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.network.json.Programme;
-import mobi.kujon.network.json.Programme_;
+import mobi.kujon.network.json.ProgrammeSingle;
 import mobi.kujon.network.json.StudentProgramme;
 import mobi.kujon.network.json.User;
 import mobi.kujon.network.json.Usos;
@@ -131,34 +130,28 @@ public class StudentInfoFragment extends BaseFragment {
                         activity.showProgress(true);
                         StudentProgramme studentProgramme = user.student_programmes.get(position);
                         Programme programme = studentProgramme.programme;
-                        kujonBackendApi.programmes().enqueue(new Callback<KujonResponse<List<Programme>>>() {
+                        kujonBackendApi.programmes(programme.id).enqueue(new Callback<KujonResponse<ProgrammeSingle>>() {
                             @Override
-                            public void onResponse(Call<KujonResponse<List<Programme>>> call, Response<KujonResponse<List<Programme>>> response) {
+                            public void onResponse(Call<KujonResponse<ProgrammeSingle>> call, Response<KujonResponse<ProgrammeSingle>> response) {
                                 activity.showProgress(false);
                                 if (ErrorHandlerUtil.handleResponse(response)) {
-                                    List<Programme> data = response.body().data;
-                                    Optional<Programme> programmeOptional = $.find(data, it -> it.programme.id.equals(programme.id));
-                                    if (!programmeOptional.isPresent()) {
-                                        Toast.makeText(KujonApplication.getApplication(), "Brak opisu programu", Toast.LENGTH_SHORT).show();
-                                    } else {
-                                        Programme prog = programmeOptional.get();
-                                        Programme_ programmeFull = prog.programme;
-                                        AlertDialog.Builder dlgAlert = new AlertDialog.Builder(getActivity());
-                                        dlgAlert.setTitle("Kierunek: " + programmeFull.description.split(",")[0]);
-                                        dlgAlert.setMessage(String.format("identyfikator: %s\ntryb: %s\nczas trwania: %s\npoziom: %s\nopis: %s",
-                                                programmeFull.id, programmeFull.modeOfStudies, programmeFull.duration, programmeFull.levelOfStudies, programmeFull.description));
-                                        dlgAlert.setCancelable(false);
-                                        dlgAlert.setNegativeButton("OK", (dialog, which) -> {
-                                            dialog.dismiss();
-                                        });
-                                        alertDialog = dlgAlert.create();
-                                        alertDialog.show();
-                                    }
+                                    ProgrammeSingle prog = response.body().data;
+                                    String name = !isEmpty(prog.name) ? prog.name.split(",")[0] : "";
+                                    AlertDialog.Builder dlgAlert = new AlertDialog.Builder(getActivity());
+                                    dlgAlert.setTitle("Kierunek: " + name);
+                                    dlgAlert.setMessage(String.format("identyfikator: %s\ntryb: %s\nczas trwania: %s\npoziom: %s\nopis: %s",
+                                            prog.programmeId, prog.modeOfStudies, prog.duration, prog.levelOfStudies, prog.name));
+                                    dlgAlert.setCancelable(false);
+                                    dlgAlert.setNegativeButton("OK", (dialog, which) -> {
+                                        dialog.dismiss();
+                                    });
+                                    alertDialog = dlgAlert.create();
+                                    alertDialog.show();
                                 }
                             }
 
                             @Override
-                            public void onFailure(Call<KujonResponse<List<Programme>>> call, Throwable t) {
+                            public void onFailure(Call<KujonResponse<ProgrammeSingle>> call, Throwable t) {
                                 activity.showProgress(true);
                                 ErrorHandlerUtil.handleError(t);
                             }

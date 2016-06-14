@@ -13,6 +13,7 @@ import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.network.json.Lecturer;
 import mobi.kujon.network.json.LecturerLong;
 import mobi.kujon.network.json.Programme;
+import mobi.kujon.network.json.ProgrammeSingle;
 import mobi.kujon.network.json.Term2;
 import mobi.kujon.network.json.User;
 import mobi.kujon.network.json.Usos;
@@ -53,6 +54,8 @@ public interface KujonBackendApi {
     @GET("terms/{termId}") Call<KujonResponse<Term2>> terms(@Path("termId") String termId);
 
     @GET("programmes") Call<KujonResponse<List<Programme>>> programmes();
+
+    @GET("programmes/{id}") Call<KujonResponse<ProgrammeSingle>> programmes(@Path("id") String id);
 
     @GET("faculties") Call<KujonResponse<List<Faculty2>>> faculties();
 
