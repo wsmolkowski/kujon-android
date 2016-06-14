@@ -48,24 +48,6 @@
 
             <TextView
                 style="@style/label"
-                android:text="Język prowadzenia"/>
-
-            <TextView
-                android:id="@+id/course_lang"
-                style="@style/entry"
-                tools:text='Lorem ipsum'/>
-
-            <TextView
-                style="@style/label"
-                android:text="Czy jest prowadzony"/>
-
-            <TextView
-                android:id="@+id/course_is_conducted"
-                style="@style/entry"
-                tools:text='Lorem ipsum'/>
-
-            <TextView
-                style="@style/label"
                 android:text="Opis"/>
 
             <TextView
@@ -109,16 +91,8 @@
             <TextView
                 android:id="@+id/course_term_name"
                 style="@style/entry"
-                tools:text='Lorem ipsum'/>
-
-            <TextView
-                style="@style/label"
-                android:text="Okres"/>
-
-            <TextView
-                android:id="@+id/course_term_dates"
-                style="@style/entry"
-                tools:text='Lorem ipsum'/>
+                android:drawableRight="@drawable/navigate_next"
+                tools:text='Semestr zimowy 2014/15'/>
 
             <TextView
                 style="@style/label"

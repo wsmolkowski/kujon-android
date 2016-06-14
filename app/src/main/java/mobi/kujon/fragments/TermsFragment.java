@@ -104,14 +104,14 @@ public class TermsFragment extends ListFragment {
         }
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.name) TextView name;
-        @Bind(R.id.term_id) TextView termId;
-        @Bind(R.id.active) TextView active;
-        @Bind(R.id.start_date) TextView startDate;
-        @Bind(R.id.end_date) TextView endDate;
-        @Bind(R.id.finish_date) TextView finishDate;
+        public @Bind(R.id.name) TextView name;
+        public @Bind(R.id.term_id) TextView termId;
+        public @Bind(R.id.active) TextView active;
+        public @Bind(R.id.start_date) TextView startDate;
+        public @Bind(R.id.end_date) TextView endDate;
+        public @Bind(R.id.finish_date) TextView finishDate;
 
         public ViewHolder(View itemView) {
             super(itemView);

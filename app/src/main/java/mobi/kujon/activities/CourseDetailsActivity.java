@@ -3,11 +3,12 @@ package mobi.kujon.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.text.Html;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -20,10 +21,12 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import mobi.kujon.R;
+import mobi.kujon.fragments.TermsFragment;
 import mobi.kujon.network.json.Coordinator;
 import mobi.kujon.network.json.CourseDetails;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.network.json.Lecturer;
+import mobi.kujon.network.json.Term2;
 import mobi.kujon.utils.ErrorHandlerUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,14 +40,11 @@ public class CourseDetailsActivity extends BaseActivity {
     public static final String TERM_ID = "TERM_ID";
 
     @Bind(R.id.course_fac) TextView courseFac;
-    @Bind(R.id.course_lang) TextView courseLang;
-    @Bind(R.id.course_is_conducted) TextView courseIsConducted;
     @Bind(R.id.description) TextView description;
     @Bind(R.id.course_name) TextView courseName;
     @Bind(R.id.bibliography) TextView bibliography;
     @Bind(R.id.assessment_criteria) TextView assessmentCriteria;
     @Bind(R.id.course_term_name) TextView courseTermName;
-    @Bind(R.id.course_term_dates) TextView courseTermDates;
     @Bind(R.id.course_lecturers) LinearLayout courseLecturers;
     @Bind(R.id.course_coordinators) LinearLayout courseCoordinators;
     @Bind(R.id.course_class_type) TextView courseClassType;
@@ -56,7 +56,6 @@ public class CourseDetailsActivity extends BaseActivity {
     private LayoutInflater layoutInflater;
     private CourseDetails courseDetails;
 
-    Handler handler = new Handler();
     private String courseId;
     private String termId;
 
@@ -88,16 +87,13 @@ public class CourseDetailsActivity extends BaseActivity {
                     courseDetails = response.body().data;
 
                     courseFac.setText(courseDetails.facId.name);
-                    courseLang.setText(courseDetails.langId);
-                    courseIsConducted.setText(courseDetails.isCurrentlyConducted);
                     description.setText(Html.fromHtml(courseDetails.description.replace("\n", "<br>")));
                     courseName.setText(courseDetails.name);
-                    courseIdTextView.setText(courseDetails.courseId);
+                    courseIdTextView.setText(String.format("Id: %s, język: %s, prowadzony: %s", courseDetails.courseId, courseDetails.langId, courseDetails.isCurrentlyConducted));
                     bibliography.setText(courseDetails.bibliography.replace("\n", "\n\n"));
                     assessmentCriteria.setText(courseDetails.assessmentCriteria.replace("\n", "\n\n"));
                     if (courseDetails.term != null) {
                         courseTermName.setText(courseDetails.term.name);
-                        courseTermDates.setText(String.format("%s - %s", courseDetails.term.startDate, courseDetails.term.endDate));
                     }
 
                     List<String> lecturers = $.collect(courseDetails.lecturers, it -> it.lastName + " " + it.firstName);
@@ -144,18 +140,41 @@ public class CourseDetailsActivity extends BaseActivity {
     }
 
     @OnClick(R.id.description)
-    public void showDesc(){
+    public void showDesc() {
         TextViewActivity.showText(this, "Opis", description.getText().toString());
     }
 
     @OnClick(R.id.bibliography)
-    public void showBibliography(){
+    public void showBibliography() {
         TextViewActivity.showText(this, "Bibliografia", bibliography.getText().toString());
     }
 
     @OnClick(R.id.assessment_criteria)
-    public void showAssessmentCriteria(){
+    public void showAssessmentCriteria() {
         TextViewActivity.showText(this, "Kryteria oceny", assessmentCriteria.getText().toString());
+    }
+
+    @OnClick(R.id.course_term_name)
+    public void termDesc() {
+        AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);
+        View termView = getLayoutInflater().inflate(R.layout.row_terms, null);
+        TermsFragment.ViewHolder holder = new TermsFragment.ViewHolder(termView);
+
+        Term2 term = courseDetails.term;
+        holder.name.setText(term.name);
+        holder.termId.setText(term.termId);
+        holder.active.setText(term.active ? "TAK" : "NIE");
+        holder.startDate.setText(term.startDate);
+        holder.endDate.setText(term.endDate);
+        holder.finishDate.setText(term.finishDate);
+
+        dlgAlert.setView(termView);
+        dlgAlert.setTitle(term.name);
+        dlgAlert.setCancelable(false);
+        dlgAlert.setNegativeButton("OK", (dialog, which) -> {
+            dialog.dismiss();
+        });
+        dlgAlert.create().show();
     }
 
 }
