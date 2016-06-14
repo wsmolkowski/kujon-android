@@ -105,7 +105,7 @@ public class PlanListFragment extends BaseFragment implements EndlessRecyclerVie
                 adapter.addData(result);
                 if (first) {
                     fab();
-                    if (result.size() == 1) emptyInfo.setVisibility(View.VISIBLE);
+                    if (result.size() == 0) emptyInfo.setVisibility(View.VISIBLE);
                 }
             } else {
                 System.out.println(error);
