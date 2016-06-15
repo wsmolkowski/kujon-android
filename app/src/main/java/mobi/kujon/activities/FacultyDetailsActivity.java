@@ -34,6 +34,9 @@ public class FacultyDetailsActivity extends BaseActivity {
     @Bind(R.id.postal_address) TextView postalAddress;
     @Bind(R.id.phone) TextView phone;
     @Bind(R.id.homepage) TextView homepage;
+    @Bind(R.id.programmeCount) TextView programmeCount;
+    @Bind(R.id.courseCount) TextView courseCount;
+    @Bind(R.id.staffCount) TextView staffCount;
 
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,6 +59,9 @@ public class FacultyDetailsActivity extends BaseActivity {
                     phone.setText($.join(faculty.phoneNumbers, ", "));
                     homepage.setText(faculty.homepageUrl);
                     picasso.load(faculty.logoUrls._100x100).into(logo);
+                    programmeCount.setText("Liczba programów: " + faculty.stats.programmeCount);
+                    courseCount.setText("Liczba kursów: " + faculty.stats.courseCount);
+                    staffCount.setText("Liczba pracowników: " + faculty.stats.staffCount);
                 }
             }
 

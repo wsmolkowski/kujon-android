@@ -70,6 +70,25 @@
             tools:text='http://www.hungarystyka.uw.edu.pl/'
             style="@style/entry"/>
 
+        <TextView
+            android:id="@+id/programmeCount"
+            android:layout_marginTop="16dp"
+            tools:text='Liczba programów: 39'
+            style="@style/entry"/>
+
+        <TextView
+            android:id="@+id/courseCount"
+            android:layout_marginTop="8dp"
+            tools:text='Liczba kursów: 445'
+            style="@style/entry"/>
+
+        <TextView
+            android:id="@+id/staffCount"
+            android:layout_marginTop="8dp"
+            tools:text='Liczba pracowników: 445'
+            style="@style/entry"/>
+
+
     </LinearLayout>
 
 </ScrollView>

@@ -29,5 +29,8 @@ public class Faculty2 {
     @SerializedName("usos_id")
     @Expose
     public String usosId;
+    @SerializedName("stats")
+    @Expose
+    public FacultyStats stats;
 
 }
