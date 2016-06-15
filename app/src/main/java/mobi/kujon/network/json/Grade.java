@@ -11,9 +11,6 @@ public class Grade {
     @SerializedName("value_description")
     @Expose
     public String valueDescription;
-    @SerializedName("term_id")
-    @Expose
-    public String termId;
     @SerializedName("exam_session_number")
     @Expose
     public Integer examSessionNumber;
@@ -23,9 +20,6 @@ public class Grade {
     @SerializedName("exam_id")
     @Expose
     public Integer examId;
-    @SerializedName("course_id")
-    @Expose
-    public String courseId;
     @SerializedName("class_type")
     @Expose
     public String classType;

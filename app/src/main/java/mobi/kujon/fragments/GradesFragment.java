@@ -5,22 +5,24 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.afollestad.sectionedrecyclerview.SectionedRecyclerViewAdapter;
+import com.github.underscore.$;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.SortedMap;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mobi.kujon.R;
 import mobi.kujon.network.json.Grade;
 import mobi.kujon.network.json.KujonResponse;
+import mobi.kujon.network.json.TermGrades;
 import mobi.kujon.utils.ErrorHandlerUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -51,19 +53,19 @@ public class GradesFragment extends ListFragment {
     }
 
     @Override protected void loadData(boolean refresh) {
-        Call<KujonResponse<List<SortedMap<String, List<Grade>>>>> kujonResponseCall = refresh ? backendApi.gradesByTermRefresh() : backendApi.gradesByTerm();
-        kujonResponseCall.enqueue(new Callback<KujonResponse<List<SortedMap<String, List<Grade>>>>>() {
+        Call<KujonResponse<List<TermGrades>>> kujonResponseCall = refresh ? backendApi.gradesByTermRefresh() : backendApi.gradesByTerm();
+        kujonResponseCall.enqueue(new Callback<KujonResponse<List<TermGrades>>>() {
             @Override
-            public void onResponse(Call<KujonResponse<List<SortedMap<String, List<Grade>>>>> call, Response<KujonResponse<List<SortedMap<String, List<Grade>>>>> response) {
+            public void onResponse(Call<KujonResponse<List<TermGrades>>> call, Response<KujonResponse<List<TermGrades>>> response) {
                 activity.showProgress(false);
                 swipeContainer.setRefreshing(false);
                 if (ErrorHandlerUtil.handleResponse(response)) {
-                    List<SortedMap<String, List<Grade>>> data = response.body().data;
+                    List<TermGrades> data = response.body().data;
                     adapter.setData(data);
                 }
             }
 
-            @Override public void onFailure(Call<KujonResponse<List<SortedMap<String, List<Grade>>>>> call, Throwable t) {
+            @Override public void onFailure(Call<KujonResponse<List<TermGrades>>> call, Throwable t) {
                 activity.showProgress(false);
                 swipeContainer.setRefreshing(false);
                 ErrorHandlerUtil.handleError(t);
@@ -78,7 +80,7 @@ public class GradesFragment extends ListFragment {
 
     protected class Adapter extends SectionedRecyclerViewAdapter<ViewHolder> {
 
-        List<SortedMap<String, List<Grade>>> data = new ArrayList<>();
+        List<TermGrades> data = new ArrayList<>();
 
         @Override public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_grade, parent, false);
@@ -102,27 +104,34 @@ public class GradesFragment extends ListFragment {
 
         @Override public void onBindViewHolder(ViewHolder holder, int section, int relativePosition, int absolutePosition) {
             Grade grade = gradesInSection(section).get(relativePosition);
+            TermGrades termGrades = data.get(section);
             holder.title.setText(grade.courseName);
             holder.desc.setText(Html.fromHtml(String.format("%s, termin: %s", grade.classType, grade.examSessionNumber)));
             holder.gradeDesc.setText(grade.valueDescription);
             holder.gradeSymbol.setText(grade.valueSymbol);
-            holder.courseId = grade.courseId;
-            holder.termId = grade.termId;
+            holder.gradeSymbol.setTextSize(TypedValue.COMPLEX_UNIT_DIP, grade.valueSymbol.length() > 3 ? 18 : 24);
+            holder.courseId = grade.courseName;
+            holder.termId = termGrades.termId;
             holder.itemView.setBackgroundResource(relativePosition % 2 == 1 ? R.color.grey : android.R.color.white);
             holder.section.setVisibility(View.GONE);
             holder.dataLayout.setVisibility(View.VISIBLE);
         }
 
         List<Grade> gradesInSection(int section) {
-            List<Grade> courses = data.get(section).get(data.get(section).firstKey());
-            return courses;
+            TermGrades termGrades = data.get(section);
+            List<List<Grade>> nestedGrades = $.collect(termGrades.courses, it -> {
+                $.each(it.grades, grade -> grade.courseName = it.courseName);
+                return it.grades;
+            });
+            List<Grade> grades = $.flatten(nestedGrades);
+            return grades;
         }
 
         String sectionName(int section) {
-            return data.get(section).firstKey();
+            return data.get(section).termId;
         }
 
-        public void setData(List<SortedMap<String, List<Grade>>> data) {
+        public void setData(List<TermGrades> data) {
             this.data = data;
             notifyDataSetChanged();
         }

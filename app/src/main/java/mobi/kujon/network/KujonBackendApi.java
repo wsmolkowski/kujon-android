@@ -15,6 +15,7 @@ import mobi.kujon.network.json.LecturerLong;
 import mobi.kujon.network.json.Programme;
 import mobi.kujon.network.json.ProgrammeSingle;
 import mobi.kujon.network.json.Term2;
+import mobi.kujon.network.json.TermGrades;
 import mobi.kujon.network.json.User;
 import mobi.kujon.network.json.Usos;
 import retrofit2.Call;
@@ -43,9 +44,9 @@ public interface KujonBackendApi {
 
     @GET("grades") Call<KujonResponse<List<Grade>>> grades();
 
-    @GET("gradesbyterm") Call<KujonResponse<List<SortedMap<String, List<Grade>>>>> gradesByTerm();
+    @GET("gradesbyterm") Call<KujonResponse<List<TermGrades>>> gradesByTerm();
 
-    @GET("gradesbyterm") @Headers(X_KUJONREFRESH_TRUE) Call<KujonResponse<List<SortedMap<String, List<Grade>>>>> gradesByTermRefresh();
+    @GET("gradesbyterm") @Headers(X_KUJONREFRESH_TRUE) Call<KujonResponse<List<TermGrades>>> gradesByTermRefresh();
 
     @GET("terms") Call<KujonResponse<List<Term2>>> terms();
 
