@@ -32,6 +32,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.text.TextUtils.isEmpty;
 import static mobi.kujon.utils.CommonUtils.showList;
 
 public class CourseDetailsActivity extends BaseActivity {
@@ -89,7 +90,8 @@ public class CourseDetailsActivity extends BaseActivity {
                     courseFac.setText(courseDetails.facId.name);
                     description.setText(Html.fromHtml(courseDetails.description.replace("\n", "<br>")));
                     courseName.setText(courseDetails.name);
-                    courseIdTextView.setText(String.format("Id: %s, język: %s, prowadzony: %s", courseDetails.courseId, courseDetails.langId, courseDetails.isCurrentlyConducted));
+                    String lang = isEmpty(courseDetails.langId) ? "Brak" : courseDetails.langId;
+                    courseIdTextView.setText(String.format("Id: %s, język: %s, prowadzony: %s", courseDetails.courseId, lang, courseDetails.isCurrentlyConducted));
                     bibliography.setText(courseDetails.bibliography.replace("\n", "\n\n"));
                     assessmentCriteria.setText(courseDetails.assessmentCriteria.replace("\n", "\n\n"));
                     if (courseDetails.term != null) {
