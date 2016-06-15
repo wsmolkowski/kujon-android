@@ -131,7 +131,7 @@ public class PlanListFragment extends BaseFragment implements EndlessRecyclerVie
     @DebugLog
     private void loadData(boolean refresh) {
         if (refresh) {
-            utils.invalidateEntry("tt");
+            utils.invalidateEntry("/tt/");
             planEventsDownloader.setRefresh(true);
         }
         adapter.data.clear();
