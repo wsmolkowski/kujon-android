@@ -24,4 +24,5 @@ public class Grade {
     @Expose
     public String classType;
 
+    public String courseId;
 }

@@ -110,7 +110,7 @@ public class GradesFragment extends ListFragment {
             holder.gradeDesc.setText(grade.valueDescription);
             holder.gradeSymbol.setText(grade.valueSymbol);
             holder.gradeSymbol.setTextSize(TypedValue.COMPLEX_UNIT_DIP, grade.valueSymbol.length() > 3 ? 18 : 24);
-            holder.courseId = grade.courseName;
+            holder.courseId = grade.courseId;
             holder.termId = termGrades.termId;
             holder.itemView.setBackgroundResource(relativePosition % 2 == 1 ? R.color.grey : android.R.color.white);
             holder.section.setVisibility(View.GONE);
@@ -120,7 +120,10 @@ public class GradesFragment extends ListFragment {
         List<Grade> gradesInSection(int section) {
             TermGrades termGrades = data.get(section);
             List<List<Grade>> nestedGrades = $.collect(termGrades.courses, it -> {
-                $.each(it.grades, grade -> grade.courseName = it.courseName);
+                $.each(it.grades, grade -> {
+                    grade.courseName = it.courseName;
+                    grade.courseId = it.courseId;
+                });
                 return it.grades;
             });
             List<Grade> grades = $.flatten(nestedGrades);
