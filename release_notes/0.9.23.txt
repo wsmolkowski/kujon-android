@@ -1,0 +1,4 @@
+* #96 stats
+* Fix #102 oceny - przejście do szczegółów zły parametr zapytania do API
+* Fix #92 odświeżanie danych w planie vs. inne formatki
+* Fix #95 zmiany layoutu activity przedmiot
