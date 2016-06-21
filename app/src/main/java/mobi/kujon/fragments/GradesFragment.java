@@ -81,6 +81,7 @@ public class GradesFragment extends ListFragment {
     protected class Adapter extends SectionedRecyclerViewAdapter<ViewHolder> {
 
         List<TermGrades> data = new ArrayList<>();
+        List<List<Grade>> sections = new ArrayList<>();
 
         @Override public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_grade, parent, false);
@@ -118,16 +119,7 @@ public class GradesFragment extends ListFragment {
         }
 
         List<Grade> gradesInSection(int section) {
-            TermGrades termGrades = data.get(section);
-            List<List<Grade>> nestedGrades = $.collect(termGrades.courses, it -> {
-                $.each(it.grades, grade -> {
-                    grade.courseName = it.courseName;
-                    grade.courseId = it.courseId;
-                });
-                return it.grades;
-            });
-            List<Grade> grades = $.flatten(nestedGrades);
-            return grades;
+            return sections.get(section);
         }
 
         String sectionName(int section) {
@@ -136,6 +128,18 @@ public class GradesFragment extends ListFragment {
 
         public void setData(List<TermGrades> data) {
             this.data = data;
+            sections.clear();
+            for (TermGrades termGrades : data) {
+                List<List<Grade>> nestedGrades = $.collect(termGrades.courses, it -> {
+                    $.each(it.grades, grade -> {
+                        grade.courseName = it.courseName;
+                        grade.courseId = it.courseId;
+                    });
+                    return it.grades;
+                });
+                List<Grade> grades = $.flatten(nestedGrades);
+                sections.add(grades);
+            }
             notifyDataSetChanged();
         }
     }
