@@ -1,0 +1,3 @@
+* Fix #103 przedmiot - fragment opisi, kryteria i bibliografia - brak scrola
+* term list api change
+* Fix #105 lista ocen - przycina się przy przewijaniu
