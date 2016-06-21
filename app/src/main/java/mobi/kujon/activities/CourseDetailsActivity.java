@@ -94,8 +94,8 @@ public class CourseDetailsActivity extends BaseActivity {
                     courseIdTextView.setText(String.format("Id: %s, język: %s, prowadzony: %s", courseDetails.courseId, lang, courseDetails.isCurrentlyConducted));
                     bibliography.setText(courseDetails.bibliography.replace("\n", "\n\n"));
                     assessmentCriteria.setText(courseDetails.assessmentCriteria.replace("\n", "\n\n"));
-                    if (courseDetails.term != null) {
-                        courseTermName.setText(courseDetails.term.name);
+                    if (courseDetails.term != null && courseDetails.term.size() > 0) {
+                        courseTermName.setText(courseDetails.term.get(0).name);
                     }
 
                     List<String> lecturers = $.collect(courseDetails.lecturers, it -> it.lastName + " " + it.firstName);
@@ -162,7 +162,7 @@ public class CourseDetailsActivity extends BaseActivity {
         View termView = getLayoutInflater().inflate(R.layout.row_terms, null);
         TermsFragment.ViewHolder holder = new TermsFragment.ViewHolder(termView);
 
-        Term2 term = courseDetails.term;
+        Term2 term = courseDetails.term.get(0);
         holder.name.setText(term.name);
         holder.termId.setText(term.termId);
         holder.active.setText(term.active ? "TAK" : "NIE");

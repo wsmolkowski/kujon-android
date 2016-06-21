@@ -41,7 +41,7 @@ public class CourseDetails {
     public List<String> courseUnitsIds = new ArrayList<String>();
     @SerializedName("term")
     @Expose
-    public Term2 term;
+    public List<Term2> term;
     @SerializedName("groups")
     @Expose
     public List<Group> groups = new ArrayList<Group>();
