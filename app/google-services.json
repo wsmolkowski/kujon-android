@@ -1,39 +1,35 @@
 {
   "project_info": {
-    "project_number": "774265221464",
-    "firebase_url": "https://kujon-942c2.firebaseio.com",
-    "project_id": "kujon-942c2",
-    "storage_bucket": "kujon-942c2.appspot.com"
+    "project_number": "896765768628",
+    "firebase_url": "https://kujon-1290.firebaseio.com",
+    "project_id": "kujon-1290",
+    "storage_bucket": "kujon-1290.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:774265221464:android:96ffee1a1f1f65f7",
+        "mobilesdk_app_id": "1:896765768628:android:f36173e948059ccb",
         "android_client_info": {
-          "package_name": "mobi.kujon"
+          "package_name": "gcm.play.android.samples.com.gcmquickstart"
         }
       },
       "oauth_client": [
         {
-          "client_id": "774265221464-gi5maqif828almefe4o6un9863ok54sd.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "mobi.kujon",
-            "certificate_hash": "19F6DA31938D2EA57E8F7D2CA2E7F4C0F9DB3E28"
-          }
-        },
-        {
-          "client_id": "774265221464-fddas9u0gh4l9935rmo217avpbkrk592.apps.googleusercontent.com",
+          "client_id": "896765768628-4tb5sl5l115mcjbavsvgjiinovtifm6p.apps.googleusercontent.com",
           "client_type": 3
         },
         {
-          "client_id": "774265221464-1v0trui5rbc375cea793r1dposo7tkan.apps.googleusercontent.com",
+          "client_id": "896765768628-b1tut5g6hjin7iin6hn4qo8lt3b6ihlt.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "896765768628-esqgt0ejem314pkud82qrmjffs2i4j59.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC5sIrIqIvl5zl4hh3xRbRLLND5B0osCiQ"
+          "current_key": "AIzaSyB07YqUpk5krk7sctuCXYV3WYOhrEh_D_s"
         }
       ],
       "services": {
@@ -51,32 +47,36 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:774265221464:android:2a3a888789483335",
+        "mobilesdk_app_id": "1:896765768628:android:96ffee1a1f1f65f7",
         "android_client_info": {
-          "package_name": "mobi.kujon.debug"
+          "package_name": "mobi.kujon"
         }
       },
       "oauth_client": [
         {
-          "client_id": "774265221464-96m033gda5a3kd6icrt6tlpthcqi7agt.apps.googleusercontent.com",
+          "client_id": "896765768628-e6ja58ug43hacq7usqnmn5uakgvnorvd.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "mobi.kujon.debug",
-            "certificate_hash": "509249D1AFCE24CE6316443228787FFB1EF46DD7"
+            "package_name": "mobi.kujon",
+            "certificate_hash": "19F6DA31938D2EA57E8F7D2CA2E7F4C0F9DB3E28"
           }
         },
         {
-          "client_id": "774265221464-fddas9u0gh4l9935rmo217avpbkrk592.apps.googleusercontent.com",
+          "client_id": "896765768628-4tb5sl5l115mcjbavsvgjiinovtifm6p.apps.googleusercontent.com",
           "client_type": 3
         },
         {
-          "client_id": "774265221464-1v0trui5rbc375cea793r1dposo7tkan.apps.googleusercontent.com",
+          "client_id": "896765768628-b1tut5g6hjin7iin6hn4qo8lt3b6ihlt.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "896765768628-esqgt0ejem314pkud82qrmjffs2i4j59.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC5sIrIqIvl5zl4hh3xRbRLLND5B0osCiQ"
+          "current_key": "AIzaSyB07YqUpk5krk7sctuCXYV3WYOhrEh_D_s"
         }
       ],
       "services": {
@@ -88,7 +88,54 @@
           "other_platform_oauth_client": []
         },
         "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:896765768628:android:2a3a888789483335",
+        "android_client_info": {
+          "package_name": "mobi.kujon.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "896765768628-44hslcfj8sfcam37ecjmm3e3hn9cfble.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "mobi.kujon.debug",
+            "certificate_hash": "509249D1AFCE24CE6316443228787FFB1EF46DD7"
+          }
+        },
+        {
+          "client_id": "896765768628-4tb5sl5l115mcjbavsvgjiinovtifm6p.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "896765768628-b1tut5g6hjin7iin6hn4qo8lt3b6ihlt.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "896765768628-esqgt0ejem314pkud82qrmjffs2i4j59.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB07YqUpk5krk7sctuCXYV3WYOhrEh_D_s"
+        }
+      ],
+      "services": {
+        "analytics_service": {
           "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
         }
       }
     }
