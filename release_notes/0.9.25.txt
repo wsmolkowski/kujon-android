@@ -1,0 +1,2 @@
+* Fix #70 Google Analytics
+* Przełączenie na konto wojciech.smolkowski@gmail.com na Fireabse
