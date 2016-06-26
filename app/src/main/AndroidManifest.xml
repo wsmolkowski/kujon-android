@@ -68,6 +68,12 @@
             android:name=".activities.TextViewActivity"
             android:screenOrientation="portrait"
             />
+
+        <activity
+            android:name=".activities.StudentSearchActivity"
+            android:screenOrientation="portrait"
+            />
+
     </application>
 
 </manifest>

@@ -18,11 +18,13 @@ import mobi.kujon.network.json.Term2;
 import mobi.kujon.network.json.TermGrades;
 import mobi.kujon.network.json.User;
 import mobi.kujon.network.json.Usos;
+import mobi.kujon.network.json.gen.StudentSearchResult;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface KujonBackendApi {
 
@@ -82,12 +84,16 @@ public interface KujonBackendApi {
     Call<KujonResponse<CourseDetails>> courseDetails(@Path("courseId") String courseId, @Path("termId") String termId);
 
     @GET("courseseditions/{courseId}/{termId}")
-    @Headers(X_KUJONREFRESH_TRUE)
-    Call<KujonResponse<CourseDetails>> courseDetailsRefresh(@Path("courseId") String courseId, @Path("termId") String termId);
+    @Headers(X_KUJONREFRESH_TRUE) Call<KujonResponse<CourseDetails>> courseDetailsRefresh(@Path("courseId") String courseId, @Path("termId") String termId);
 
     @GET("tt/{day}") Call<KujonResponse<List<CalendarEvent>>> plan(@Path("day") String day);
 
     @GET("tt/{day}") @Headers(X_KUJONREFRESH_TRUE) Call<KujonResponse<List<CalendarEvent>>> planRefresh(@Path("day") String day);
 
     @GET("authentication/archive") Call<Object> deleteAccount();
+
+    @GET("search/users/{query}?start=0") Call<KujonResponse<StudentSearchResult>> search(@Path(value = "query", encoded = true) String query);
+
+    @GET("search/users/{user}")
+    Call<KujonResponse<StudentSearchResult>> search(@Path(value = "user", encoded = true) String query, @Query("start") Integer start);
 }

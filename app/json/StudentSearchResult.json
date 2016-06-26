@@ -1,0 +1,39 @@
+{
+  "items": [
+    {
+      "user": {
+        "titles": {
+          "after": null,
+          "before": "prof. dr hab."
+        },
+        "staff_status": "Nauczyciel akademicki",
+        "student_status": "brak",
+        "id": "123456",
+        "employment_positions": [
+          {
+            "position": {
+              "id": "105",
+              "name": "adiunkt naukowy"
+            },
+            "faculty": {
+              "id": "10030000",
+              "name": "Instytut Matematyki Stosowanej i Mechaniki"
+            }
+          },
+          {
+            "position": {
+              "id": "105",
+              "name": "adiunkt naukowy"
+            },
+            "faculty": {
+              "id": "24000000",
+              "name": "Wydzia\u0142 Nauk Ekonomicznych"
+            }
+          }
+        ]
+      },
+      "match": "Maciej <b>Kowalski</b>"
+    }
+  ],
+  "next_page": true
+}
