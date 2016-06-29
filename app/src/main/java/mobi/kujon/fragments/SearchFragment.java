@@ -1,8 +1,8 @@
 package mobi.kujon.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.github.underscore.Function1;
 
 import javax.inject.Inject;
 
@@ -22,9 +24,13 @@ import butterknife.OnClick;
 import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
 import mobi.kujon.activities.BaseActivity;
+import mobi.kujon.activities.CoursesSearchActivity;
+import mobi.kujon.activities.FacultySearchActivity;
 import mobi.kujon.activities.StudentSearchActivity;
 import mobi.kujon.network.KujonBackendApi;
 import mobi.kujon.network.json.KujonResponse;
+import mobi.kujon.network.json.gen.CoursersSearchResult;
+import mobi.kujon.network.json.gen.FacultiesSearchResult;
 import mobi.kujon.network.json.gen.StudentSearchResult;
 import mobi.kujon.utils.ErrorHandlerUtil;
 import retrofit2.Call;
@@ -33,14 +39,21 @@ import retrofit2.Response;
 
 public class SearchFragment extends BaseFragment {
 
-    @Bind(R.id.student_query) EditText studentQuery;
+    @Inject KujonBackendApi kujonBackendApi;
+
     @BindString(R.string.search_student_hint) String searchStudentHint;
 
-    @Bind(R.id.student_query_input_layout) TextInputLayout studentQueryInputLayout;
+    @Bind(R.id.student_query) EditText studentQuery;
     @Bind(R.id.student_search_message) TextView studentSearchMessage;
-    private CancellationTokenSource cts;
 
-    @Inject KujonBackendApi kujonBackendApi;
+    @Bind(R.id.faculty_query) EditText facultyQuery;
+    @Bind(R.id.faculty_search_message) TextView facultySearchMessage;
+
+    @Bind(R.id.course_query) EditText courseQuery;
+    @Bind(R.id.course_search_message) TextView courseSearchMessage;
+
+    @Bind(R.id.programme_query) EditText programmeQuery;
+    @Bind(R.id.programme_search_message) TextView programmeSearchMessage;
 
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -56,12 +69,39 @@ public class SearchFragment extends BaseFragment {
         StudentSearchActivity.start(getActivity(), studentQuery.getText().toString());
     }
 
+    @OnClick(R.id.course_search)
+    public void courseSearch() {
+        CoursesSearchActivity.start(getActivity(), courseQuery.getText().toString());
+    }
+
+    @OnClick(R.id.faculty_search)
+    public void facultySearch() {
+        FacultySearchActivity.start(getActivity(), facultyQuery.getText().toString());
+    }
+
     @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         ((BaseActivity) getActivity()).getSupportActionBar().setTitle("Szukaj");
-        studentQuery.addTextChangedListener(new TextWatcher() {
 
-            private Call<KujonResponse<StudentSearchResult>> searchCall;
+        studentQuery.addTextChangedListener(getTextWatcher(studentSearchMessage, query -> kujonBackendApi.searchStudent(query, 0)));
+        facultyQuery.addTextChangedListener(getTextWatcher(facultySearchMessage, query -> kujonBackendApi.searchFaculty(query, 0)));
+        courseQuery.addTextChangedListener(getTextWatcher(courseSearchMessage, query -> kujonBackendApi.searchCourses(query, 0)));
+        programmeQuery.addTextChangedListener(getTextWatcher(programmeSearchMessage, query -> kujonBackendApi.searchProgrammes(query, 0)));
+    }
+
+    private int getItemsSize(Object data) {
+        if (data instanceof StudentSearchResult) return ((StudentSearchResult) data).items.size();
+        if (data instanceof FacultiesSearchResult) return ((FacultiesSearchResult) data).items.size();
+        if (data instanceof CoursersSearchResult) return ((CoursersSearchResult) data).items.size();
+
+        return 0;
+    }
+
+    @NonNull private <T> TextWatcher getTextWatcher(final TextView searchMessage, Function1<String, Call<KujonResponse<T>>> search) {
+        return new TextWatcher() {
+
+            private Call<KujonResponse<T>> searchCall;
+            private CancellationTokenSource cts;
 
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
@@ -81,30 +121,30 @@ public class SearchFragment extends BaseFragment {
                     searchCall = null;
                 }
                 if (query.length() == 0) {
-                    studentSearchMessage.setText("");
+                    searchMessage.setText("");
                 } else if (query.length() < 4) {
-                    studentSearchMessage.setText("Minimum 4 znaki");
+                    searchMessage.setText("Minimum 4 znaki");
                 } else {
-                    studentSearchMessage.setText("");
+                    searchMessage.setText("");
 
                     cts = new CancellationTokenSource();
                     Task.delay(500, cts.getToken()).onSuccess(task -> {
-                        studentSearchMessage.setText("Szukam...");
+                        searchMessage.setText("Szukam...");
                         System.out.println("Searching " + query);
-                        searchCall = kujonBackendApi.search(query);
-                        searchCall.enqueue(new Callback<KujonResponse<StudentSearchResult>>() {
+                        searchCall = search.apply(query);
+                        searchCall.enqueue(new Callback<KujonResponse<T>>() {
                             @Override
-                            public void onResponse(Call<KujonResponse<StudentSearchResult>> call, Response<KujonResponse<StudentSearchResult>> response) {
-                                StudentSearchResult data = response.body().data;
+                            public void onResponse(Call<KujonResponse<T>> call, Response<KujonResponse<T>> response) {
+                                T data = response.body().data;
                                 if (data != null) {
-                                    int size = data.items.size();
-                                    studentSearchMessage.setText(String.format("Znaleziono %s wyników", size < 20 ? size : "20+"));
+                                    int size = getItemsSize(data);
+                                    searchMessage.setText(String.format("Znaleziono %s wyników", size < 20 ? size : "20+"));
                                 } else {
-                                    studentSearchMessage.setText("Nie znaleziono wyników");
+                                    searchMessage.setText("Nie znaleziono wyników");
                                 }
                             }
 
-                            @Override public void onFailure(Call<KujonResponse<StudentSearchResult>> call, Throwable t) {
+                            @Override public void onFailure(Call<KujonResponse<T>> call, Throwable t) {
                                 if (!call.isCanceled()) {
                                     ErrorHandlerUtil.handleError(t);
                                 }
@@ -114,6 +154,6 @@ public class SearchFragment extends BaseFragment {
                     }, Task.UI_THREAD_EXECUTOR);
                 }
             }
-        });
+        };
     }
 }

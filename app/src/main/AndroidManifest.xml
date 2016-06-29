@@ -34,7 +34,8 @@
         <activity
             android:name=".activities.MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ToolbarAppTheme"/>
+            android:theme="@style/ToolbarAppTheme"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".activities.CourseDetailsActivity"
             android:screenOrientation="portrait"/>
@@ -73,6 +74,15 @@
             android:name=".activities.StudentSearchActivity"
             android:screenOrientation="portrait"
             />
+        <activity
+            android:name=".activities.CoursesSearchActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:name=".activities.FacultySearchActivity"
+            android:screenOrientation="portrait"
+            />
+
 
     </application>
 

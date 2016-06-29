@@ -6,7 +6,9 @@ import dagger.Component;
 import mobi.kujon.activities.BaseActivity;
 import mobi.kujon.activities.CongratulationsActivity;
 import mobi.kujon.activities.CourseDetailsActivity;
+import mobi.kujon.activities.CoursesSearchActivity;
 import mobi.kujon.activities.FacultyDetailsActivity;
+import mobi.kujon.activities.FacultySearchActivity;
 import mobi.kujon.activities.ImageActivity;
 import mobi.kujon.activities.LecturerDetailsActivity;
 import mobi.kujon.activities.LoginActivity;
@@ -38,6 +40,10 @@ public interface KujonComponent {
     void inject(BaseActivity activity);
 
     void inject(StudentSearchActivity activity);
+
+    void inject(CoursesSearchActivity activity);
+
+    void inject(FacultySearchActivity activity);
 
     void inject(CongratulationsActivity activity);
 

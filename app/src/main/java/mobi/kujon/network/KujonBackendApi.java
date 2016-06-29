@@ -18,6 +18,8 @@ import mobi.kujon.network.json.Term2;
 import mobi.kujon.network.json.TermGrades;
 import mobi.kujon.network.json.User;
 import mobi.kujon.network.json.Usos;
+import mobi.kujon.network.json.gen.CoursersSearchResult;
+import mobi.kujon.network.json.gen.FacultiesSearchResult;
 import mobi.kujon.network.json.gen.StudentSearchResult;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -92,8 +94,16 @@ public interface KujonBackendApi {
 
     @GET("authentication/archive") Call<Object> deleteAccount();
 
-    @GET("search/users/{query}?start=0") Call<KujonResponse<StudentSearchResult>> search(@Path(value = "query", encoded = true) String query);
+    @GET("search/users/{query}")
+    Call<KujonResponse<StudentSearchResult>> searchStudent(@Path(value = "query", encoded = true) String query, @Query("start") Integer start);
 
-    @GET("search/users/{user}")
-    Call<KujonResponse<StudentSearchResult>> search(@Path(value = "user", encoded = true) String query, @Query("start") Integer start);
+    @GET("search/faculties/{query}")
+    Call<KujonResponse<FacultiesSearchResult>> searchFaculty(@Path(value = "query", encoded = true) String query, @Query("start") Integer start);
+
+    @GET("search/programmes/{query}")
+    Call<KujonResponse<Object>> searchProgrammes(@Path(value = "query", encoded = true) String query, @Query("start") Integer start);
+
+    @GET("search/courses/{query}")
+    Call<KujonResponse<CoursersSearchResult>> searchCourses(@Path(value = "query", encoded = true) String query, @Query("start") Integer start);
+
 }
