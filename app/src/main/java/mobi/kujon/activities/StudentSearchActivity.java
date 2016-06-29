@@ -33,6 +33,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static mobi.kujon.utils.CommonUtils.stringEquals;
+
 
 public class StudentSearchActivity extends BaseActivity implements EndlessRecyclerViewAdapter.RequestToLoadMoreListener {
 
@@ -121,10 +123,12 @@ public class StudentSearchActivity extends BaseActivity implements EndlessRecycl
             super(itemView);
             ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(v -> {
-                if ("Nieaktywny pracownik".equals(item.user.staff_status)) {
+                if (stringEquals("Pracownik", item.user.staff_status) || stringEquals("Nauczyciel akademicki", item.user.staff_status)) {
+                    LecturerDetailsActivity.showLecturerDatails(StudentSearchActivity.this, item.user.id);
+                } else if (stringEquals("aktywny student", item.user.student_status)) {
                     StudentDetailsActivity.showStudentDetails(StudentSearchActivity.this, item.user.id);
                 } else {
-                    LecturerDetailsActivity.showLecturerDatails(StudentSearchActivity.this, item.user.id);
+                    StudentDetailsActivity.showStudentDetails(StudentSearchActivity.this, item.user.id);
                 }
             });
         }

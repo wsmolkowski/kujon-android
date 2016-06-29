@@ -85,10 +85,11 @@ public class SearchFragment extends BaseFragment {
                 } else if (query.length() < 4) {
                     studentSearchMessage.setText("Minimum 4 znaki");
                 } else {
-                    studentSearchMessage.setText("Szukam...");
+                    studentSearchMessage.setText("");
 
                     cts = new CancellationTokenSource();
                     Task.delay(500, cts.getToken()).onSuccess(task -> {
+                        studentSearchMessage.setText("Szukam...");
                         System.out.println("Searching " + query);
                         searchCall = kujonBackendApi.search(query);
                         searchCall.enqueue(new Callback<KujonResponse<StudentSearchResult>>() {
@@ -110,7 +111,7 @@ public class SearchFragment extends BaseFragment {
                             }
                         });
                         return null;
-                    });
+                    }, Task.UI_THREAD_EXECUTOR);
                 }
             }
         });

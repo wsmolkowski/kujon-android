@@ -35,4 +35,16 @@ public class CommonUtils {
             layout.addView(row);
         }
     }
+
+    public static boolean stringEquals(String left, String right) {
+        if (left == null && right == null) {
+            return true;
+        }
+
+        if (left == null || right == null) {
+            return false;
+        }
+
+        return left.trim().toLowerCase().equals(right.trim().toLowerCase());
+    }
 }
