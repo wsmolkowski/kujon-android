@@ -1,0 +1,1 @@
+* Wyszukiwarki: studenci, wydziały OK, przedmioty bez szczegółów (brak termId), studia - server error
