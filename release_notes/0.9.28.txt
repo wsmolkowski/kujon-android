@@ -1,1 +1,2 @@
 * search fragments translations
+* Wyszukiwanie przedmiotów
