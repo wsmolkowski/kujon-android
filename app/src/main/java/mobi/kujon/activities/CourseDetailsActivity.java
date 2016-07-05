@@ -75,12 +75,9 @@ public class CourseDetailsActivity extends BaseActivity {
     }
 
     private void loadData(boolean refresh) {
-        if (refresh) {
-            utils.invalidateEntry("courseseditions/" + courseId + "/" + termId);
-        }
+        Call<KujonResponse<CourseDetails>> call = getCourseCall(refresh);
 
         swipeContainer.setRefreshing(true);
-        Call<KujonResponse<CourseDetails>> call = refresh ? kujonBackendApi.courseDetailsRefresh(courseId, termId) : kujonBackendApi.courseDetails(courseId, termId);
         call.enqueue(new Callback<KujonResponse<CourseDetails>>() {
             @Override public void onResponse(Call<KujonResponse<CourseDetails>> call, Response<KujonResponse<CourseDetails>> response) {
                 swipeContainer.setRefreshing(false);
@@ -127,10 +124,26 @@ public class CourseDetailsActivity extends BaseActivity {
         });
     }
 
+    private Call<KujonResponse<CourseDetails>> getCourseCall(boolean refresh) {
+        if (termId != null) {
+            if (refresh) utils.invalidateEntry("courseseditions/" + courseId + "/" + termId);
+            return refresh ? kujonBackendApi.courseDetailsRefresh(courseId, termId) : kujonBackendApi.courseDetails(courseId, termId);
+        } else {
+            if (refresh) utils.invalidateEntry("courses/" + courseId);
+            return refresh ? kujonBackendApi.courseDetailsRefresh(courseId) : kujonBackendApi.courseDetails(courseId);
+        }
+    }
+
     public static void showCourseDetails(Activity activity, String courseId, String termId) {
         Intent intent = new Intent(activity, CourseDetailsActivity.class);
         intent.putExtra(COURSE_ID, courseId);
         intent.putExtra(TERM_ID, termId);
+        activity.startActivity(intent);
+    }
+
+    public static void showCourseDetails(Activity activity, String courseId) {
+        Intent intent = new Intent(activity, CourseDetailsActivity.class);
+        intent.putExtra(COURSE_ID, courseId);
         activity.startActivity(intent);
     }
 

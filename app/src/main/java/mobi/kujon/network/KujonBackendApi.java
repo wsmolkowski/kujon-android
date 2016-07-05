@@ -85,8 +85,14 @@ public interface KujonBackendApi {
     @GET("courseseditions/{courseId}/{termId}")
     Call<KujonResponse<CourseDetails>> courseDetails(@Path("courseId") String courseId, @Path("termId") String termId);
 
+    @GET("courses/{courseId}")
+    Call<KujonResponse<CourseDetails>> courseDetails(@Path("courseId") String courseId);
+
     @GET("courseseditions/{courseId}/{termId}")
     @Headers(X_KUJONREFRESH_TRUE) Call<KujonResponse<CourseDetails>> courseDetailsRefresh(@Path("courseId") String courseId, @Path("termId") String termId);
+
+    @GET("courses/{courseId}")
+    @Headers(X_KUJONREFRESH_TRUE) Call<KujonResponse<CourseDetails>> courseDetailsRefresh(@Path("courseId") String courseId);
 
     @GET("tt/{day}") Call<KujonResponse<List<CalendarEvent>>> plan(@Path("day") String day);
 
