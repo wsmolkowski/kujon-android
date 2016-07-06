@@ -81,7 +81,7 @@ public class SearchFragment extends BaseFragment {
 
     @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        ((BaseActivity) getActivity()).getSupportActionBar().setTitle("Szukaj");
+        ((BaseActivity) getActivity()).getSupportActionBar().setTitle(R.string.search);
 
         studentQuery.addTextChangedListener(getTextWatcher(studentSearchMessage, query -> kujonBackendApi.searchStudent(query, 0)));
         facultyQuery.addTextChangedListener(getTextWatcher(facultySearchMessage, query -> kujonBackendApi.searchFaculty(query, 0)));
@@ -123,14 +123,14 @@ public class SearchFragment extends BaseFragment {
                 if (query.length() == 0) {
                     searchMessage.setText("");
                 } else if (query.length() < 4) {
-                    searchMessage.setText("Minimum 4 znaki");
+                    searchMessage.setText(R.string.search_minimum);
                 } else {
                     searchMessage.setText("");
 
                     cts = new CancellationTokenSource();
                     Task.delay(500, cts.getToken()).onSuccess(task -> {
-                        searchMessage.setText("Szukam...");
-                        System.out.println("Searching " + query);
+                        searchMessage.setText(R.string.searching);
+                        // System.out.println("Searching " + query);
                         searchCall = search.apply(query);
                         searchCall.enqueue(new Callback<KujonResponse<T>>() {
                             @Override
@@ -140,7 +140,7 @@ public class SearchFragment extends BaseFragment {
                                     int size = getItemsSize(data);
                                     searchMessage.setText(String.format("Znaleziono %s wyników", size < 20 ? size : "20+"));
                                 } else {
-                                    searchMessage.setText("Nie znaleziono wyników");
+                                    searchMessage.setText(R.string.no_results_found);
                                 }
                             }
 

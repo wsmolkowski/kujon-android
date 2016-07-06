@@ -23,6 +23,9 @@
     <string name="email_subject">Comment</string>
     <string name="congratulations">Congratulations</string>
     <string name="no_events">No events</string>
+    <string name="search_minimum">Minimum 4 chars</string>
+    <string name="searching">Searching...</string>
+    <string name="no_results_found">No results found</string>
 
     <string-array name="months">
         <item>January</item>
@@ -38,4 +41,5 @@
         <item>November</item>
         <item>December</item>
     </string-array>
+    <string name="search">Search</string>
 </resources>
