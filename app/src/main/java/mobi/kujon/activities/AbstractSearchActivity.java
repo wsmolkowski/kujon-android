@@ -57,13 +57,15 @@ public abstract class AbstractSearchActivity<S, T> extends BaseActivity implemen
         getKujonResponseCall().enqueue(new Callback<KujonResponse<S>>() {
             @Override
             public void onResponse(Call<KujonResponse<S>> call, Response<KujonResponse<S>> response) {
-                start += 20;
-                S data = response.body().data;
-                if (data != null) {
-                    adapter.addItems(getItems(data));
-                    endlessRecyclerViewAdapter.onDataReady(getNextPage(data));
-                } else {
-                    endlessRecyclerViewAdapter.onDataReady(false);
+                if (ErrorHandlerUtil.handleResponse(response)) {
+                    start += 20;
+                    S data = response.body().data;
+                    if (data != null) {
+                        adapter.addItems(getItems(data));
+                        endlessRecyclerViewAdapter.onDataReady(getNextPage(data));
+                    } else {
+                        endlessRecyclerViewAdapter.onDataReady(false);
+                    }
                 }
             }
 
