@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import butterknife.Bind;
@@ -72,10 +74,10 @@ public abstract class ListFragment extends BaseFragment {
         if (!isEmpty(courseId) && !isEmpty(termId)) {
             CourseDetailsActivity.showCourseDetails(getActivity(), courseId, termId);
         } else if (!isEmpty(termId)) {
-            backendApi.terms(termId).enqueue(new Callback<KujonResponse<Term2>>() {
-                @Override public void onResponse(Call<KujonResponse<Term2>> call, Response<KujonResponse<Term2>> response) {
+            backendApi.terms(termId).enqueue(new Callback<KujonResponse<List<Term2>>>() {
+                @Override public void onResponse(Call<KujonResponse<List<Term2>>> call, Response<KujonResponse<List<Term2>>> response) {
                     if (ErrorHandlerUtil.handleResponse(response)) {
-                        Term2 term = response.body().data;
+                        Term2 term = response.body().data.get(0);
                         AlertDialog.Builder dlgAlert = new AlertDialog.Builder(activity);
                         dlgAlert.setMessage(String.format("Numer: %s\nData początkowa: %s\nData końcowa: %s\nData zakończenia: %s",
                                 term.termId, term.startDate, term.endDate, term.finishDate));
@@ -87,7 +89,7 @@ public abstract class ListFragment extends BaseFragment {
                     }
                 }
 
-                @Override public void onFailure(Call<KujonResponse<Term2>> call, Throwable t) {
+                @Override public void onFailure(Call<KujonResponse<List<Term2>>> call, Throwable t) {
                     ErrorHandlerUtil.handleError(t);
                 }
             });

@@ -43,8 +43,6 @@ public class SearchFragment extends BaseFragment {
 
     @Inject KujonBackendApi kujonBackendApi;
 
-    @BindString(R.string.search_student_hint) String searchStudentHint;
-
     @Bind(R.id.student_query) EditText studentQuery;
     @Bind(R.id.student_search_message) TextView studentSearchMessage;
 

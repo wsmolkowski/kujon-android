@@ -57,7 +57,7 @@ public interface KujonBackendApi {
 
     @GET("terms") @Headers(X_KUJONREFRESH_TRUE) Call<KujonResponse<List<Term2>>> termsRefresh();
 
-    @GET("terms/{termId}") Call<KujonResponse<Term2>> terms(@Path("termId") String termId);
+    @GET("terms/{termId}") Call<KujonResponse<List<Term2>>> terms(@Path("termId") String termId);
 
     @GET("programmes") Call<KujonResponse<List<Programme>>> programmes();
 
