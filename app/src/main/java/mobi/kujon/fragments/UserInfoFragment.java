@@ -102,9 +102,8 @@ public class UserInfoFragment extends BaseFragment {
             utils.invalidateEntry("users");
             utils.invalidateEntry("faculties");
             utils.invalidateEntry("terms");
-            if (user != null && user.picture != null) {
-                picasso.invalidate(user.picture);
-            }
+            if (user != null && user.picture != null) picasso.invalidate(user.picture);
+            if (user != null && user.photoUrl != null) picasso.invalidate(user.photoUrl);
         }
 
         usersCall = refresh ? kujonBackendApi.usersRefresh() : kujonBackendApi.users();
@@ -118,14 +117,15 @@ public class UserInfoFragment extends BaseFragment {
                     index.setText(user.student_number);
                     String name = user.first_name + " " + user.last_name;
                     firstLastName.setText(name);
-                    picasso.load(user.picture)
+                    String pictureUrl = !isEmpty(user.picture) ? user.picture : user.photoUrl;
+                    picasso.load(pictureUrl)
                             .transform(new CircleTransform())
                             .fit()
                             .centerInside()
                             .placeholder(R.drawable.user_placeholder)
-                            .into(picture);
+                            .into(UserInfoFragment.this.picture);
                     showUsosLogo(user.usos_id, usosLogo);
-                    picture.setOnClickListener(v -> ImageActivity.show(getActivity(), user.picture, name));
+                    UserInfoFragment.this.picture.setOnClickListener(v -> ImageActivity.show(getActivity(), pictureUrl, name));
                     studentStatus.setText(user.student_status);
                     studentAccountNumber.setText(user.id);
                     List<String> collect = $.collect(user.student_programmes, it -> it.programme.description.split(",")[0]);

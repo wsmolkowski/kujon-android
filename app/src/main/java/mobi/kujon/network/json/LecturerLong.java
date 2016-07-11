@@ -44,6 +44,9 @@ public class LecturerLong {
     @SerializedName("has_photo")
     @Expose
     public String hasPhoto;
+    @SerializedName("photo_url")
+    @Expose
+    public String photoUrl;
     @SerializedName("id")
     @Expose
     public String id;

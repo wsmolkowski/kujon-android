@@ -11,6 +11,9 @@ public class User {
     @SerializedName("picture")
     @Expose
     public String picture;
+    @SerializedName("photo_url")
+    @Expose
+    public String photoUrl;
     @SerializedName("last_name")
     @Expose
     public String last_name;

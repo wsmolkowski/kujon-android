@@ -77,7 +77,7 @@ public class LecturerDetailsActivity extends BaseActivity {
         if (refresh) {
             utils.invalidateEntry("lecturers/" + lecturerId);
             if (lecturer != null) {
-                picasso.invalidate(lecturer.hasPhoto);
+                if (!isEmpty(lecturer.photoUrl)) picasso.invalidate(lecturer.photoUrl);
             }
         }
 
@@ -109,7 +109,8 @@ public class LecturerDetailsActivity extends BaseActivity {
                         CourseDetailsActivity.showCourseDetails(LecturerDetailsActivity.this, course.courseId, course.termId);
                     });
 
-                    picasso.load(lecturer.hasPhoto)
+                    String photoUrl = lecturer.photoUrl;
+                    picasso.load(photoUrl)
                             .transform(new CircleTransform())
                             .fit()
                             .centerInside()
@@ -117,8 +118,8 @@ public class LecturerDetailsActivity extends BaseActivity {
                             .into(picture);
 
                     picture.setOnClickListener(v -> {
-                        if (!isEmpty(lecturer.hasPhoto) && lecturer.hasPhoto.startsWith("http")) {
-                            ImageActivity.show(LecturerDetailsActivity.this, lecturer.hasPhoto, name);
+                        if (!isEmpty(photoUrl) && photoUrl.startsWith("http")) {
+                            ImageActivity.show(LecturerDetailsActivity.this, photoUrl, name);
                         } else {
                             Toast.makeText(LecturerDetailsActivity.this, "Brak zdjęcia", Toast.LENGTH_SHORT).show();
                         }
