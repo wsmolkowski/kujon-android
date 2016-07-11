@@ -1,0 +1,2 @@
+* Fix #108 wyświetlanie zdjęcia studenta - problem login1633846
+* Fix #101 Wyszukiwarka studiów
