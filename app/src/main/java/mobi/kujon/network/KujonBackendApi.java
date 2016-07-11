@@ -20,6 +20,7 @@ import mobi.kujon.network.json.User;
 import mobi.kujon.network.json.Usos;
 import mobi.kujon.network.json.gen.CoursersSearchResult;
 import mobi.kujon.network.json.gen.FacultiesSearchResult;
+import mobi.kujon.network.json.gen.ProgrammeSearchResult;
 import mobi.kujon.network.json.gen.StudentSearchResult;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -107,7 +108,7 @@ public interface KujonBackendApi {
     Call<KujonResponse<FacultiesSearchResult>> searchFaculty(@Path(value = "query", encoded = true) String query, @Query("start") Integer start);
 
     @GET("search/programmes/{query}")
-    Call<KujonResponse<Object>> searchProgrammes(@Path(value = "query", encoded = true) String query, @Query("start") Integer start);
+    Call<KujonResponse<ProgrammeSearchResult>> searchProgrammes(@Path(value = "query", encoded = true) String query, @Query("start") Integer start);
 
     @GET("search/courses/{query}")
     Call<KujonResponse<CoursersSearchResult>> searchCourses(@Path(value = "query", encoded = true) String query, @Query("start") Integer start);

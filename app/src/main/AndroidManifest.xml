@@ -82,7 +82,10 @@
             android:name=".activities.FacultySearchActivity"
             android:screenOrientation="portrait"
             />
-
+        <activity
+            android:name=".activities.ProgrammeSearchActivity"
+            android:screenOrientation="portrait"
+            />
 
     </application>
 

@@ -26,11 +26,13 @@ import mobi.kujon.R;
 import mobi.kujon.activities.BaseActivity;
 import mobi.kujon.activities.CoursesSearchActivity;
 import mobi.kujon.activities.FacultySearchActivity;
+import mobi.kujon.activities.ProgrammeSearchActivity;
 import mobi.kujon.activities.StudentSearchActivity;
 import mobi.kujon.network.KujonBackendApi;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.network.json.gen.CoursersSearchResult;
 import mobi.kujon.network.json.gen.FacultiesSearchResult;
+import mobi.kujon.network.json.gen.ProgrammeSearchResult;
 import mobi.kujon.network.json.gen.StudentSearchResult;
 import mobi.kujon.utils.ErrorHandlerUtil;
 import retrofit2.Call;
@@ -79,6 +81,11 @@ public class SearchFragment extends BaseFragment {
         FacultySearchActivity.start(getActivity(), facultyQuery.getText().toString());
     }
 
+    @OnClick(R.id.programme_search)
+    public void programmeSearch() {
+        ProgrammeSearchActivity.start(getActivity(), programmeQuery.getText().toString());
+    }
+
     @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         ((BaseActivity) getActivity()).getSupportActionBar().setTitle(R.string.search);
@@ -93,6 +100,7 @@ public class SearchFragment extends BaseFragment {
         if (data instanceof StudentSearchResult) return ((StudentSearchResult) data).items.size();
         if (data instanceof FacultiesSearchResult) return ((FacultiesSearchResult) data).items.size();
         if (data instanceof CoursersSearchResult) return ((CoursersSearchResult) data).items.size();
+        if (data instanceof ProgrammeSearchResult) return ((ProgrammeSearchResult) data).items.size();
 
         return 0;
     }
@@ -138,7 +146,7 @@ public class SearchFragment extends BaseFragment {
                                 T data = response.body().data;
                                 if (data != null) {
                                     int size = getItemsSize(data);
-                                    searchMessage.setText(String.format("Znaleziono %s wyników", size < 20 ? size : "20+"));
+                                    searchMessage.setText(String.format("%s wyników", size < 20 ? size : "20+"));
                                 } else {
                                     searchMessage.setText(R.string.no_results_found);
                                 }
