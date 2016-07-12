@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
-    android:id="@+id/scrollView"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                  xmlns:tools="http://schemas.android.com/tools"
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent"
-                  android:orientation="vertical"
-                  android:padding="16dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
 
 
         <LinearLayout
@@ -22,12 +21,12 @@
             <TextView
                 android:id="@+id/faculty_name"
                 android:layout_width="0dp"
-                android:layout_weight="1"
-                android:textSize="20sp"
-                android:layout_gravity="center_vertical"
-                android:textStyle="bold"
-                android:textColor="@android:color/black"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
                 tools:text="Katedra Hungarystyki"/>
 
             <ImageView
@@ -46,47 +45,66 @@
 
         <TextView
             android:id="@+id/postal_address"
-            tools:text='Dobra 55, 00-312 Warszawa (\u015ar\u00f3dmie\u015bcie)"'
             style="@style/entry"
-            android:drawableRight="@drawable/place_black"/>
+            android:drawableRight="@drawable/place_black"
+            tools:text='Dobra 55, 00-312 Warszawa (\u015ar\u00f3dmie\u015bcie)"'/>
 
         <TextView
-            android:text="Telefon"
-            style="@style/label"/>
+            style="@style/label"
+            android:text="Telefon"/>
 
         <TextView
             android:id="@+id/phone"
-            tools:text='123456789'
+            style="@style/entry"
             android:autoLink="phone"
-            style="@style/entry"/>
+            tools:text='123456789'/>
 
         <TextView
-            android:text="Strona"
-            style="@style/label"/>
+            style="@style/label"
+            android:text="Strona"/>
 
         <TextView
             android:id="@+id/homepage"
+            style="@style/entry"
             android:autoLink="web"
-            tools:text='http://www.hungarystyka.uw.edu.pl/'
-            style="@style/entry"/>
+            tools:text='http://www.hungarystyka.uw.edu.pl/'/>
+
+        <TextView
+            style="@style/label"
+            android:text="Statystyki"/>
 
         <TextView
             android:id="@+id/programmeCount"
-            android:layout_marginTop="16dp"
-            tools:text='Liczba programów: 39'
-            style="@style/entry"/>
+            style="@style/entry"
+            android:layout_marginTop="8dp"
+            tools:text='Liczba programów: 39'/>
 
         <TextView
             android:id="@+id/courseCount"
+            style="@style/entry"
             android:layout_marginTop="8dp"
-            tools:text='Liczba kursów: 445'
-            style="@style/entry"/>
+            tools:text='Liczba kursów: 445'/>
 
         <TextView
             android:id="@+id/staffCount"
+            style="@style/entry"
             android:layout_marginTop="8dp"
-            tools:text='Liczba pracowników: 445'
-            style="@style/entry"/>
+            tools:text='Liczba pracowników: 445'/>
+
+        <TextView
+            style="@style/label"
+            android:text="Jednostki nadrzędne"/>
+
+        <LinearLayout
+            android:id="@+id/parent_faculties"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical"
+            tools:minHeight="100dp"
+            tools:background="@android:color/holo_green_dark"
+            />
+
 
 
     </LinearLayout>

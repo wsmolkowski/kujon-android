@@ -7,11 +7,13 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
+import mobi.kujon.network.json.gen.Logo_urls;
+
 public class FacId {
 
     @SerializedName("logo_urls")
     @Expose
-    public LogoUrls logoUrls;
+    public Logo_urls logoUrls;
     @SerializedName("name")
     @Expose
     public String name;

@@ -1,0 +1,22 @@
+{
+  "_id": "57848bfe855ef92d84595188",
+  "fac_id": "37000000",
+  "homepage_url": "",
+  "logo_urls": {
+    "100x100": "https://usosapps.demo.usos.edu.pl/res/fl/100x100/77f50d6c1b73d3ff722933409300b3f6-2f2778cc123da935c549c57aae36aa235deb3de3.jpg"
+  },
+  "name": "Wydzia\u0142 \"Artes Liberales\"",
+  "path": [
+    {
+      "id": "00000000",
+      "name": "Uniwersytet Warszawski"
+    }
+  ],
+  "phone_numbers": [],
+  "postal_address": "Nowy \u015awiat 69, 00-046 Warszawa (\u015ar\u00f3dmie\u015bcie)",
+  "stats": {
+    "course_count": 496,
+    "programme_count": 17,
+    "staff_count": 52
+  }
+}

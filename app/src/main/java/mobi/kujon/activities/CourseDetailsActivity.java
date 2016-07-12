@@ -175,22 +175,23 @@ public class CourseDetailsActivity extends BaseActivity {
         View termView = getLayoutInflater().inflate(R.layout.row_terms, null);
         TermsFragment.ViewHolder holder = new TermsFragment.ViewHolder(termView);
 
-        Term2 term = courseDetails.term.get(0);
-        holder.name.setText(term.name);
-        holder.termId.setText(term.termId);
-        holder.active.setText(term.active ? "TAK" : "NIE");
-        holder.startDate.setText(term.startDate);
-        holder.endDate.setText(term.endDate);
-        holder.finishDate.setText(term.finishDate);
+        if (courseDetails.term.size() > 0) {
+            Term2 term = courseDetails.term.get(0);
+            holder.name.setText(term.name);
+            holder.termId.setText(term.termId);
+            holder.active.setText(term.active ? "TAK" : "NIE");
+            holder.startDate.setText(term.startDate);
+            holder.endDate.setText(term.endDate);
+            holder.finishDate.setText(term.finishDate);
 
-        dlgAlert.setView(termView);
-        dlgAlert.setTitle(term.name);
-        dlgAlert.setCancelable(false);
-        dlgAlert.setNegativeButton("OK", (dialog, which) -> {
-            dialog.dismiss();
-        });
-        dlgAlert.create().show();
+            dlgAlert.setView(termView);
+            dlgAlert.setTitle(term.name);
+            dlgAlert.setCancelable(false);
+            dlgAlert.setNegativeButton("OK", (dialog, which) -> {
+                dialog.dismiss();
+            });
+            dlgAlert.create().show();
+        }
     }
-
 }
 

@@ -31,7 +31,6 @@ import mobi.kujon.activities.FacultyDetailsActivity;
 import mobi.kujon.activities.ImageActivity;
 import mobi.kujon.activities.TermsActivity;
 import mobi.kujon.network.KujonBackendApi;
-import mobi.kujon.network.json.Faculty2;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.network.json.Programme;
 import mobi.kujon.network.json.Programme_;
@@ -39,6 +38,7 @@ import mobi.kujon.network.json.StudentProgramme;
 import mobi.kujon.network.json.Term2;
 import mobi.kujon.network.json.User;
 import mobi.kujon.network.json.Usos;
+import mobi.kujon.network.json.gen.Faculty2;
 import mobi.kujon.ui.CircleTransform;
 import mobi.kujon.utils.CommonUtils;
 import mobi.kujon.utils.ErrorHandlerUtil;
@@ -187,7 +187,7 @@ public class UserInfoFragment extends BaseFragment {
                     List<String> facultyNames = $.collect(data, it -> it.name);
                     studentFaculties.removeAllViews();
                     CommonUtils.showList(activity.getLayoutInflater(), studentFaculties, facultyNames, position -> {
-                        FacultyDetailsActivity.showFacultyDetails(getActivity(), data.get(position).facId);
+                        FacultyDetailsActivity.showFacultyDetails(getActivity(), data.get(position).fac_id);
                     });
 
                 }
