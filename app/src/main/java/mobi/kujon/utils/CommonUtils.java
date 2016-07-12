@@ -25,6 +25,7 @@ public class CommonUtils {
 
     public static void showList(LayoutInflater layoutInflater, LinearLayout layout, List<String> data, OnPositionClickListener listener) {
         KujonApplication application = KujonApplication.getApplication();
+        layout.removeAllViews();
         for (int i = 0; i < data.size(); i++) {
             String rowData = data.get(i);
             TextView row = (TextView) layoutInflater.inflate(R.layout.list_row, null);
