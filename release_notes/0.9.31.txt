@@ -1,0 +1,3 @@
+* Fix #96 jednostki - dodatnie hierarchi i statystyk
+* Fix #110 przy odświeżaniu przedmiotu duplikują sie prowadzący i studenci
+* Fix #111 oceny i przedmioty - przy kliknięciu na semestr - illegal state exception
