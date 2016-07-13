@@ -41,6 +41,7 @@
                     android:hint="@string/search_student_hint"
                     android:singleLine="true"
                     android:textSize="14sp"
+                    android:imeOptions="actionSearch"
                     />
             </android.support.design.widget.TextInputLayout>
 
@@ -97,6 +98,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Nazwa jednostki organizacyjnej"
                     android:singleLine="true"
+                    android:imeOptions="actionSearch"
                     android:textSize="14sp"
                     />
             </android.support.design.widget.TextInputLayout>
@@ -155,6 +157,7 @@
                     android:hint="Nazwa przedmiotu"
                     android:singleLine="true"
                     android:textSize="14sp"
+                    android:imeOptions="actionSearch"
                     />
             </android.support.design.widget.TextInputLayout>
 
@@ -211,6 +214,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Nazwa kierunku studiów"
                     android:singleLine="true"
+                    android:imeOptions="actionSearch"
                     android:textSize="14sp"
                     />
             </android.support.design.widget.TextInputLayout>

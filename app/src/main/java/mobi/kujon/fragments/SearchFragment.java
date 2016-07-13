@@ -8,6 +8,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -18,7 +19,6 @@ import javax.inject.Inject;
 import bolts.CancellationTokenSource;
 import bolts.Task;
 import butterknife.Bind;
-import butterknife.BindString;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import mobi.kujon.KujonApplication;
@@ -92,6 +92,22 @@ public class SearchFragment extends BaseFragment {
         facultyQuery.addTextChangedListener(getTextWatcher(facultySearchMessage, query -> kujonBackendApi.searchFaculty(query, 0)));
         courseQuery.addTextChangedListener(getTextWatcher(courseSearchMessage, query -> kujonBackendApi.searchCourses(query, 0)));
         programmeQuery.addTextChangedListener(getTextWatcher(programmeSearchMessage, query -> kujonBackendApi.searchProgrammes(query, 0)));
+
+        studentQuery.setOnEditorActionListener(startSearch(this::studentSearch));
+        facultyQuery.setOnEditorActionListener(startSearch(this::facultySearch));
+        courseQuery.setOnEditorActionListener(startSearch(this::courseSearch));
+        programmeQuery.setOnEditorActionListener(startSearch(this::programmeSearch));
+    }
+
+    @NonNull private TextView.OnEditorActionListener startSearch(Runnable runnable) {
+        return (v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                runnable.run();
+                return true;
+            } else {
+                return false;
+            }
+        };
     }
 
     private int getItemsSize(Object data) {
