@@ -66,6 +66,8 @@ public abstract class AbstractSearchActivity<S, T> extends BaseActivity implemen
                     } else {
                         endlessRecyclerViewAdapter.onDataReady(false);
                     }
+                } else {
+                    endlessRecyclerViewAdapter.onDataReady(false);
                 }
             }
 
