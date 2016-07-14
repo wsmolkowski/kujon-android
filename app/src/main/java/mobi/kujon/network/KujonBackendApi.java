@@ -22,6 +22,7 @@ import mobi.kujon.network.json.gen.FacultiesSearchResult;
 import mobi.kujon.network.json.gen.Faculty2;
 import mobi.kujon.network.json.gen.ProgrammeSearchResult;
 import mobi.kujon.network.json.gen.StudentSearchResult;
+import mobi.kujon.network.json.gen.Thesis;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
@@ -66,6 +67,10 @@ public interface KujonBackendApi {
     @GET("faculties") Call<KujonResponse<List<Faculty2>>> faculties();
 
     @GET("faculties") @Headers(X_KUJONREFRESH_TRUE) Call<KujonResponse<List<Faculty2>>> facultiesRefresh();
+
+    @GET("theses") Call<KujonResponse<List<Thesis>>> theses();
+
+    @GET("theses") @Headers(X_KUJONREFRESH_TRUE) Call<KujonResponse<List<Thesis>>> thesesRefresh();
 
     @GET("faculties/{facultyId}") Call<KujonResponse<Faculty2>> faculty(@Path("facultyId") String facultyId);
 

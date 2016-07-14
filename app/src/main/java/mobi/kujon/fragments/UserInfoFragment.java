@@ -30,6 +30,7 @@ import mobi.kujon.activities.BaseActivity;
 import mobi.kujon.activities.FacultyDetailsActivity;
 import mobi.kujon.activities.ImageActivity;
 import mobi.kujon.activities.TermsActivity;
+import mobi.kujon.activities.ThesesActivity;
 import mobi.kujon.network.KujonBackendApi;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.network.json.Programme;
@@ -39,6 +40,7 @@ import mobi.kujon.network.json.Term2;
 import mobi.kujon.network.json.User;
 import mobi.kujon.network.json.Usos;
 import mobi.kujon.network.json.gen.Faculty2;
+import mobi.kujon.network.json.gen.Thesis;
 import mobi.kujon.ui.CircleTransform;
 import mobi.kujon.utils.CommonUtils;
 import mobi.kujon.utils.ErrorHandlerUtil;
@@ -59,6 +61,7 @@ public class UserInfoFragment extends BaseFragment {
     @Bind(R.id.firstLastName) TextView firstLastName;
     @Bind(R.id.index) TextView index;
     @Bind(R.id.terms) TextView terms;
+    @Bind(R.id.theses) TextView theses;
     @Bind(R.id.picture) ImageView picture;
     @Bind(R.id.usosLogo) ImageView usosLogo;
     @Bind(R.id.student_faculties) LinearLayout studentFaculties;
@@ -74,6 +77,7 @@ public class UserInfoFragment extends BaseFragment {
     private Call<KujonResponse<User>> usersCall;
     private Call<KujonResponse<List<Faculty2>>> facultiesCall;
     private Call<KujonResponse<List<Term2>>> termsCall;
+    private Call<KujonResponse<List<Thesis>>> thesesCall;
 
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -102,6 +106,7 @@ public class UserInfoFragment extends BaseFragment {
             utils.invalidateEntry("users");
             utils.invalidateEntry("faculties");
             utils.invalidateEntry("terms");
+            utils.invalidateEntry("theses");
             if (user != null && user.picture != null) picasso.invalidate(user.picture);
             if (user != null && user.photoUrl != null) picasso.invalidate(user.photoUrl);
         }
@@ -213,11 +218,32 @@ public class UserInfoFragment extends BaseFragment {
                 ErrorHandlerUtil.handleError(t);
             }
         });
+
+        thesesCall = refresh ? kujonBackendApi.thesesRefresh() : kujonBackendApi.theses();
+        thesesCall.enqueue(new Callback<KujonResponse<List<Thesis>>>() {
+            @Override
+            public void onResponse(Call<KujonResponse<List<Thesis>>> call, Response<KujonResponse<List<Thesis>>> response) {
+                if (ErrorHandlerUtil.handleResponse(response)) {
+                    List<Thesis> data = response.body().data;
+                    UserInfoFragment.this.theses.setText(String.format("Prace dyplomowe (%s)", data.size()));
+                }
+            }
+
+            @Override public void onFailure(Call<KujonResponse<List<Thesis>>> call, Throwable t) {
+                ErrorHandlerUtil.handleError(t);
+            }
+        });
     }
 
     @OnClick(R.id.terms)
     public void terms() {
         Intent intent = new Intent(getActivity(), TermsActivity.class);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.theses)
+    public void theses() {
+        Intent intent = new Intent(getActivity(), ThesesActivity.class);
         startActivity(intent);
     }
 

@@ -171,7 +171,19 @@
 
                 <TextView
                     style="@style/label"
-                    android:text="Statystyki"/>
+                    android:text="Prace dyplomowe"/>
+
+                <TextView
+                    android:id="@+id/theses"
+                    style="@style/entry"
+                    android:drawableRight="@drawable/navigate_next"
+                    android:gravity="center_vertical"
+                    android:text='Prace dyplomowe'/>
+
+
+                <TextView
+                    style="@style/label"
+                    android:text="Informacje"/>
 
                 <TextView
                     android:id="@+id/terms"

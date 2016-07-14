@@ -66,6 +66,11 @@
             android:screenOrientation="portrait"
             />
         <activity
+            android:name=".activities.ThesesActivity"
+            android:screenOrientation="portrait"
+            />
+
+        <activity
             android:name=".activities.TextViewActivity"
             android:screenOrientation="portrait"
             />
