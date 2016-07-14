@@ -1,0 +1,3 @@
+* Fix #107 dodanie prac dyplomowych
+* Fix #112 wyszukiwarka - po naciśnięciu entera przechodzi do następnej pozycji szukania
+* Fix #113 wyszukiwarka - po wpisaniu głupoty i wciśnięciu szukaj - kręci spiner
