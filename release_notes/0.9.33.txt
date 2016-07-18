@@ -1,0 +1,1 @@
+* Fix #84 - przewijanie kalendarza wstecz. To trochę bardziej złożone. Dodałem na razie miesiąc wcześniej. Ciągłe dociąganie z przewijaniem odłożone na później.
