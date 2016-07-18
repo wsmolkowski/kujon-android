@@ -51,9 +51,13 @@ public class PlanEventsDownloader {
             Call<KujonResponse<List<CalendarEvent>>> call = refresh ? kujonBackendApi.planRefresh(restSuffix) : kujonBackendApi.plan(restSuffix);
             call.enqueue(new Callback<KujonResponse<List<CalendarEvent>>>() {
                 @Override public void onResponse(Call<KujonResponse<List<CalendarEvent>>> call, Response<KujonResponse<List<CalendarEvent>>> response) {
-                    if (ErrorHandlerUtil.handleResponse(response)) {
+                    if (ErrorHandlerUtil.handleResponse(response, true)) {
                         List<CalendarEvent> data = response.body().data;
-                        tcs.setResult(data);
+                        if (data != null) {
+                            tcs.setResult(data);
+                        } else {
+                            tcs.setResult(new ArrayList<>());
+                        }
                     } else {
                         tcs.setError(new Exception(response.message() + response.code()));
                     }

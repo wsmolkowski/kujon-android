@@ -43,12 +43,17 @@ public class ErrorHandlerUtil {
     }
 
     public static void handleError(Throwable throwable) {
+        throwable.printStackTrace();
         log.error(throwable.getMessage());
         translateAndToastErrorMessage(throwable.getMessage());
         Crashlytics.logException(throwable);
     }
 
     public static <T> boolean handleResponse(Response<KujonResponse<T>> response) {
+        return handleResponse(response, false);
+    }
+
+    public static <T> boolean handleResponse(Response<KujonResponse<T>> response, boolean acceptNull) {
         if (!response.isSuccessful()) {
             log.error(response.raw().toString());
             handleResponseError(response, "Network error " + response.message());
@@ -67,7 +72,7 @@ public class ErrorHandlerUtil {
             return false;
         }
 
-        if (response.body().data == null) {
+        if (!acceptNull && response.body().data == null) {
             log.error(response.raw().toString());
             handleResponseError(response, "Brak danych");
             return false;

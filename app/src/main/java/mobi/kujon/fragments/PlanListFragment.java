@@ -13,10 +13,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.sectionedrecyclerview.SectionedRecyclerViewAdapter;
-import com.crashlytics.android.Crashlytics;
 import com.github.underscore.$;
 import com.rockerhieu.rvadapter.endless.EndlessRecyclerViewAdapter;
 
@@ -77,46 +75,6 @@ public class PlanListFragment extends BaseFragment implements EndlessRecyclerVie
         return rootView;
     }
 
-    @Override public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.refresh) {
-            loadData(true);
-            return true;
-        } else {
-            return super.onOptionsItemSelected(item);
-        }
-    }
-
-    @DebugLog
-    private synchronized void downloadNext(boolean first) {
-        current = current.plusMonths(1);
-        int year = current.getYear();
-        int monthOfYear = current.getMonthOfYear();
-        if (Months.monthsBetween(DateTime.now(), current).getMonths() > 12) {
-            Log.d(TAG, "downloadNext: more then 12 months");
-            handler.post(() -> endlessRecyclerViewAdapter.onDataReady(false));
-            return;
-        }
-        planEventsDownloader.prepareMonth(year, monthOfYear).continueWith(task -> {
-            endlessRecyclerViewAdapter.onDataReady(true);
-            Exception error = task.getError();
-            if ((error == null)) {
-                SortedMap<PlanEventsDownloader.CalendarSection, List<CalendarEvent>> result = task.getResult();
-                System.out.println(result);
-                adapter.addData(result);
-                if (first) {
-                    fab();
-                    if (result.size() == 0) emptyInfo.setVisibility(View.VISIBLE);
-                }
-            } else {
-                System.out.println(error);
-                error.printStackTrace();
-                Crashlytics.logException(error);
-                Toast.makeText(activity, "Error", Toast.LENGTH_SHORT).show();
-            }
-            return null;
-        }, Task.UI_THREAD_EXECUTOR).continueWith(ErrorHandlerUtil.ERROR_HANDLER);
-    }
-
     @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         activity = ((BaseActivity) getActivity());
@@ -126,6 +84,15 @@ public class PlanListFragment extends BaseFragment implements EndlessRecyclerVie
         recyclerView.setLayoutManager(layoutManager);
         endlessRecyclerViewAdapter = new EndlessRecyclerViewAdapter(getActivity(), this.adapter, this);
         recyclerView.setAdapter(endlessRecyclerViewAdapter);
+    }
+
+    @Override public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.refresh) {
+            loadData(true);
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
     }
 
     @DebugLog
@@ -139,6 +106,46 @@ public class PlanListFragment extends BaseFragment implements EndlessRecyclerVie
         current = DateTime.now();
         current = current.minusMonths(1);
         downloadNext(true);
+
+        DateTime previous = current;
+
+        previous = previous.minusMonths(1);
+        addMonth(true, previous.getYear(), previous.getMonthOfYear());
+    }
+
+    @DebugLog @Override public void onLoadMoreRequested() {
+        downloadNext(false);
+    }
+
+    @DebugLog
+    private synchronized void downloadNext(boolean first) {
+        current = current.plusMonths(1);
+        int year = current.getYear();
+        int monthOfYear = current.getMonthOfYear();
+        if (Months.monthsBetween(DateTime.now(), current).getMonths() > 12) {
+            Log.d(TAG, "downloadNext: more then 12 months");
+            handler.post(() -> endlessRecyclerViewAdapter.onDataReady(false));
+            return;
+        }
+        addMonth(first, year, monthOfYear);
+    }
+
+    private void addMonth(boolean first, int year, int monthOfYear) {
+        planEventsDownloader.prepareMonth(year, monthOfYear).continueWith(task -> {
+            endlessRecyclerViewAdapter.onDataReady(true);
+            Exception error = task.getError();
+            if ((error == null)) {
+                SortedMap<PlanEventsDownloader.CalendarSection, List<CalendarEvent>> result = task.getResult();
+                adapter.addData(result);
+                if (first) {
+                    gotoToday();
+                    if (result.size() == 0) emptyInfo.setVisibility(View.VISIBLE);
+                }
+            } else {
+                ErrorHandlerUtil.handleError(error);
+            }
+            return null;
+        }, Task.UI_THREAD_EXECUTOR).continueWith(ErrorHandlerUtil.ERROR_HANDLER);
     }
 
     @Override public void onStart() {
@@ -147,7 +154,7 @@ public class PlanListFragment extends BaseFragment implements EndlessRecyclerVie
         loadData(false);
     }
 
-    @OnClick(R.id.fab) public void fab() {
+    @OnClick(R.id.fab) public void gotoToday() {
         int index = 0;
         DateTime now = DateTime.now();
         for (Object key : adapter.data.keySet().toArray()) {
@@ -166,11 +173,6 @@ public class PlanListFragment extends BaseFragment implements EndlessRecyclerVie
     @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.plan_list_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @DebugLog
-    @Override public void onLoadMoreRequested() {
-        downloadNext(false);
     }
 
     protected class Adapter extends SectionedRecyclerViewAdapter<ViewHolder> {
