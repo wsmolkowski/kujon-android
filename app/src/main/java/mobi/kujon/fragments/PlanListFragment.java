@@ -1,11 +1,14 @@
 package mobi.kujon.fragments;
 
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -49,6 +52,8 @@ public class PlanListFragment extends BaseFragment implements EndlessRecyclerVie
 
     @Inject KujonApplication application;
     @Inject KujonUtils utils;
+
+    Handler handler = new Handler();
 
     private static final String TAG = "PlanListFragment";
 
@@ -167,7 +172,8 @@ public class PlanListFragment extends BaseFragment implements EndlessRecyclerVie
                 break;
             }
         }
-        layoutManager.scrollToPositionWithOffset(index, 0);
+        final int finalIndex = index -1;
+        handler.postDelayed(() -> layoutManager.scrollToPositionWithOffset(finalIndex, 0), 200);
     }
 
     @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -178,10 +184,18 @@ public class PlanListFragment extends BaseFragment implements EndlessRecyclerVie
     protected class Adapter extends SectionedRecyclerViewAdapter<ViewHolder> {
 
         SortedMap<PlanEventsDownloader.CalendarSection, List<CalendarEvent>> data = new TreeMap<>();
+        private final int contentHeight;
+
+        public Adapter() {
+            View view = getActivity().findViewById(R.id.placeholder);
+            Resources r = getResources();
+            float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 40, r.getDisplayMetrics());
+            contentHeight = view.getHeight() - (int) px;
+        }
 
         @Override public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_plan_event, parent, false);
-            return new ViewHolder(v);
+            return new ViewHolder(v, contentHeight);
         }
 
         @Override public int getSectionCount() {
@@ -265,9 +279,14 @@ public class PlanListFragment extends BaseFragment implements EndlessRecyclerVie
         @Bind(R.id.no_events) View noEvents;
         CalendarEvent event;
 
-        public ViewHolder(View itemView) {
+        public ViewHolder(View itemView, int contentHeight) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+
+            ViewGroup.LayoutParams params = noEvents.getLayoutParams();
+            params.height = contentHeight;
+            noEvents.setLayoutParams(params);
+
             itemView.setOnClickListener(v -> {
                 if (event != null) {
                     AlertDialog eventDialog = EventUtils.getEventDialog(getActivity(), event);
