@@ -30,6 +30,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.gson.Gson;
+import com.onesignal.OneSignal;
 import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
@@ -184,6 +185,9 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
     public void handle(GoogleSignInResult result) {
         Log.i(TAG, "handle sign in status: " + result.isSuccess());
         KujonApplication.getApplication().setLoginStatus(result);
+        if (!result.isSuccess()) {
+            OneSignal.deleteTag(KujonApplication.USER_EMAIL_TAG);
+        }
         if (!result.isSuccess() && !(this instanceof LoginActivity)) {
             finish();
             if (this instanceof UsosesActivity || this instanceof MainActivity) {

@@ -38,6 +38,7 @@ import mobi.kujon.utils.KujonUtils;
 )
 public class KujonApplication extends FoamApplication implements OneSignal.NotificationOpenedHandler {
 
+    public static final String USER_EMAIL_TAG = "user_email";
     @Inject KujonUtils utils;
 
     private static final Logger log = LoggerFactory.getLogger(KujonApplication.class);
@@ -144,7 +145,7 @@ public class KujonApplication extends FoamApplication implements OneSignal.Notif
     public void setLoginStatus(GoogleSignInResult loginStatus) {
         this.loginStatus = loginStatus;
         if (loginStatus != null && loginStatus.getSignInAccount() != null) {
-            OneSignal.sendTag("user_email", loginStatus.getSignInAccount().getEmail());
+            OneSignal.sendTag(USER_EMAIL_TAG, loginStatus.getSignInAccount().getEmail());
         }
     }
 
