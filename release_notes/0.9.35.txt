@@ -1,0 +1,2 @@
+* #115 OneSignal - all of your users ae not subscribed.
+* Fix #114 OneSignal - section-cancelnotification - podczas kasowania konta
