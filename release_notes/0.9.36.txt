@@ -1,0 +1,3 @@
+* Fix #117 Prace dyplomowe - przejście do szczegółow recencenta i szczegółow wydziału
+* Fix #118 strona główna - połaczenie prac dyplomowych i informacji
+* Fix #116 /authentication/archive POST not GET
