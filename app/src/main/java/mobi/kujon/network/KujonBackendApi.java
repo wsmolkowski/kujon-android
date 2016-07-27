@@ -104,7 +104,7 @@ public interface KujonBackendApi {
 
     @GET("tt/{day}") @Headers(X_KUJONREFRESH_TRUE) Call<KujonResponse<List<CalendarEvent>>> planRefresh(@Path("day") String day);
 
-    @GET("authentication/archive") Call<Object> deleteAccount();
+    @POST("authentication/archive") Call<Object> deleteAccount();
 
     @GET("search/users/{query}")
     Call<KujonResponse<StudentSearchResult>> searchStudent(@Path(value = "query", encoded = true) String query, @Query("start") Integer start);
