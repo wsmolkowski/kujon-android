@@ -7,10 +7,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.underscore.$;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -23,6 +25,10 @@ import mobi.kujon.utils.ErrorHandlerUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static mobi.kujon.activities.FacultyDetailsActivity.showFacultyDetails;
+import static mobi.kujon.activities.LecturerDetailsActivity.showLecturerDatails;
+import static mobi.kujon.utils.CommonUtils.showList;
 
 public class ThesesFragment extends ListFragment {
 
@@ -80,9 +86,13 @@ public class ThesesFragment extends ListFragment {
             Thesis thesis = data.get(position);
             holder.title.setText(thesis.title);
             holder.type.setText(thesis.type);
-            holder.faculty.setText(thesis.faculty.name);
             holder.authors.setText($.join($.collect(thesis.authors, author -> author.first_name + " " + author.last_name), ","));
-            holder.supervisors.setText($.join($.collect(thesis.supervisors, supervisor -> supervisor.first_name + " " + supervisor.last_name), ","));
+
+            List<String> names = $.collect(thesis.supervisors, supervisor -> supervisor.first_name + " " + supervisor.last_name);
+            showList(activity.getLayoutInflater(), holder.supervisors, names, index -> showLecturerDatails(activity, thesis.supervisors.get(index).id));
+
+            showList(activity.getLayoutInflater(), holder.faculty, Arrays.asList(thesis.faculty.name), index -> showFacultyDetails(activity, thesis.faculty.id));
+
             holder.itemView.setBackgroundResource(position % 2 == 1 ? R.color.grey : android.R.color.white);
         }
 
@@ -100,9 +110,9 @@ public class ThesesFragment extends ListFragment {
 
         @Bind(R.id.title) TextView title;
         @Bind(R.id.authors) TextView authors;
-        @Bind(R.id.supervisors) TextView supervisors;
+        @Bind(R.id.supervisors) LinearLayout supervisors;
         @Bind(R.id.type) TextView type;
-        @Bind(R.id.faculty) TextView faculty;
+        @Bind(R.id.faculty) LinearLayout faculty;
 
         public ViewHolder(View itemView) {
             super(itemView);

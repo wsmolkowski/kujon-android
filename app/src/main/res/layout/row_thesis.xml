@@ -15,8 +15,9 @@
     <TextView
         android:id="@+id/title"
         style="@style/entry"
+        android:fontFamily="sans-serif-medium"
+        android:textSize="16sp"
         tools:text='Edukacyjna rola filmu na przyk\u0142adzie dzia\u0142alno\u015bci warszawskiego kina \u201ePraha\u201d'/>
-
 
     <TextView
         style="@style/label"
@@ -35,10 +36,11 @@
         android:text="Recenzenci"
         />
 
-    <TextView
+    <LinearLayout
         android:id="@+id/supervisors"
         style="@style/entry"
-        tools:text='Jan Kowalski, Andrzej Nowak'/>
+        android:orientation="vertical"
+        tools:text='Lorem ipsum'/>
 
     <TextView
         style="@style/label"
@@ -58,9 +60,10 @@
         android:text="Wydział"
         />
 
-    <TextView
+    <LinearLayout
         android:id="@+id/faculty"
         style="@style/entry"
-        tools:text='Wydzia\u0142 Historyczny'/>
+        android:orientation="vertical"
+        tools:text='Lorem ipsum'/>
 
 </LinearLayout>
