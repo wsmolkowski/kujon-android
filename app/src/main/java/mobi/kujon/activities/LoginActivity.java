@@ -97,7 +97,9 @@ public class LoginActivity extends BaseActivity {
                     if (ErrorHandlerUtil.handleResponse(response)) {
                         Config data = response.body().data;
                         log.debug("Response: " + data);
-                        if (data.usosPaired) {
+                        if (!data.usosWorks) {
+                            ErrorActivity.open(LoginActivity.this);
+                        } else if (data.usosPaired) {
                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         } else {
                             startActivity(new Intent(LoginActivity.this, UsosesActivity.class));
@@ -122,7 +124,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     @OnClick(R.id.regulations)
-    public void regulations(){
+    public void regulations() {
         String url = getString(R.string.regulations_url);
         WebViewAcitivty.showUrl(this, url);
     }

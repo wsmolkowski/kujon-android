@@ -6,6 +6,7 @@ public class Config {
     @SerializedName("API_URL") public String apiUrl;
     @SerializedName("USER_LOGGED") public boolean userLogged;
     @SerializedName("USOS_PAIRED") public boolean usosPaired;
+    @SerializedName("USOS_WORKS") public boolean usosWorks;
 
     @Override public String toString() {
         return "Config{" +
