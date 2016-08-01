@@ -97,10 +97,12 @@ public class LoginActivity extends BaseActivity {
                     if (ErrorHandlerUtil.handleResponse(response)) {
                         Config data = response.body().data;
                         log.debug("Response: " + data);
-                        if (!data.usosWorks) {
-                            ErrorActivity.open(LoginActivity.this);
-                        } else if (data.usosPaired) {
-                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        if (data.usosPaired) {
+                            if (data.usosWorks) {
+                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                            } else {
+                                ErrorActivity.open(LoginActivity.this);
+                            }
                         } else {
                             startActivity(new Intent(LoginActivity.this, UsosesActivity.class));
                         }

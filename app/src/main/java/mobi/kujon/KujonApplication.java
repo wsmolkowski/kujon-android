@@ -50,6 +50,8 @@ public class KujonApplication extends FoamApplication implements OneSignal.Notif
     private GoogleSignInResult loginStatus;
     private static KujonComponent component;
 
+    private Activity topActivity;
+
     @Override public void onCreate() {
         super.onCreate();
         instance = this;
@@ -71,6 +73,7 @@ public class KujonApplication extends FoamApplication implements OneSignal.Notif
         OneSignal.enableNotificationsWhenActive(true);
 
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
+
             @Override public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
                 stack.add(activity);
             }
@@ -79,9 +82,11 @@ public class KujonApplication extends FoamApplication implements OneSignal.Notif
             }
 
             @Override public void onActivityResumed(Activity activity) {
+                topActivity = activity;
             }
 
             @Override public void onActivityPaused(Activity activity) {
+                topActivity = null;
             }
 
             @Override public void onActivityStopped(Activity activity) {
@@ -155,5 +160,9 @@ public class KujonApplication extends FoamApplication implements OneSignal.Notif
 
     public static KujonComponent getComponent() {
         return component;
+    }
+
+    public Activity getTopActivity() {
+        return topActivity;
     }
 }
