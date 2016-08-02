@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:gravity="center"
-        android:text="Przepraszamy, system USOS jest tymczasowo niedostępny. Prosimy spróbuj później."
+        android:text="Przepraszamy, system USOS na Twojej uczelni jest tymczasowo niedostępny. Prosimy spróbuj później."
         android:textColor="@android:color/black"
         android:textSize="20sp"/>
 
