@@ -136,18 +136,13 @@ public class PlanListFragment extends BaseFragment implements EndlessRecyclerVie
     }
 
     private void addMonth(boolean first, int year, int monthOfYear) {
-        planEventsDownloader.prepareMonth(year, monthOfYear).continueWith(task -> {
+        planEventsDownloader.prepareMonth(year, monthOfYear).onSuccessTask(task -> {
             endlessRecyclerViewAdapter.onDataReady(true);
-            Exception error = task.getError();
-            if ((error == null)) {
-                SortedMap<PlanEventsDownloader.CalendarSection, List<CalendarEvent>> result = task.getResult();
-                adapter.addData(result);
-                if (first) {
-                    gotoToday();
-                    if (result.size() == 0) emptyInfo.setVisibility(View.VISIBLE);
-                }
-            } else {
-                ErrorHandlerUtil.handleError(error);
+            SortedMap<PlanEventsDownloader.CalendarSection, List<CalendarEvent>> result = task.getResult();
+            adapter.addData(result);
+            if (first) {
+                gotoToday();
+                if (result.size() == 0) emptyInfo.setVisibility(View.VISIBLE);
             }
             return null;
         }, Task.UI_THREAD_EXECUTOR).continueWith(ErrorHandlerUtil.ERROR_HANDLER);
@@ -172,7 +167,7 @@ public class PlanListFragment extends BaseFragment implements EndlessRecyclerVie
                 break;
             }
         }
-        final int finalIndex = index -1;
+        final int finalIndex = index - 1;
         handler.postDelayed(() -> layoutManager.scrollToPositionWithOffset(finalIndex, 0), 200);
     }
 

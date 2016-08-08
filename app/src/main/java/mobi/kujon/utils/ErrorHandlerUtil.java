@@ -43,9 +43,13 @@ public class ErrorHandlerUtil {
     }
 
     public static void handleError(Throwable throwable) {
+        handleError(throwable, true);
+    }
+
+    public static void handleError(Throwable throwable, boolean showToast) {
         throwable.printStackTrace();
         log.error(throwable.getMessage());
-        translateAndToastErrorMessage(throwable.getMessage());
+        if (showToast) translateAndToastErrorMessage(throwable.getMessage());
         Crashlytics.logException(throwable);
     }
 
