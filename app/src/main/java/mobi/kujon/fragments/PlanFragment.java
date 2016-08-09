@@ -67,6 +67,7 @@ public class PlanFragment extends BaseFragment implements MonthLoader.MonthChang
         weekView.setMonthChangeListener(this);
         weekView.setFirstDayOfWeek(Calendar.MONDAY);
         weekView.setShowNowLine(true);
+        weekView.setLimitTime(7, 21);
         weekView.setOnEventClickListener((event, eventRect) -> {
             KujonWeekViewEvent viewEvent = (KujonWeekViewEvent) event;
             CalendarEvent calendarEvent = viewEvent.getCalendarEvent();
