@@ -1,0 +1,4 @@
+* #123 wyświetlenie błedów USOS
+* kalendarz od 6am to 9pm
+* usunięta tymczasowo lista w kalendarzu
+* wyłączony papertrail
