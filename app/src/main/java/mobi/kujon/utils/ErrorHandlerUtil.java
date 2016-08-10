@@ -1,6 +1,12 @@
 package mobi.kujon.utils;
 
+import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
@@ -8,17 +14,23 @@ import com.crashlytics.android.Crashlytics;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import bolts.Continuation;
 import mobi.kujon.KujonApplication;
+import mobi.kujon.R;
 import mobi.kujon.network.json.KujonResponse;
 import retrofit2.Response;
 
 public class ErrorHandlerUtil {
 
+    private static final String TAG = "ErrorHandlerUtil";
+
     private static final Logger log = LoggerFactory.getLogger(ErrorHandlerUtil.class);
+
+    private static Date lastToast = new Date(0);
 
     private static Map<String, String> errorTranslations = new HashMap<String, String>() {{
         put("only-if-cached", "Tryb offline. Nie wszystkie dane są dostępne");
@@ -33,7 +45,16 @@ public class ErrorHandlerUtil {
             }
         }
         log.error(finalMessage);
-        Toast.makeText(KujonApplication.getApplication(), finalMessage, Toast.LENGTH_SHORT).show();
+        if (checkErrorFrequency()) {
+            Toast.makeText(KujonApplication.getApplication(), finalMessage, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private static boolean checkErrorFrequency() {
+        Date now = new Date();
+        boolean result = now.getTime() - lastToast.getTime() > 3000;
+        lastToast = now;
+        return result;
     }
 
     public static <T> void handleResponseError(Response<KujonResponse<T>> response, String message) {
@@ -70,6 +91,13 @@ public class ErrorHandlerUtil {
             return false;
         }
 
+        Integer code = response.body().code;
+        if (code != null && code == 504) {
+            showErrorInRed(response.body().message);
+            Crashlytics.logException(new Exception(response.body() + " " + response.raw()));
+            return false;
+        }
+
         if (!response.body().isSuccessful()) {
             log.error(response.raw().toString());
             handleResponseError(response, response.body().message);
@@ -83,6 +111,23 @@ public class ErrorHandlerUtil {
         }
 
         return true;
+    }
+
+    public static void showErrorInRed(String message) {
+        if (checkErrorFrequency()) {
+            Log.d(TAG, "showErrorInRed() called with: " + "message = [" + message + "]");
+            LayoutInflater inflater = (LayoutInflater) KujonApplication.getApplication().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View layout = inflater.inflate(R.layout.red_toast, null);
+
+            TextView text = (TextView) layout.findViewById(R.id.text);
+            text.setText(message);
+
+            Toast toast = new Toast(KujonApplication.getApplication());
+            toast.setGravity(Gravity.TOP | Gravity.LEFT | Gravity.RIGHT, 0, 0);
+            toast.setDuration(Toast.LENGTH_LONG);
+            toast.setView(layout);
+            toast.show();
+        }
     }
 
     public static final Continuation<Object, Object> ERROR_HANDLER = task1 -> {
