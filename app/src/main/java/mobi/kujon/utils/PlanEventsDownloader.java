@@ -64,7 +64,7 @@ public class PlanEventsDownloader {
                 }
 
                 @Override public void onFailure(Call<KujonResponse<List<CalendarEvent>>> call, Throwable t) {
-                    ErrorHandlerUtil.handleError(t);
+                    ErrorHandlerUtil.handleError(t, false);
                     tcs.setError(new Exception(t));
                 }
             });

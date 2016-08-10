@@ -16,7 +16,6 @@ import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader;
 import com.mikepenz.materialdrawer.util.DrawerImageLoader;
 import com.mikepenz.materialdrawer.util.DrawerUIUtils;
 import com.onesignal.OneSignal;
-import com.percolate.foam.FoamApiKeys;
 import com.percolate.foam.FoamApplication;
 import com.squareup.picasso.Picasso;
 
@@ -33,9 +32,9 @@ import javax.inject.Inject;
 import io.fabric.sdk.android.Fabric;
 import mobi.kujon.utils.KujonUtils;
 
-@FoamApiKeys(
-        papertrail = "logs3.papertrailapp.com:22247" // Server URL
-)
+//@FoamApiKeys(
+//        papertrail = "logs3.papertrailapp.com:22247" // Server URL
+//)
 public class KujonApplication extends FoamApplication implements OneSignal.NotificationOpenedHandler {
 
     public static final String USER_EMAIL_TAG = "user_email";

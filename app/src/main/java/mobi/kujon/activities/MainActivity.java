@@ -38,7 +38,7 @@ public class MainActivity extends BaseActivity {
     public String[] TITLES = new String[]{"Użytkownik", "Plan zajęć", "Przedmioty", "Oceny", "Wykładowcy", "Szukaj"};
     public int[] ICONS = new int[]{R.drawable.user, R.drawable.plan, R.drawable.courses, R.drawable.grades, R.drawable.teachers, R.drawable.search};
     public Fragment[] FRAGMENTS = new Fragment[]{
-            new UserInfoFragment(), new PlanListFragment(), new CoursesFragment(), new GradesFragment(), new LecturersFragment(), new SearchFragment()};
+            new UserInfoFragment(), new PlanFragment(), new CoursesFragment(), new GradesFragment(), new LecturersFragment(), new SearchFragment()};
     private Drawer drawer;
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
