@@ -71,16 +71,21 @@ public class CourseDetailsActivity extends BaseActivity {
         termId = getIntent().getStringExtra(TERM_ID);
 
         swipeContainer.setOnRefreshListener(() -> loadData(true));
+        showProgress(true);
         handler.post(() -> loadData(false));
     }
 
     private void loadData(boolean refresh) {
         Call<KujonResponse<CourseDetails>> call = getCourseCall(refresh);
 
-        swipeContainer.setRefreshing(true);
+        if (refresh) {
+            swipeContainer.setRefreshing(true);
+        } else {
+            showProgress(true);
+        }
+
         call.enqueue(new Callback<KujonResponse<CourseDetails>>() {
             @Override public void onResponse(Call<KujonResponse<CourseDetails>> call, Response<KujonResponse<CourseDetails>> response) {
-                swipeContainer.setRefreshing(false);
                 if (ErrorHandlerUtil.handleResponse(response)) {
                     courseDetails = response.body().data;
 
@@ -115,9 +120,14 @@ public class CourseDetailsActivity extends BaseActivity {
 
                     courseClassType.setText($.join($.collect(courseDetails.groups, it -> it.classType + ", numer grupy: " + it.groupNumber), "\n"));
                 }
+                handler.postDelayed(() -> {
+                    swipeContainer.setRefreshing(false);
+                    showProgress(false);
+                }, 200);
             }
 
             @Override public void onFailure(Call<KujonResponse<CourseDetails>> call, Throwable t) {
+                swipeContainer.setRefreshing(false);
                 showProgress(false);
                 ErrorHandlerUtil.handleError(t);
             }
