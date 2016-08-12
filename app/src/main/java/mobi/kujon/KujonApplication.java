@@ -29,6 +29,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import bolts.Task;
+import bolts.TaskCompletionSource;
 import io.fabric.sdk.android.Fabric;
 import mobi.kujon.utils.KujonUtils;
 
@@ -46,10 +48,10 @@ public class KujonApplication extends FoamApplication implements OneSignal.Notif
     private List<Activity> stack = new ArrayList<>();
 
     private static KujonApplication instance;
-    private GoogleSignInResult loginStatus;
     private static KujonComponent component;
 
     private Activity topActivity;
+    private TaskCompletionSource<GoogleSignInResult> googleSignInResultTCS = new TaskCompletionSource<>();
 
     @Override public void onCreate() {
         super.onCreate();
@@ -132,7 +134,7 @@ public class KujonApplication extends FoamApplication implements OneSignal.Notif
         component.inject(this);
     }
 
-    public void finishAllAcitities(){
+    public void finishAllAcitities() {
         for (Activity activity : stack) {
             activity.finish();
         }
@@ -142,12 +144,13 @@ public class KujonApplication extends FoamApplication implements OneSignal.Notif
         return instance;
     }
 
-    public GoogleSignInResult getLoginStatus() {
-        return loginStatus;
+    public Task<GoogleSignInResult> getLoginStatus() {
+        return googleSignInResultTCS.getTask();
     }
 
     public void setLoginStatus(GoogleSignInResult loginStatus) {
-        this.loginStatus = loginStatus;
+        googleSignInResultTCS = new TaskCompletionSource<>();
+        googleSignInResultTCS.setResult(loginStatus);
         if (loginStatus != null && loginStatus.getSignInAccount() != null) {
             OneSignal.sendTag(USER_EMAIL_TAG, loginStatus.getSignInAccount().getEmail());
         }

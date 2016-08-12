@@ -18,6 +18,7 @@ import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 
+import bolts.Task;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mobi.kujon.KujonApplication;
@@ -29,6 +30,7 @@ import mobi.kujon.fragments.PlanFragment;
 import mobi.kujon.fragments.PlanListFragment;
 import mobi.kujon.fragments.SearchFragment;
 import mobi.kujon.fragments.UserInfoFragment;
+import mobi.kujon.utils.ErrorHandlerUtil;
 
 public class MainActivity extends BaseActivity {
 
@@ -40,6 +42,7 @@ public class MainActivity extends BaseActivity {
     public Fragment[] FRAGMENTS = new Fragment[]{
             new UserInfoFragment(), new PlanFragment(), new CoursesFragment(), new GradesFragment(), new LecturersFragment(), new SearchFragment()};
     private Drawer drawer;
+    private AccountHeader headerResult;
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,22 +50,28 @@ public class MainActivity extends BaseActivity {
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
 
-        GoogleSignInResult loginStatus = KujonApplication.getApplication().getLoginStatus();
 
-        String displayName = loginStatus.getSignInAccount().getDisplayName();
-        String email = loginStatus.getSignInAccount().getEmail();
-        Uri photoUrl = loginStatus.getSignInAccount().getPhotoUrl();
-        ProfileDrawerItem profileDrawerItem = new ProfileDrawerItem()
-                .withName(displayName)
-                .withEmail(email)
-                .withIcon(photoUrl);
+        KujonApplication.getApplication().getLoginStatus().onSuccessTask(task -> {
+            GoogleSignInResult loginStatus = task.getResult();
+            String displayName = loginStatus.getSignInAccount().getDisplayName();
+            String email = loginStatus.getSignInAccount().getEmail();
+            Uri photoUrl = loginStatus.getSignInAccount().getPhotoUrl();
+            ProfileDrawerItem profileDrawerItem = new ProfileDrawerItem()
+                    .withName(displayName)
+                    .withEmail(email)
+                    .withIcon(photoUrl);
 
-        AccountHeader headerResult = new AccountHeaderBuilder()
+            headerResult.addProfiles(profileDrawerItem);
+            return null;
+        }, Task.UI_THREAD_EXECUTOR).continueWith(ErrorHandlerUtil.ERROR_HANDLER);
+
+
+        headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
                 .withHeaderBackground(R.color.colorPrimaryDark)
 //                .withHeaderBackground(new ImageHolder(Uri.parse("https://kujon.mobi/static/img/logo/logo-demo-64x64.jpg")))
 //                .withHeaderBackgroundScaleType(ImageView.ScaleType.CENTER)
-                .addProfiles(profileDrawerItem)
+//                .addProfiles(profileDrawerItem)
                 .build();
 
         drawer = new DrawerBuilder()

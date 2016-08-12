@@ -35,9 +35,11 @@ import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
 
+import bolts.Task;
 import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
 import mobi.kujon.network.KujonBackendApi;
+import mobi.kujon.utils.ErrorHandlerUtil;
 import mobi.kujon.utils.KujonUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -148,28 +150,33 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
 
     protected void deleteAccount() {
         AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);
-        String email = KujonApplication.getApplication().getLoginStatus().getSignInAccount().getEmail();
-        dlgAlert.setMessage(Html.fromHtml(getString(R.string.delete_confirm, email)));
-        dlgAlert.setTitle(R.string.delete_account);
-        dlgAlert.setPositiveButton("OK", (dialog, which) -> {
-            kujonBackendApi.deleteAccount().enqueue(new Callback<Object>() {
-                @Override public void onResponse(Call<Object> call, Response<Object> response) {
-                    System.out.println("call = [" + call + "], response = [" + response + "]");
-                    logout();
-                }
+        KujonApplication.getApplication().getLoginStatus().onSuccessTask(task -> {
+            GoogleSignInResult signInResult = task.getResult();
+            String email = signInResult.getSignInAccount().getEmail();
+            dlgAlert.setMessage(Html.fromHtml(getString(R.string.delete_confirm, email)));
+            dlgAlert.setTitle(R.string.delete_account);
+            dlgAlert.setPositiveButton("OK", (dialog, which) -> {
+                kujonBackendApi.deleteAccount().enqueue(new Callback<Object>() {
+                    @Override public void onResponse(Call<Object> call, Response<Object> response) {
+                        System.out.println("call = [" + call + "], response = [" + response + "]");
+                        logout();
+                    }
 
-                @Override public void onFailure(Call<Object> call, Throwable t) {
-                    Crashlytics.logException(t);
-                    logout();
-                }
+                    @Override public void onFailure(Call<Object> call, Throwable t) {
+                        Crashlytics.logException(t);
+                        logout();
+                    }
+                });
             });
-        });
-        dlgAlert.setNegativeButton(getString(R.string.cancel), (dialog, which) -> {
-            dialog.dismiss();
-        });
-        dlgAlert.setCancelable(false);
-        alertDialog = dlgAlert.create();
-        alertDialog.show();
+            dlgAlert.setNegativeButton(getString(R.string.cancel), (dialog, which) -> {
+                dialog.dismiss();
+            });
+            dlgAlert.setCancelable(false);
+            alertDialog = dlgAlert.create();
+            alertDialog.show();
+            return null;
+        }, Task.UI_THREAD_EXECUTOR).continueWith(ErrorHandlerUtil.ERROR_HANDLER);
+
     }
 
     public void checkLoggingStatus(ResultCallback<GoogleSignInResult> resultCallback) {

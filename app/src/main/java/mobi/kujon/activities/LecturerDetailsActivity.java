@@ -68,11 +68,16 @@ public class LecturerDetailsActivity extends BaseActivity {
 
         lecturerId = getIntent().getStringExtra(LECTURER_ID);
         swipeContainer.setOnRefreshListener(() -> loadData(true));
+        showProgress(true);
         handler.post(() -> loadData(false));
     }
 
     private void loadData(boolean refresh) {
-        swipeContainer.setRefreshing(true);
+        if (refresh) {
+            swipeContainer.setRefreshing(true);
+        } else {
+            showProgress(true);
+        }
 
         if (refresh) {
             utils.invalidateEntry("lecturers/" + lecturerId);
@@ -84,7 +89,6 @@ public class LecturerDetailsActivity extends BaseActivity {
         Call<KujonResponse<LecturerLong>> lecturerCall = refresh ? kujonBackendApi.lecturerRefresh(lecturerId) : kujonBackendApi.lecturer(lecturerId);
         lecturerCall.enqueue(new Callback<KujonResponse<LecturerLong>>() {
             @Override public void onResponse(Call<KujonResponse<LecturerLong>> call, Response<KujonResponse<LecturerLong>> response) {
-                swipeContainer.setRefreshing(false);
                 if (ErrorHandlerUtil.handleResponse(response)) {
                     lecturer = response.body().data;
                     String title = "";
@@ -128,9 +132,15 @@ public class LecturerDetailsActivity extends BaseActivity {
                     lecturerHomepage.setText(lecturer.homepageUrl);
                     lecturerEmploymentPositions.setText($.join($.collect(lecturer.employmentPositions, it -> it.faculty.name + ", " + it.position.name), "\n\n"));
                 }
+
+                handler.postDelayed(() -> {
+                    swipeContainer.setRefreshing(false);
+                    showProgress(false);
+                }, 200);
             }
 
             @Override public void onFailure(Call<KujonResponse<LecturerLong>> call, Throwable t) {
+                swipeContainer.setRefreshing(false);
                 showProgress(false);
                 ErrorHandlerUtil.handleError(t);
             }

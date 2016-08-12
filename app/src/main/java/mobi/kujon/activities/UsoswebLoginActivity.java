@@ -27,6 +27,7 @@ import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 
+import bolts.Task;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mobi.kujon.KujonApplication;
@@ -34,6 +35,7 @@ import mobi.kujon.NetModule;
 import mobi.kujon.R;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.network.json.Usos;
+import mobi.kujon.utils.ErrorHandlerUtil;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -124,11 +126,15 @@ public class UsoswebLoginActivity extends BaseActivity {
                 return false;
             }
         });
-        GoogleSignInResult loginStatus = KujonApplication.getApplication().getLoginStatus();
-        GoogleSignInAccount account = loginStatus.getSignInAccount();
-        String url = String.format("https:/api.kujon.mobi/authentication/register?email=%s&token=%s&usos_id=%s&type=GOOGLE", account.getEmail(), account.getIdToken(), usos.usosId);
-        log.info("Loading urs: " + url);
-        webView.loadUrl(url);
+        KujonApplication.getApplication().getLoginStatus().onSuccessTask(task -> {
+            GoogleSignInResult signInResult = task.getResult();
+            GoogleSignInAccount account = signInResult.getSignInAccount();
+            String url = String.format("https:/api.kujon.mobi/authentication/register?email=%s&token=%s&usos_id=%s&type=GOOGLE", account.getEmail(), account.getIdToken(), usos.usosId);
+            log.info("Loading urs: " + url);
+            webView.loadUrl(url);
+            return null;
+        }, Task.UI_THREAD_EXECUTOR).continueWith(ErrorHandlerUtil.ERROR_HANDLER);
+
     }
 
     class MyJavaScriptInterface {

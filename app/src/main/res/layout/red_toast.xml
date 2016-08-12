@@ -4,7 +4,7 @@
     android:id="@+id/text"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#F44336"
+    android:background="#EF5350"
     android:gravity="center"
     android:padding="32dp"
     android:textColor="@android:color/white"
