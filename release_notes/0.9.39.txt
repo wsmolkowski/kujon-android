@@ -1,0 +1,4 @@
+* login crashlytics crash bugfix
+* Fix #125 pokazanie kręcioła (loading) podczas wczytywania Przedmiotu
+* Fix #124 pokazanie kręcioła (loading) podczas wczytywania Wykładowcy
+!!! PLEASE TEST BEFORE RELEASE TO PLAY !!!
