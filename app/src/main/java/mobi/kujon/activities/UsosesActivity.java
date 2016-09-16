@@ -30,6 +30,7 @@ import mobi.kujon.R;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.network.json.Usos;
 import mobi.kujon.utils.ErrorHandlerUtil;
+import mobi.kujon.utils.SimpleDividerItemDecoration;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -42,6 +43,7 @@ public class UsosesActivity extends BaseActivity {
     @Bind(R.id.toolbar) Toolbar toolbar;
     @Bind(R.id.recyclerView) RecyclerView recyclerView;
     List<Long> toolbarClickTimestamps = new ArrayList<>();
+    @Bind(R.id.toolbar_title) TextView toolbarTitle;
     private UsosesAdapter adapter;
 
     private boolean demoEnabled = false;
@@ -53,13 +55,15 @@ public class UsosesActivity extends BaseActivity {
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setTitle("Wybierz uczelnię");
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        toolbarTitle.setText("Wybierz uczelnię");
 
         requestUsoses();
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new UsosesAdapter();
         recyclerView.setAdapter(adapter);
+        recyclerView.addItemDecoration(new SimpleDividerItemDecoration(this));
     }
 
     private void requestUsoses() {

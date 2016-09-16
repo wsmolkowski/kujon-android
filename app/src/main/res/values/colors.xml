@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#2196F3</color>
-    <color name="colorPrimaryDark">#1976D2</color>
-    <color name="primary_light">#BBDEFB</color>
-    <color name="colorAccent">#9E9E9E</color>
-    <color name="primary_text">#212121</color>
-    <color name="secondary_text">#727272</color>
-    <color name="icons">#FFFFFF</color>
-    <color name="divider">#B6B6B6</color>
+    <color name="colorPrimary">@color/dark_blue_sky</color>
+    <color name="colorPrimaryDark">@color/dark_blue_sky</color>
+    <color name="primary_light">@color/white</color>
+    <color name="colorAccent">@color/dark_blue_sky</color>
+    <color name="primary_text">@color/dark</color>
+    <color name="secondary_text">@color/dark</color>
+    <color name="icons">@color/pale_grey</color>
+    <color name="divider">@color/white</color>
 
     <color name="grey">#EEEEEE</color>
+
+    <color name="dark">#2a333e</color>
+    <color name="dark_blue_sky">#3fbad9</color>
+    <color name="white">#d8d8d8</color>
+    <color name="pale_grey">#eff2f8</color>
+    <color name="teal_blue">#0080b3</color>
 </resources>

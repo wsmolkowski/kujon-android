@@ -2,25 +2,27 @@
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
-    android:padding="16dp">
+    android:paddingBottom="16dp"
+    android:paddingTop="16dp">
 
     <ImageView
         android:id="@+id/usos_logo"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         tools:src="@mipmap/ic_launcher"/>
 
     <TextView
         android:id="@+id/usos_name"
+        style="@style/Regular"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/black"
         android:layout_gravity="center"
         android:padding="8dp"
-        android:text="Uniwersytet Technologiczno-Przyrodniczy w Bydgoszczy"/>
+        android:textColor="@color/dark"
+        tools:text="Uniwersytet Technologiczno-Przyrodniczy w Bydgoszczy"/>
 
 </LinearLayout>

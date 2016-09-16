@@ -33,4 +33,22 @@
         <item name="android:textColorLink">@color/colorPrimaryDark</item>
     </style>
 
+    <style name="Semibold">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="fontPath">fonts/Lato-Semibold.ttf</item>
+    </style>
+
+    <style name="Regular">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="fontPath">fonts/Lato-Regular.ttf</item>
+    </style>
+
 </resources>

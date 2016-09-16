@@ -2,6 +2,7 @@ package mobi.kujon.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
@@ -45,13 +46,17 @@ public class LoginActivity extends BaseActivity {
     @Bind(R.id.sign_in_button) SignInButton signIn;
     @Bind(R.id.progressBar) ProgressBar progressBar;
     @Bind(R.id.regulations) TextView regulations;
+    @Bind(R.id.toolbar_title) TextView toolbarTitle;
+    @Bind(R.id.toolbar) Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-        getSupportActionBar().setTitle(R.string.main_login_title);
+        setSupportActionBar(toolbar);
+        toolbarTitle.setText(R.string.main_login_title);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         KujonApplication.getComponent().inject(this);
 

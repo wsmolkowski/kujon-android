@@ -3,25 +3,45 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
-              android:paddingTop="@dimen/activity_vertical_margin"
-              android:paddingLeft="@dimen/activity_vertical_margin"
-              android:paddingRight="@dimen/activity_vertical_margin"
-              android:paddingBottom="32dp"
               tools:context=".activities.LoginActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            style="@style/Semibold"
+            android:text="Toolbar Title"
+            />
+    </android.support.v7.widget.Toolbar>
+
+    <android.support.v4.widget.Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
-        android:src="@drawable/logo"
+        android:src="@drawable/big_logo"
         />
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:src="@drawable/kujon_title"/>
+    <TextView
+        style="@style/Regular"
+        android:textColor="@color/dark_blue_sky"
+        android:textSize="45sp"
+        android:text="Kujon"
+        />
 
     <android.support.v4.widget.Space
         android:layout_width="match_parent"
@@ -48,13 +68,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="16dp"
+        android:layout_marginBottom="32dp"
         android:gravity="center"
         tools:text="@string/regulations_info"/>
-
-
-    <android.support.v4.widget.Space
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
 
 </LinearLayout>
