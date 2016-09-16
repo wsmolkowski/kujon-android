@@ -15,8 +15,8 @@ android {
         applicationId "mobi.kujon"
         minSdkVersion 16
         targetSdkVersion 21
-        versionCode 45
-        versionName "0.9.39"
+        versionCode 46
+        versionName "0.9.40"
 
         manifestPlaceholders = [manifestApplicationId          : "${applicationId}",
                                 onesignal_app_id               : "f01a20f9-bbe7-4c89-a017-bf8930c61cf4",
