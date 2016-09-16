@@ -1,6 +1,7 @@
 package mobi.kujon.activities;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -83,11 +84,14 @@ public class MainActivity extends BaseActivity {
                 .withAccountHeader(headerResult)
                 .build();
 
+        Typeface latoSemiBold = Typeface.createFromAsset(getAssets(), "fonts/Lato-Semibold.ttf");
+
         for (int i = 0; i < FRAGMENTS.length; i++) {
             final int finalI = i;
             drawer.addItem(new PrimaryDrawerItem()
                     .withName(TITLES[i])
                     .withIcon(ICONS[i])
+                    .withTypeface(latoSemiBold)
                     .withOnDrawerItemClickListener((view, position, drawerItem) -> {
                         showFragment(FRAGMENTS[finalI], true);
                         return true;
@@ -99,6 +103,7 @@ public class MainActivity extends BaseActivity {
                 .withName(R.string.settings)
                 .withSelectable(false)
                 .withIcon(R.drawable.settings)
+                .withTypeface(latoSemiBold)
                 .withOnDrawerItemClickListener((view, position, drawerItem) -> {
                     drawer.closeDrawer();
                     startActivity(new Intent(this, PreferencesActivity.class));
@@ -109,6 +114,7 @@ public class MainActivity extends BaseActivity {
                 .withName("Prześlij opinię")
                 .withSelectable(false)
                 .withIcon(R.drawable.contact_us)
+                .withTypeface(latoSemiBold)
                 .withOnDrawerItemClickListener((view, position, drawerItem) -> {
                     contactUs();
                     drawer.closeDrawer();
@@ -118,6 +124,7 @@ public class MainActivity extends BaseActivity {
         drawer.addItem(new PrimaryDrawerItem()
                 .withName(R.string.share_app)
                 .withSelectable(false)
+                .withTypeface(latoSemiBold)
                 .withIcon(R.drawable.share)
                 .withOnDrawerItemClickListener((view, position, drawerItem) -> {
                     Intent sendIntent = new Intent();
