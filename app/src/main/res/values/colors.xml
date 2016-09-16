@@ -11,9 +11,11 @@
 
     <color name="grey">#EEEEEE</color>
 
+    <color name="opacityBlack">#5A000000</color>
     <color name="dark">#2a333e</color>
     <color name="dark_blue_sky">#3fbad9</color>
     <color name="white">#d8d8d8</color>
     <color name="pale_grey">#eff2f8</color>
+    <color name="pale_grey2">#F7F8FB</color>
     <color name="teal_blue">#0080b3</color>
 </resources>

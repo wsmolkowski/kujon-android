@@ -26,6 +26,7 @@ import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.network.json.Term2;
 import mobi.kujon.utils.ErrorHandlerUtil;
 import mobi.kujon.utils.KujonUtils;
+import mobi.kujon.utils.SimpleDividerItemDecoration;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -54,6 +55,7 @@ public abstract class ListFragment extends BaseFragment {
         super.onActivityCreated(savedInstanceState);
         activity = (BaseActivity) getActivity();
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.addItemDecoration(new SimpleDividerItemDecoration(getActivity()));
 
         swipeContainer.setOnRefreshListener(() -> {
             invalidate();
