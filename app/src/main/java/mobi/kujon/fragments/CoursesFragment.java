@@ -45,7 +45,7 @@ public class CoursesFragment extends ListFragment {
 
     @Override public void onStart() {
         super.onStart();
-        activity.getSupportActionBar().setTitle("Przedmioty");
+        activity.setToolbarTitle(R.string.lectures);
     }
 
     @Override protected void loadData(boolean refresh) {

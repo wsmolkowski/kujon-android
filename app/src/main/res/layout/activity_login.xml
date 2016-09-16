@@ -19,7 +19,7 @@
         <TextView
             android:id="@+id/toolbar_title"
             style="@style/Semibold"
-            android:text="Toolbar Title"
+            tools:text="Toolbar Title"
             />
     </android.support.v7.widget.Toolbar>
 

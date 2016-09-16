@@ -220,4 +220,8 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
     @Override protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
+
+    public void setToolbarTitle(int title) {
+        getSupportActionBar().setTitle(title);
+    }
 }

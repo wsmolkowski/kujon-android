@@ -2,7 +2,6 @@ package mobi.kujon.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.util.TypedValue;
@@ -75,7 +74,7 @@ public class GradesFragment extends ListFragment {
 
     @Override public void onStart() {
         super.onStart();
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Oceny");
+        activity.setToolbarTitle(R.string.grades);
     }
 
     protected class Adapter extends SectionedRecyclerViewAdapter<ViewHolder> {

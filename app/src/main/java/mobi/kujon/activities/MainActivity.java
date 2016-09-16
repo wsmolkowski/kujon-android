@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.mikepenz.materialdrawer.AccountHeader;
@@ -41,6 +42,7 @@ public class MainActivity extends BaseActivity {
     public int[] ICONS = new int[]{R.drawable.user, R.drawable.plan, R.drawable.courses, R.drawable.grades, R.drawable.teachers, R.drawable.search};
     public Fragment[] FRAGMENTS = new Fragment[]{
             new UserInfoFragment(), new PlanFragment(), new CoursesFragment(), new GradesFragment(), new LecturersFragment(), new SearchFragment()};
+    @Bind(R.id.toolbar_title) TextView toolbarTitle;
     private Drawer drawer;
     private AccountHeader headerResult;
 
@@ -49,7 +51,7 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_user_profile);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
-
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         KujonApplication.getApplication().getLoginStatus().onSuccessTask(task -> {
             GoogleSignInResult loginStatus = task.getResult();
@@ -158,6 +160,10 @@ public class MainActivity extends BaseActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void setToolbarTitle(int title) {
+        toolbarTitle.setText(title);
     }
 
 }

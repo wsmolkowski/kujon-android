@@ -78,8 +78,8 @@ public class NetModule {
                 .downloader(new OkHttp3Downloader(httpClient))
                 .build();
 
-        picasso.setIndicatorsEnabled(BuildConfig.DEBUG);
-        picasso.setLoggingEnabled(BuildConfig.DEBUG);
+//        picasso.setIndicatorsEnabled(BuildConfig.DEBUG);
+//        picasso.setLoggingEnabled(BuildConfig.DEBUG);
         return picasso;
     }
 

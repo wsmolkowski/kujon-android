@@ -51,4 +51,15 @@
         <item name="fontPath">fonts/Lato-Regular.ttf</item>
     </style>
 
+    <style name="new_label">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/label_background</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:alpha">0.35</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+
 </resources>

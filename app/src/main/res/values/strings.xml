@@ -33,6 +33,9 @@
     <string name="searching">Szukam...</string>
     <string name="no_results_found">Nie znaleziono wyników</string>
     <string name="search">Szukaj</string>
+    <string name="lectures">Przedmioty</string>
+    <string name="grades">Oceny</string>
+    <string name="teachers">Wykładowcy</string>
 
     <string-array name="months">
         <item>Styczeń</item>
