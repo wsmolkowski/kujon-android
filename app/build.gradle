@@ -15,8 +15,8 @@ android {
         applicationId "mobi.kujon"
         minSdkVersion 16
         targetSdkVersion 21
-        versionCode 44
-        versionName "0.9.38"
+        versionCode 46
+        versionName "0.9.40"
 
         manifestPlaceholders = [manifestApplicationId          : "${applicationId}",
                                 onesignal_app_id               : "f01a20f9-bbe7-4c89-a017-bf8930c61cf4",
@@ -130,6 +130,8 @@ dependencies {
     compile 'com.google.dagger:dagger:2.2'
     provided 'javax.annotation:jsr250-api:1.0'
     compile 'com.rockerhieu:rv-adapter-endless:1.1'
+
+    compile 'uk.co.chrisjenx:calligraphy:2.2.0'
 }
 
 if (project.properties.keySet().containsAll(['storeFile', 'storePassword', 'keyAlias', 'keyPassword'])) {

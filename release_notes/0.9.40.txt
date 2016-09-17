@@ -1,0 +1,4 @@
+* lectures view
+* navigation drawer icons
+* user fragment screen. top titles
+* New design. colors, icon, fonts, list divider

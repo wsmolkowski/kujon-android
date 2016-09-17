@@ -1,5 +1,6 @@
 package mobi.kujon.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -44,6 +45,7 @@ import mobi.kujon.utils.KujonUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static android.content.Intent.createChooser;
 
@@ -213,5 +215,13 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
 
     @Override public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Toast.makeText(this, "Connection failed", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
+    public void setToolbarTitle(int title) {
+        getSupportActionBar().setTitle(title);
     }
 }

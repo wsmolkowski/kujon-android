@@ -57,7 +57,6 @@ public class UserInfoFragment extends BaseFragment {
     @Bind(R.id.student_status) TextView studentStatus;
     @Bind(R.id.student_account_number) TextView studentAccountNumber;
     @Bind(R.id.student_programmes) LinearLayout studentProgrammes;
-    @Bind(R.id.usosName) TextView usosName;
     @Bind(R.id.firstLastName) TextView firstLastName;
     @Bind(R.id.index) TextView index;
     @Bind(R.id.terms) TextView terms;
@@ -90,7 +89,7 @@ public class UserInfoFragment extends BaseFragment {
     @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         activity = (BaseActivity) getActivity();
-        activity.getSupportActionBar().setTitle(R.string.app_name);
+        activity.setToolbarTitle(R.string.app_name);
         swipeContainer.setOnRefreshListener(() -> loadData(true));
     }
 
@@ -118,7 +117,6 @@ public class UserInfoFragment extends BaseFragment {
                 swipeContainer.setRefreshing(false);
                 if (ErrorHandlerUtil.handleResponse(response)) {
                     user = response.body().data;
-                    usosName.setText(user.usos_name);
                     index.setText(user.student_number);
                     String name = user.first_name + " " + user.last_name;
                     firstLastName.setText(name);
@@ -272,6 +270,7 @@ public class UserInfoFragment extends BaseFragment {
                         if (usosOpt.isPresent()) {
                             Usos usos = usosOpt.get();
                             Picasso.with(getActivity()).load(usos.logo)
+                                    .transform(new CircleTransform())
                                     .fit()
                                     .centerInside()
                                     .into(imageView);

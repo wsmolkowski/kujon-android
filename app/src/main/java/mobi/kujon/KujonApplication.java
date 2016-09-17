@@ -33,6 +33,7 @@ import bolts.Task;
 import bolts.TaskCompletionSource;
 import io.fabric.sdk.android.Fabric;
 import mobi.kujon.utils.KujonUtils;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 //@FoamApiKeys(
 //        papertrail = "logs3.papertrailapp.com:22247" // Server URL
@@ -132,6 +133,12 @@ public class KujonApplication extends FoamApplication implements OneSignal.Notif
                 .build();
 
         component.inject(this);
+
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath("fonts/Lato-Regular.ttf")
+                .setFontAttrId(R.attr.fontPath)
+                .build()
+        );
     }
 
     public void finishAllAcitities() {

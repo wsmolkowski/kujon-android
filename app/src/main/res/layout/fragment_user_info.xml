@@ -17,160 +17,128 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:padding="16dp">
+                >
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:paddingBottom="16dp"
+                    android:background="@color/dark_blue_sky"
+                    android:orientation="vertical">
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="16dp">
+
+                        <ImageView
+                            android:id="@+id/picture"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+
+                            android:src="@drawable/user_placeholder"/>
+
+                        <ImageView
+                            android:id="@+id/usosLogo"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="right|bottom"
+                            />
+
+                    </FrameLayout>
+
+                    <TextView
+                        android:id="@+id/firstLastName"
+                        style="@style/Semibold"
+                        tools:text='Jan Kowalski'/>
+
+                    <TextView
+                        android:id="@+id/student_status"
+                        style="@style/Regular"
+                        tools:text='aktywny student'/>
 
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
+                        android:layout_marginTop="16dp"
+                        android:layout_marginLeft="32dp"
+                        android:layout_marginRight="32dp"
+                        android:orientation="horizontal">
 
-                        <TextView
-                            style="@style/label"
-                            android:layout_marginTop="0dp"
-                            android:text="Imię i Nazwisko"/>
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/firstLastName"
-                            style="@style/entry"
-                            android:textColor="@color/colorPrimaryDark"
-                            android:textSize="22sp"
-                            android:textStyle="bold"
-                            tools:text='Jan Kowalski'/>
+                            <TextView
+                                style="@style/Regular"
+                                android:layout_marginTop="0dp"
+                                android:text="Numer indeksu"
+                                android:textSize="11sp"/>
 
-                        <TextView
-                            android:id="@+id/student_status"
-                            style="@style/entry"
-                            android:alpha="0.87"
-                            android:textSize="14sp"
-                            tools:text='aktywny student'/>
+                            <TextView
+                                android:id="@+id/index"
+                                style="@style/Regular"
+                                tools:text='1234567890'/>
 
-                    </LinearLayout>
+                        </LinearLayout>
 
-                    <ImageView
-                        android:id="@+id/picture"
-                        android:layout_width="64dp"
-                        android:layout_height="64dp"
-                        android:layout_margin="8dp"
-                        android:src="@drawable/user_placeholder"/>
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
 
-                </LinearLayout>
+                            <TextView
+                                style="@style/Regular"
+                                android:text="Numer konta"
+                                android:textSize="11sp"/>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                            <TextView
+                                android:id="@+id/student_account_number"
+                                style="@style/Regular"
+                                tools:text='987654321'/>
+                        </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            style="@style/label"
-                            android:layout_marginTop="0dp"
-                            android:text="Uczelnia"/>
-
-                        <TextView
-                            android:id="@+id/usosName"
-                            style="@style/entry"
-                            tools:text='Lorem ipsum'/>
-
-                    </LinearLayout>
-
-                    <ImageView
-                        android:id="@+id/usosLogo"
-                        android:layout_width="56dp"
-                        android:layout_height="56dp"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginRight="12dp"
-                        android:layout_marginTop="8dp"
-                        />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            style="@style/label"
-                            android:layout_marginTop="0dp"
-                            android:text="Numer indeksu"/>
-
-                        <TextView
-                            android:id="@+id/index"
-                            style="@style/entry"
-                            tools:text='1234567890'/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            style="@style/label"
-                            android:layout_marginTop="0dp"
-                            android:text="Numer konta"/>
-
-                        <TextView
-                            android:id="@+id/student_account_number"
-                            style="@style/entry"
-                            tools:text='987654321'/>
                     </LinearLayout>
 
                 </LinearLayout>
 
                 <TextView
-                    style="@style/label"
-                    android:text="Kierunki"/>
+                    android:text="Kierunki"
+                    style="@style/new_label"/>
 
                 <LinearLayout
                     android:id="@+id/student_programmes"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
                     android:orientation="vertical"
                     />
 
                 <TextView
-                    style="@style/label"
+                    style="@style/new_label"
                     android:text="Jednostki"/>
 
                 <LinearLayout
                     android:id="@+id/student_faculties"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
                     android:orientation="vertical"
                     />
 
                 <TextView
-                    style="@style/label"
+                    style="@style/new_label"
                     android:text="Informacje"/>
 
                 <TextView
@@ -178,6 +146,8 @@
                     style="@style/entry"
                     android:layout_marginTop="8dp"
                     android:drawableRight="@drawable/navigate_next"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
                     android:gravity="center_vertical"
                     android:text='Cykle'/>
 
@@ -186,6 +156,8 @@
                     style="@style/entry"
                     android:layout_marginTop="24dp"
                     android:drawableRight="@drawable/navigate_next"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
                     android:gravity="center_vertical"
                     android:text='Prace dyplomowe'/>
 

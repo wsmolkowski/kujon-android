@@ -86,7 +86,7 @@ public class SearchFragment extends BaseFragment {
 
     @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        ((BaseActivity) getActivity()).getSupportActionBar().setTitle(R.string.search);
+        ((BaseActivity) getActivity()).setToolbarTitle(R.string.search);
 
         studentQuery.addTextChangedListener(getTextWatcher(studentSearchMessage, query -> kujonBackendApi.searchStudent(query, 0)));
         facultyQuery.addTextChangedListener(getTextWatcher(facultySearchMessage, query -> kujonBackendApi.searchFaculty(query, 0)));

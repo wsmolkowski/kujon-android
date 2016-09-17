@@ -3,11 +3,19 @@ package mobi.kujon.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.http.SslError;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
+import android.webkit.ConsoleMessage;
 import android.webkit.CookieManager;
 import android.webkit.JavascriptInterface;
+import android.webkit.SslErrorHandler;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
@@ -44,6 +52,8 @@ import okhttp3.Response;
 
 public class UsoswebLoginActivity extends BaseActivity {
 
+    private static final String TAG = "UsoswebLoginActivity";
+
     public static final String USOS_POJO = "USOS_POJO";
     public static final Logger log = LoggerFactory.getLogger(UsoswebLoginActivity.class);
 
@@ -56,6 +66,7 @@ public class UsoswebLoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         log.info("UsoswebLoginActivity");
         KujonApplication.getComponent().inject(this);
+        WebView.setWebContentsDebuggingEnabled(true);
         CookieManager.getInstance().setAcceptCookie(true);
         setContentView(R.layout.activity_usos_login);
         ButterKnife.bind(this);
@@ -66,6 +77,33 @@ public class UsoswebLoginActivity extends BaseActivity {
         webView.getSettings().setJavaScriptEnabled(true);
         webView.addJavascriptInterface(new MyJavaScriptInterface(this, webView), "HtmlViewer");
         webView.setWebViewClient(new WebViewClient() {
+
+            @Override public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+                super.onReceivedError(view, request, error);
+                Log.d(TAG, "onReceivedError() called with: " + "view = [" + view + "], request = [" + request + "], error = [" + error + "]");
+            }
+
+            @Override public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse errorResponse) {
+                super.onReceivedHttpError(view, request, errorResponse);
+                Log.d(TAG, "onReceivedHttpError() called with: " + "view = [" + view + "], request = [" + request + "], errorResponse = [" + errorResponse + "]");
+            }
+
+            @Override public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+                super.onReceivedSslError(view, handler, error);
+                Log.d(TAG, "onReceivedSslError() called with: " + "view = [" + view + "], handler = [" + handler + "], error = [" + error + "]");
+            }
+
+            @Override public void onTooManyRedirects(WebView view, Message cancelMsg, Message continueMsg) {
+                super.onTooManyRedirects(view, cancelMsg, continueMsg);
+                Log.d(TAG, "onTooManyRedirects() called with: " + "view = [" + view + "], cancelMsg = [" + cancelMsg + "], continueMsg = [" + continueMsg + "]");
+            }
+
+            @Override public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+                super.onReceivedError(view, errorCode, description, failingUrl);
+                Log.d(TAG, "onReceivedError() called with: " + "view = [" + view + "], errorCode = [" + errorCode + "], description = [" + description + "], failingUrl = [" + failingUrl + "]");
+            }
+
+
             @Override public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 log.info("onPageStarted: " + url);
                 progressBar.setVisibility(View.VISIBLE);

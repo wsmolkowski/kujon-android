@@ -154,7 +154,7 @@ public class PlanFragment extends BaseFragment implements MonthLoader.MonthChang
         super.onStart();
         refresh = false;
         gotoNow();
-        activity.getSupportActionBar().setTitle(R.string.plan_title);
+        activity.setToolbarTitle(R.string.plan_title);
     }
 
     private void gotoNow() {

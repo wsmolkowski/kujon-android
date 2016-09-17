@@ -9,11 +9,11 @@
         android:id="@+id/section"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/accent"
+        android:background="@drawable/label_background"
         android:gravity="center"
         android:padding="8dp"
-        android:textColor="@android:color/white"
-        android:textSize="22dp"
+        android:textColor="@color/opacityBlack"
+        style="@style/Regular"
         tools:text="2015"/>
 
     <LinearLayout
