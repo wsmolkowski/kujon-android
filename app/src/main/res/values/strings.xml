@@ -13,7 +13,8 @@
     <string name="no_photo">Brak zdjęcia</string>
     <string name="app_link">Sprawdź nową aplikację: https://play.google.com/store/apps/details?id=mobi.kujon</string>
     <string name="share_app">Podziel się apką</string>
-    <string name="congratulations">Gratulacje udało Ci się zalogować do Twojego konta na %1$s.\n\nTeraz możesz przeglądać swoje przedmioty, oceny, plan zajęć..</string>
+    <string name="congratulations">Gratulacje! Udało Ci się zalogować do Twojego konta na %1$s.</string>
+    <string name="now_you_can">Teraz możesz przeglądać swoje przedmioty, oceny, plan zajęć..</string>
     <string name="login_title">Logowanie do uczelni</string>
     <string name="main_login_title">Logowanie</string>
     <string name="login_error">Błąd logowania</string>

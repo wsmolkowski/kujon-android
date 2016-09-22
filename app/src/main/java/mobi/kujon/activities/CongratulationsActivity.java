@@ -15,7 +15,6 @@ import mobi.kujon.network.json.Usos;
 public class CongratulationsActivity extends BaseActivity {
 
     @Bind(R.id.congratulations) TextView congratulations;
-    @Bind(R.id.logo) ImageView logo;
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,7 +24,6 @@ public class CongratulationsActivity extends BaseActivity {
 
         String usosPojo = getIntent().getStringExtra(UsoswebLoginActivity.USOS_POJO);
         Usos usos = gson.fromJson(usosPojo, Usos.class);
-        picasso.load(usos.logo).centerInside().fit().into(logo);
 
         congratulations.setText(getString(R.string.congratulations, usos.name));
     }
