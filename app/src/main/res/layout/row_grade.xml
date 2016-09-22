@@ -7,13 +7,13 @@
 
     <TextView
         android:id="@+id/section"
+        style="@style/Regular"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/accent"
+        android:background="@drawable/label_background"
         android:gravity="center"
         android:padding="8dp"
-        android:textColor="@android:color/white"
-        android:textSize="22dp"
+        android:textColor="@color/opacityBlack"
         tools:text="2015"/>
 
     <LinearLayout
@@ -27,29 +27,35 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:gravity="left"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/title"
-                style="@style/entry"
+                style="@style/Semibold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
-                tools:text="Recepcja filozofii antycznej w kulturze umysłowej Europy - 2013L"/>
+                android:layout_gravity="left"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:textColor="@color/dark"
+                android:textSize="15sp"
+                tools:text="Recepcja filozofii antycznej w kulturze umysłowej Europy - 2013L. Dodatkowe informacje"/>
 
             <TextView
                 android:id="@+id/desc"
-                style="@style/entry"
+                style="@style/Regular"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="12sp"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/opacityBlack"
                 tools:text="Ocena Końcowa, termin 1"
                 />
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="96dp"
+            android:layout_width="76dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="8dp"
@@ -58,21 +64,23 @@
 
             <TextView
                 android:id="@+id/grade_value_symbol"
-                style="@style/entry"
+                style="@style/Semibold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="24sp"
+                android:textColor="@color/dark"
+                android:textSize="17sp"
                 tools:text="4"/>
 
             <TextView
                 android:id="@+id/grade_value_desc"
-                style="@style/label"
+                style="@style/Regular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:gravity="center"
-                android:text="(dobry)"
-                android:textSize="10sp"
+                android:text="dobry plus"
+                android:textColor="@color/dark"
+                android:textSize="11sp"
                 />
 
         </LinearLayout>
