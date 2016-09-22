@@ -9,7 +9,6 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
-import android.webkit.ConsoleMessage;
 import android.webkit.CookieManager;
 import android.webkit.JavascriptInterface;
 import android.webkit.SslErrorHandler;
@@ -39,7 +38,6 @@ import bolts.Task;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mobi.kujon.KujonApplication;
-import mobi.kujon.NetModule;
 import mobi.kujon.R;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.network.json.Usos;
@@ -49,6 +47,8 @@ import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+
+import static mobi.kujon.BuildConfig.API_URL;
 
 public class UsoswebLoginActivity extends BaseActivity {
 
@@ -66,7 +66,6 @@ public class UsoswebLoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         log.info("UsoswebLoginActivity");
         KujonApplication.getComponent().inject(this);
-        WebView.setWebContentsDebuggingEnabled(true);
         CookieManager.getInstance().setAcceptCookie(true);
         setContentView(R.layout.activity_usos_login);
         ButterKnife.bind(this);
@@ -120,15 +119,14 @@ public class UsoswebLoginActivity extends BaseActivity {
 
             @Override public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 log.info("shouldOverrideUrlLoading: " + url);
-                if (url.contains("https://api.kujon.mobi/authentication/verify")) {
+                if (url.contains(API_URL + "authentication/verify")) {
                     log.info("Got URL to kujon. Making request: " + url);
 
-                    String cookie = CookieManager.getInstance().getCookie(NetModule.API_URL);
+                    String cookie = CookieManager.getInstance().getCookie(API_URL);
 
-                    Request request = new Request.Builder()
-                            .url(url)
-                            .addHeader("Cookie", cookie)
-                            .build();
+                    Request.Builder builder = new Request.Builder().url(url);
+                    if (cookie != null) builder.addHeader("Cookie", cookie);
+                    Request request = builder.build();
 
                     client.newCall(request).enqueue(new Callback() {
                         @Override public void onFailure(Call call, IOException e) {
@@ -167,7 +165,8 @@ public class UsoswebLoginActivity extends BaseActivity {
         KujonApplication.getApplication().getLoginStatus().onSuccessTask(task -> {
             GoogleSignInResult signInResult = task.getResult();
             GoogleSignInAccount account = signInResult.getSignInAccount();
-            String url = String.format("https:/api.kujon.mobi/authentication/register?email=%s&token=%s&usos_id=%s&type=GOOGLE", account.getEmail(), account.getIdToken(), usos.usosId);
+            String url = String.format(API_URL + "authentication/register?email=%s&token=%s&usos_id=%s&type=GOOGLE", account.getEmail(), account.getIdToken(),
+                    usos.usosId);
             log.info("Loading urs: " + url);
             webView.loadUrl(url);
             return null;

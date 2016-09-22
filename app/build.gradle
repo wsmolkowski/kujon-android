@@ -38,10 +38,10 @@ android {
         debug {
             applicationIdSuffix '.debug'
 //            buildConfigField "String", "API_URL", "\"https://api-demo.kujon.mobi/\""
-            buildConfigField "String", "API_URL", "\"https://api.kujon.mobi\""
+            buildConfigField "String", "API_URL", "\"https://api.kujon.mobi/\""
         }
         release {
-            buildConfigField "String", "API_URL", "\"https://api.kujon.mobi\""
+            buildConfigField "String", "API_URL", "\"https://api.kujon.mobi/\""
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             ext.betaDistributionReleaseNotesFilePath = "release_notes/${android.defaultConfig.versionName}.txt"
@@ -49,6 +49,18 @@ android {
             signingConfig signingConfigs.release
         }
     }
+
+//    productFlavors {
+//        demo {
+//            applicationId "mobi.kujon.demo"
+//            buildConfigField "String", "API_URL", "\"https://demo-api.kujon.mobi/\""
+//        }
+//
+//        prod {
+//            applicationId "mobi.kujon"
+//            buildConfigField "String", "API_URL", "\"https://api.kujon.mobi\""
+//        }
+//    }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
