@@ -151,8 +151,14 @@ public class UserInfoFragment extends BaseFragment {
                                         Programme_ programmeFull = prog.programme;
                                         AlertDialog.Builder dlgAlert = new AlertDialog.Builder(getActivity());
                                         dlgAlert.setTitle("Kierunek: " + programmeFull.description.split(",")[0]);
-                                        dlgAlert.setMessage(String.format("identyfikator: %s\ntryb: %s\nczas trwania: %s\npoziom: %s\nopis: %s",
+                                        StringBuilder programmeDesc = new StringBuilder();
+                                        programmeDesc.append(String.format("identyfikator: %s\ntryb: %s\nczas trwania: %s\npoziom: %s\nopis: %s",
                                                 programmeFull.id, programmeFull.modeOfStudies, programmeFull.duration, programmeFull.levelOfStudies, programmeFull.description));
+
+                                        if (programmeFull.ectsUsedSum != null) {
+                                            programmeDesc.append(String.format("ECTS: %s", programmeFull.ectsUsedSum));
+                                        }
+                                        dlgAlert.setMessage(programmeDesc.toString());
                                         dlgAlert.setCancelable(false);
                                         dlgAlert.setNegativeButton("OK", (dialog, which) -> {
                                             dialog.dismiss();
