@@ -1,50 +1,39 @@
 package mobi.kujon.activities;
 
 import android.os.Bundle;
-import android.preference.Preference;
-import android.preference.PreferenceFragment;
+import android.view.View;
+import android.widget.TextView;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import mobi.kujon.R;
 
 public class PreferencesActivity extends BaseActivity {
 
+    @Bind(R.id.toolbar_title) TextView toolbarTitle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().setTitle(R.string.settings);
-        getFragmentManager().beginTransaction().replace(android.R.id.content, new MyPreferenceFragment()).commit();
+        setContentView(R.layout.activitiy_settings);
+        ButterKnife.bind(this);
+        toolbarTitle.setText(R.string.settings);
     }
 
-    public static class MyPreferenceFragment extends PreferenceFragment {
-
-        private BaseActivity activity;
-
-        @Override
-        public void onCreate(final Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.preferences);
-
-            activity = (BaseActivity) getActivity();
-
-            Preference logout = findPreference("logout");
-            logout.setOnPreferenceClickListener(preference -> {
-                activity.logout();
-                return true;
-            });
-
-            Preference deleteAccount = findPreference("delete_account");
-            deleteAccount.setOnPreferenceClickListener(preference -> {
-                activity.deleteAccount();
-                return true;
-            });
-
-            Preference regulations = findPreference("regulations");
-            regulations.setOnPreferenceClickListener(preference -> {
-                String url = activity.getString(R.string.regulations_url);
-                WebViewAcitivty.showUrl(activity, url);
-                return true;
-            });
+    @OnClick({R.id.logout, R.id.delete_account, R.id.regulations})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.logout:
+                logout();
+                break;
+            case R.id.delete_account:
+                deleteAccount();
+                break;
+            case R.id.regulations:
+                String url = getString(R.string.regulations_url);
+                WebViewAcitivty.showUrl(this, url);
+                break;
         }
     }
-
 }
