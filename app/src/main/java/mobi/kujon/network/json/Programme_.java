@@ -18,6 +18,9 @@ public class Programme_ {
     @SerializedName("mode_of_studies")
     @Expose
     public String modeOfStudies;
+    @SerializedName("ects_used_sum")
+    @Expose
+    public Number ectsUsedSum;
     @SerializedName("id")
     @Expose
     public String id;

@@ -27,7 +27,6 @@ import retrofit2.Response;
 
 public class CoursesFragment extends ListFragment {
 
-    public static final int NO_ITEM_DECORATOR = 1;
     private Adapter adapter;
 
     @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -93,7 +92,7 @@ public class CoursesFragment extends ListFragment {
             holder.termId = sectionName(section);
             holder.section.setVisibility(View.VISIBLE);
             holder.courseLayout.setVisibility(View.GONE);
-            holder.itemView.setTag(NO_ITEM_DECORATOR, true);
+            holder.itemView.setTag(R.string.no_item_decorator, true);
         }
 
         @Override public void onBindViewHolder(ViewHolder holder, int section, int relativePosition, int absolutePosition) {
@@ -103,7 +102,7 @@ public class CoursesFragment extends ListFragment {
             holder.termId = sectionName(section);
             holder.section.setVisibility(View.GONE);
             holder.courseLayout.setVisibility(View.VISIBLE);
-            holder.itemView.setTag(NO_ITEM_DECORATOR, false);
+            holder.itemView.setTag(R.string.no_item_decorator, false);
         }
 
         public void setData(List<SortedMap<String, List<Course>>> data) {

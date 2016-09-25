@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.alamkanak.weekview.DateTimeInterpreter;
 import com.alamkanak.weekview.MonthLoader;
 import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
@@ -19,10 +21,12 @@ import com.github.underscore.$;
 
 import org.joda.time.DateTime;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -68,6 +72,31 @@ public class PlanFragment extends BaseFragment implements MonthLoader.MonthChang
         weekView.setFirstDayOfWeek(Calendar.MONDAY);
         weekView.setShowNowLine(true);
         weekView.setLimitTime(7, 21);
+        weekView.setDateTimeInterpreter(new DateTimeInterpreter() {
+            public String interpretDate(Calendar date) {
+                try {
+                    SimpleDateFormat e = new SimpleDateFormat("EEE dd.M", Locale.getDefault());
+                    return e.format(date.getTime()).toUpperCase();
+                } catch (Exception var3) {
+                    var3.printStackTrace();
+                    return "";
+                }
+            }
+
+            public String interpretTime(int hour) {
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(Calendar.HOUR_OF_DAY, hour);
+                calendar.set(Calendar.MINUTE, 0);
+
+                try {
+                    SimpleDateFormat e = DateFormat.is24HourFormat(getActivity()) ? new SimpleDateFormat("HH:mm", Locale.getDefault()) : new SimpleDateFormat("hh a", Locale.getDefault());
+                    return e.format(calendar.getTime());
+                } catch (Exception var4) {
+                    var4.printStackTrace();
+                    return "";
+                }
+            }
+        });
         weekView.setOnEventClickListener((event, eventRect) -> {
             KujonWeekViewEvent viewEvent = (KujonWeekViewEvent) event;
             CalendarEvent calendarEvent = viewEvent.getCalendarEvent();

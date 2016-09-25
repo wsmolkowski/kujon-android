@@ -185,7 +185,7 @@ public class CourseDetailsActivity extends BaseActivity {
         View termView = getLayoutInflater().inflate(R.layout.row_terms, null);
         TermsFragment.ViewHolder holder = new TermsFragment.ViewHolder(termView);
 
-        if (courseDetails.term.size() > 0) {
+        if (courseDetails.term != null && courseDetails.term.size() > 0) {
             Term2 term = courseDetails.term.get(0);
             holder.name.setText(term.name);
             holder.termId.setText(term.termId);

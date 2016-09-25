@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -100,6 +99,7 @@ public class GradesFragment extends ListFragment {
             holder.section.setVisibility(View.VISIBLE);
             holder.dataLayout.setVisibility(View.GONE);
             holder.termId = sectionName(section);
+            holder.itemView.setTag(R.string.no_item_decorator, true);
         }
 
         @Override public void onBindViewHolder(ViewHolder holder, int section, int relativePosition, int absolutePosition) {
@@ -109,12 +109,11 @@ public class GradesFragment extends ListFragment {
             holder.desc.setText(Html.fromHtml(String.format("%s, termin: %s", grade.classType, grade.examSessionNumber)));
             holder.gradeDesc.setText(grade.valueDescription);
             holder.gradeSymbol.setText(grade.valueSymbol);
-            holder.gradeSymbol.setTextSize(TypedValue.COMPLEX_UNIT_DIP, grade.valueSymbol.length() > 3 ? 18 : 24);
             holder.courseId = grade.courseId;
             holder.termId = termGrades.termId;
-            holder.itemView.setBackgroundResource(relativePosition % 2 == 1 ? R.color.grey : android.R.color.white);
             holder.section.setVisibility(View.GONE);
             holder.dataLayout.setVisibility(View.VISIBLE);
+            holder.itemView.setTag(R.string.no_item_decorator, false);
         }
 
         List<Grade> gradesInSection(int section) {

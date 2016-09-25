@@ -41,14 +41,14 @@
                             android:id="@+id/picture"
                             android:layout_width="80dp"
                             android:layout_height="80dp"
-
-                            android:src="@drawable/user_placeholder"/>
+                            android:src="@drawable/photo_placeholder"/>
 
                         <ImageView
                             android:id="@+id/usosLogo"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
                             android:layout_gravity="right|bottom"
+                            tools:src="@drawable/user_placeholder"
                             />
 
                     </FrameLayout>
