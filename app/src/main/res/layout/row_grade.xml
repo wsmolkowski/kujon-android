@@ -7,13 +7,9 @@
 
     <TextView
         android:id="@+id/section"
-        style="@style/Regular"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/label_background"
+        style="@style/Regular.Label"
         android:gravity="center"
-        android:padding="8dp"
-        android:textColor="@color/opacityBlack"
+        android:background="@drawable/label_background"
         tools:text="2015"/>
 
     <LinearLayout

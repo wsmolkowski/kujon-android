@@ -39,10 +39,12 @@
             android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".activities.CourseDetailsActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/ToolbarAppTheme"/>
         <activity
             android:name=".activities.LecturerDetailsActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/ToolbarAppTheme"/>
         <activity
             android:name=".activities.StudentDetailsActivity"
             android:screenOrientation="portrait"/>

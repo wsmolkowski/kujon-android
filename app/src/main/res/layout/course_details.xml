@@ -1,139 +1,172 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.SwipeRefreshLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/swipeContainer"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
 
-    <ScrollView
-        android:id="@+id/scrollView"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            style="@style/Semibold"
+            tools:text="Toolbar Title"
+            />
+    </android.support.v7.widget.Toolbar>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <ScrollView
+            android:id="@+id/scrollView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/course_name"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/black"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                tools:text="Historia sztuki średniowiecznej"/>
-
-            <TextView
-                android:id="@+id/course_id"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:textColor="@android:color/black"
-                android:textSize="12dp"
-                tools:text="4018-KONW52"/>
-
-            <TextView
-                style="@style/label"
-                android:text="Jednostka"
-                />
-
-            <TextView
-                android:id="@+id/course_fac"
-                style="@style/entry"
-                android:drawableRight="@drawable/navigate_next"
-                tools:text='Wydział "Artes Liberales", Nowy Świat 69, 00-046 Warszawa (Śródmieście), tel.: 123266516,123266517'/>
-
-            <TextView
-                style="@style/label"
-                android:text="Opis"/>
-
-            <TextView
-                android:id="@+id/description"
-                style="@style/entry"
-                android:drawableRight="@drawable/navigate_next"
-                android:ellipsize="end"
-                android:maxLines="2"
-                tools:text="@string/lorem"
-                />
-
-            <TextView
-                style="@style/label"
-                android:text="Bibliografia"/>
-
-            <TextView
-                android:id="@+id/bibliography"
-                style="@style/entry"
-                android:drawableRight="@drawable/navigate_next"
-                android:ellipsize="end"
-                android:maxLines="2"
-                tools:text="@string/lorem"
-                />
-
-            <TextView
-                style="@style/label"
-                android:text="Kryteria oceny"/>
-
-            <TextView
-                android:id="@+id/assessment_criteria"
-                style="@style/entry"
-                android:drawableRight="@drawable/navigate_next"
-                android:ellipsize="end"
-                android:maxLines="2"
-                tools:text="@string/lorem"/>
-
-            <TextView
-                style="@style/label"
-                android:text="Zajęcia w cyklu"/>
-
-            <TextView
-                android:id="@+id/course_term_name"
-                style="@style/entry"
-                android:drawableRight="@drawable/navigate_next"
-                tools:text='Semestr zimowy 2014/15'/>
-
-            <TextView
-                style="@style/label"
-                android:text="Prowadzący grup"/>
-
-            <LinearLayout
-                android:id="@+id/course_lecturers"
-                style="@style/entry"
+                android:layout_height="match_parent"
                 android:orientation="vertical"
-                tools:text='Lorem ipsum'/>
+                >
 
-            <TextView
-                style="@style/label"
-                android:text="Koordynatorzy"/>
+                <TextView
+                    android:id="@+id/course_name"
+                    style="@style/Semibold.Dark"
+                    android:layout_gravity="left"
+                    android:layout_margin="16dp"
+                    tools:text="Historia sztuki średniowiecznej (4018-KONW52)"/>
 
-            <LinearLayout
-                android:id="@+id/course_coordinators"
-                style="@style/entry"
-                android:orientation="vertical"
-                tools:text='Lorem ipsum'/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/white"
+                    />
 
-            <TextView
-                style="@style/label"
-                android:text="Typ zajęć"/>
+                <TextView
+                    android:id="@+id/course_fac"
+                    style="@style/Regular.Entry"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginTop="16dp"
+                    android:drawableRight="@drawable/navigate_next"
+                    tools:text='Wydział "Artes Liberales", Nowy Świat 69, 00-046 Warszawa (Śródmieście), tel.: 123266516,123266517'/>
 
-            <TextView
-                android:id="@+id/course_class_type"
-                style="@style/entry"
-                tools:text='Lorem ipsum'/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/white"
+                    />
 
-            <TextView
-                style="@style/label"
-                android:text="Studenci"/>
+                <TextView
+                    style="@style/Regular.Label"
+                    android:text="Język prowadzenia"/>
 
-            <LinearLayout
-                android:id="@+id/course_students"
-                style="@style/entry"
-                android:orientation="vertical"
-                tools:text='Lorem ipsum'/>
+                <TextView
+                    android:id="@+id/lang"
+                    style="@style/Regular.Entry"
+                    tools:text="ANG"
+                    />
 
-        </LinearLayout>
+                <TextView
+                    style="@style/Regular.Label"
+                    android:text="Czy jest prowadzony"/>
 
-    </ScrollView>
-</android.support.v4.widget.SwipeRefreshLayout>
+                <TextView
+                    android:id="@+id/is_conducted"
+                    style="@style/Regular.Entry"
+                    tools:text="TAK"
+                    />
+
+                <TextView
+                    style="@style/Regular.Label"
+                    android:text="Opis"/>
+
+                <TextView
+                    android:id="@+id/description"
+                    style="@style/Regular.Entry"
+                    tools:text="@string/lorem"
+                    />
+
+                <TextView
+                    style="@style/Regular.Label"
+                    android:text="Bibliografia"/>
+
+                <TextView
+                    android:id="@+id/bibliography"
+                    style="@style/Regular.Entry"
+                    tools:text="@string/lorem"
+                    />
+
+                <TextView
+                    style="@style/Regular.Label"
+                    android:text="Kryteria oceny"/>
+
+                <TextView
+                    android:id="@+id/assessment_criteria"
+                    style="@style/Regular.Entry"
+                    tools:text="@string/lorem"/>
+
+                <TextView
+                    style="@style/Regular.Label"
+                    android:text="Zajęcia w cyklu"/>
+
+                <TextView
+                    android:id="@+id/course_term_name"
+                    style="@style/Regular.Entry"
+                    android:drawableRight="@drawable/navigate_next"
+                    tools:text='Semestr zimowy 2014/15'/>
+
+                <TextView
+                    style="@style/Regular.Label"
+                    android:text="Typ zajęć"/>
+
+                <TextView
+                    android:id="@+id/course_class_type"
+                    style="@style/Regular.Entry"
+                    tools:text='Lorem ipsum'/>
+
+                <TextView
+                    style="@style/Regular.Label.Background"
+                    android:text="Prowadzący grup"/>
+
+                <LinearLayout
+                    android:id="@+id/course_lecturers"
+                    style="@style/Regular.Entry"
+                    android:orientation="vertical"
+                    tools:text='Lorem ipsum'/>
+
+                <TextView
+                    style="@style/Regular.Label.Background"
+                    android:text="Koordynatorzy"/>
+
+                <LinearLayout
+                    android:id="@+id/course_coordinators"
+                    style="@style/Regular.Entry"
+                    android:orientation="vertical"
+                    tools:text='Lorem ipsum'/>
+
+                <TextView
+                    style="@style/Regular.Label.Background"
+                    android:text="Studenci"/>
+
+                <LinearLayout
+                    android:id="@+id/course_students"
+                    style="@style/Regular.Entry"
+                    android:orientation="vertical"
+                    tools:text='Lorem ipsum'/>
+
+            </LinearLayout>
+
+        </ScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+</LinearLayout>

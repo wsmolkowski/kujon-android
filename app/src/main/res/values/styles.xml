@@ -42,6 +42,10 @@
         <item name="fontPath">fonts/Lato-Semibold.ttf</item>
     </style>
 
+    <style name="Semibold.Dark">
+        <item name="android:textColor">@color/dark</item>
+    </style>
+
     <style name="Regular">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -60,6 +64,33 @@
         <item name="android:paddingLeft">16dp</item>
         <item name="android:alpha">0.35</item>
         <item name="android:textColor">#000000</item>
+    </style>
+
+    <style name="Regular.Label">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">4dp</item>
+        <item name="android:textColor">@color/opacityBlack</item>
+    </style>
+
+    <style name="Regular.Entry">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:layout_marginRight">16dp</item>
+        <item name="android:layout_marginTop">4dp</item>
+        <item name="android:layout_marginBottom">4dp</item>
+        <item name="android:textColor">@color/dark</item>
+    </style>
+
+    <style name="Regular.Label.Background">
+        <item name="android:background">@drawable/label_background</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
     </style>
 
 </resources>

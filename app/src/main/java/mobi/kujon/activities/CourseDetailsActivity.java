@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,8 +52,11 @@ public class CourseDetailsActivity extends BaseActivity {
     @Bind(R.id.course_class_type) TextView courseClassType;
     @Bind(R.id.course_students) LinearLayout courseStudents;
     @Bind(R.id.scrollView) ScrollView scrollView;
-    @Bind(R.id.course_id) TextView courseIdTextView;
     @Bind(R.id.swipeContainer) SwipeRefreshLayout swipeContainer;
+    @Bind(R.id.lang) TextView langView;
+    @Bind(R.id.is_conducted) TextView isConductedView;
+    @Bind(R.id.toolbar_title) TextView toolbarTitle;
+    @Bind(R.id.toolbar) Toolbar toolbar;
 
     private LayoutInflater layoutInflater;
     private CourseDetails courseDetails;
@@ -65,7 +69,7 @@ public class CourseDetailsActivity extends BaseActivity {
         setContentView(R.layout.course_details);
         ButterKnife.bind(this);
         layoutInflater = getLayoutInflater();
-        getSupportActionBar().setTitle(R.string.course_title);
+        toolbarTitle.setText(R.string.course_title);
 
         courseId = getIntent().getStringExtra(COURSE_ID);
         termId = getIntent().getStringExtra(TERM_ID);
@@ -91,9 +95,10 @@ public class CourseDetailsActivity extends BaseActivity {
 
                     courseFac.setText(courseDetails.facId.name);
                     description.setText(Html.fromHtml(courseDetails.description.replace("\n", "<br>")));
-                    courseName.setText(courseDetails.name);
+                    courseName.setText(String.format("%s (%s)", courseDetails.name, courseDetails.courseId));
                     String lang = isEmpty(courseDetails.langId) ? "Brak" : courseDetails.langId;
-                    courseIdTextView.setText(String.format("Id: %s, język: %s, prowadzony: %s", courseDetails.courseId, lang, courseDetails.isCurrentlyConducted));
+                    langView.setText(lang);
+                    isConductedView.setText(courseDetails.isCurrentlyConducted);
                     bibliography.setText(courseDetails.bibliography.replace("\n", "\n\n"));
                     assessmentCriteria.setText(courseDetails.assessmentCriteria.replace("\n", "\n\n"));
                     if (courseDetails.term != null && courseDetails.term.size() > 0) {
@@ -162,21 +167,6 @@ public class CourseDetailsActivity extends BaseActivity {
         if (courseDetails != null && courseDetails.facId != null) {
             FacultyDetailsActivity.showFacultyDetails(this, courseDetails.facId.facId);
         }
-    }
-
-    @OnClick(R.id.description)
-    public void showDesc() {
-        TextViewActivity.showText(this, "Opis", description.getText().toString());
-    }
-
-    @OnClick(R.id.bibliography)
-    public void showBibliography() {
-        TextViewActivity.showText(this, "Bibliografia", bibliography.getText().toString());
-    }
-
-    @OnClick(R.id.assessment_criteria)
-    public void showAssessmentCriteria() {
-        TextViewActivity.showText(this, "Kryteria oceny", assessmentCriteria.getText().toString());
     }
 
     @OnClick(R.id.course_term_name)

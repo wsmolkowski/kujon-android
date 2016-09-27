@@ -37,8 +37,8 @@ android {
     buildTypes {
         debug {
             applicationIdSuffix '.debug'
-//            buildConfigField "String", "API_URL", "\"https://api-demo.kujon.mobi/\""
-            buildConfigField "String", "API_URL", "\"https://api.kujon.mobi/\""
+            buildConfigField "String", "API_URL", "\"https://api-demo.kujon.mobi/\""
+//            buildConfigField "String", "API_URL", "\"https://api.kujon.mobi/\""
         }
         release {
             buildConfigField "String", "API_URL", "\"https://api.kujon.mobi/\""
