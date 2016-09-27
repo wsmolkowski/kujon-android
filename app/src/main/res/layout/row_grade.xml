@@ -8,6 +8,7 @@
     <TextView
         android:id="@+id/section"
         style="@style/Regular.Label"
+        android:padding="16dp"
         android:gravity="center"
         android:background="@drawable/label_background"
         tools:text="2015"/>

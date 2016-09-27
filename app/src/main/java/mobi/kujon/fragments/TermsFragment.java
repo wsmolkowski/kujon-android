@@ -26,13 +26,14 @@ import retrofit2.Response;
 public class TermsFragment extends ListFragment {
 
     private Adapter adapter;
+    private Typeface latoSemiBold;
 
     @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         adapter = new Adapter();
         recyclerView.setAdapter(adapter);
         activity.showProgress(true);
-
+        latoSemiBold = Typeface.createFromAsset(activity.getAssets(), "fonts/Lato-Semibold.ttf");
         loadData(false);
     }
 
@@ -80,18 +81,18 @@ public class TermsFragment extends ListFragment {
             holder.name.setText(term.name);
             holder.termId.setText(term.termId);
             holder.active.setText(term.active ? "TAK" : "NIE");
+
             if (term.active) {
-                holder.name.setTypeface(null, Typeface.BOLD);
-                holder.termId.setTypeface(null, Typeface.BOLD);
-                holder.active.setTypeface(null, Typeface.BOLD);
-                holder.startDate.setTypeface(null, Typeface.BOLD);
-                holder.endDate.setTypeface(null, Typeface.BOLD);
-                holder.finishDate.setTypeface(null, Typeface.BOLD);
+                holder.name.setTypeface(latoSemiBold);
+                holder.termId.setTypeface(latoSemiBold);
+                holder.active.setTypeface(latoSemiBold);
+                holder.startDate.setTypeface(latoSemiBold);
+                holder.endDate.setTypeface(latoSemiBold);
+                holder.finishDate.setTypeface(latoSemiBold);
             }
             holder.startDate.setText(term.startDate);
             holder.endDate.setText(term.endDate);
             holder.finishDate.setText(term.finishDate);
-            holder.itemView.setBackgroundResource(position % 2 == 1 ? R.color.grey : android.R.color.white);
         }
 
         @Override public int getItemCount() {

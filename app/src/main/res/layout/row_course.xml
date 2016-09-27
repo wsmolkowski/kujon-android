@@ -9,6 +9,7 @@
         android:id="@+id/section"
         android:gravity="center"
         style="@style/Regular.Label"
+        android:padding="16dp"
         android:background="@drawable/label_background"
         tools:text="2015"/>
 

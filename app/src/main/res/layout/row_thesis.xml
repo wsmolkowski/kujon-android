@@ -1,68 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical"
-              android:padding="16dp">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
 
     <TextView
-        style="@style/label"
-        android:layout_marginTop="0dp"
+        style="@style/Regular.Label"
         android:text="Tytuł"
         />
 
     <TextView
         android:id="@+id/title"
-        style="@style/entry"
-        android:fontFamily="sans-serif-medium"
-        android:textSize="16sp"
+        style="@style/Regular.Entry"
         tools:text='Edukacyjna rola filmu na przyk\u0142adzie dzia\u0142alno\u015bci warszawskiego kina \u201ePraha\u201d'/>
 
     <TextView
-        style="@style/label"
-        android:layout_marginTop="8dp"
+        style="@style/Regular.Label"
         android:text="Autorzy"
         />
 
     <TextView
         android:id="@+id/authors"
-        style="@style/entry"
+        style="@style/Regular.Entry"
         tools:text='Jan Kowalski'/>
 
     <TextView
-        style="@style/label"
-        android:layout_marginTop="8dp"
+        style="@style/Regular.Label"
         android:text="Recenzenci"
         />
 
     <LinearLayout
         android:id="@+id/supervisors"
-        style="@style/entry"
+        style="@style/Regular.Entry"
         android:orientation="vertical"
         tools:text='Lorem ipsum'/>
 
     <TextView
-        style="@style/label"
-        android:layout_marginTop="8dp"
+        style="@style/Regular.Label"
         android:text="Typ"
         />
 
     <TextView
         android:id="@+id/type"
-        style="@style/entry"
+        style="@style/Regular.Entry"
         tools:text='licencjacka'/>
 
-
     <TextView
-        style="@style/label"
-        android:layout_marginTop="8dp"
+        style="@style/Regular.Label"
         android:text="Wydział"
         />
 
     <LinearLayout
         android:id="@+id/faculty"
-        style="@style/entry"
+        style="@style/Regular.Entry"
         android:orientation="vertical"
         tools:text='Lorem ipsum'/>
 
