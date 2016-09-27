@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,12 +43,14 @@ public class FacultyDetailsActivity extends BaseActivity {
     @Bind(R.id.courseCount) TextView courseCount;
     @Bind(R.id.staffCount) TextView staffCount;
     @Bind(R.id.parent_faculties) LinearLayout parentFaculties;
+    @Bind(R.id.toolbar_title) TextView toolbarTitle;
+    @Bind(R.id.scrollView) ScrollView scrollView;
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_faculty);
         ButterKnife.bind(this);
-        getSupportActionBar().setTitle(R.string.faculty_title);
+        toolbarTitle.setText(R.string.faculty_title);
 
         String facultyId = getIntent().getStringExtra(FACULTY_ID);
 
