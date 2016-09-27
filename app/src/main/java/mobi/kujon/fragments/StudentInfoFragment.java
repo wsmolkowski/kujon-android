@@ -48,7 +48,6 @@ public class StudentInfoFragment extends BaseFragment {
     @Bind(R.id.student_status) TextView studentStatus;
     @Bind(R.id.student_account_number) TextView studentAccountNumber;
     @Bind(R.id.student_programmes) LinearLayout studentProgrammes;
-    @Bind(R.id.usosName) TextView usosName;
     @Bind(R.id.firstLastName) TextView firstLastName;
     @Bind(R.id.picture) ImageView picture;
     @Bind(R.id.usosLogo) ImageView usosLogo;
@@ -57,7 +56,6 @@ public class StudentInfoFragment extends BaseFragment {
     @Inject KujonUtils utils;
     @Inject KujonBackendApi kujonBackendApi;
     @Inject Picasso picasso;
-    @Bind(R.id.usosLayout) LinearLayout usosLayout;
 
     private BaseActivity activity;
     private AlertDialog alertDialog;
@@ -82,13 +80,13 @@ public class StudentInfoFragment extends BaseFragment {
     @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         activity = (BaseActivity) getActivity();
-        activity.getSupportActionBar().setTitle("Student");
         swipeContainer.setOnRefreshListener(() -> loadData(true));
         handler.post(() -> loadData(false));
     }
 
     private void loadData(boolean refresh) {
-        swipeContainer.setRefreshing(true);
+        handler.post(() -> swipeContainer.setRefreshing(true));
+//        swipeContainer.setRefreshing(true);
 
         String userId = getArguments().getString(USER_ID);
         if (refresh) {
@@ -105,20 +103,13 @@ public class StudentInfoFragment extends BaseFragment {
                 swipeContainer.setRefreshing(false);
                 if (ErrorHandlerUtil.handleResponse(response)) {
                     user = response.body().data;
-                    if (isEmpty(user.usos_name)) {
-                        usosLayout.setVisibility(View.GONE);
-                    } else {
-                        usosLayout.setVisibility(View.VISIBLE);
-                        usosName.setText(user.usos_name);
-                        showUsosLogo(user.usos_id, usosLogo);
-                    }
                     String name = user.first_name + " " + user.last_name;
                     firstLastName.setText(name);
                     picasso.load(user.picture)
                             .transform(new CircleTransform())
                             .fit()
                             .centerInside()
-                            .placeholder(R.drawable.user_placeholder)
+                            .placeholder(R.drawable.photo_placeholder)
                             .into(picture);
 
                     picture.setOnClickListener(v -> ImageActivity.show(getActivity(), user.picture, name));
@@ -152,7 +143,7 @@ public class StudentInfoFragment extends BaseFragment {
 
                             @Override
                             public void onFailure(Call<KujonResponse<ProgrammeSingle>> call, Throwable t) {
-                                activity.showProgress(true);
+                                activity.showProgress(false);
                                 ErrorHandlerUtil.handleError(t);
                             }
                         });
@@ -161,7 +152,7 @@ public class StudentInfoFragment extends BaseFragment {
             }
 
             @Override public void onFailure(Call<KujonResponse<User>> call, Throwable t) {
-                activity.showProgress(true);
+                activity.showProgress(false);
                 swipeContainer.setRefreshing(false);
                 ErrorHandlerUtil.handleError(t);
             }

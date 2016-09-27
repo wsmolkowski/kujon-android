@@ -47,7 +47,8 @@
             android:theme="@style/ToolbarAppTheme"/>
         <activity
             android:name=".activities.StudentDetailsActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/ToolbarAppTheme"/>
         <activity
             android:name=".activities.ImageActivity"
             android:screenOrientation="portrait"/>
