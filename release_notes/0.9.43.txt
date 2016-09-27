@@ -1,0 +1,8 @@
+* courses, grades, programmes, thesis design update
+* faculty design
+* student view
+* design. lecturer & course view
+* setting screen new design
+* Fix #127 w planie zajęć zmienić format daty na dzień/miesiąc teraz jest na odwrót
+* Fix #131 wyświetlenie nowego pola ects_used_sum z url api/programmes
+* new desing pngs
