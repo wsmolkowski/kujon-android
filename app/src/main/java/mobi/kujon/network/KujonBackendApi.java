@@ -38,8 +38,6 @@ public interface KujonBackendApi {
 
     @GET("config") Call<KujonResponse<Config>> config();
 
-    @POST("authentication/register") Call<KujonResponse> register();
-
     @GET("users") Call<KujonResponse<User>> users();
 
     @GET("users") @Headers(X_KUJONREFRESH_TRUE) Call<KujonResponse<User>> usersRefresh();

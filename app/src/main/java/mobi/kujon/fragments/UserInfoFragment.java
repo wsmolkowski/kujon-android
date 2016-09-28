@@ -156,7 +156,7 @@ public class UserInfoFragment extends BaseFragment {
                                                 programmeFull.id, programmeFull.modeOfStudies, programmeFull.duration, programmeFull.levelOfStudies, programmeFull.description));
 
                                         if (programmeFull.ectsUsedSum != null) {
-                                            programmeDesc.append(String.format("ECTS: %s", programmeFull.ectsUsedSum));
+                                            programmeDesc.append(String.format("\nECTS: %s", programmeFull.ectsUsedSum));
                                         }
                                         dlgAlert.setMessage(programmeDesc.toString());
                                         dlgAlert.setCancelable(false);
