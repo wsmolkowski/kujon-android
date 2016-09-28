@@ -35,6 +35,7 @@ public class ErrorHandlerUtil {
     private static Map<String, String> errorTranslations = new HashMap<String, String>() {{
         put("only-if-cached", "Tryb offline. Nie wszystkie dane są dostępne");
         put("Bad Gateway", "Wystąpił błąd techniczny. Pracujemy nad rozwiązaniem. Spróbuj za chwilę");
+        put("Canceled", "");
     }};
 
     public static void translateAndToastErrorMessage(String message) {
@@ -45,7 +46,7 @@ public class ErrorHandlerUtil {
             }
         }
         log.error(finalMessage);
-        if (checkErrorFrequency()) {
+        if (checkErrorFrequency() && finalMessage != null && finalMessage.length() > 0) {
             Toast.makeText(KujonApplication.getApplication(), finalMessage, Toast.LENGTH_SHORT).show();
         }
     }

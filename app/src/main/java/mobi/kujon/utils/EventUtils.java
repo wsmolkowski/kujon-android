@@ -43,7 +43,7 @@ public class EventUtils {
         dlgAlert.setTitle(calendarEvent.name);
         dlgAlert.setPositiveButton("OK", null);
         dlgAlert.setNeutralButton("Zobacz przedmiot", (dialog, which) -> {
-            CourseDetailsActivity.showCourseDetails(activity, calendarEvent.courseId, term);
+            CourseDetailsActivity.showCourseDetails(activity, calendarEvent.courseId);
         });
         dlgAlert.setCancelable(true);
         return dlgAlert.create();

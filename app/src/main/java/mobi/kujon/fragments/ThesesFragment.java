@@ -20,7 +20,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import mobi.kujon.R;
 import mobi.kujon.network.json.KujonResponse;
-import mobi.kujon.network.json.gen.Thesis;
+import mobi.kujon.network.json.gen.Thesis_;
 import mobi.kujon.utils.ErrorHandlerUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -48,18 +48,18 @@ public class ThesesFragment extends ListFragment {
     }
 
     @Override protected void loadData(boolean refresh) {
-        Call<KujonResponse<List<Thesis>>> theses = refresh ? backendApi.thesesRefresh() : backendApi.theses();
-        theses.enqueue(new Callback<KujonResponse<List<Thesis>>>() {
-            @Override public void onResponse(Call<KujonResponse<List<Thesis>>> call, Response<KujonResponse<List<Thesis>>> response) {
+        Call<KujonResponse<List<Thesis_>>> theses = refresh ? backendApi.thesesRefresh() : backendApi.theses();
+        theses.enqueue(new Callback<KujonResponse<List<Thesis_>>>() {
+            @Override public void onResponse(Call<KujonResponse<List<Thesis_>>> call, Response<KujonResponse<List<Thesis_>>> response) {
                 activity.showProgress(false);
                 swipeContainer.setRefreshing(false);
                 if (ErrorHandlerUtil.handleResponse(response)) {
-                    List<Thesis> data = response.body().data;
+                    List<Thesis_> data = response.body().data;
                     adapter.setData(data);
                 }
             }
 
-            @Override public void onFailure(Call<KujonResponse<List<Thesis>>> call, Throwable t) {
+            @Override public void onFailure(Call<KujonResponse<List<Thesis_>>> call, Throwable t) {
                 activity.showProgress(false);
                 swipeContainer.setRefreshing(false);
                 ErrorHandlerUtil.handleError(t);
@@ -75,7 +75,7 @@ public class ThesesFragment extends ListFragment {
 
     protected class Adapter extends RecyclerView.Adapter<ViewHolder> {
 
-        List<Thesis> data = new LinkedList<>();
+        List<Thesis_> data = new LinkedList<>();
 
         @Override public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_thesis, parent, false);
@@ -83,7 +83,7 @@ public class ThesesFragment extends ListFragment {
         }
 
         @Override public void onBindViewHolder(ViewHolder holder, int position) {
-            Thesis thesis = data.get(position);
+            Thesis_ thesis = data.get(position);
             holder.title.setText(thesis.title);
             holder.type.setText(thesis.type);
             holder.authors.setText($.join($.collect(thesis.authors, author -> author.first_name + " " + author.last_name), ","));
@@ -100,7 +100,7 @@ public class ThesesFragment extends ListFragment {
             return data.size();
         }
 
-        public void setData(List<Thesis> data) {
+        public void setData(List<Thesis_> data) {
             this.data = data;
             notifyDataSetChanged();
         }

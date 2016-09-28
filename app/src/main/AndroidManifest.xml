@@ -87,6 +87,10 @@
         <activity
             android:name=".activities.ProgrammeSearchActivity"
             android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".activities.ThesesSearchActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activities.ErrorActivity"
             android:screenOrientation="portrait"/>

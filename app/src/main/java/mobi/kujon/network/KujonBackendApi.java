@@ -22,7 +22,8 @@ import mobi.kujon.network.json.gen.FacultiesSearchResult;
 import mobi.kujon.network.json.gen.Faculty2;
 import mobi.kujon.network.json.gen.ProgrammeSearchResult;
 import mobi.kujon.network.json.gen.StudentSearchResult;
-import mobi.kujon.network.json.gen.Thesis;
+import mobi.kujon.network.json.gen.ThesesSearchResult;
+import mobi.kujon.network.json.gen.Thesis_;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
@@ -66,9 +67,9 @@ public interface KujonBackendApi {
 
     @GET("faculties") @Headers(X_KUJONREFRESH_TRUE) Call<KujonResponse<List<Faculty2>>> facultiesRefresh();
 
-    @GET("theses") Call<KujonResponse<List<Thesis>>> theses();
+    @GET("theses") Call<KujonResponse<List<Thesis_>>> theses();
 
-    @GET("theses") @Headers(X_KUJONREFRESH_TRUE) Call<KujonResponse<List<Thesis>>> thesesRefresh();
+    @GET("theses") @Headers(X_KUJONREFRESH_TRUE) Call<KujonResponse<List<Thesis_>>> thesesRefresh();
 
     @GET("faculties/{facultyId}") Call<KujonResponse<Faculty2>> faculty(@Path("facultyId") String facultyId);
 
@@ -116,4 +117,6 @@ public interface KujonBackendApi {
     @GET("search/courses/{query}")
     Call<KujonResponse<CoursersSearchResult>> searchCourses(@Path(value = "query", encoded = true) String query, @Query("start") Integer start);
 
+    @GET("search/theses/{query}")
+    Call<KujonResponse<ThesesSearchResult>> searchTheses(@Path(value = "query", encoded = true) String query, @Query("start") Integer start);
 }
