@@ -98,9 +98,9 @@ public interface KujonBackendApi {
     @GET("courses/{courseId}")
     @Headers(X_KUJONREFRESH_TRUE) Call<KujonResponse<CourseDetails>> courseDetailsRefresh(@Path("courseId") String courseId);
 
-    @GET("tt/{day}") Call<KujonResponse<List<CalendarEvent>>> plan(@Path("day") String day);
+    @GET("tt/{day}?lecturers_info=False") Call<KujonResponse<List<CalendarEvent>>> plan(@Path("day") String day);
 
-    @GET("tt/{day}") @Headers(X_KUJONREFRESH_TRUE) Call<KujonResponse<List<CalendarEvent>>> planRefresh(@Path("day") String day);
+    @GET("tt/{day}?lecturers_info=False") @Headers(X_KUJONREFRESH_TRUE) Call<KujonResponse<List<CalendarEvent>>> planRefresh(@Path("day") String day);
 
     @POST("authentication/archive") Call<Object> deleteAccount();
 

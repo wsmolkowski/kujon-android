@@ -121,6 +121,7 @@ public class PlanFragment extends BaseFragment implements MonthLoader.MonthChang
         });
 
         setHasOptionsMenu(true);
+        gotoNow();
 
         return rootView;
     }
@@ -191,7 +192,6 @@ public class PlanFragment extends BaseFragment implements MonthLoader.MonthChang
     @Override public void onStart() {
         super.onStart();
         refresh = false;
-        gotoNow();
         activity.setToolbarTitle(R.string.plan_title);
     }
 
@@ -216,11 +216,11 @@ public class PlanFragment extends BaseFragment implements MonthLoader.MonthChang
 
     @Override public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.refresh) {
-            gotoNow();
             refresh = true;
             utils.invalidateEntry("tt");
             downloaded.clear();
             eventsForDate.clear();
+            gotoNow();
             return true;
         } else {
             return super.onOptionsItemSelected(item);

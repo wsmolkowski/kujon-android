@@ -26,6 +26,7 @@
     <LinearLayout
         android:id="@+id/logout"
         android:layout_width="match_parent"
+        android:gravity="center_vertical"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="16dp">
@@ -54,6 +55,7 @@
         android:id="@+id/delete_account"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="16dp">
 
@@ -82,6 +84,7 @@
         android:id="@+id/regulations"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="16dp">
 
