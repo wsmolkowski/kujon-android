@@ -8,6 +8,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -58,6 +59,17 @@ public class CourseDetailsActivity extends BaseActivity {
     @Bind(R.id.toolbar_title) TextView toolbarTitle;
     @Bind(R.id.toolbar) Toolbar toolbar;
 
+    @Bind(R.id.lang_label) TextView langLabel;
+    @Bind(R.id.is_conducted_label) TextView isConductedLabel;
+    @Bind(R.id.description_label) TextView descriptionLabel;
+    @Bind(R.id.bibliography_label) TextView bibliographyLabel;
+    @Bind(R.id.assessment_criteria_label) TextView assessmentCriteriaLabel;
+    @Bind(R.id.course_term_name_label) TextView courseTermNameLabel;
+    @Bind(R.id.course_class_type_label) TextView courseClassTypeLabel;
+    @Bind(R.id.course_lecturers_label) TextView courseLecturersLabel;
+    @Bind(R.id.course_coordinators_label) TextView courseCoordinatorsLabel;
+    @Bind(R.id.course_students_label) TextView courseStudentsLabel;
+
     private LayoutInflater layoutInflater;
     private CourseDetails courseDetails;
 
@@ -94,16 +106,22 @@ public class CourseDetailsActivity extends BaseActivity {
                     courseDetails = response.body().data;
 
                     courseFac.setText(courseDetails.facId.name);
-                    description.setText(Html.fromHtml(courseDetails.description.replace("\n", "<br>")));
+
+                    setText(description, descriptionLabel, Html.fromHtml(CourseDetailsActivity.this.courseDetails.description.replace("\n", "<br>")));
                     courseName.setText(String.format("%s (%s)", courseDetails.name, courseDetails.courseId));
-                    String lang = isEmpty(courseDetails.langId) ? "Brak" : courseDetails.langId;
-                    langView.setText(lang);
-                    isConductedView.setText(courseDetails.isCurrentlyConducted);
-                    bibliography.setText(courseDetails.bibliography.replace("\n", "\n\n"));
+                    setText(langView, langLabel, isEmpty(courseDetails.langId) ? "Brak" : courseDetails.langId);
+                    setText(isConductedView, isConductedLabel, courseDetails.isCurrentlyConducted);
+                    setText(bibliography, bibliographyLabel, courseDetails.bibliography.replace("\n", "\n\n"));
+                    setText(assessmentCriteria, assessmentCriteriaLabel, courseDetails.assessmentCriteria.replace("\n", "\n\n"));
                     assessmentCriteria.setText(courseDetails.assessmentCriteria.replace("\n", "\n\n"));
-                    if (courseDetails.term != null && courseDetails.term.size() > 0) {
+                    if (courseDetails.term != null && courseDetails.term.size() > 0 && courseDetails.term.get(0).name.length() > 0) {
                         courseTermName.setText(courseDetails.term.get(0).name);
+                    } else {
+                        courseTermName.setVisibility(View.GONE);
+                        courseTermNameLabel.setVisibility(View.GONE);
                     }
+
+                    setText(courseClassType, courseClassTypeLabel, $.join($.collect(courseDetails.groups, it -> it.classType + ", numer grupy: " + it.groupNumber), "\n"));
 
                     List<String> lecturers = $.collect(courseDetails.lecturers, it -> it.lastName + " " + it.firstName);
                     showList(CourseDetailsActivity.this.layoutInflater, courseLecturers, lecturers, position -> {
@@ -111,19 +129,27 @@ public class CourseDetailsActivity extends BaseActivity {
                         LecturerDetailsActivity.showLecturerDatails(CourseDetailsActivity.this, lecturer.userId);
                     });
 
+                    courseLecturers.setVisibility(lecturers.size() > 0 ? View.VISIBLE : View.GONE);
+                    courseLecturersLabel.setVisibility(lecturers.size() > 0 ? View.VISIBLE : View.GONE);
+
                     List<String> coordinators = $.collect(courseDetails.coordinators, it -> it.lastName + " " + it.firstName);
                     showList(CourseDetailsActivity.this.layoutInflater, courseCoordinators, coordinators, position -> {
                         Coordinator coordinator = courseDetails.coordinators.get(position);
                         LecturerDetailsActivity.showLecturerDatails(CourseDetailsActivity.this, coordinator.userId);
                     });
 
-                    handler.post(() -> scrollView.scrollTo(0, 0));
+                    courseCoordinators.setVisibility(coordinators.size() > 0 ? View.VISIBLE : View.GONE);
+                    courseCoordinatorsLabel.setVisibility(coordinators.size() > 0 ? View.VISIBLE : View.GONE);
 
                     List<String> participants = $.collect(courseDetails.participants, participant -> participant.lastName + " " + participant.firstName);
                     showList(CourseDetailsActivity.this.layoutInflater, courseStudents, participants,
                             position -> StudentDetailsActivity.showStudentDetails(CourseDetailsActivity.this, courseDetails.participants.get(position).userId));
 
-                    courseClassType.setText($.join($.collect(courseDetails.groups, it -> it.classType + ", numer grupy: " + it.groupNumber), "\n"));
+                    courseStudents.setVisibility(participants.size() > 0 ? View.VISIBLE : View.GONE);
+                    courseStudentsLabel.setVisibility(participants.size() > 0 ? View.VISIBLE : View.GONE);
+
+                    handler.post(() -> scrollView.scrollTo(0, 0));
+
                 }
                 handler.postDelayed(() -> {
                     swipeContainer.setRefreshing(false);
@@ -137,6 +163,22 @@ public class CourseDetailsActivity extends BaseActivity {
                 ErrorHandlerUtil.handleError(t);
             }
         });
+    }
+
+    private void setText(TextView textView, TextView label, Spanned text) {
+        textView.setText(text);
+        if (text.toString().length() == 0) {
+            textView.setVisibility(View.GONE);
+            label.setVisibility(View.GONE);
+        }
+    }
+
+    private void setText(TextView textView, TextView label, String text) {
+        textView.setText(text);
+        if (text.length() == 0) {
+            textView.setVisibility(View.GONE);
+            label.setVisibility(View.GONE);
+        }
     }
 
     private Call<KujonResponse<CourseDetails>> getCourseCall(boolean refresh) {

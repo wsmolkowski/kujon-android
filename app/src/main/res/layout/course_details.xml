@@ -68,6 +68,7 @@
                     />
 
                 <TextView
+                    android:id="@+id/lang_label"
                     style="@style/Regular.Label"
                     android:text="Język prowadzenia"/>
 
@@ -78,6 +79,7 @@
                     />
 
                 <TextView
+                    android:id="@+id/is_conducted_label"
                     style="@style/Regular.Label"
                     android:text="Czy jest prowadzony"/>
 
@@ -88,6 +90,7 @@
                     />
 
                 <TextView
+                    android:id="@+id/description_label"
                     style="@style/Regular.Label"
                     android:text="Opis"/>
 
@@ -98,6 +101,7 @@
                     />
 
                 <TextView
+                    android:id="@+id/bibliography_label"
                     style="@style/Regular.Label"
                     android:text="Bibliografia"/>
 
@@ -108,6 +112,7 @@
                     />
 
                 <TextView
+                    android:id="@+id/assessment_criteria_label"
                     style="@style/Regular.Label"
                     android:text="Kryteria oceny"/>
 
@@ -117,6 +122,7 @@
                     tools:text="@string/lorem"/>
 
                 <TextView
+                    android:id="@+id/course_term_name_label"
                     style="@style/Regular.Label"
                     android:text="Zajęcia w cyklu"/>
 
@@ -127,6 +133,7 @@
                     tools:text='Semestr zimowy 2014/15'/>
 
                 <TextView
+                    android:id="@+id/course_class_type_label"
                     style="@style/Regular.Label"
                     android:text="Typ zajęć"/>
 
@@ -136,6 +143,7 @@
                     tools:text='Lorem ipsum'/>
 
                 <TextView
+                    android:id="@+id/course_lecturers_label"
                     style="@style/Regular.Label.Background"
                     android:text="Prowadzący grup"/>
 
@@ -146,6 +154,7 @@
                     tools:text='Lorem ipsum'/>
 
                 <TextView
+                    android:id="@+id/course_coordinators_label"
                     style="@style/Regular.Label.Background"
                     android:text="Koordynatorzy"/>
 
@@ -156,6 +165,7 @@
                     tools:text='Lorem ipsum'/>
 
                 <TextView
+                    android:id="@+id/course_students_label"
                     style="@style/Regular.Label.Background"
                     android:text="Studenci"/>
 
