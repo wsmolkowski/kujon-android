@@ -15,6 +15,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
@@ -91,6 +92,12 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
         progressBar = new ProgressBar(this);
         progressBar.setLayoutParams(layoutParams);
         content = (FrameLayout) findViewById(android.R.id.content);
+    }
+
+    @Override protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        View backView = findViewById(R.id.back);
+        if (backView != null) backView.setOnClickListener(v -> onBackPressed());
     }
 
     public void showProgress(boolean show) {
