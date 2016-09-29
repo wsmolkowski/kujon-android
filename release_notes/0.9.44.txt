@@ -1,0 +1,7 @@
+* #134 strona główna zmniejszenie niebieskiego pola
+* Fix #135 przedmiot poprawki layout
+* Fix  #133 menu - ikonka użytkownika nie ma przeźroczystego tła
+* Fix #120 brak możliwości przejścia do ekranu jeśli nie ma danych
+* Fix #121 dodać wyszukiwanie prac dylopmowych
+* Fix #128 zmiana wywołania usługi /tt/
+* Fix #130 przy wywołaniu /authentication/register możecie dodać dwa nowe parametry: device_type oraz device_id
