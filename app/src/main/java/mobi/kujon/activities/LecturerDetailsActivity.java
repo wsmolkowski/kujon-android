@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
@@ -51,6 +52,8 @@ public class LecturerDetailsActivity extends BaseActivity {
     @Bind(R.id.lecturer_office_hours) TextView lecturerOfficeHours;
     @Bind(R.id.lecturer_interests) TextView lecturerInterests;
     @Bind(R.id.swipeContainer) SwipeRefreshLayout swipeContainer;
+    @Bind(R.id.toolbar_title) TextView toolbarTitle;
+    @Bind(R.id.toolbar) Toolbar toolbar;
 
     @Inject protected KujonUtils utils;
 
@@ -64,7 +67,7 @@ public class LecturerDetailsActivity extends BaseActivity {
         ButterKnife.bind(this);
         KujonApplication.getComponent().inject(this);
         layoutInflater = getLayoutInflater();
-        getSupportActionBar().setTitle(R.string.lecturer_title);
+        toolbarTitle.setText(R.string.lecturer_title);
 
         lecturerId = getIntent().getStringExtra(LECTURER_ID);
         swipeContainer.setOnRefreshListener(() -> loadData(true));

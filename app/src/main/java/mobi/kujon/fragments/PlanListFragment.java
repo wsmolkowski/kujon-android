@@ -41,7 +41,6 @@ import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
 import mobi.kujon.activities.BaseActivity;
 import mobi.kujon.network.json.CalendarEvent;
-import mobi.kujon.network.json.LecturerLong;
 import mobi.kujon.utils.ErrorHandlerUtil;
 import mobi.kujon.utils.EventUtils;
 import mobi.kujon.utils.KujonUtils;
@@ -238,9 +237,9 @@ public class PlanListFragment extends BaseFragment implements EndlessRecyclerVie
         @Override public void onBindViewHolder(ViewHolder holder, int section, int relativePosition, int absolutePosition) {
             CalendarEvent event = coursesInSection(section).get(relativePosition);
             String lecturers = "";
-            if (event.lecturers != null) {
-                lecturers = $.join($.collect(event.lecturers, (LecturerLong it) -> String.format("%s %s %s", it.titles.before, it.firstName, it.lastName)), ", ");
-            }
+//            if (event.lecturers != null) {
+//                lecturers = $.join($.collect(event.lecturers, (LecturerLong it) -> String.format("%s %s %s", it.titles.before, it.firstName, it.lastName)), ", ");
+//            }
             holder.eventName.setText(event.name + "\n" + lecturers);
             holder.time.setText(event.getHoursFromTo("\n") + "\ns. " + event.roomNumber);
             holder.section.setVisibility(View.GONE);

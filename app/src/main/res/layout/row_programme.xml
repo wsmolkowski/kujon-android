@@ -4,14 +4,13 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:orientation="vertical"
-              android:padding="16dp">
+              >
 
     <TextView
         android:id="@+id/description"
-        style="@style/entry"
+        style="@style/Regular.Entry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textStyle="bold"
         tools:text="Międzykierunkowe Studia Ekonomiczno-Menadżerskie, stacjonarne, pierwszego stopnia"/>
 
     <LinearLayout
@@ -22,45 +21,45 @@
 
         <TextView
             android:id="@+id/id"
-            style="@style/entry"
+            style="@style/Regular.Entry"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             tools:text="S1-MSEMen"
-            android:textSize="12sp"
+            android:textSize="11sp"
             />
 
         <TextView
             android:id="@+id/level_of_studies"
-            style="@style/entry"
+            style="@style/Regular.Entry"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
             android:layout_weight="2"
             tools:text="Pierwszego stopnia"
-            android:textSize="12sp"
+            android:textSize="11sp"
             />
 
         <TextView
             android:id="@+id/mode_of_studies"
-            style="@style/entry"
+            style="@style/Regular.Entry"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
             android:layout_weight="1"
             tools:text="Stacjonarne"
-            android:textSize="12sp"
+            android:textSize="11sp"
             />
 
         <TextView
             android:id="@+id/duration"
-            style="@style/entry"
+            style="@style/Regular.Entry"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
             android:layout_weight="1"
             tools:text="3-letnie"
-            android:textSize="12sp"
+            android:textSize="11sp"
             />
 
     </LinearLayout>

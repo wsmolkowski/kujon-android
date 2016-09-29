@@ -24,6 +24,7 @@ import mobi.kujon.R;
 import mobi.kujon.network.KujonBackendApi;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.utils.ErrorHandlerUtil;
+import mobi.kujon.utils.SimpleDividerItemDecoration;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -50,6 +51,7 @@ public abstract class AbstractSearchActivity<S, T> extends BaseActivity implemen
         query = getIntent().getStringExtra(QUERY);
         endlessRecyclerViewAdapter = new EndlessRecyclerViewAdapter(this, adapter, this);
         recyclerView.setAdapter(endlessRecyclerViewAdapter);
+        recyclerView.addItemDecoration(new SimpleDividerItemDecoration(this));
         getSupportActionBar().setTitle("Wyniki wyszukiwania");
     }
 
@@ -86,6 +88,10 @@ public abstract class AbstractSearchActivity<S, T> extends BaseActivity implemen
 
     protected abstract void handeClick(T item);
 
+    protected boolean isClickable() {
+        return true;
+    }
+
     protected abstract String getMatch(T item);
 
     protected class Adapter extends RecyclerView.Adapter<ViewHolder> {
@@ -100,8 +106,8 @@ public abstract class AbstractSearchActivity<S, T> extends BaseActivity implemen
         @Override public void onBindViewHolder(ViewHolder holder, int position) {
             T item = items.get(position);
             holder.lecturerName.setText(Html.fromHtml(getMatch(item)));
+            if (!isClickable()) holder.lecturerName.setCompoundDrawables(null, null, null, null);
             holder.item = item;
-            holder.itemView.setBackgroundResource(position % 2 == 1 ? R.color.grey : android.R.color.white);
         }
 
         @Override public int getItemCount() {

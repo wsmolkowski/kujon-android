@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.net.http.SslError;
 import android.os.Bundle;
 import android.os.Message;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
@@ -165,8 +166,9 @@ public class UsoswebLoginActivity extends BaseActivity {
         KujonApplication.getApplication().getLoginStatus().onSuccessTask(task -> {
             GoogleSignInResult signInResult = task.getResult();
             GoogleSignInAccount account = signInResult.getSignInAccount();
-            String url = String.format(API_URL + "authentication/register?email=%s&token=%s&usos_id=%s&type=GOOGLE", account.getEmail(), account.getIdToken(),
-                    usos.usosId);
+            String deviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+            String url = String.format(API_URL + "authentication/register?email=%s&token=%s&usos_id=%s&type=GOOGLE&device_type=ANDROID&device_id=%s",
+                    account.getEmail(), account.getIdToken(), usos.usosId, deviceId);
             log.info("Loading urs: " + url);
             webView.loadUrl(url);
             return null;

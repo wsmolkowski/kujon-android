@@ -15,8 +15,8 @@ android {
         applicationId "mobi.kujon"
         minSdkVersion 16
         targetSdkVersion 21
-        versionCode 48
-        versionName "0.9.42"
+        versionCode 49
+        versionName "0.9.43"
 
         manifestPlaceholders = [manifestApplicationId          : "${applicationId}",
                                 onesignal_app_id               : "f01a20f9-bbe7-4c89-a017-bf8930c61cf4",
@@ -37,8 +37,8 @@ android {
     buildTypes {
         debug {
             applicationIdSuffix '.debug'
-//            buildConfigField "String", "API_URL", "\"https://api-demo.kujon.mobi/\""
-            buildConfigField "String", "API_URL", "\"https://api.kujon.mobi/\""
+            buildConfigField "String", "API_URL", "\"https://api-demo.kujon.mobi/\""
+//            buildConfigField "String", "API_URL", "\"https://api.kujon.mobi/\""
         }
         release {
             buildConfigField "String", "API_URL", "\"https://api.kujon.mobi/\""

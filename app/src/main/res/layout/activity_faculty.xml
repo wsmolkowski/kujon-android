@@ -1,112 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/scrollView"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
+        <TextView
+            android:id="@+id/toolbar_title"
+            style="@style/Semibold"
+            tools:text="Toolbar Title"
+            />
+    </android.support.v7.widget.Toolbar>
+
+
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp">
+
+                <ImageView
+                    android:id="@+id/logo"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    tools:src="@drawable/user_placeholder"/>
+
+                <TextView
+                    android:id="@+id/faculty_name"
+                    style="@style/Semibold.Dark"
+                    android:layout_marginLeft="8dp"
+                    tools:text="Katedra Hungarystyki"/>
+
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/faculty_name"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:textColor="@android:color/black"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                tools:text="Katedra Hungarystyki"/>
+                style="@style/Regular.Label"
+                android:text="Adres"
+                />
 
-            <ImageView
-                android:id="@+id/logo"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:layout_margin="8dp"
-                tools:src="@drawable/user_placeholder"/>
+            <TextView
+                android:id="@+id/postal_address"
+                style="@style/Regular.Entry"
+                android:drawableRight="@drawable/place_black"
+                tools:text='Dobra 55, 00-312 Warszawa (\u015ar\u00f3dmie\u015bcie)"'/>
+
+            <TextView
+                style="@style/Regular.Label"
+                android:text="Telefon"/>
+
+            <TextView
+                android:id="@+id/phone"
+                style="@style/Regular.Entry"
+                android:autoLink="phone"
+                android:drawableRight="@drawable/telephone"
+                tools:text='123456789'/>
+
+            <TextView
+                style="@style/Regular.Label"
+                android:text="Strona"/>
+
+            <TextView
+                android:id="@+id/homepage"
+                style="@style/Regular.Entry"
+                android:autoLink="web"
+                tools:text='http://www.hungarystyka.uw.edu.pl/'/>
+
+            <TextView
+                style="@style/Regular.Label"
+                android:text="Statystyki"/>
+
+            <TextView
+                android:id="@+id/programmeCount"
+                style="@style/Regular.Entry"
+                android:layout_marginTop="8dp"
+                tools:text='Liczba programów: 39'/>
+
+            <TextView
+                android:id="@+id/courseCount"
+                style="@style/Regular.Entry"
+                android:layout_marginTop="8dp"
+                tools:text='Liczba kursów: 445'/>
+
+            <TextView
+                android:id="@+id/staffCount"
+                style="@style/Regular.Entry"
+                android:layout_marginTop="8dp"
+                tools:text='Liczba pracowników: 445'/>
+
+            <TextView
+                style="@style/Regular.Label"
+                android:text="Jednostki nadrzędne"/>
+
+            <LinearLayout
+                android:id="@+id/parent_faculties"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="8dp"
+                android:orientation="vertical"
+                tools:background="@android:color/holo_green_dark"
+                tools:minHeight="100dp"
+                />
 
         </LinearLayout>
 
-        <TextView
-            style="@style/label"
-            android:text="Adres"
-            />
-
-        <TextView
-            android:id="@+id/postal_address"
-            style="@style/entry"
-            android:drawableRight="@drawable/place_black"
-            tools:text='Dobra 55, 00-312 Warszawa (\u015ar\u00f3dmie\u015bcie)"'/>
-
-        <TextView
-            style="@style/label"
-            android:text="Telefon"/>
-
-        <TextView
-            android:id="@+id/phone"
-            style="@style/entry"
-            android:autoLink="phone"
-            tools:text='123456789'/>
-
-        <TextView
-            style="@style/label"
-            android:text="Strona"/>
-
-        <TextView
-            android:id="@+id/homepage"
-            style="@style/entry"
-            android:autoLink="web"
-            tools:text='http://www.hungarystyka.uw.edu.pl/'/>
-
-        <TextView
-            style="@style/label"
-            android:text="Statystyki"/>
-
-        <TextView
-            android:id="@+id/programmeCount"
-            style="@style/entry"
-            android:layout_marginTop="8dp"
-            tools:text='Liczba programów: 39'/>
-
-        <TextView
-            android:id="@+id/courseCount"
-            style="@style/entry"
-            android:layout_marginTop="8dp"
-            tools:text='Liczba kursów: 445'/>
-
-        <TextView
-            android:id="@+id/staffCount"
-            style="@style/entry"
-            android:layout_marginTop="8dp"
-            tools:text='Liczba pracowników: 445'/>
-
-        <TextView
-            style="@style/label"
-            android:text="Jednostki nadrzędne"/>
-
-        <LinearLayout
-            android:id="@+id/parent_faculties"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:orientation="vertical"
-            tools:minHeight="100dp"
-            tools:background="@android:color/holo_green_dark"
-            />
-
-
-
-    </LinearLayout>
-
-</ScrollView>
+    </ScrollView>
+</LinearLayout>

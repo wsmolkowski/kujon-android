@@ -39,13 +39,16 @@
             android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".activities.CourseDetailsActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/ToolbarAppTheme"/>
         <activity
             android:name=".activities.LecturerDetailsActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/ToolbarAppTheme"/>
         <activity
             android:name=".activities.StudentDetailsActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/ToolbarAppTheme"/>
         <activity
             android:name=".activities.ImageActivity"
             android:screenOrientation="portrait"/>
@@ -54,10 +57,12 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".activities.FacultyDetailsActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/ToolbarAppTheme"/>
         <activity
             android:name=".activities.PreferencesActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/ToolbarAppTheme"/>
         <activity
             android:name=".activities.WebViewAcitivty"
             android:screenOrientation="portrait"/>
@@ -81,6 +86,10 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".activities.ProgrammeSearchActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".activities.ThesesSearchActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".activities.ErrorActivity"

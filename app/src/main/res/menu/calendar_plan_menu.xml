@@ -12,5 +12,6 @@
         android:id="@+id/switch_to_list"
         android:icon="@drawable/view_list"
         android:title="List"
+        android:visible="false"
         app:showAsAction="ifRoom"/>
 </menu>

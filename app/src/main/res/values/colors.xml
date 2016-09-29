@@ -18,4 +18,5 @@
     <color name="pale_grey">#eff2f8</color>
     <color name="pale_grey2">#F7F8FB</color>
     <color name="teal_blue">#0080b3</color>
+    <color name="event_color">#d9f1f7</color>
 </resources>

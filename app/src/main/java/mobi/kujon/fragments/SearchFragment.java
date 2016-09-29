@@ -28,12 +28,14 @@ import mobi.kujon.activities.CoursesSearchActivity;
 import mobi.kujon.activities.FacultySearchActivity;
 import mobi.kujon.activities.ProgrammeSearchActivity;
 import mobi.kujon.activities.StudentSearchActivity;
+import mobi.kujon.activities.ThesesSearchActivity;
 import mobi.kujon.network.KujonBackendApi;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.network.json.gen.CoursersSearchResult;
 import mobi.kujon.network.json.gen.FacultiesSearchResult;
 import mobi.kujon.network.json.gen.ProgrammeSearchResult;
 import mobi.kujon.network.json.gen.StudentSearchResult;
+import mobi.kujon.network.json.gen.ThesesSearchResult;
 import mobi.kujon.utils.ErrorHandlerUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -54,6 +56,9 @@ public class SearchFragment extends BaseFragment {
 
     @Bind(R.id.programme_query) EditText programmeQuery;
     @Bind(R.id.programme_search_message) TextView programmeSearchMessage;
+
+    @Bind(R.id.thesis_query) EditText thesisQuery;
+    @Bind(R.id.thesis_search_message) TextView thesisSearchMessage;
 
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -84,6 +89,11 @@ public class SearchFragment extends BaseFragment {
         ProgrammeSearchActivity.start(getActivity(), programmeQuery.getText().toString());
     }
 
+    @OnClick(R.id.thesis_search)
+    public void thesisSearch() {
+        ThesesSearchActivity.start(getActivity(), thesisQuery.getText().toString());
+    }
+
     @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         ((BaseActivity) getActivity()).setToolbarTitle(R.string.search);
@@ -92,11 +102,13 @@ public class SearchFragment extends BaseFragment {
         facultyQuery.addTextChangedListener(getTextWatcher(facultySearchMessage, query -> kujonBackendApi.searchFaculty(query, 0)));
         courseQuery.addTextChangedListener(getTextWatcher(courseSearchMessage, query -> kujonBackendApi.searchCourses(query, 0)));
         programmeQuery.addTextChangedListener(getTextWatcher(programmeSearchMessage, query -> kujonBackendApi.searchProgrammes(query, 0)));
+        thesisQuery.addTextChangedListener(getTextWatcher(thesisSearchMessage, query -> kujonBackendApi.searchTheses(query, 0)));
 
         studentQuery.setOnEditorActionListener(startSearch(this::studentSearch));
         facultyQuery.setOnEditorActionListener(startSearch(this::facultySearch));
         courseQuery.setOnEditorActionListener(startSearch(this::courseSearch));
         programmeQuery.setOnEditorActionListener(startSearch(this::programmeSearch));
+        thesisQuery.setOnEditorActionListener(startSearch(this::thesisSearch));
     }
 
     @NonNull private TextView.OnEditorActionListener startSearch(Runnable runnable) {
@@ -115,6 +127,7 @@ public class SearchFragment extends BaseFragment {
         if (data instanceof FacultiesSearchResult) return ((FacultiesSearchResult) data).items.size();
         if (data instanceof CoursersSearchResult) return ((CoursersSearchResult) data).items.size();
         if (data instanceof ProgrammeSearchResult) return ((ProgrammeSearchResult) data).items.size();
+        if (data instanceof ThesesSearchResult) return ((ThesesSearchResult) data).items.size();
 
         return 0;
     }

@@ -40,7 +40,7 @@ import mobi.kujon.network.json.Term2;
 import mobi.kujon.network.json.User;
 import mobi.kujon.network.json.Usos;
 import mobi.kujon.network.json.gen.Faculty2;
-import mobi.kujon.network.json.gen.Thesis;
+import mobi.kujon.network.json.gen.Thesis_;
 import mobi.kujon.ui.CircleTransform;
 import mobi.kujon.utils.CommonUtils;
 import mobi.kujon.utils.ErrorHandlerUtil;
@@ -76,7 +76,7 @@ public class UserInfoFragment extends BaseFragment {
     private Call<KujonResponse<User>> usersCall;
     private Call<KujonResponse<List<Faculty2>>> facultiesCall;
     private Call<KujonResponse<List<Term2>>> termsCall;
-    private Call<KujonResponse<List<Thesis>>> thesesCall;
+    private Call<KujonResponse<List<Thesis_>>> thesesCall;
 
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -156,7 +156,7 @@ public class UserInfoFragment extends BaseFragment {
                                                 programmeFull.id, programmeFull.modeOfStudies, programmeFull.duration, programmeFull.levelOfStudies, programmeFull.description));
 
                                         if (programmeFull.ectsUsedSum != null) {
-                                            programmeDesc.append(String.format("ECTS: %s", programmeFull.ectsUsedSum));
+                                            programmeDesc.append(String.format("\nECTS: %s", programmeFull.ectsUsedSum));
                                         }
                                         dlgAlert.setMessage(programmeDesc.toString());
                                         dlgAlert.setCancelable(false);
@@ -180,7 +180,7 @@ public class UserInfoFragment extends BaseFragment {
             }
 
             @Override public void onFailure(Call<KujonResponse<User>> call, Throwable t) {
-                activity.showProgress(true);
+                activity.showProgress(false);
                 swipeContainer.setRefreshing(false);
                 ErrorHandlerUtil.handleError(t);
             }
@@ -224,16 +224,16 @@ public class UserInfoFragment extends BaseFragment {
         });
 
         thesesCall = refresh ? kujonBackendApi.thesesRefresh() : kujonBackendApi.theses();
-        thesesCall.enqueue(new Callback<KujonResponse<List<Thesis>>>() {
+        thesesCall.enqueue(new Callback<KujonResponse<List<Thesis_>>>() {
             @Override
-            public void onResponse(Call<KujonResponse<List<Thesis>>> call, Response<KujonResponse<List<Thesis>>> response) {
+            public void onResponse(Call<KujonResponse<List<Thesis_>>> call, Response<KujonResponse<List<Thesis_>>> response) {
                 if (ErrorHandlerUtil.handleResponse(response)) {
-                    List<Thesis> data = response.body().data;
+                    List<Thesis_> data = response.body().data;
                     UserInfoFragment.this.theses.setText(String.format("Prace dyplomowe (%s)", data.size()));
                 }
             }
 
-            @Override public void onFailure(Call<KujonResponse<List<Thesis>>> call, Throwable t) {
+            @Override public void onFailure(Call<KujonResponse<List<Thesis_>>> call, Throwable t) {
                 ErrorHandlerUtil.handleError(t);
             }
         });

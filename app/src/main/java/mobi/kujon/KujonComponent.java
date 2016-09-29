@@ -17,6 +17,7 @@ import mobi.kujon.activities.PreferencesActivity;
 import mobi.kujon.activities.ProgrammeSearchActivity;
 import mobi.kujon.activities.StudentDetailsActivity;
 import mobi.kujon.activities.StudentSearchActivity;
+import mobi.kujon.activities.ThesesSearchActivity;
 import mobi.kujon.activities.UsosesActivity;
 import mobi.kujon.activities.UsoswebLoginActivity;
 import mobi.kujon.activities.WebViewAcitivty;
@@ -47,6 +48,8 @@ public interface KujonComponent {
     void inject(FacultySearchActivity activity);
 
     void inject(ProgrammeSearchActivity activity);
+
+    void inject(ThesesSearchActivity activity);
 
     void inject(CongratulationsActivity activity);
 
