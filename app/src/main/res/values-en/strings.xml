@@ -42,4 +42,9 @@
     </string-array>
     <string name="search">Search</string>
     <string name="search_student_hint">Find student or employee</string>
+    <string name="congratulations">Congratulations. You managed to lo in to your account at %1$s</string>
+    <string name="grades">Grades</string>
+    <string name="lectures">Courses</string>
+    <string name="now_you_can">Now you can check your courses, grades, schedules...</string>
+    <string name="teachers">Teachers</string>
 </resources>

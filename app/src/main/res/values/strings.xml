@@ -37,7 +37,7 @@
     <string name="lectures">Przedmioty</string>
     <string name="grades">Oceny</string>
     <string name="teachers">Wykładowcy</string>
-    <string name="no_item_decorator">NO_ITEM_DECORATOR</string>
+    <string name="no_item_decorator" translatable="false">NO_ITEM_DECORATOR</string>
 
     <string-array name="months">
         <item>Styczeń</item>
