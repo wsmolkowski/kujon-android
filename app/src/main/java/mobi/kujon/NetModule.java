@@ -93,8 +93,8 @@ public class NetModule {
 
             Request originalRequest = chain.request();
             Log.i(TAG, "AuthenticationInterceptor: modifying request" + originalRequest.url());
-            String email = null;
-            String token = null;
+            String email = "";
+            String token = "";
             if (loginStatus.isCompleted() && loginStatus.getResult() != null && loginStatus.getResult().getSignInAccount() != null) {
                 GoogleSignInAccount account = loginStatus.getResult().getSignInAccount();
                 email = account.getEmail();
