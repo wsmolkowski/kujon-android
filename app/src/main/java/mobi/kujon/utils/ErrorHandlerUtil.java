@@ -1,6 +1,7 @@
 package mobi.kujon.utils;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -21,6 +22,7 @@ import java.util.Map;
 import bolts.Continuation;
 import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
+import mobi.kujon.activities.LoginActivity;
 import mobi.kujon.network.json.KujonResponse;
 import retrofit2.Response;
 
@@ -93,10 +95,16 @@ public class ErrorHandlerUtil {
         }
 
         Integer code = response.body().code;
-        if (code != null && code == 504) {
-            showErrorInRed(response.body().message);
-            Crashlytics.logException(new Exception(response.body() + " " + response.raw()));
-            return false;
+        if (code != null) {
+            if (code == 504) {
+                showErrorInRed(response.body().message);
+                Crashlytics.logException(new Exception(response.body() + " " + response.raw()));
+                return false;
+            } else if (code == 401) {
+                Intent intent = new Intent(KujonApplication.getApplication(), LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                KujonApplication.getApplication().startActivity(intent);
+            }
         }
 
         if (!response.body().isSuccessful()) {
