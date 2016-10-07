@@ -149,22 +149,24 @@ public class UserInfoFragment extends BaseFragment {
                                     } else {
                                         Programme prog = programmeOptional.get();
                                         Programme_ programmeFull = prog.programme;
-                                        AlertDialog.Builder dlgAlert = new AlertDialog.Builder(getActivity());
-                                        dlgAlert.setTitle("Kierunek: " + programmeFull.description.split(",")[0]);
-                                        StringBuilder programmeDesc = new StringBuilder();
-                                        programmeDesc.append(String.format("identyfikator: %s\ntryb: %s\nczas trwania: %s\npoziom: %s\nopis: %s",
-                                                programmeFull.id, programmeFull.modeOfStudies, programmeFull.duration, programmeFull.levelOfStudies, programmeFull.description));
+                                        if (getActivity() != null) {
+                                            AlertDialog.Builder dlgAlert = new AlertDialog.Builder(getActivity());
+                                            dlgAlert.setTitle("Kierunek: " + programmeFull.description.split(",")[0]);
+                                            StringBuilder programmeDesc = new StringBuilder();
+                                            programmeDesc.append(String.format("identyfikator: %s\ntryb: %s\nczas trwania: %s\npoziom: %s\nopis: %s",
+                                                    programmeFull.id, programmeFull.modeOfStudies, programmeFull.duration, programmeFull.levelOfStudies, programmeFull.description));
 
-                                        if (programmeFull.ectsUsedSum != null) {
-                                            programmeDesc.append(String.format("\nECTS: %s", programmeFull.ectsUsedSum));
+                                            if (programmeFull.ectsUsedSum != null) {
+                                                programmeDesc.append(String.format("\nECTS: %s", programmeFull.ectsUsedSum));
+                                            }
+                                            dlgAlert.setMessage(programmeDesc.toString());
+                                            dlgAlert.setCancelable(false);
+                                            dlgAlert.setNegativeButton("OK", (dialog, which) -> {
+                                                dialog.dismiss();
+                                            });
+                                            alertDialog = dlgAlert.create();
+                                            alertDialog.show();
                                         }
-                                        dlgAlert.setMessage(programmeDesc.toString());
-                                        dlgAlert.setCancelable(false);
-                                        dlgAlert.setNegativeButton("OK", (dialog, which) -> {
-                                            dialog.dismiss();
-                                        });
-                                        alertDialog = dlgAlert.create();
-                                        alertDialog.show();
                                     }
                                 }
                             }
@@ -260,9 +262,13 @@ public class UserInfoFragment extends BaseFragment {
         swipeContainer.setRefreshing(false);
         swipeContainer.destroyDrawingCache();
         swipeContainer.clearAnimation();
-        usersCall.cancel();
-        facultiesCall.cancel();
-        termsCall.cancel();
+        cancelCall(usersCall);
+        cancelCall(facultiesCall);
+        cancelCall(termsCall);
+    }
+
+    private void cancelCall(Call call) {
+        if (call != null) call.cancel();
     }
 
     private void showUsosLogo(String usosId, ImageView imageView) {
