@@ -100,7 +100,7 @@ public class StudentInfoFragment extends BaseFragment {
         users.enqueue(new Callback<KujonResponse<User>>() {
             @Override
             public void onResponse(Call<KujonResponse<User>> call, Response<KujonResponse<User>> response) {
-                swipeContainer.setRefreshing(false);
+                if (swipeContainer != null) swipeContainer.setRefreshing(false);
                 if (ErrorHandlerUtil.handleResponse(response)) {
                     user = response.body().data;
                     String name = user.first_name + " " + user.last_name;
