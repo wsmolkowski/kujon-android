@@ -24,6 +24,7 @@ import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.BindColor;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import mobi.kujon.R;
@@ -35,6 +36,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.text.TextUtils.isEmpty;
+
 public class UsosesActivity extends BaseActivity {
 
     public static final int NUMBER_OF_CLICKS = 5;
@@ -44,6 +47,10 @@ public class UsosesActivity extends BaseActivity {
     @Bind(R.id.recyclerView) RecyclerView recyclerView;
     List<Long> toolbarClickTimestamps = new ArrayList<>();
     @Bind(R.id.toolbar_title) TextView toolbarTitle;
+
+    @BindColor(R.color.dark) int colorDark;
+    @BindColor(R.color.opacityBlack) int colorOpacityBlack;
+
     private UsosesAdapter adapter;
 
     private boolean demoEnabled = false;
@@ -68,7 +75,7 @@ public class UsosesActivity extends BaseActivity {
 
     private void requestUsoses() {
         showProgress(true);
-        kujonBackendApi.usoses().enqueue(new Callback<KujonResponse<List<Usos>>>() {
+        kujonBackendApi.usosesAll().enqueue(new Callback<KujonResponse<List<Usos>>>() {
             @Override public void onResponse(Call<KujonResponse<List<Usos>>> call, Response<KujonResponse<List<Usos>>> response) {
                 showProgress(false);
                 if (ErrorHandlerUtil.handleResponse(response)) {
@@ -139,8 +146,28 @@ public class UsosesActivity extends BaseActivity {
         @Override public void onBindViewHolder(UsosViewHolder holder, int position) {
             Usos usos = filteredUsoses().get(position);
             holder.name.setText(usos.name);
-            holder.usos = usos;
+            holder.name.setTextColor(usos.enabled ? colorDark : colorOpacityBlack);
             picasso.load(usos.logo).into(holder.logo);
+
+            holder.rootView.setOnClickListener(v -> {
+                if (usos.enabled) {
+                    AlertDialog.Builder dlgAlert = new AlertDialog.Builder(UsosesActivity.this);
+                    dlgAlert.setMessage("Zostaniesz teraz przekierowany do strony " + usos.name + ", aby zalogować się na Twoje konto w USOS");
+                    dlgAlert.setCancelable(false);
+                    dlgAlert.setPositiveButton("OK", (dialog, which) -> {
+                        Intent intent = new Intent(UsosesActivity.this, UsoswebLoginActivity.class);
+                        intent.putExtra(UsoswebLoginActivity.USOS_POJO, gson.toJson(usos));
+                        startActivityForResult(intent, USOS_LOGIN_REQUEST_CODE);
+                    });
+                    dlgAlert.setNegativeButton("Cofnij", (dialog, which) -> {
+                        dialog.dismiss();
+                    });
+                    alertDialog = dlgAlert.create();
+                    alertDialog.show();
+                } else {
+                    Toast.makeText(UsosesActivity.this, !isEmpty(usos.comment) ? usos.comment : "Ta uczelnia jest aktualnie niedostępna", Toast.LENGTH_LONG).show();
+                }
+            });
         }
 
         @Override public int getItemCount() {
@@ -149,7 +176,7 @@ public class UsosesActivity extends BaseActivity {
 
         public void setItems(List<Usos> items) {
             if (items != null) {
-                this.items = items;
+                this.items = $.sortBy(items, item -> item.name);
                 notifyDataSetChanged();
             }
         }
@@ -167,26 +194,12 @@ public class UsosesActivity extends BaseActivity {
 
         @Bind(R.id.usos_name) TextView name;
         @Bind(R.id.usos_logo) ImageView logo;
-        Usos usos;
+        View rootView;
 
         public UsosViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            itemView.setOnClickListener(v -> {
-                AlertDialog.Builder dlgAlert = new AlertDialog.Builder(UsosesActivity.this);
-                dlgAlert.setMessage("Zostaniesz teraz przekierowany do strony " + usos.name + ", aby zalogować się na Twoje konto w USOS");
-                dlgAlert.setCancelable(false);
-                dlgAlert.setPositiveButton("OK", (dialog, which) -> {
-                    Intent intent = new Intent(UsosesActivity.this, UsoswebLoginActivity.class);
-                    intent.putExtra(UsoswebLoginActivity.USOS_POJO, gson.toJson(usos));
-                    startActivityForResult(intent, USOS_LOGIN_REQUEST_CODE);
-                });
-                dlgAlert.setNegativeButton("Cofnij", (dialog, which) -> {
-                    dialog.dismiss();
-                });
-                alertDialog = dlgAlert.create();
-                alertDialog.show();
-            });
+            rootView = itemView;
         }
     }
 

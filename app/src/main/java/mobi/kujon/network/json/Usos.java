@@ -11,6 +11,7 @@ public class Usos {
     public String logo;
     public @SerializedName("consumer_key") String consumerKey;
     public boolean enabled;
+    public String comment;
 
     @Override public String toString() {
         return "Usos{" +

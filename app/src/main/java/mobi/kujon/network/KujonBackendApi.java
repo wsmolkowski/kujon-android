@@ -37,6 +37,8 @@ public interface KujonBackendApi {
 
     @GET("usoses") Call<KujonResponse<List<Usos>>> usoses();
 
+    @GET("usosesall") Call<KujonResponse<List<Usos>>> usosesAll();
+
     @GET("config") Call<KujonResponse<Config>> config();
 
     @GET("users") Call<KujonResponse<User>> users();
