@@ -176,7 +176,7 @@ public class UsosesActivity extends BaseActivity {
 
         public void setItems(List<Usos> items) {
             if (items != null) {
-                this.items = $.sortBy(items, item -> item.name);
+                this.items = items;
                 notifyDataSetChanged();
             }
         }
