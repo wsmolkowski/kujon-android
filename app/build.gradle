@@ -71,12 +71,7 @@ android {
         def appName = 'Kujon'
 
         variant.outputs.each { output ->
-            def newApkName
-            if (output.zipAlign) {
-                newApkName = "${appName}-${output.baseName}-${variant.versionName}_${variant.versionCode}.apk"
-            } else {
-                newApkName = "${appName}-${output.baseName}-${variant.versionName}_${variant.versionCode}-unaligned.apk"
-            }
+            def newApkName = "${appName}-${output.baseName}-${variant.versionName}_${variant.versionCode}.apk"
             output.outputFile = new File(output.outputFile.parent, newApkName)
         }
     }

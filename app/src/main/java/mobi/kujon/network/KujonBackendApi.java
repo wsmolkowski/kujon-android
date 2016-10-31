@@ -41,9 +41,9 @@ public interface KujonBackendApi {
 
     @GET("config") Call<KujonResponse<Config>> config();
 
-    @GET("users") Call<KujonResponse<User>> users();
+    @GET("usersinfoall") Call<KujonResponse<User>> users();
 
-    @GET("users") @Headers(X_KUJONREFRESH_TRUE) Call<KujonResponse<User>> usersRefresh();
+    @GET("usersinfoall") @Headers(X_KUJONREFRESH_TRUE) Call<KujonResponse<User>> usersRefresh();
 
     @GET("users/{userId}") Call<KujonResponse<User>> users(@Path("userId") String userId);
 

@@ -6,6 +6,9 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
+import mobi.kujon.network.json.gen.Faculty2;
+import mobi.kujon.network.json.gen.Thesis_;
+
 public class User {
 
     @SerializedName("picture")
@@ -53,5 +56,18 @@ public class User {
     @SerializedName("user_email")
     @Expose
     public Object user_email;
+    @SerializedName("theses")
+    @Expose
+    public List<Thesis_> theses;
+    @SerializedName("terms")
+    @Expose
+    public List<Term2> terms;
+    @SerializedName("programmes")
+    @Expose
+    public List<Programme> programmes;
+    @SerializedName("faculties")
+    @Expose
+    public List<Faculty2> faculties;
+
 
 }
