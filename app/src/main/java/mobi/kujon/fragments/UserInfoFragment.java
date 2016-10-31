@@ -36,11 +36,9 @@ import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.network.json.Programme;
 import mobi.kujon.network.json.Programme_;
 import mobi.kujon.network.json.StudentProgramme;
-import mobi.kujon.network.json.Term2;
 import mobi.kujon.network.json.User;
 import mobi.kujon.network.json.Usos;
 import mobi.kujon.network.json.gen.Faculty2;
-import mobi.kujon.network.json.gen.Thesis_;
 import mobi.kujon.ui.CircleTransform;
 import mobi.kujon.utils.CommonUtils;
 import mobi.kujon.utils.ErrorHandlerUtil;
@@ -74,9 +72,6 @@ public class UserInfoFragment extends BaseFragment {
     private AlertDialog alertDialog;
     private User user;
     private Call<KujonResponse<User>> usersCall;
-    private Call<KujonResponse<List<Faculty2>>> facultiesCall;
-    private Call<KujonResponse<List<Term2>>> termsCall;
-    private Call<KujonResponse<List<Thesis_>>> thesesCall;
 
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -134,108 +129,52 @@ public class UserInfoFragment extends BaseFragment {
                     List<String> collect = $.collect(user.student_programmes, it -> it.programme.description.split(",")[0]);
                     studentProgrammes.removeAllViews();
                     CommonUtils.showList(activity.getLayoutInflater(), studentProgrammes, collect, position -> {
-                        activity.showProgress(true);
                         StudentProgramme studentProgramme = user.student_programmes.get(position);
                         Programme programme = studentProgramme.programme;
-                        kujonBackendApi.programmes().enqueue(new Callback<KujonResponse<List<Programme>>>() {
-                            @Override
-                            public void onResponse(Call<KujonResponse<List<Programme>>> call, Response<KujonResponse<List<Programme>>> response) {
-                                activity.showProgress(false);
-                                if (ErrorHandlerUtil.handleResponse(response)) {
-                                    List<Programme> data = response.body().data;
-                                    Optional<Programme> programmeOptional = $.find(data, it -> it.programme.id.equals(programme.id));
-                                    if (!programmeOptional.isPresent()) {
-                                        Toast.makeText(KujonApplication.getApplication(), "Brak opisu programu", Toast.LENGTH_SHORT).show();
-                                    } else {
-                                        Programme prog = programmeOptional.get();
-                                        Programme_ programmeFull = prog.programme;
-                                        if (getActivity() != null) {
-                                            AlertDialog.Builder dlgAlert = new AlertDialog.Builder(getActivity());
-                                            dlgAlert.setTitle("Kierunek: " + programmeFull.description.split(",")[0]);
-                                            StringBuilder programmeDesc = new StringBuilder();
-                                            programmeDesc.append(String.format("identyfikator: %s\ntryb: %s\nczas trwania: %s\npoziom: %s\nopis: %s",
-                                                    programmeFull.id, programmeFull.modeOfStudies, programmeFull.duration, programmeFull.levelOfStudies, programmeFull.description));
 
-                                            if (programmeFull.ectsUsedSum != null) {
-                                                programmeDesc.append(String.format("\nECTS: %s", programmeFull.ectsUsedSum));
-                                            }
-                                            dlgAlert.setMessage(programmeDesc.toString());
-                                            dlgAlert.setCancelable(false);
-                                            dlgAlert.setNegativeButton("OK", (dialog, which) -> {
-                                                dialog.dismiss();
-                                            });
-                                            alertDialog = dlgAlert.create();
-                                            alertDialog.show();
-                                        }
-                                    }
+                        List<Programme> data = user.programmes;
+                        Optional<Programme> programmeOptional = $.find(data, it -> it.programme.id.equals(programme.id));
+                        if (!programmeOptional.isPresent()) {
+                            Toast.makeText(KujonApplication.getApplication(), "Brak opisu programu", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Programme prog = programmeOptional.get();
+                            Programme_ programmeFull = prog.programme;
+                            if (getActivity() != null) {
+                                AlertDialog.Builder dlgAlert = new AlertDialog.Builder(getActivity());
+                                dlgAlert.setTitle("Kierunek: " + programmeFull.description.split(",")[0]);
+                                StringBuilder programmeDesc = new StringBuilder();
+                                programmeDesc.append(String.format("identyfikator: %s\ntryb: %s\nczas trwania: %s\npoziom: %s\nopis: %s",
+                                        programmeFull.id, programmeFull.modeOfStudies, programmeFull.duration, programmeFull.levelOfStudies, programmeFull.description));
+
+                                if (programmeFull.ectsUsedSum != null) {
+                                    programmeDesc.append(String.format("\nECTS: %s", programmeFull.ectsUsedSum));
                                 }
+                                dlgAlert.setMessage(programmeDesc.toString());
+                                dlgAlert.setCancelable(false);
+                                dlgAlert.setNegativeButton("OK", (dialog, which) -> {
+                                    dialog.dismiss();
+                                });
+                                alertDialog = dlgAlert.create();
+                                alertDialog.show();
                             }
-
-                            @Override
-                            public void onFailure(Call<KujonResponse<List<Programme>>> call, Throwable t) {
-                                activity.showProgress(true);
-                                ErrorHandlerUtil.handleError(t);
-                            }
-                        });
+                        }
                     });
+
+                    List<Faculty2> faculties = user.faculties;
+                    List<String> facultyNames = $.collect(faculties, it -> it.name);
+                    studentFaculties.removeAllViews();
+                    CommonUtils.showList(activity.getLayoutInflater(), studentFaculties, facultyNames, position -> {
+                        FacultyDetailsActivity.showFacultyDetails(getActivity(), faculties.get(position).fac_id);
+                    });
+
+                    UserInfoFragment.this.terms.setText(String.format("Cykle (%s)", user.terms.size()));
+                    UserInfoFragment.this.theses.setText(String.format("Prace dyplomowe (%s)", user.theses.size()));
                 }
             }
 
             @Override public void onFailure(Call<KujonResponse<User>> call, Throwable t) {
                 activity.showProgress(false);
                 swipeContainer.setRefreshing(false);
-                ErrorHandlerUtil.handleError(t);
-            }
-        });
-
-        facultiesCall = refresh ? kujonBackendApi.facultiesRefresh() : kujonBackendApi.faculties();
-        facultiesCall.enqueue(new Callback<KujonResponse<List<Faculty2>>>() {
-            @Override
-            public void onResponse(Call<KujonResponse<List<Faculty2>>> call, Response<KujonResponse<List<Faculty2>>> response) {
-//                activity.showProgress(false);
-                if (ErrorHandlerUtil.handleResponse(response)) {
-                    List<Faculty2> data = response.body().data;
-                    List<String> facultyNames = $.collect(data, it -> it.name);
-                    studentFaculties.removeAllViews();
-                    CommonUtils.showList(activity.getLayoutInflater(), studentFaculties, facultyNames, position -> {
-                        FacultyDetailsActivity.showFacultyDetails(getActivity(), data.get(position).fac_id);
-                    });
-
-                }
-            }
-
-            @Override public void onFailure(Call<KujonResponse<List<Faculty2>>> call, Throwable t) {
-//                activity.showProgress(false);
-                ErrorHandlerUtil.handleError(t);
-            }
-        });
-
-        termsCall = refresh ? kujonBackendApi.termsRefresh() : kujonBackendApi.terms();
-        termsCall.enqueue(new Callback<KujonResponse<List<Term2>>>() {
-            @Override
-            public void onResponse(Call<KujonResponse<List<Term2>>> call, Response<KujonResponse<List<Term2>>> response) {
-                if (ErrorHandlerUtil.handleResponse(response)) {
-                    List<Term2> data = response.body().data;
-                    UserInfoFragment.this.terms.setText(String.format("Cykle (%s)", data.size()));
-                }
-            }
-
-            @Override public void onFailure(Call<KujonResponse<List<Term2>>> call, Throwable t) {
-                ErrorHandlerUtil.handleError(t);
-            }
-        });
-
-        thesesCall = refresh ? kujonBackendApi.thesesRefresh() : kujonBackendApi.theses();
-        thesesCall.enqueue(new Callback<KujonResponse<List<Thesis_>>>() {
-            @Override
-            public void onResponse(Call<KujonResponse<List<Thesis_>>> call, Response<KujonResponse<List<Thesis_>>> response) {
-                if (ErrorHandlerUtil.handleResponse(response)) {
-                    List<Thesis_> data = response.body().data;
-                    UserInfoFragment.this.theses.setText(String.format("Prace dyplomowe (%s)", data.size()));
-                }
-            }
-
-            @Override public void onFailure(Call<KujonResponse<List<Thesis_>>> call, Throwable t) {
                 ErrorHandlerUtil.handleError(t);
             }
         });
@@ -263,8 +202,6 @@ public class UserInfoFragment extends BaseFragment {
         swipeContainer.destroyDrawingCache();
         swipeContainer.clearAnimation();
         cancelCall(usersCall);
-        cancelCall(facultiesCall);
-        cancelCall(termsCall);
     }
 
     private void cancelCall(Call call) {
