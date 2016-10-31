@@ -1,0 +1,1 @@
+* Fix #148 nowy adres api dla strony startowej
