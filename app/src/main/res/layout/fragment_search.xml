@@ -182,7 +182,7 @@
             style="@style/Semibold.Dark"
             android:layout_gravity="left"
             android:paddingLeft="4dp"
-            android:text="Studia"
+            android:text="Kierunki"
             />
 
         <LinearLayout

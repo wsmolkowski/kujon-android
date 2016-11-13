@@ -10,6 +10,8 @@ import android.widget.ImageView;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader;
@@ -73,6 +75,9 @@ public class KujonApplication extends FoamApplication implements OneSignal.Notif
                 .init();
 
         OneSignal.enableNotificationsWhenActive(true);
+
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        AppEventsLogger.activateApp(this);
 
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
 
