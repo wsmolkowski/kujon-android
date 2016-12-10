@@ -121,7 +121,7 @@ public class LecturerDetailsActivity extends BaseActivity {
                             .transform(new CircleTransform())
                             .fit()
                             .centerInside()
-                            .placeholder(R.drawable.user_placeholder)
+                            .placeholder(R.drawable.photo_placeholder)
                             .into(picture);
 
                     picture.setOnClickListener(v -> {

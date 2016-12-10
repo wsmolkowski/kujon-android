@@ -1,167 +1,179 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/swipeContainer"
+    <data>
+
+        <variable
+            name="user"
+            type="mobi.kujon.network.json.User"/>
+    </data>
+
+    <FrameLayout
+
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
 
-        <ScrollView
+        <android.support.v4.widget.SwipeRefreshLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/swipeContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-
-            <LinearLayout
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                >
+                android:layout_height="match_parent">
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="8dp"
-                    android:background="@color/dark_blue_sky"
-                    android:orientation="vertical">
-
-                    <FrameLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_margin="8dp">
-
-                        <ImageView
-                            android:id="@+id/picture"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:src="@drawable/photo_placeholder"/>
-
-                        <ImageView
-                            android:id="@+id/usosLogo"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:layout_gravity="right|bottom"
-                            tools:src="@drawable/user_placeholder"
-                            />
-
-                    </FrameLayout>
-
-                    <TextView
-                        android:id="@+id/firstLastName"
-                        style="@style/Semibold"
-                        tools:text='Jan Kowalski'/>
-
-                    <TextView
-                        android:id="@+id/student_status"
-                        style="@style/Regular"
-                        tools:text='aktywny student'/>
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    >
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginLeft="32dp"
-                        android:layout_marginRight="32dp"
-                        android:orientation="horizontal">
+                        android:background="@color/dark_blue_sky"
+                        android:orientation="vertical"
+                        android:paddingBottom="8dp">
+
+                        <FrameLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_margin="8dp">
+
+                            <ImageView
+                                android:id="@+id/picture"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:src="@drawable/photo_placeholder"/>
+
+                            <ImageView
+                                android:id="@+id/usosLogo"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_gravity="right|bottom"
+                                tools:src="@drawable/user_placeholder"
+                                />
+
+                        </FrameLayout>
+
+                        <TextView
+                            android:id="@+id/firstLastName"
+                            style="@style/Semibold"
+                            tools:text='Jan Kowalski'/>
+
+                        <TextView
+                            style="@style/Regular"
+                            android:text="@{user.student_status}"
+                            tools:text='aktywny student'/>
 
                         <LinearLayout
-                            android:layout_width="0dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
+                            android:layout_marginLeft="32dp"
+                            android:layout_marginRight="32dp"
+                            android:layout_marginTop="8dp"
+                            android:orientation="horizontal">
 
-                            <TextView
-                                style="@style/Regular"
-                                android:layout_marginTop="0dp"
-                                android:text="Numer indeksu"
-                                android:textSize="11sp"/>
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
 
-                            <TextView
-                                android:id="@+id/index"
-                                style="@style/Regular"
-                                tools:text='1234567890'/>
+                                <TextView
+                                    style="@style/Regular"
+                                    android:layout_marginTop="0dp"
+                                    android:text="Numer indeksu"
+                                    android:textSize="11sp"/>
 
-                        </LinearLayout>
+                                <TextView
+                                    style="@style/Regular"
+                                    android:text="@{user.student_number}"
+                                    tools:text='1234567890'/>
 
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
+                            </LinearLayout>
 
-                            <TextView
-                                style="@style/Regular"
-                                android:text="Numer konta"
-                                android:textSize="11sp"/>
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
 
-                            <TextView
-                                android:id="@+id/student_account_number"
-                                style="@style/Regular"
-                                tools:text='987654321'/>
+                                <TextView
+                                    style="@style/Regular"
+                                    android:text="Numer konta"
+                                    android:textSize="11sp"/>
+
+                                <TextView
+                                    style="@style/Regular"
+                                    android:text="@{user.id}"
+                                    tools:text='987654321'/>
+                            </LinearLayout>
+
                         </LinearLayout>
 
                     </LinearLayout>
 
+                    <TextView
+                        style="@style/new_label"
+                        android:text="Kierunki"/>
+
+                    <LinearLayout
+                        android:id="@+id/student_programmes"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:orientation="vertical"
+                        />
+
+                    <TextView
+                        style="@style/new_label"
+                        android:text="Jednostki"/>
+
+                    <LinearLayout
+                        android:id="@+id/student_faculties"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:orientation="vertical"
+                        />
+
+                    <TextView
+                        style="@style/new_label"
+                        android:text="Informacje"/>
+
+                    <TextView
+                        android:id="@+id/terms"
+                        style="@style/entry"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginTop="8dp"
+                        android:drawableRight="@drawable/navigate_next"
+                        android:gravity="center_vertical"
+                        android:text='Cykle'/>
+
+                    <TextView
+                        android:id="@+id/theses"
+                        style="@style/entry"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginTop="24dp"
+                        android:drawableRight="@drawable/navigate_next"
+                        android:gravity="center_vertical"
+                        android:text='Prace dyplomowe'/>
+
                 </LinearLayout>
-
-                <TextView
-                    android:text="Kierunki"
-                    style="@style/new_label"/>
-
-                <LinearLayout
-                    android:id="@+id/student_programmes"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:orientation="vertical"
-                    />
-
-                <TextView
-                    style="@style/new_label"
-                    android:text="Jednostki"/>
-
-                <LinearLayout
-                    android:id="@+id/student_faculties"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:orientation="vertical"
-                    />
-
-                <TextView
-                    style="@style/new_label"
-                    android:text="Informacje"/>
-
-                <TextView
-                    android:id="@+id/terms"
-                    style="@style/entry"
-                    android:layout_marginTop="8dp"
-                    android:drawableRight="@drawable/navigate_next"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:gravity="center_vertical"
-                    android:text='Cykle'/>
-
-                <TextView
-                    android:id="@+id/theses"
-                    style="@style/entry"
-                    android:layout_marginTop="24dp"
-                    android:drawableRight="@drawable/navigate_next"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:gravity="center_vertical"
-                    android:text='Prace dyplomowe'/>
-
-            </LinearLayout>
-        </ScrollView>
-    </android.support.v4.widget.SwipeRefreshLayout>
-</FrameLayout>
+            </ScrollView>
+        </android.support.v4.widget.SwipeRefreshLayout>
+    </FrameLayout>
+</layout>

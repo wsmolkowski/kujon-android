@@ -1,16 +1,14 @@
 package mobi.kujon.fragments;
 
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.underscore.$;
@@ -21,7 +19,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import mobi.kujon.KujonApplication;
@@ -31,6 +28,7 @@ import mobi.kujon.activities.FacultyDetailsActivity;
 import mobi.kujon.activities.ImageActivity;
 import mobi.kujon.activities.TermsActivity;
 import mobi.kujon.activities.ThesesActivity;
+import mobi.kujon.databinding.FragmentUserInfoBinding;
 import mobi.kujon.network.KujonBackendApi;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.network.json.Programme;
@@ -51,19 +49,6 @@ import static android.text.TextUtils.isEmpty;
 
 public class UserInfoFragment extends BaseFragment {
 
-    public static final String USER_ID = "USER_ID";
-    @Bind(R.id.student_status) TextView studentStatus;
-    @Bind(R.id.student_account_number) TextView studentAccountNumber;
-    @Bind(R.id.student_programmes) LinearLayout studentProgrammes;
-    @Bind(R.id.firstLastName) TextView firstLastName;
-    @Bind(R.id.index) TextView index;
-    @Bind(R.id.terms) TextView terms;
-    @Bind(R.id.theses) TextView theses;
-    @Bind(R.id.picture) ImageView picture;
-    @Bind(R.id.usosLogo) ImageView usosLogo;
-    @Bind(R.id.student_faculties) LinearLayout studentFaculties;
-    @Bind(R.id.swipeContainer) SwipeRefreshLayout swipeContainer;
-
     @Inject KujonUtils utils;
     @Inject KujonBackendApi kujonBackendApi;
     @Inject Picasso picasso;
@@ -72,20 +57,21 @@ public class UserInfoFragment extends BaseFragment {
     private AlertDialog alertDialog;
     private User user;
     private Call<KujonResponse<User>> usersCall;
+    private FragmentUserInfoBinding binding;
 
     @Nullable @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_user_info, container, false);
-        ButterKnife.bind(this, rootView);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_user_info, container, false);
+        ButterKnife.bind(this, binding.getRoot());
         KujonApplication.getComponent().inject(this);
-        return rootView;
+        return binding.getRoot();
     }
 
     @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         activity = (BaseActivity) getActivity();
         activity.setToolbarTitle(R.string.app_name);
-        swipeContainer.setOnRefreshListener(() -> loadData(true));
+        binding.swipeContainer.setOnRefreshListener(() -> loadData(true));
     }
 
     @Override public void onStart() {
@@ -94,7 +80,7 @@ public class UserInfoFragment extends BaseFragment {
     }
 
     private void loadData(boolean refresh) {
-        swipeContainer.setRefreshing(true);
+        binding.swipeContainer.setRefreshing(true);
 
         if (refresh) {
             utils.invalidateEntry("users");
@@ -109,26 +95,24 @@ public class UserInfoFragment extends BaseFragment {
         usersCall.enqueue(new Callback<KujonResponse<User>>() {
             @Override
             public void onResponse(Call<KujonResponse<User>> call, Response<KujonResponse<User>> response) {
-                swipeContainer.setRefreshing(false);
+                binding.swipeContainer.setRefreshing(false);
                 if (ErrorHandlerUtil.handleResponse(response)) {
                     user = response.body().data;
-                    index.setText(user.student_number);
+                    binding.setUser(user);
                     String name = user.first_name + " " + user.last_name;
-                    firstLastName.setText(name);
+                    binding.firstLastName.setText(name);
                     String pictureUrl = !isEmpty(user.picture) ? user.picture : user.photoUrl;
                     picasso.load(pictureUrl)
                             .transform(new CircleTransform())
                             .fit()
                             .centerInside()
-                            .placeholder(R.drawable.user_placeholder)
-                            .into(UserInfoFragment.this.picture);
-                    showUsosLogo(user.usos_id, usosLogo);
-                    UserInfoFragment.this.picture.setOnClickListener(v -> ImageActivity.show(getActivity(), pictureUrl, name));
-                    studentStatus.setText(user.student_status);
-                    studentAccountNumber.setText(user.id);
+                            .placeholder(R.drawable.photo_placeholder)
+                            .into(binding.picture);
+                    showUsosLogo(user.usos_id, binding.usosLogo);
+                    binding.picture.setOnClickListener(v -> ImageActivity.show(getActivity(), pictureUrl, name));
                     List<String> collect = $.collect(user.student_programmes, it -> it.programme.description.split(",")[0]);
-                    studentProgrammes.removeAllViews();
-                    CommonUtils.showList(activity.getLayoutInflater(), studentProgrammes, collect, position -> {
+                    binding.studentProgrammes.removeAllViews();
+                    CommonUtils.showList(activity.getLayoutInflater(), binding.studentProgrammes, collect, position -> {
                         StudentProgramme studentProgramme = user.student_programmes.get(position);
                         Programme programme = studentProgramme.programme;
 
@@ -151,9 +135,7 @@ public class UserInfoFragment extends BaseFragment {
                                 }
                                 dlgAlert.setMessage(programmeDesc.toString());
                                 dlgAlert.setCancelable(false);
-                                dlgAlert.setNegativeButton("OK", (dialog, which) -> {
-                                    dialog.dismiss();
-                                });
+                                dlgAlert.setNegativeButton("OK", (dialog, which) -> dialog.dismiss());
                                 alertDialog = dlgAlert.create();
                                 alertDialog.show();
                             }
@@ -162,19 +144,19 @@ public class UserInfoFragment extends BaseFragment {
 
                     List<Faculty2> faculties = user.faculties;
                     List<String> facultyNames = $.collect(faculties, it -> it.name);
-                    studentFaculties.removeAllViews();
-                    CommonUtils.showList(activity.getLayoutInflater(), studentFaculties, facultyNames, position -> {
+                    binding.studentFaculties.removeAllViews();
+                    CommonUtils.showList(activity.getLayoutInflater(), binding.studentFaculties, facultyNames, position -> {
                         FacultyDetailsActivity.showFacultyDetails(getActivity(), faculties.get(position).fac_id);
                     });
 
-                    UserInfoFragment.this.terms.setText(String.format("Cykle (%s)", user.terms.size()));
-                    UserInfoFragment.this.theses.setText(String.format("Prace dyplomowe (%s)", user.theses.size()));
+                    binding.terms.setText(String.format("Cykle (%s)", user.terms.size()));
+                    binding.theses.setText(String.format("Prace dyplomowe (%s)", user.theses.size()));
                 }
             }
 
             @Override public void onFailure(Call<KujonResponse<User>> call, Throwable t) {
                 activity.showProgress(false);
-                swipeContainer.setRefreshing(false);
+                binding.swipeContainer.setRefreshing(false);
                 ErrorHandlerUtil.handleError(t);
             }
         });
@@ -198,9 +180,9 @@ public class UserInfoFragment extends BaseFragment {
             alertDialog.dismiss();
             alertDialog = null;
         }
-        swipeContainer.setRefreshing(false);
-        swipeContainer.destroyDrawingCache();
-        swipeContainer.clearAnimation();
+        binding.swipeContainer.setRefreshing(false);
+        binding.swipeContainer.destroyDrawingCache();
+        binding.swipeContainer.clearAnimation();
         cancelCall(usersCall);
     }
 
