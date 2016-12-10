@@ -69,5 +69,5 @@ public class User {
     @Expose
     public List<Faculty2> faculties;
 
-
+    @SerializedName("avr_grades") @Expose public String avrGrades;
 }

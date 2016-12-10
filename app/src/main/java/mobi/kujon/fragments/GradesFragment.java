@@ -101,10 +101,11 @@ public class GradesFragment extends ListFragment {
         }
 
         @Override public void onBindHeaderViewHolder(ViewHolder holder, int section) {
-            holder.binding.section.setText(sectionName(section));
+            TermGrades termGrades = data.get(section);
+            holder.binding.section.setText(termGrades.termId + ", średnia ocen: " + termGrades.avrGrades);
             holder.binding.section.setVisibility(View.VISIBLE);
             holder.binding.dataLayout.setVisibility(View.GONE);
-            holder.termId = sectionName(section);
+            holder.termId = termGrades.termId;
             holder.itemView.setTag(R.string.no_item_decorator, true);
         }
 
@@ -128,10 +129,6 @@ public class GradesFragment extends ListFragment {
 
         List<Pair<CourseGrades, Grade>> gradesInSection(int section) {
             return sections.get(section);
-        }
-
-        String sectionName(int section) {
-            return data.get(section).termId;
         }
 
         public void setData(List<TermGrades> data) {
