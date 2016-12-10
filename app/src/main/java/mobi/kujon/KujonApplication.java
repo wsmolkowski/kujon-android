@@ -1,6 +1,7 @@
 package mobi.kujon;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -18,7 +19,6 @@ import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader;
 import com.mikepenz.materialdrawer.util.DrawerImageLoader;
 import com.mikepenz.materialdrawer.util.DrawerUIUtils;
 import com.onesignal.OneSignal;
-import com.percolate.foam.FoamApplication;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
@@ -37,10 +37,7 @@ import io.fabric.sdk.android.Fabric;
 import mobi.kujon.utils.KujonUtils;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
-//@FoamApiKeys(
-//        papertrail = "logs3.papertrailapp.com:22247" // Server URL
-//)
-public class KujonApplication extends FoamApplication implements OneSignal.NotificationOpenedHandler {
+public class KujonApplication extends Application implements OneSignal.NotificationOpenedHandler {
 
     public static final String USER_EMAIL_TAG = "user_email";
     @Inject KujonUtils utils;
