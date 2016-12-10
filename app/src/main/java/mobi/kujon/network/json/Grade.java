@@ -20,9 +20,10 @@ public class Grade {
     @SerializedName("exam_id")
     @Expose
     public Integer examId;
+
     @SerializedName("class_type")
     @Expose
-    public String classType;
+    public GradeClassType classType;
 
     public String courseId;
 }

@@ -1,23 +1,26 @@
 package mobi.kujon.fragments;
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.afollestad.sectionedrecyclerview.SectionedRecyclerViewAdapter;
-import com.github.underscore.$;
+import com.annimon.stream.Collectors;
+import com.annimon.stream.Stream;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
 import mobi.kujon.R;
+import mobi.kujon.databinding.RowGradeBinding;
+import mobi.kujon.network.json.CourseGrades;
 import mobi.kujon.network.json.Grade;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.network.json.TermGrades;
@@ -29,6 +32,8 @@ import retrofit2.Response;
 public class GradesFragment extends ListFragment {
 
     private Adapter adapter;
+    private int dark;
+    private int red;
 
     @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -42,7 +47,8 @@ public class GradesFragment extends ListFragment {
             }
         });
         activity.showProgress(true);
-
+        dark = ContextCompat.getColor(activity, R.color.dark);
+        red = ContextCompat.getColor(activity, android.R.color.holo_red_light);
         loadData(false);
     }
 
@@ -79,11 +85,11 @@ public class GradesFragment extends ListFragment {
     protected class Adapter extends SectionedRecyclerViewAdapter<ViewHolder> {
 
         List<TermGrades> data = new ArrayList<>();
-        List<List<Grade>> sections = new ArrayList<>();
+        List<List<Pair<CourseGrades, Grade>>> sections = new ArrayList<>();
 
         @Override public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_grade, parent, false);
-            return new ViewHolder(v);
+            RowGradeBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.row_grade, parent, false);
+            return new ViewHolder(binding);
         }
 
         @Override public int getSectionCount() {
@@ -95,28 +101,32 @@ public class GradesFragment extends ListFragment {
         }
 
         @Override public void onBindHeaderViewHolder(ViewHolder holder, int section) {
-            holder.section.setText(sectionName(section));
-            holder.section.setVisibility(View.VISIBLE);
-            holder.dataLayout.setVisibility(View.GONE);
+            holder.binding.section.setText(sectionName(section));
+            holder.binding.section.setVisibility(View.VISIBLE);
+            holder.binding.dataLayout.setVisibility(View.GONE);
             holder.termId = sectionName(section);
             holder.itemView.setTag(R.string.no_item_decorator, true);
         }
 
         @Override public void onBindViewHolder(ViewHolder holder, int section, int relativePosition, int absolutePosition) {
-            Grade grade = gradesInSection(section).get(relativePosition);
+            Pair<CourseGrades, Grade> grade = gradesInSection(section).get(relativePosition);
             TermGrades termGrades = data.get(section);
-            holder.title.setText(grade.courseName);
-            holder.desc.setText(Html.fromHtml(String.format("%s, termin: %s", grade.classType, grade.examSessionNumber)));
-            holder.gradeDesc.setText(grade.valueDescription);
-            holder.gradeSymbol.setText(grade.valueSymbol);
-            holder.courseId = grade.courseId;
+            holder.binding.title.setText(grade.first.courseName);
+            holder.binding.desc.setText(Html.fromHtml(String.format("%s, termin: %s", grade.second.classType.name, grade.second.examSessionNumber)));
+            String symbol = grade.second.valueSymbol;
+            holder.binding.gradeValueSymbol.setText(symbol);
+            int color = "2".equals(symbol) || "nzal".equals(symbol.toLowerCase()) ? red : dark;
+            holder.binding.gradeValueSymbol.setTextColor(color);
+            holder.binding.gradeValueDesc.setText(grade.second.valueDescription);
+            holder.binding.gradeValueDesc.setTextColor(color);
+            holder.courseId = grade.first.courseId;
             holder.termId = termGrades.termId;
-            holder.section.setVisibility(View.GONE);
-            holder.dataLayout.setVisibility(View.VISIBLE);
+            holder.binding.section.setVisibility(View.GONE);
+            holder.binding.dataLayout.setVisibility(View.VISIBLE);
             holder.itemView.setTag(R.string.no_item_decorator, false);
         }
 
-        List<Grade> gradesInSection(int section) {
+        List<Pair<CourseGrades, Grade>> gradesInSection(int section) {
             return sections.get(section);
         }
 
@@ -128,15 +138,12 @@ public class GradesFragment extends ListFragment {
             this.data = data;
             sections.clear();
             for (TermGrades termGrades : data) {
-                List<List<Grade>> nestedGrades = $.collect(termGrades.courses, it -> {
-                    $.each(it.grades, grade -> {
-                        grade.courseName = it.courseName;
-                        grade.courseId = it.courseId;
-                    });
-                    return it.grades;
-                });
-                List<Grade> grades = $.flatten(nestedGrades);
-                sections.add(grades);
+                List<Pair<CourseGrades, Grade>> result = Stream.of(termGrades.courses)
+                        .flatMap(course -> Stream.of(course.grades)
+                                .map(grade -> Pair.create(course, grade)))
+                        .collect(Collectors.toList());
+
+                sections.add(result);
             }
             notifyDataSetChanged();
         }
@@ -144,19 +151,14 @@ public class GradesFragment extends ListFragment {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.title) TextView title;
-        @Bind(R.id.desc) TextView desc;
-        @Bind(R.id.grade_value_symbol) TextView gradeSymbol;
-        @Bind(R.id.grade_value_desc) TextView gradeDesc;
-        @Bind(R.id.section) TextView section;
-        @Bind(R.id.dataLayout) View dataLayout;
         String courseId;
         String termId;
+        public final RowGradeBinding binding;
 
-        public ViewHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-            itemView.setOnClickListener(v -> showCourseOrTerm(courseId, termId));
+        public ViewHolder(RowGradeBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
+            binding.getRoot().setOnClickListener(v -> showCourseOrTerm(courseId, termId));
         }
     }
 }

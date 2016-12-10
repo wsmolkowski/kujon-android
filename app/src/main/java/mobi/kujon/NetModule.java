@@ -5,6 +5,8 @@ import android.util.Log;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.jakewharton.picasso.OkHttp3Downloader;
 import com.squareup.picasso.Picasso;
 
@@ -19,6 +21,7 @@ import bolts.Task;
 import dagger.Module;
 import dagger.Provides;
 import mobi.kujon.network.KujonBackendApi;
+import mobi.kujon.network.json.GradeClassType;
 import mobi.kujon.utils.KujonUtils;
 import okhttp3.Cache;
 import okhttp3.Interceptor;
@@ -57,11 +60,17 @@ public class NetModule {
         return httpClient;
     }
 
-    @Provides @Singleton Retrofit provideRetrofit(OkHttpClient okHttpClient) {
+    @Provides @Singleton Gson provideGson() {
+        return new GsonBuilder()
+                .registerTypeAdapter(GradeClassType.class, new GradeClassType.GradeClassTypeDeserializer())
+                .create();
+    }
+
+    @Provides @Singleton Retrofit provideRetrofit(OkHttpClient okHttpClient, Gson gson) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(API_URL)
                 .client(okHttpClient)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         return retrofit;
     }
