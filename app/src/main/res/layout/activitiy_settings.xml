@@ -58,6 +58,62 @@
         android:background="@color/white"/>
 
     <LinearLayout
+        android:id="@+id/contact_us"
+        android:layout_width="match_parent"
+        android:gravity="center_vertical"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@drawable/contact_us"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Regular"
+            android:textColor="@color/dark"
+            android:paddingLeft="32dp"
+            android:text="@string/contact_us"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="16dp"
+        android:background="@color/white"/>
+
+    <LinearLayout
+        android:id="@+id/share_app"
+        android:layout_width="match_parent"
+        android:gravity="center_vertical"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@drawable/share"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Regular"
+            android:textColor="@color/dark"
+            android:paddingLeft="32dp"
+            android:text="@string/share_app"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="16dp"
+        android:background="@color/white"/>
+
+    <LinearLayout
         android:id="@+id/delete_account"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

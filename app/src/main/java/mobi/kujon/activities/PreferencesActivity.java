@@ -1,5 +1,6 @@
 package mobi.kujon.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -21,7 +22,7 @@ public class PreferencesActivity extends BaseActivity {
         toolbarTitle.setText(R.string.settings);
     }
 
-    @OnClick({R.id.logout, R.id.delete_account, R.id.regulations})
+    @OnClick({R.id.logout, R.id.delete_account, R.id.regulations, R.id.contact_us, R.id.share_app})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.logout:
@@ -29,6 +30,16 @@ public class PreferencesActivity extends BaseActivity {
                 break;
             case R.id.delete_account:
                 deleteAccount();
+                break;
+            case R.id.contact_us:
+                contactUs();
+                break;
+            case R.id.share_app:
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.app_link));
+                sendIntent.setType("text/plain");
+                startActivity(sendIntent);
                 break;
             case R.id.regulations:
                 String url = getString(R.string.regulations_url);

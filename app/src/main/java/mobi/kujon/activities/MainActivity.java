@@ -110,34 +110,6 @@ public class MainActivity extends BaseActivity {
                     return true;
                 }));
 
-        drawer.addItem(new PrimaryDrawerItem()
-                .withName("Prześlij opinię")
-                .withSelectable(false)
-                .withIcon(R.drawable.contact_us)
-                .withTypeface(latoSemiBold)
-                .withOnDrawerItemClickListener((view, position, drawerItem) -> {
-                    contactUs();
-                    drawer.closeDrawer();
-                    return true;
-                }));
-
-        drawer.addItem(new PrimaryDrawerItem()
-                .withName(R.string.share_app)
-                .withSelectable(false)
-                .withTypeface(latoSemiBold)
-                .withIcon(R.drawable.share)
-                .withOnDrawerItemClickListener((view, position, drawerItem) -> {
-                    Intent sendIntent = new Intent();
-                    sendIntent.setAction(Intent.ACTION_SEND);
-                    sendIntent.putExtra(Intent.EXTRA_TEXT,
-                            getString(R.string.app_link));
-                    sendIntent.setType("text/plain");
-                    startActivity(sendIntent);
-                    drawer.closeDrawer();
-                    return true;
-                }));
-
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         drawer.getActionBarDrawerToggle().setDrawerIndicatorEnabled(true);
 
