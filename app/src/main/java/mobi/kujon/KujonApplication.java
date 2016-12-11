@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.multidex.MultiDex;
 import android.widget.ImageView;
 
 import com.crashlytics.android.Crashlytics;
@@ -147,6 +148,12 @@ public class KujonApplication extends Application implements OneSignal.Notificat
         for (Activity activity : stack) {
             activity.finish();
         }
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
     }
 
     public static KujonApplication getApplication() {
