@@ -54,13 +54,9 @@ public class CourseDetailsActivity extends BaseActivity {
     @Bind(R.id.course_students) LinearLayout courseStudents;
     @Bind(R.id.scrollView) ScrollView scrollView;
     @Bind(R.id.swipeContainer) SwipeRefreshLayout swipeContainer;
-    @Bind(R.id.lang) TextView langView;
-    @Bind(R.id.is_conducted) TextView isConductedView;
     @Bind(R.id.toolbar_title) TextView toolbarTitle;
     @Bind(R.id.toolbar) Toolbar toolbar;
 
-    @Bind(R.id.lang_label) TextView langLabel;
-    @Bind(R.id.is_conducted_label) TextView isConductedLabel;
     @Bind(R.id.description_label) TextView descriptionLabel;
     @Bind(R.id.bibliography_label) TextView bibliographyLabel;
     @Bind(R.id.assessment_criteria_label) TextView assessmentCriteriaLabel;
@@ -69,6 +65,7 @@ public class CourseDetailsActivity extends BaseActivity {
     @Bind(R.id.course_lecturers_label) TextView courseLecturersLabel;
     @Bind(R.id.course_coordinators_label) TextView courseCoordinatorsLabel;
     @Bind(R.id.course_students_label) TextView courseStudentsLabel;
+    @Bind(R.id.course_additional_info) TextView courseAdditionalInfo;
 
     private LayoutInflater layoutInflater;
     private CourseDetails courseDetails;
@@ -108,9 +105,9 @@ public class CourseDetailsActivity extends BaseActivity {
                     courseFac.setText(courseDetails.facId.name);
 
                     setText(description, descriptionLabel, Html.fromHtml(CourseDetailsActivity.this.courseDetails.description.replace("\n", "<br>")));
-                    courseName.setText(String.format("%s (%s)", courseDetails.name, courseDetails.courseId));
-                    setText(langView, langLabel, isEmpty(courseDetails.langId) ? "Brak" : courseDetails.langId);
-                    setText(isConductedView, isConductedLabel, courseDetails.isCurrentlyConducted);
+                    courseName.setText(courseDetails.name);
+                    courseAdditionalInfo.setText(String.format("id: %s, język: %s, prowadzony: %s", courseDetails.courseId,
+                            isEmpty(courseDetails.langId) ? "Brak" : courseDetails.langId, courseDetails.isCurrentlyConducted));
                     setText(bibliography, bibliographyLabel, Html.fromHtml(courseDetails.bibliography.replace("\n", "<br/><br/>")));
                     setText(assessmentCriteria, assessmentCriteriaLabel, Html.fromHtml(courseDetails.assessmentCriteria.replace("\n", "<br/><br/>")));
                     if (courseDetails.term != null && courseDetails.term.size() > 0 && courseDetails.term.get(0).name.length() > 0) {

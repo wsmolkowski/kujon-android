@@ -50,8 +50,18 @@
                     android:id="@+id/course_name"
                     style="@style/Semibold.Dark"
                     android:layout_gravity="left"
-                    android:layout_margin="16dp"
-                    tools:text="Historia sztuki średniowiecznej (4018-KONW52)"/>
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="8dp"
+                    tools:text="Historia sztuki średniowiecznej"/>
+
+                <TextView
+                    android:id="@+id/course_additional_info"
+                    style="@style/Regular.Entry"
+                    android:layout_marginBottom="16dp"
+                    tools:text="id: 2500-OB-33, język: POL, prowadzonu: TAK"
+                    />
 
                 <View
                     android:layout_width="match_parent"
@@ -71,28 +81,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@color/white"
-                    />
-
-                <TextView
-                    android:id="@+id/lang_label"
-                    style="@style/Regular.Label"
-                    android:text="Język prowadzenia"/>
-
-                <TextView
-                    android:id="@+id/lang"
-                    style="@style/Regular.Entry"
-                    tools:text="ANG"
-                    />
-
-                <TextView
-                    android:id="@+id/is_conducted_label"
-                    style="@style/Regular.Label"
-                    android:text="Czy jest prowadzony"/>
-
-                <TextView
-                    android:id="@+id/is_conducted"
-                    style="@style/Regular.Entry"
-                    tools:text="TAK"
                     />
 
                 <TextView
@@ -128,17 +116,6 @@
                     tools:text="@string/lorem"/>
 
                 <TextView
-                    android:id="@+id/course_term_name_label"
-                    style="@style/Regular.Label"
-                    android:text="Zajęcia w cyklu"/>
-
-                <TextView
-                    android:id="@+id/course_term_name"
-                    style="@style/Regular.Entry"
-                    android:drawableRight="@drawable/navigate_next"
-                    tools:text='Semestr zimowy 2014/15'/>
-
-                <TextView
                     android:id="@+id/course_class_type_label"
                     style="@style/Regular.Label"
                     android:text="Typ zajęć"/>
@@ -147,6 +124,18 @@
                     android:id="@+id/course_class_type"
                     style="@style/Regular.Entry"
                     tools:text='Lorem ipsum'/>
+
+                <TextView
+                    android:id="@+id/course_term_name_label"
+                    style="@style/Regular.Label.Background"
+                    android:text="Zajęcia w cyklu"/>
+
+                <TextView
+                    android:id="@+id/course_term_name"
+                    style="@style/Regular.Entry"
+                    android:layout_marginTop="16dp"
+                    android:drawableRight="@drawable/navigate_next"
+                    tools:text='Semestr zimowy 2014/15'/>
 
                 <TextView
                     android:id="@+id/course_lecturers_label"
