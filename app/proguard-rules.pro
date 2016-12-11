@@ -56,6 +56,7 @@
 -keep class mobi.kujon.network.json.** { *; }
 
 -keep class ch.qos.** { *; }
+-dontwarn okhttp3.internal.Internal
 -keep class org.slf4j.** { *; }
 -keep class org.apache.** { *; }
 -keep class com.sun.jna.** { *; }
