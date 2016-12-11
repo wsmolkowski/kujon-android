@@ -1,0 +1,7 @@
+#154 przenieść Prześij opinię i podziel się apką do ustawień.
+#144 Szczegóły przedmiotu - poprawienie layoutu
+#141 Szczegóły przedmiotu - Kryteria oceny - HTML
+#147 w ustawieniach w lewym górym rogu strzałki powrót która wróci do głównego okna aplikacji
+Fix #153 wyświetlenie pola avr_grades w endpoint-ach /usersinfoall oraz /gradesbyterm
+Fix #145 oceny 2 na czerwono
+Fix #146 brak zdjęcia dla pracownika czy studenta - wyświetlić sowę jak na IOS
