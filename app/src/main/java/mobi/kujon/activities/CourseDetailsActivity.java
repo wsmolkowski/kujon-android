@@ -111,9 +111,8 @@ public class CourseDetailsActivity extends BaseActivity {
                     courseName.setText(String.format("%s (%s)", courseDetails.name, courseDetails.courseId));
                     setText(langView, langLabel, isEmpty(courseDetails.langId) ? "Brak" : courseDetails.langId);
                     setText(isConductedView, isConductedLabel, courseDetails.isCurrentlyConducted);
-                    setText(bibliography, bibliographyLabel, courseDetails.bibliography.replace("\n", "\n\n"));
-                    setText(assessmentCriteria, assessmentCriteriaLabel, courseDetails.assessmentCriteria.replace("\n", "\n\n"));
-                    assessmentCriteria.setText(courseDetails.assessmentCriteria.replace("\n", "\n\n"));
+                    setText(bibliography, bibliographyLabel, Html.fromHtml(courseDetails.bibliography.replace("\n", "<br/><br/>")));
+                    setText(assessmentCriteria, assessmentCriteriaLabel, Html.fromHtml(courseDetails.assessmentCriteria.replace("\n", "<br/><br/>")));
                     if (courseDetails.term != null && courseDetails.term.size() > 0 && courseDetails.term.get(0).name.length() > 0) {
                         courseTermName.setText(courseDetails.term.get(0).name);
                     } else {
