@@ -99,19 +99,15 @@ public class LoginActivity extends BaseActivity {
             utils.clearCache();
             kujonBackendApi.config().enqueue(new Callback<KujonResponse<Config>>() {
                 @Override public void onResponse(Call<KujonResponse<Config>> call, Response<KujonResponse<Config>> response) {
-                    if (ErrorHandlerUtil.handleResponse(response)) {
-                        Config data = response.body().data;
-                        log.debug("Response: " + data);
-                        if (data.usosPaired) {
-                            if (data.usosWorks) {
-                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                            } else {
-                                ErrorActivity.open(LoginActivity.this);
-                            }
-                        } else {
-                            startActivity(new Intent(LoginActivity.this, UsosesActivity.class));
-                        }
-                        finish();
+                    Integer code = response.body().code;
+                    if(code == 401){
+                        Toast.makeText(LoginActivity.this, R.string.login_error, Toast.LENGTH_SHORT).show();
+                        Auth.GoogleSignInApi.signOut(apiClient).setResultCallback(status -> {
+                            progress(false);
+                            Toast.makeText(LoginActivity.this, status.getStatusMessage(), Toast.LENGTH_SHORT).show();
+                        });
+                    }else {
+                        proceedNormalResponse(response);
                     }
                 }
 
@@ -122,6 +118,23 @@ public class LoginActivity extends BaseActivity {
         } else {
             progress(false);
             Log.i(TAG, "Login not successful: " + result.getStatus().getStatusMessage());
+        }
+    }
+
+    private void proceedNormalResponse(Response<KujonResponse<Config>> response) {
+        if (ErrorHandlerUtil.handleResponse(response)) {
+            Config data = response.body().data;
+            log.debug("Response: " + data);
+            if (data.usosPaired) {
+                if (data.usosWorks) {
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                } else {
+                    ErrorActivity.open(LoginActivity.this);
+                }
+            } else {
+                startActivity(new Intent(LoginActivity.this, UsosesActivity.class));
+            }
+            finish();
         }
     }
 
