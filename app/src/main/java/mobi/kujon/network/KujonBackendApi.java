@@ -11,6 +11,7 @@ import mobi.kujon.network.json.Grade;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.network.json.Lecturer;
 import mobi.kujon.network.json.LecturerLong;
+import mobi.kujon.network.json.Preferences;
 import mobi.kujon.network.json.Programme;
 import mobi.kujon.network.json.ProgrammeSingle;
 import mobi.kujon.network.json.Term2;
@@ -121,4 +122,19 @@ public interface KujonBackendApi {
 
     @GET("search/theses/{query}")
     Call<KujonResponse<ThesesSearchResult>> searchTheses(@Path(value = "query", encoded = true) String query, @Query("start") Integer start);
+
+    @GET("settings")
+    Call<KujonResponse<Preferences>> getUserPreferences();
+
+    @POST("settings/event/enable")
+    Call<KujonResponse<Preferences>> enableEvents();
+
+    @POST("settings/event/disable")
+    Call<KujonResponse<Preferences>> disableEvents();
+
+    @POST("settings/googlecalendar/enable")
+    Call<KujonResponse<Preferences>> enableGoogleCalendar();
+
+    @POST("settings/googlecalendar/disable")
+    Call<KujonResponse<Preferences>> disableGoogleCalendar();
 }
