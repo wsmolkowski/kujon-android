@@ -123,6 +123,7 @@ public class LoginActivity extends BaseActivity {
 
     private void proceedNormalResponse(Response<KujonResponse<Config>> response) {
         if (ErrorHandlerUtil.handleResponse(response)) {
+
             Config data = response.body().data;
             log.debug("Response: " + data);
             if (data.usosPaired) {
