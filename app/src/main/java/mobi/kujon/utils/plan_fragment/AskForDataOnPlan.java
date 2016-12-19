@@ -112,13 +112,15 @@ public class AskForDataOnPlan {
                     if (ErrorHandlerUtil.handleResponse(response)) {
                         List<CalendarEvent> data = response.body().data;
                         handleIncomingEvents(call, data, year, month);
+                    }else {
+                        checkForRefreshCondition();
+                        callList.remove(call);
                     }
                 }
 
                 @Override
                 public void onFailure(Call<KujonResponse<List<CalendarEvent>>> call, Throwable t) {
                     callList.remove(call);
-                    checkForRefreshCondition();
                     ErrorHandlerUtil.handleError(t);
                 }
             });
@@ -146,8 +148,10 @@ public class AskForDataOnPlan {
         List<Call<KujonResponse<List<CalendarEvent>>>> calls = new ArrayList<>(callList);
         for (Call<KujonResponse<List<CalendarEvent>>> call : calls) {
             call.cancel();
+
             callList.remove(call);
         }
+        counter.set(0);
     }
 
 }
