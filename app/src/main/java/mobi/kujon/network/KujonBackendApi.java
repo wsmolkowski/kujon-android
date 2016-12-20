@@ -127,14 +127,14 @@ public interface KujonBackendApi {
     Call<KujonResponse<Preferences>> getUserPreferences();
 
     @POST("settings/event/enable")
-    Call<KujonResponse<Preferences>> enableEvents();
+    Call<KujonResponse<String>> enableEvents();
 
     @POST("settings/event/disable")
-    Call<KujonResponse<Preferences>> disableEvents();
+    Call<KujonResponse<String>> disableEvents();
 
     @POST("settings/googlecalendar/enable")
-    Call<KujonResponse<Preferences>> enableGoogleCalendar();
+    Call<KujonResponse<String>> enableGoogleCalendar();
 
     @POST("settings/googlecalendar/disable")
-    Call<KujonResponse<Preferences>> disableGoogleCalendar();
+    Call<KujonResponse<String>> disableGoogleCalendar();
 }

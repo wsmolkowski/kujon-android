@@ -31,7 +31,6 @@ public class PreferencesActivity extends BaseActivity {
         showProgress(true);
         toolbarTitle.setText(R.string.settings);
         initSwitchStates();
-        initSwitchListeners();
     }
 
     private void initSwitchStates() {
@@ -41,6 +40,7 @@ public class PreferencesActivity extends BaseActivity {
                 showProgress(false);
                 if(ErrorHandlerUtil.handleResponse(response)) {
                     notificationsSwitch.setChecked(response.body().data.notificationsEnabled);
+                    initSwitchListeners();
                 }
             }
 
@@ -67,17 +67,14 @@ public class PreferencesActivity extends BaseActivity {
     }
 
     private void enableEvents() {
-        kujonBackendApi.enableEvents().enqueue(new Callback<KujonResponse<Preferences>>() {
+        kujonBackendApi.enableEvents().enqueue(new Callback<KujonResponse<String>>() {
             @Override
-            public void onResponse(Call<KujonResponse<Preferences>> call, Response<KujonResponse<Preferences>> response) {
+            public void onResponse(Call<KujonResponse<String>> call, Response<KujonResponse<String>> response) {
                 showProgress(false);
-                if(ErrorHandlerUtil.handleResponse(response)) {
-                    showProgress(false);
-                }
             }
 
             @Override
-            public void onFailure(Call<KujonResponse<Preferences>> call, Throwable t) {
+            public void onFailure(Call<KujonResponse<String>> call, Throwable t) {
                 showProgress(false);
                 notificationsSwitch.setChecked(false);
                 ErrorHandlerUtil.handleError(t);
@@ -87,17 +84,14 @@ public class PreferencesActivity extends BaseActivity {
 
     private void disableEvents() {
         showProgress(true);
-        kujonBackendApi.disableEvents().enqueue(new Callback<KujonResponse<Preferences>>() {
+        kujonBackendApi.disableEvents().enqueue(new Callback<KujonResponse<String>>() {
             @Override
-            public void onResponse(Call<KujonResponse<Preferences>> call, Response<KujonResponse<Preferences>> response) {
+            public void onResponse(Call<KujonResponse<String>> call, Response<KujonResponse<String>> response) {
                 showProgress(false);
-                if(ErrorHandlerUtil.handleResponse(response)) {
-                    showProgress(false);
-                }
             }
 
             @Override
-            public void onFailure(Call<KujonResponse<Preferences>> call, Throwable t) {
+            public void onFailure(Call<KujonResponse<String>> call, Throwable t) {
                 showProgress(false);
                 notificationsSwitch.setChecked(true);
                 ErrorHandlerUtil.handleError(t);

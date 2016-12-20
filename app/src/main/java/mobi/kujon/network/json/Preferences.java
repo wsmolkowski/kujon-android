@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class Preferences {
 
-    @SerializedName("events_enable")
+    @SerializedName("event_enable")
     @Expose
     public Boolean notificationsEnabled;
 
