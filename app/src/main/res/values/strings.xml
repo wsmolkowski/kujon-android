@@ -38,7 +38,8 @@
     <string name="grades">Oceny</string>
     <string name="teachers">Wykładowcy</string>
     <string name="no_item_decorator" translatable="false">NO_ITEM_DECORATOR</string>
-    <string name="enable_notifications">Włącz powiadomienia</string>
+    <string name="enable_notifications">Powiadomienia</string>
+    <string name="enable_googlecalendar">Synchronizacja Kalendarza Google</string>
 
     <string-array name="months">
         <item>Styczeń</item>
