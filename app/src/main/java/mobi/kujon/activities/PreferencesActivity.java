@@ -29,6 +29,7 @@ public class PreferencesActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activitiy_settings);
         ButterKnife.bind(this);
+        utils.invalidateEntry("settings");
         showProgress(true);
         toolbarTitle.setText(R.string.settings);
         initSwitches();
