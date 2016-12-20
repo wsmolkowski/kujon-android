@@ -22,6 +22,7 @@ public class PreferencesActivity extends BaseActivity {
 
     @Bind(R.id.toolbar_title) TextView toolbarTitle;
     @Bind(R.id.notifications_enabler) SwitchCompat notificationsSwitch;
+    @Bind(R.id.googlecalendar_enabler) SwitchCompat googleCalendarSwitch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,16 +31,17 @@ public class PreferencesActivity extends BaseActivity {
         ButterKnife.bind(this);
         showProgress(true);
         toolbarTitle.setText(R.string.settings);
-        initSwitchStates();
+        initSwitches();
     }
 
-    private void initSwitchStates() {
+    private void initSwitches() {
         kujonBackendApi.getUserPreferences().enqueue(new Callback<KujonResponse<Preferences>>() {
             @Override
             public void onResponse(Call<KujonResponse<Preferences>> call, Response<KujonResponse<Preferences>> response) {
                 showProgress(false);
                 if(ErrorHandlerUtil.handleResponse(response)) {
                     notificationsSwitch.setChecked(response.body().data.notificationsEnabled);
+                    googleCalendarSwitch.setChecked(response.body().data.googleCalendarEnabled);
                     initSwitchListeners();
                 }
             }
@@ -53,6 +55,57 @@ public class PreferencesActivity extends BaseActivity {
     }
 
     private void initSwitchListeners() {
+        initNotificationsSwitchListener();
+        initGoogleCalendarSwitchListener();
+    }
+
+    private void initGoogleCalendarSwitchListener() {
+        googleCalendarSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                showProgress(true);
+                if (isChecked) {
+                    enableGoogleCalendar();
+                } else {
+                    disableGoogleCalendar();
+                }
+            }
+        });
+    }
+
+    private void enableGoogleCalendar() {
+        kujonBackendApi.enableGoogleCalendar().enqueue(new Callback<KujonResponse<String>>() {
+            @Override
+            public void onResponse(Call<KujonResponse<String>> call, Response<KujonResponse<String>> response) {
+                showProgress(false);
+            }
+
+            @Override
+            public void onFailure(Call<KujonResponse<String>> call, Throwable t) {
+                showProgress(false);
+                googleCalendarSwitch.setChecked(false);
+                ErrorHandlerUtil.handleError(t);
+            }
+        });
+    }
+
+    private void disableGoogleCalendar() {
+        kujonBackendApi.disableGoogleCalendar().enqueue(new Callback<KujonResponse<String>>() {
+            @Override
+            public void onResponse(Call<KujonResponse<String>> call, Response<KujonResponse<String>> response) {
+                showProgress(false);
+            }
+
+            @Override
+            public void onFailure(Call<KujonResponse<String>> call, Throwable t) {
+                showProgress(false);
+                googleCalendarSwitch.setChecked(true);
+                ErrorHandlerUtil.handleError(t);
+            }
+        });
+    }
+
+    private void initNotificationsSwitchListener() {
         notificationsSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
