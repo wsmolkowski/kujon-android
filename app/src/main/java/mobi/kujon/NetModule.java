@@ -21,6 +21,7 @@ import bolts.Task;
 import dagger.Module;
 import dagger.Provides;
 import mobi.kujon.network.KujonBackendApi;
+import mobi.kujon.network.SettingsApi;
 import mobi.kujon.network.json.GradeClassType;
 import mobi.kujon.utils.KujonUtils;
 import okhttp3.Cache;
@@ -77,6 +78,11 @@ public class NetModule {
 
     @Provides @Singleton KujonBackendApi provideBackendApi(Retrofit retrofit) {
         return retrofit.create(KujonBackendApi.class);
+    }
+
+    @Provides @Singleton
+    SettingsApi provideSettingsApi(KujonBackendApi kujonBackendApi) {
+        return new SettingsApi(kujonBackendApi);
     }
 
     @Provides @Singleton KujonUtils provideUtils() {

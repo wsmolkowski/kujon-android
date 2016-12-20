@@ -41,6 +41,7 @@ import bolts.Task;
 import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
 import mobi.kujon.network.KujonBackendApi;
+import mobi.kujon.network.SettingsApi;
 import mobi.kujon.utils.ErrorHandlerUtil;
 import mobi.kujon.utils.KujonUtils;
 import retrofit2.Call;
@@ -56,6 +57,7 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
     private static final String TAG = "BaseActivity";
 
     @Inject protected KujonBackendApi kujonBackendApi;
+    @Inject protected SettingsApi settingsApi;
     @Inject protected KujonApplication kujonApplication;
     @Inject protected Picasso picasso;
     @Inject protected KujonUtils utils;
