@@ -84,14 +84,14 @@ public class PreferencesActivity extends BaseActivity {
             public void onResponse(Call<KujonResponse<String>> call, Response<KujonResponse<String>> response) {
                 showProgress(false);
                 if (!ErrorHandlerUtil.handleResponse(response)) {
-                    programGoogleCalendarSwitchChange(!isChecked);
+                    programGoogleCalendarSwitchChange(isChecked);
                 }
             }
 
             @Override
             public void onFailure(Call<KujonResponse<String>> call, Throwable t) {
                 showProgress(false);
-                programGoogleCalendarSwitchChange(!isChecked);
+                programGoogleCalendarSwitchChange(isChecked);
                 ErrorHandlerUtil.handleError(t);
             }
         });
