@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import com.github.underscore.$;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -27,6 +29,7 @@ import retrofit2.Response;
 public class MessagesFragment extends ListFragment {
 
     private Adapter adapter;
+    private DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
     @Override protected String getRequestUrl() {
         return backendApi.getMessages().request().url().toString();
@@ -80,7 +83,7 @@ public class MessagesFragment extends ListFragment {
         @Override public void onBindViewHolder(ViewHolder holder, int position) {
             Message message = messages.get(position);
             holder.messageSender.setText(message.from);
-            holder.messageSendDate.setText(message.createdTime);
+            holder.messageSendDate.setText(dateFormat.format(message.createdTime));
         }
 
         @Override public int getItemCount() {
