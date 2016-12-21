@@ -13,6 +13,7 @@ import mobi.kujon.activities.ImageActivity;
 import mobi.kujon.activities.LecturerDetailsActivity;
 import mobi.kujon.activities.LoginActivity;
 import mobi.kujon.activities.MainActivity;
+import mobi.kujon.activities.MessageDetailsActivity;
 import mobi.kujon.activities.PreferencesActivity;
 import mobi.kujon.activities.ProgrammeSearchActivity;
 import mobi.kujon.activities.StudentDetailsActivity;
@@ -73,6 +74,8 @@ public interface KujonComponent {
     void inject(UsoswebLoginActivity activity);
 
     void inject(WebViewAcitivty activity);
+
+    void inject(MessageDetailsActivity activity);
 
     void inject(CoursesFragment fragment);
 

@@ -52,4 +52,8 @@
     <string name="messages">Messages</string>
     <string name="sender">Sender</string>
     <string name="send_date">Send date</string>
+    <string name="from">From:</string>
+    <string name="date">Date:</string>
+    <string name="details">Details</string>
+    <string name="empty_message">Empty Message</string>
 </resources>

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="mobi.kujon">
+    package="mobi.kujon">
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
-    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
-    <uses-permission android:name="android.permission.READ_PROFILE"/>
-    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".KujonApplication"
@@ -20,81 +21,83 @@
             android:screenOrientation="portrait"
             android:theme="@style/ToolbarAppTheme">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".activities.UsosesActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ToolbarAppTheme"/>
+            android:theme="@style/ToolbarAppTheme" />
         <activity
             android:name=".activities.UsoswebLoginActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ToolbarAppTheme"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".activities.CourseDetailsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ToolbarAppTheme"/>
+            android:theme="@style/ToolbarAppTheme" />
         <activity
             android:name=".activities.LecturerDetailsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ToolbarAppTheme"/>
+            android:theme="@style/ToolbarAppTheme" />
         <activity
             android:name=".activities.StudentDetailsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ToolbarAppTheme"/>
+            android:theme="@style/ToolbarAppTheme" />
         <activity
             android:name=".activities.ImageActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.CongratulationsActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.FacultyDetailsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ToolbarAppTheme"/>
+            android:theme="@style/ToolbarAppTheme" />
         <activity
             android:name=".activities.PreferencesActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ToolbarAppTheme"/>
+            android:theme="@style/ToolbarAppTheme" />
         <activity
             android:name=".activities.WebViewAcitivty"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.TermsActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.ThesesActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.TextViewActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.StudentSearchActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.CoursesSearchActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.FacultySearchActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.ProgrammeSearchActivity"
-            android:screenOrientation="portrait"/>
-
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.ThesesSearchActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.ErrorActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.MessageDetailsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ToolbarAppTheme"/>
     </application>
 
-    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>

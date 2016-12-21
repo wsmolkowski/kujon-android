@@ -19,6 +19,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mobi.kujon.R;
+import mobi.kujon.activities.MessageDetailsActivity;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.network.json.Message;
 import mobi.kujon.utils.ErrorHandlerUtil;
@@ -82,6 +83,7 @@ public class MessagesFragment extends ListFragment {
 
         @Override public void onBindViewHolder(ViewHolder holder, int position) {
             Message message = messages.get(position);
+            holder.message = message;
             holder.messageSender.setText(message.from);
             holder.messageSendDate.setText(dateFormat.format(message.createdTime));
         }
@@ -100,12 +102,14 @@ public class MessagesFragment extends ListFragment {
 
         @Bind(R.id.message_sender) TextView messageSender;
         @Bind(R.id.message_send_date) TextView messageSendDate;
+        Message message;
 
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(v -> {
-
+                MessageDetailsActivity.showMessageDetails(getActivity(), message.from,
+                        dateFormat.format(message.createdTime), message.message);
             });
         }
     }

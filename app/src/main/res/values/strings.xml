@@ -43,6 +43,10 @@
     <string name="messages">Wiadomości</string>
     <string name="sender">Nadawca</string>
     <string name="send_date">Data wysłania</string>
+    <string name="from">Od:</string>
+    <string name="date">Data:</string>
+    <string name="details">Szczegóły</string>
+    <string name="empty_message">Pusty email</string>
 
     <string-array name="months">
         <item>Styczeń</item>
