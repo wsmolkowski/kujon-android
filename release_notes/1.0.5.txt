@@ -1,0 +1,3 @@
+#150 #151 dodanie ustawień powiadomień i kalendarza
+#152 Poprawa błędu zapętlenia na ekranie logowanie w przypadku 401 z serwera
+#137 poprawna obsługa refresha na ekranie planu zajęć
