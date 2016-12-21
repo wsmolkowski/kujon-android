@@ -18,7 +18,7 @@ public class Message {
     @Expose
     public String message;
 
-    @SerializedName("type")
+    @SerializedName("typ")
     @Expose
     public String type;
 

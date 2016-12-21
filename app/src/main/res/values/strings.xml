@@ -41,6 +41,8 @@
     <string name="enable_notifications">Powiadomienia</string>
     <string name="enable_googlecalendar">Synchronizacja Kalendarza Google</string>
     <string name="messages">Wiadomości</string>
+    <string name="sender">Nadawca</string>
+    <string name="send_date">Data wysłania</string>
 
     <string-array name="months">
         <item>Styczeń</item>

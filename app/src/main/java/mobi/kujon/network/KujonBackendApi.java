@@ -132,4 +132,7 @@ public interface KujonBackendApi {
 
     @GET("messages")
     Call<KujonResponse<List<Message>>> getMessages();
+
+    @GET("messages") @Headers(X_KUJONREFRESH_TRUE)
+    Call<KujonResponse<List<Message>>> getMessagesRefresh();
 }
