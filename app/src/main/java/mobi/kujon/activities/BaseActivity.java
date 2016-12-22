@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.ContentViewEvent;
+import com.facebook.appevents.AppEventsLogger;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
@@ -42,6 +43,7 @@ import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
 import mobi.kujon.network.KujonBackendApi;
 import mobi.kujon.network.SettingsApi;
+import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.utils.ErrorHandlerUtil;
 import mobi.kujon.utils.KujonUtils;
 import retrofit2.Call;
@@ -170,12 +172,12 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
                 kujonBackendApi.deleteAccount().enqueue(new Callback<Object>() {
                     @Override public void onResponse(Call<Object> call, Response<Object> response) {
                         System.out.println("call = [" + call + "], response = [" + response + "]");
-                        logout();
+                        googleLogout();
                     }
 
                     @Override public void onFailure(Call<Object> call, Throwable t) {
                         Crashlytics.logException(t);
-                        logout();
+                        googleLogout();
                     }
                 });
             });
@@ -216,10 +218,28 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
 
     public void logout() {
         Log.d(TAG, "logout() called with: " + "");
-        Auth.GoogleSignInApi.signOut(apiClient).setResultCallback(status -> checkLoggingStatus(this::handle));
+        showProgress(true);
+        kujonBackendApi.logout().enqueue(new Callback<KujonResponse<String>>() {
+            @Override
+            public void onResponse(Call<KujonResponse<String>> call, Response<KujonResponse<String>> response) {
+                showProgress(false);
+                if(ErrorHandlerUtil.handleResponse(response)) {
+                    googleLogout();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<KujonResponse<String>> call, Throwable t) {
+                showProgress(false);
+            }
+        });
+    }
+
+    private void googleLogout() {
+        Auth.GoogleSignInApi.signOut(apiClient).setResultCallback(status -> checkLoggingStatus(BaseActivity.this::handle));
         utils.clearCache();
         kujonApplication.finishAllAcitities();
-        startActivity(new Intent(this, LoginActivity.class));
+        startActivity(new Intent(BaseActivity.this, LoginActivity.class));
     }
 
     @Override public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
