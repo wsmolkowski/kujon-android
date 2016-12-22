@@ -11,7 +11,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.underscore.$;
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -19,6 +22,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mobi.kujon.R;
+import mobi.kujon.activities.ThesesActivity;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.network.json.gen.Thesis_;
 import mobi.kujon.utils.ErrorHandlerUtil;
@@ -40,7 +44,7 @@ public class ThesesFragment extends ListFragment {
         recyclerView.setAdapter(adapter);
         activity.showProgress(true);
 
-        loadData(false);
+       loadData(false);
     }
 
     @Override protected String getRequestUrl() {
@@ -48,6 +52,36 @@ public class ThesesFragment extends ListFragment {
     }
 
     @Override protected void loadData(boolean refresh) {
+        if(getActivity().getIntent().getStringExtra(ThesesActivity.THESE_KEY) !=null){
+            loadDataFromBundle();
+
+        }else {
+            loadDataFromApi(refresh);
+        }
+
+    }
+
+    private void loadDataFromBundle() {
+        String thesisJson = getActivity().getIntent().getStringExtra(ThesesActivity.THESE_KEY);
+        Gson gson  = new Gson();
+        try {
+            activity.showProgress(false);
+            swipeContainer.setRefreshing(false);
+            Thesis_ thesis = gson.fromJson(thesisJson, Thesis_.class);
+            List<Thesis_> thesises = new ArrayList<>();
+            thesises.add(thesis);
+            ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(thesis.title);
+            adapter.setData(thesises);
+        }catch (JsonSyntaxException e){
+
+            activity.showProgress(false);
+            swipeContainer.setRefreshing(false);
+            adapter.setData( new ArrayList<>());
+        }
+    }
+
+    private void loadDataFromApi(boolean refresh) {
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Prace dyplomowe");
         Call<KujonResponse<List<Thesis_>>> theses = refresh ? backendApi.thesesRefresh() : backendApi.theses();
         theses.enqueue(new Callback<KujonResponse<List<Thesis_>>>() {
             @Override public void onResponse(Call<KujonResponse<List<Thesis_>>> call, Response<KujonResponse<List<Thesis_>>> response) {
@@ -65,12 +99,10 @@ public class ThesesFragment extends ListFragment {
                 ErrorHandlerUtil.handleError(t);
             }
         });
-
     }
 
     @Override public void onStart() {
         super.onStart();
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Prace dyplomowe");
     }
 
     protected class Adapter extends RecyclerView.Adapter<ViewHolder> {
