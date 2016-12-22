@@ -64,6 +64,7 @@ public class NetModule {
     @Provides @Singleton Gson provideGson() {
         return new GsonBuilder()
                 .registerTypeAdapter(GradeClassType.class, new GradeClassType.GradeClassTypeDeserializer())
+                .setDateFormat("yyyy-MM-dd HH:mm:ss")
                 .create();
     }
 

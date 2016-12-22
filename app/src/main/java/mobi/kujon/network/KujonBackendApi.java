@@ -11,6 +11,7 @@ import mobi.kujon.network.json.Grade;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.network.json.Lecturer;
 import mobi.kujon.network.json.LecturerLong;
+import mobi.kujon.network.json.Message;
 import mobi.kujon.network.json.Preferences;
 import mobi.kujon.network.json.Programme;
 import mobi.kujon.network.json.ProgrammeSingle;
@@ -128,4 +129,10 @@ public interface KujonBackendApi {
 
     @POST("settings/{setting}/{action}")
     Call<KujonResponse<String>> setSetting(@Path(value = "setting") String setting, @Path(value = "action") String action);
+
+    @GET("messages")
+    Call<KujonResponse<List<Message>>> getMessages();
+
+    @GET("messages") @Headers(X_KUJONREFRESH_TRUE)
+    Call<KujonResponse<List<Message>>> getMessagesRefresh();
 }

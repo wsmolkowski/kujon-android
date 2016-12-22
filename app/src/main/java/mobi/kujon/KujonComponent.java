@@ -13,6 +13,7 @@ import mobi.kujon.activities.ImageActivity;
 import mobi.kujon.activities.LecturerDetailsActivity;
 import mobi.kujon.activities.LoginActivity;
 import mobi.kujon.activities.MainActivity;
+import mobi.kujon.activities.MessageDetailsActivity;
 import mobi.kujon.activities.PreferencesActivity;
 import mobi.kujon.activities.ProgrammeSearchActivity;
 import mobi.kujon.activities.StudentDetailsActivity;
@@ -25,6 +26,7 @@ import mobi.kujon.fragments.CoursesFragment;
 import mobi.kujon.fragments.GradesFragment;
 import mobi.kujon.fragments.LecturersFragment;
 import mobi.kujon.fragments.ListFragment;
+import mobi.kujon.fragments.MessagesFragment;
 import mobi.kujon.fragments.PlanFragment;
 import mobi.kujon.fragments.PlanListFragment;
 import mobi.kujon.fragments.SearchFragment;
@@ -73,6 +75,8 @@ public interface KujonComponent {
 
     void inject(WebViewAcitivty activity);
 
+    void inject(MessageDetailsActivity activity);
+
     void inject(CoursesFragment fragment);
 
     void inject(GradesFragment fragment);
@@ -98,4 +102,6 @@ public interface KujonComponent {
     void inject(StudentInfoFragment studentInfoFragment);
 
     void inject(SearchFragment searchFragment);
+
+    void inject(MessagesFragment messagesFragment);
 }
