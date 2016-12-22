@@ -43,6 +43,7 @@ import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
 import mobi.kujon.network.KujonBackendApi;
 import mobi.kujon.network.SettingsApi;
+import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.utils.ErrorHandlerUtil;
 import mobi.kujon.utils.KujonUtils;
 import retrofit2.Call;
@@ -110,12 +111,6 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
         } else {
             content.removeView(progressBar);
         }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        AppEventsLogger.activateApp(getApplication());
     }
 
     @Override protected void onStart() {
@@ -223,10 +218,24 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
 
     public void logout() {
         Log.d(TAG, "logout() called with: " + "");
-        Auth.GoogleSignInApi.signOut(apiClient).setResultCallback(status -> checkLoggingStatus(this::handle));
-        utils.clearCache();
-        kujonApplication.finishAllAcitities();
-        startActivity(new Intent(this, LoginActivity.class));
+        showProgress(true);
+        kujonBackendApi.logout().enqueue(new Callback<KujonResponse<String>>() {
+            @Override
+            public void onResponse(Call<KujonResponse<String>> call, Response<KujonResponse<String>> response) {
+                showProgress(false);
+                if(ErrorHandlerUtil.handleResponse(response)) {
+                    Auth.GoogleSignInApi.signOut(apiClient).setResultCallback(status -> checkLoggingStatus(BaseActivity.this::handle));
+                    utils.clearCache();
+                    kujonApplication.finishAllAcitities();
+                    startActivity(new Intent(BaseActivity.this, LoginActivity.class));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<KujonResponse<String>> call, Throwable t) {
+                showProgress(false);
+            }
+        });
     }
 
     @Override public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {

@@ -135,4 +135,7 @@ public interface KujonBackendApi {
 
     @GET("messages") @Headers(X_KUJONREFRESH_TRUE)
     Call<KujonResponse<List<Message>>> getMessagesRefresh();
+
+    @POST("authentication/logout")
+    Call<KujonResponse<String>> logout();
 }
