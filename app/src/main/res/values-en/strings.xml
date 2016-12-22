@@ -56,4 +56,12 @@
     <string name="date">Date:</string>
     <string name="details">Details</string>
     <string name="empty_message">Empty Message</string>
+    <string name="study_level">Study Level</string>
+    <string name="programme_duration">Programme time span</string>
+    <string name="none">N/A</string>
+    <string name="programme_id">Identifier</string>
+    <string name="programme_mode">Studies Type</string>
+    <string name="programme_name">Program name</string>
+    <string name="programme">Programme</string>
+    <string name="ects_sum">Sum of ECTS points</string>
 </resources>

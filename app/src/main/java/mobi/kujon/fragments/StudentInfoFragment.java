@@ -25,6 +25,7 @@ import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
 import mobi.kujon.activities.BaseActivity;
 import mobi.kujon.activities.ImageActivity;
+import mobi.kujon.activities.ProgrammeDetailsActivity;
 import mobi.kujon.network.KujonBackendApi;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.network.json.Programme;
@@ -128,16 +129,7 @@ public class StudentInfoFragment extends BaseFragment {
                                 if (ErrorHandlerUtil.handleResponse(response)) {
                                     ProgrammeSingle prog = response.body().data;
                                     String name = !isEmpty(prog.name) ? prog.name.split(",")[0] : "";
-                                    AlertDialog.Builder dlgAlert = new AlertDialog.Builder(getActivity());
-                                    dlgAlert.setTitle("Kierunek: " + name);
-                                    dlgAlert.setMessage(String.format("identyfikator: %s\ntryb: %s\nczas trwania: %s\npoziom: %s\nopis: %s",
-                                            prog.programmeId, prog.modeOfStudies, prog.duration, prog.levelOfStudies, prog.name));
-                                    dlgAlert.setCancelable(false);
-                                    dlgAlert.setNegativeButton("OK", (dialog, which) -> {
-                                        dialog.dismiss();
-                                    });
-                                    alertDialog = dlgAlert.create();
-                                    alertDialog.show();
+                                    ProgrammeDetailsActivity.showProgrammeDetails(StudentInfoFragment.this.getActivity(), prog, name);
                                 }
                             }
 
