@@ -28,6 +28,7 @@ import mobi.kujon.R;
 import mobi.kujon.fragments.CoursesFragment;
 import mobi.kujon.fragments.GradesFragment;
 import mobi.kujon.fragments.LecturersFragment;
+import mobi.kujon.fragments.MessagesFragment;
 import mobi.kujon.fragments.PlanFragment;
 import mobi.kujon.fragments.PlanListFragment;
 import mobi.kujon.fragments.SearchFragment;
@@ -39,10 +40,10 @@ public class MainActivity extends BaseActivity {
     public static final int CALENDAR_POSITION = 1;
     @Bind(R.id.toolbar) Toolbar toolbar;
 
-    public String[] TITLES = new String[]{"Użytkownik", "Plan zajęć", "Przedmioty", "Oceny", "Wykładowcy", "Szukaj"};
-    public int[] ICONS = new int[]{R.drawable.user, R.drawable.plan, R.drawable.courses, R.drawable.grades, R.drawable.teachers, R.drawable.search};
+    public String[] TITLES = new String[]{"Użytkownik", "Plan zajęć", "Przedmioty", "Oceny", "Wykładowcy", "Wiadomości","Szukaj"};
+    public int[] ICONS = new int[]{R.drawable.user, R.drawable.plan, R.drawable.courses, R.drawable.grades, R.drawable.teachers, R.drawable.ic_messages, R.drawable.search};
     public Fragment[] FRAGMENTS = new Fragment[]{
-            new UserInfoFragment(), new PlanFragment(), new CoursesFragment(), new GradesFragment(), new LecturersFragment(), new SearchFragment()};
+            new UserInfoFragment(), new PlanFragment(), new CoursesFragment(), new GradesFragment(), new LecturersFragment(), new MessagesFragment(), new SearchFragment()};
     @Bind(R.id.toolbar_title) TextView toolbarTitle;
     private Drawer drawer;
     private AccountHeader headerResult;
