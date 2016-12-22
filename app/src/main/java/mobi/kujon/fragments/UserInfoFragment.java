@@ -26,6 +26,7 @@ import mobi.kujon.R;
 import mobi.kujon.activities.BaseActivity;
 import mobi.kujon.activities.FacultyDetailsActivity;
 import mobi.kujon.activities.ImageActivity;
+import mobi.kujon.activities.ProgrammeDetailsActivity;
 import mobi.kujon.activities.TermsActivity;
 import mobi.kujon.activities.ThesesActivity;
 import mobi.kujon.databinding.FragmentUserInfoBinding;
@@ -124,20 +125,8 @@ public class UserInfoFragment extends BaseFragment {
                             Programme prog = programmeOptional.get();
                             Programme_ programmeFull = prog.programme;
                             if (getActivity() != null) {
-                                AlertDialog.Builder dlgAlert = new AlertDialog.Builder(getActivity());
-                                dlgAlert.setTitle("Kierunek: " + programmeFull.description.split(",")[0]);
-                                StringBuilder programmeDesc = new StringBuilder();
-                                programmeDesc.append(String.format("identyfikator: %s\ntryb: %s\nczas trwania: %s\npoziom: %s\nopis: %s",
-                                        programmeFull.id, programmeFull.modeOfStudies, programmeFull.duration, programmeFull.levelOfStudies, programmeFull.description));
-
-                                if (programmeFull.ectsUsedSum != null) {
-                                    programmeDesc.append(String.format("\nECTS: %s", programmeFull.ectsUsedSum));
-                                }
-                                dlgAlert.setMessage(programmeDesc.toString());
-                                dlgAlert.setCancelable(false);
-                                dlgAlert.setNegativeButton("OK", (dialog, which) -> dialog.dismiss());
-                                alertDialog = dlgAlert.create();
-                                alertDialog.show();
+                                String programmeName = programmeFull.description.split(",")[0];
+                                ProgrammeDetailsActivity.showProgrammeDetails(getActivity(), programmeFull, programmeName);
                             }
                         }
                     });

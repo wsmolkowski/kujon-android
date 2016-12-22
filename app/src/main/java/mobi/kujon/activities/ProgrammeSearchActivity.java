@@ -15,6 +15,8 @@ import mobi.kujon.network.json.gen.Programme;
 import mobi.kujon.network.json.gen.ProgrammeSearchResult;
 import retrofit2.Call;
 
+import static android.text.TextUtils.isEmpty;
+
 public class ProgrammeSearchActivity extends AbstractSearchActivity<ProgrammeSearchResult, Item__> {
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,16 +41,9 @@ public class ProgrammeSearchActivity extends AbstractSearchActivity<ProgrammeSea
     }
 
     protected void handeClick(Item__ item) {
-        AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);
         Programme programme = item.programme;
-        dlgAlert.setTitle(programme.name);
-        dlgAlert.setMessage(String.format("identyfikator: %s\ntryb: %s\nczas trwania: %s\npoziom: %s\n opis: %s",
-                programme.id, programme.mode_of_studies, programme.duration, programme.level_of_studies, programme.name));
-        dlgAlert.setCancelable(false);
-        dlgAlert.setNegativeButton("OK", (dialog, which) -> {
-            dialog.dismiss();
-        });
-        dlgAlert.create().show();
+        String name = !isEmpty(programme.name) ? programme.name.split(",")[0] : "";
+        ProgrammeDetailsActivity.showProgrammeDetails(this, programme, name);
     }
 
     public static void start(Activity from, String query) {

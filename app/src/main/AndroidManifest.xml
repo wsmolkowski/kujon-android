@@ -97,6 +97,10 @@
         <activity
             android:name=".activities.MessageDetailsActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/ToolbarAppTheme" />
+        <activity
+            android:name=".activities.ProgrammeDetailsActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/ToolbarAppTheme"/>
     </application>
 
