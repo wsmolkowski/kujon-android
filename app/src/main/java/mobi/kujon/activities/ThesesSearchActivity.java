@@ -37,6 +37,7 @@ public class ThesesSearchActivity extends AbstractSearchActivity<ThesesSearchRes
     }
 
     protected void handeClick(Item____ item) {
+        ThesesActivity.openWithThese(this,item.thesis);
     }
 
     @Override protected boolean isClickable() {

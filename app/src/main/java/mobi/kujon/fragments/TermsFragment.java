@@ -37,6 +37,7 @@ public class TermsFragment extends ListFragment {
         loadData(false);
     }
 
+
     @Override protected String getRequestUrl() {
         return backendApi.terms().request().url().toString();
     }

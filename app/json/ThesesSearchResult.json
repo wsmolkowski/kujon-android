@@ -5,7 +5,25 @@
       "thesis": {
         "id": "27",
         "title": "Cztery prace Archimedesa",
-        "type": "master"
+        "type": "master",
+        "authors": [
+          {
+            "first_name": "Jakub",
+            "id": "1167405",
+            "last_name": "Jamrozik"
+          }
+        ],
+        "faculty": {
+          "id": "10000000",
+          "name": "Wydzia\u0142 Matematyki, Informatyki i Mechaniki"
+        },
+        "supervisors": [
+          {
+            "first_name": "Marek",
+            "id": "1",
+            "last_name": "G\u00f3ralowski"
+          }
+        ]
       }
     }
   ],
