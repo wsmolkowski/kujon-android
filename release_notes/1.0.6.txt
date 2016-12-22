@@ -1,0 +1,3 @@
+#122 dodanie opcji w menu wiadomości a także wyświetlanie list i szczegółów jednej
+#156 dodanie strzała na logout serwera w przypadku wylogowania
+#140 przeniesienie na widok pracy po kliknięciu w wyniki jej wyszukiwania
