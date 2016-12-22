@@ -62,4 +62,13 @@
         <item>Listopad</item>
         <item>Grudzień</item>
     </string-array>
+    <string name="title_activity_programmes">ProgrammesActivity</string>
+    <string name="study_level">Poziom studiów</string>
+    <string name="programme_duration">Czas trwania</string>
+    <string name="none">Brak</string>
+    <string name="programme_id">Identyfikator</string>
+    <string name="programme_mode">Tryb Studiów</string>
+    <string name="programme_name">Opis</string>
+    <string name="programme">Kierunek</string>
+    <string name="ects_sum">Suma Punktów ECTS</string>
 </resources>
