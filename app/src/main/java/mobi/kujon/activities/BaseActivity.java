@@ -172,12 +172,12 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
                 kujonBackendApi.deleteAccount().enqueue(new Callback<Object>() {
                     @Override public void onResponse(Call<Object> call, Response<Object> response) {
                         System.out.println("call = [" + call + "], response = [" + response + "]");
-                        logout();
+                        googleLogout();
                     }
 
                     @Override public void onFailure(Call<Object> call, Throwable t) {
                         Crashlytics.logException(t);
-                        logout();
+                        googleLogout();
                     }
                 });
             });
@@ -224,10 +224,7 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
             public void onResponse(Call<KujonResponse<String>> call, Response<KujonResponse<String>> response) {
                 showProgress(false);
                 if(ErrorHandlerUtil.handleResponse(response)) {
-                    Auth.GoogleSignInApi.signOut(apiClient).setResultCallback(status -> checkLoggingStatus(BaseActivity.this::handle));
-                    utils.clearCache();
-                    kujonApplication.finishAllAcitities();
-                    startActivity(new Intent(BaseActivity.this, LoginActivity.class));
+                    googleLogout();
                 }
             }
 
@@ -236,6 +233,13 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
                 showProgress(false);
             }
         });
+    }
+
+    private void googleLogout() {
+        Auth.GoogleSignInApi.signOut(apiClient).setResultCallback(status -> checkLoggingStatus(BaseActivity.this::handle));
+        utils.clearCache();
+        kujonApplication.finishAllAcitities();
+        startActivity(new Intent(BaseActivity.this, LoginActivity.class));
     }
 
     @Override public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
