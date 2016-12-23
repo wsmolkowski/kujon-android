@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name" translatable="false">Kujon</string>
-    <string name="logout">Wyloguj</string>
+    <string name="logout">Wyloguj się</string>
     <string name="help">Pomoc</string>
-    <string name="delete_account">Skasuj konto</string>
+    <string name="delete_account">Usuń konto</string>
     <string name="contact_us">Prześlij opinię</string>
     <string name="contact_email" translatable="false">"kujon@kujon.mobi"</string>
     <string name="cancel">Anuluj</string>
@@ -12,7 +12,7 @@
     <string name="no_date">Brak danych do wyświetlenia</string>
     <string name="no_photo">Brak zdjęcia</string>
     <string name="app_link">Sprawdź nową aplikację: https://play.google.com/store/apps/details?id=mobi.kujon</string>
-    <string name="share_app">Podziel się apką</string>
+    <string name="share_app">Poleć aplikację znajomemu</string>
     <string name="congratulations">Gratulacje! Udało Ci się zalogować do Twojego konta na %1$s.</string>
     <string name="now_you_can">Teraz możesz przeglądać swoje przedmioty, oceny, plan zajęć..</string>
     <string name="login_title">Logowanie do uczelni</string>
@@ -39,7 +39,7 @@
     <string name="teachers">Wykładowcy</string>
     <string name="no_item_decorator" translatable="false">NO_ITEM_DECORATOR</string>
     <string name="enable_notifications">Powiadomienia</string>
-    <string name="enable_googlecalendar">Synchronizacja Kalendarza Google</string>
+    <string name="enable_googlecalendar">Synchronizacja kalendarza Google</string>
     <string name="messages">Wiadomości</string>
     <string name="sender">Nadawca</string>
     <string name="send_date">Data wysłania</string>
