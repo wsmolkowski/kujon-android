@@ -92,8 +92,8 @@ public class StudentInfoFragment extends BaseFragment {
         String userId = getArguments().getString(USER_ID);
         if (refresh) {
             utils.invalidateEntry("users/" + userId);
-            if (user != null && user.picture != null) {
-                picasso.invalidate(user.picture);
+            if (user != null && user.photoUrl != null) {
+                picasso.invalidate(user.photoUrl);
             }
         }
 
@@ -106,7 +106,7 @@ public class StudentInfoFragment extends BaseFragment {
                     user = response.body().data;
                     String name = user.first_name + " " + user.last_name;
                     firstLastName.setText(name);
-                    picasso.load(user.picture)
+                    picasso.load(user.photoUrl)
                             .transform(new CircleTransform())
                             .fit()
                             .centerInside()
