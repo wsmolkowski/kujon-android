@@ -1,0 +1,7 @@
+#163 koleność w ustawieniach tak jak w iOS app
+#162 dodanie strzałki i api call po zdjęcie
+#161 koleność zamieniona
+#155 stworzona nowa aktywność, widoku przeniesione na nią
+#150 powiadomienia zapisane na dysku, zostawiony też strzał tak że nie jeździ z prawa na lewo jak się uruchamia
+#149 usunięcie usunięcia Taga przy wylogowaniu
+#140 poprawki layoutowe
