@@ -77,6 +77,9 @@
         <item name="android:paddingBottom">4dp</item>
         <item name="android:textColor">@color/opacityBlack</item>
     </style>
+    <style name="Regular.Label.Left">
+        <item name="android:layout_gravity">left</item>
+    </style>
 
     <style name="Regular.Entry">
         <item name="android:layout_width">match_parent</item>
@@ -96,4 +99,13 @@
         <item name="android:paddingTop">16dp</item>
         <item name="android:paddingBottom">16dp</item>
     </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
