@@ -6,18 +6,27 @@ import android.support.v7.widget.SwitchCompat;
 import android.view.View;
 import android.widget.TextView;
 
+import javax.inject.Inject;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.network.json.Preferences;
 import mobi.kujon.utils.ErrorHandlerUtil;
+import mobi.kujon.utils.shared_preferences.SharedPreferencesFacade;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class PreferencesActivity extends BaseActivity {
+
+    private static final String NOTIFICATION_PREFS_KEY = "NOTIFICATION_PREFS_KEY";
+    private static final String CALENDAR_PREFS_KEY = "CALENDAR_PREFS_KEY";
+    @Inject
+    SharedPreferencesFacade sharedPreferencesFacade;
 
     @Bind(R.id.toolbar_title)
     TextView toolbarTitle;
@@ -33,6 +42,7 @@ public class PreferencesActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activitiy_settings);
+        KujonApplication.getComponent().inject(this);
         ButterKnife.bind(this);
         utils.invalidateEntry("settings");
         showProgress(true);
@@ -41,13 +51,21 @@ public class PreferencesActivity extends BaseActivity {
     }
 
     private void initSwitches() {
+        if (sharedPreferencesFacade.contaisKey(NOTIFICATION_PREFS_KEY)) {
+            notificationsSwitch.setChecked(sharedPreferencesFacade.retrieveBoolean(NOTIFICATION_PREFS_KEY));
+        }
+        if (sharedPreferencesFacade.contaisKey(CALENDAR_PREFS_KEY)) {
+            googleCalendarSwitch.setChecked(sharedPreferencesFacade.retrieveBoolean(CALENDAR_PREFS_KEY));
+        }
         kujonBackendApi.getUserPreferences().enqueue(new Callback<KujonResponse<Preferences>>() {
             @Override
             public void onResponse(Call<KujonResponse<Preferences>> call, Response<KujonResponse<Preferences>> response) {
                 showProgress(false);
                 if (ErrorHandlerUtil.handleResponse(response)) {
                     notificationsSwitch.setChecked(response.body().data.notificationsEnabled);
+                    sharedPreferencesFacade.putBoolean(NOTIFICATION_PREFS_KEY, response.body().data.notificationsEnabled);
                     googleCalendarSwitch.setChecked(response.body().data.googleCalendarEnabled);
+                    sharedPreferencesFacade.putBoolean(CALENDAR_PREFS_KEY, response.body().data.googleCalendarEnabled);
                     initSwitchListeners();
                 }
 
@@ -85,6 +103,8 @@ public class PreferencesActivity extends BaseActivity {
                 showProgress(false);
                 if (!ErrorHandlerUtil.handleResponse(response)) {
                     programGoogleCalendarSwitchChange(isChecked);
+                }else {
+                    sharedPreferencesFacade.putBoolean(CALENDAR_PREFS_KEY, isChecked);
                 }
             }
 
@@ -119,6 +139,8 @@ public class PreferencesActivity extends BaseActivity {
                 showProgress(false);
                 if (!ErrorHandlerUtil.handleResponse(response)) {
                     programNotificationSwitchChange(isChecked);
+                }else {
+                    sharedPreferencesFacade.putBoolean(NOTIFICATION_PREFS_KEY, isChecked);
                 }
             }
 

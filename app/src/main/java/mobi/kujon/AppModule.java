@@ -7,10 +7,13 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import mobi.kujon.utils.shared_preferences.SharedPreferencesFacade;
+import mobi.kujon.utils.shared_preferences.SharedPreferencesFacadeImpl;
 
 @Module
 public class AppModule {
 
+    private static final String PREFERENCES_NAME = "kujon_prefs_name";
     KujonApplication application;
 
     public AppModule(KujonApplication application) {
@@ -28,4 +31,10 @@ public class AppModule {
     @Provides @Singleton Context providesContext() {
         return application;
     }
+
+    @Provides @Singleton
+    SharedPreferencesFacade proviceSharedPreferencesFacade(KujonApplication kujonApplication){
+        return new SharedPreferencesFacadeImpl(application.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE));
+    }
+
 }
