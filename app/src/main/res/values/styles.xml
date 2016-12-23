@@ -87,7 +87,9 @@
         <item name="android:layout_marginBottom">4dp</item>
         <item name="android:textColor">@color/dark</item>
     </style>
-
+    <style name="Regular.Entry.Semibold">
+        <item name="fontPath">fonts/Lato-Semibold.ttf</item>
+    </style>
     <style name="Regular.Label.Background">
         <item name="android:background">@drawable/label_background</item>
         <item name="android:layout_marginTop">8dp</item>

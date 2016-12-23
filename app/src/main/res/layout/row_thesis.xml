@@ -7,7 +7,7 @@
 
     <TextView
         android:id="@+id/title"
-        style="@style/Regular.Entry"
+        style="@style/Regular.Entry.Semibold"
         android:textStyle="bold"
         tools:text='Edukacyjna rola filmu na przyk\u0142adzie dzia\u0142alno\u015bci warszawskiego kina \u201ePraha\u201d' />
 
