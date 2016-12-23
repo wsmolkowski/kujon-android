@@ -55,7 +55,6 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginLeft="16dp"
         android:background="@color/white"/>
 
     <RelativeLayout
@@ -84,8 +83,12 @@
 
     <View
         android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/white"/>
+    <View
+        android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginLeft="16dp"
+
         android:background="@color/white"/>
 
     <LinearLayout
@@ -113,21 +116,19 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginLeft="16dp"
         android:background="@color/white"/>
-
     <LinearLayout
-        android:id="@+id/contact_us"
+        android:id="@+id/delete_account"
         android:layout_width="match_parent"
-        android:gravity="center_vertical"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="16dp">
 
         <ImageView
             android:layout_width="18dp"
             android:layout_height="18dp"
-            android:src="@drawable/contact_us"/>
+            android:src="@drawable/remove_account"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -135,13 +136,38 @@
             style="@style/Regular"
             android:textColor="@color/dark"
             android:paddingLeft="32dp"
-            android:text="@string/contact_us"/>
+            android:text="@string/delete_account"/>
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginLeft="16dp"
+        android:background="@color/white"/>
+
+    <LinearLayout
+        android:id="@+id/regulations"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@drawable/terms"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Regular"
+            android:textColor="@color/dark"
+            android:paddingLeft="32dp"
+            android:text="@string/regulations"/>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
         android:background="@color/white"/>
 
     <LinearLayout
@@ -169,21 +195,22 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginLeft="16dp"
         android:background="@color/white"/>
 
+
+
     <LinearLayout
-        android:id="@+id/delete_account"
+        android:id="@+id/contact_us"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:gravity="center_vertical"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="16dp">
 
         <ImageView
             android:layout_width="18dp"
             android:layout_height="18dp"
-            android:src="@drawable/remove_account"/>
+            android:src="@drawable/contact_us"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -191,37 +218,10 @@
             style="@style/Regular"
             android:textColor="@color/dark"
             android:paddingLeft="32dp"
-            android:text="@string/delete_account"/>
+            android:text="@string/contact_us"/>
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginLeft="16dp"
-        android:background="@color/white"/>
 
-
-    <LinearLayout
-        android:id="@+id/regulations"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="16dp">
-
-        <ImageView
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:src="@drawable/terms"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/Regular"
-            android:textColor="@color/dark"
-            android:paddingLeft="32dp"
-            android:text="@string/regulations"/>
-    </LinearLayout>
 
 
 </LinearLayout>
