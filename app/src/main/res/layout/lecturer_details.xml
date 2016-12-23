@@ -80,6 +80,15 @@
 
                 <TextView
                     style="@style/Regular.Label"
+                    android:text="Konsultacje"/>
+
+                <TextView
+                    android:id="@+id/lecturer_office_hours"
+                    style="@style/Regular.Entry"
+                    android:autoLink="web"
+                    tools:text='Lorem ipsum'/>
+                <TextView
+                    style="@style/Regular.Label"
                     android:layout_marginTop="8dp"
                     android:text="Pokój"/>
 
@@ -88,15 +97,7 @@
                     style="@style/Regular.Entry"
                     tools:text='Lorem ipsum'/>
 
-                <TextView
-                    style="@style/Regular.Label"
-                    android:text="Konsultacje"/>
 
-                <TextView
-                    android:id="@+id/lecturer_office_hours"
-                    style="@style/Regular.Entry"
-                    android:autoLink="web"
-                    tools:text='Lorem ipsum'/>
 
                 <TextView
                     style="@style/Regular.Label"
