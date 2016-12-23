@@ -2,7 +2,6 @@ package mobi.kujon.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,7 +69,7 @@ public class ThesesFragment extends ListFragment {
             Thesis_ thesis = gson.fromJson(thesisJson, Thesis_.class);
             List<Thesis_> thesises = new ArrayList<>();
             thesises.add(thesis);
-            ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(thesis.title);
+            ((ThesesActivity)getActivity()).setToolbarTitle("Praca dyplomowe");
             adapter.setData(thesises);
         }catch (JsonSyntaxException e){
 
@@ -81,7 +80,7 @@ public class ThesesFragment extends ListFragment {
     }
 
     private void loadDataFromApi(boolean refresh) {
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Prace dyplomowe");
+        ((ThesesActivity)getActivity()).setToolbarTitle("Prace dyplomowe");
         Call<KujonResponse<List<Thesis_>>> theses = refresh ? backendApi.thesesRefresh() : backendApi.theses();
         theses.enqueue(new Callback<KujonResponse<List<Thesis_>>>() {
             @Override public void onResponse(Call<KujonResponse<List<Thesis_>>> call, Response<KujonResponse<List<Thesis_>>> response) {
@@ -124,8 +123,9 @@ public class ThesesFragment extends ListFragment {
             showList(activity.getLayoutInflater(), holder.supervisors, names, index -> showLecturerDatails(activity, thesis.supervisors.get(index).id));
 
             showList(activity.getLayoutInflater(), holder.faculty, Arrays.asList(thesis.faculty.name), index -> showFacultyDetails(activity, thesis.faculty.id));
-
-            holder.itemView.setBackgroundResource(position % 2 == 1 ? R.color.grey : android.R.color.white);
+            if(position==getItemCount()-1){
+                holder.greyView.setVisibility(View.GONE);
+            }
         }
 
         @Override public int getItemCount() {
@@ -145,7 +145,7 @@ public class ThesesFragment extends ListFragment {
         @Bind(R.id.supervisors) LinearLayout supervisors;
         @Bind(R.id.type) TextView type;
         @Bind(R.id.faculty) LinearLayout faculty;
-
+        @Bind(R.id.last_grey) View greyView;
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
