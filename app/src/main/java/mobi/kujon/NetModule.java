@@ -20,6 +20,7 @@ import javax.inject.Singleton;
 import bolts.Task;
 import dagger.Module;
 import dagger.Provides;
+import mobi.kujon.network.ApiProvider;
 import mobi.kujon.network.KujonBackendApi;
 import mobi.kujon.network.SettingsApi;
 import mobi.kujon.network.json.GradeClassType;
@@ -66,6 +67,11 @@ public class NetModule {
                 .registerTypeAdapter(GradeClassType.class, new GradeClassType.GradeClassTypeDeserializer())
                 .setDateFormat("yyyy-MM-dd HH:mm:ss")
                 .create();
+    }
+
+    @Provides @Singleton
+    ApiProvider provideApiProvider(OkHttpClient okHttpClient, Gson gson) {
+        return new ApiProvider(okHttpClient, gson);
     }
 
     @Provides @Singleton Retrofit provideRetrofit(OkHttpClient okHttpClient, Gson gson) {
