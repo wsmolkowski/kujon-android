@@ -104,19 +104,6 @@
                 android:text="@string/none" />
 
             <TextView
-                style="@style/Regular.Label.Left"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="@string/programme_name" />
-
-            <TextView
-                android:id="@+id/programme_name"
-                style="@style/Regular.Entry"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/none" />
-
-            <TextView
                 android:id="@+id/ects_sum_label"
                 style="@style/Regular.Label.Left"
                 android:layout_width="wrap_content"
@@ -129,6 +116,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/none" />
+
+            <TextView
+                style="@style/Regular.Label.Left"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/programme_name" />
+
+            <TextView
+                android:id="@+id/programme_name"
+                style="@style/Regular.Entry"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/none" />
+
         </LinearLayout>
 
     </ScrollView>

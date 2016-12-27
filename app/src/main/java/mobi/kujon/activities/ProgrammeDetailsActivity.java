@@ -56,14 +56,7 @@ public class ProgrammeDetailsActivity extends BaseActivity {
         programmeId.setText(bundle.getString(ID));
         programmeDuration.setText(bundle.getString(DURATION));
         programmeMode.setText(bundle.getString(MODE));
-        String ectsUsed = bundle.getString(ECTS_SUM);
-        ectsSum.setVisibility(View.GONE);
-        ectsSumLabel.setVisibility(View.GONE);
-        if(ectsUsed != null) {
-            ectsSum.setVisibility(View.VISIBLE);
-            ectsSumLabel.setVisibility(View.VISIBLE);
-            ectsSum.setText(ectsUsed);
-        }
+        ectsSum.setText(bundle.getString(ECTS_SUM));
         programmeName.setText(bundle.getString(NAME));
     }
 
