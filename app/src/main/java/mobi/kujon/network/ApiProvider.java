@@ -56,7 +56,7 @@ public class ApiProvider implements ApiChoice {
                 .build();
     }
 
-    private String getApiURL() {
+    public String getApiURL() {
         switch (currentApiType) {
             case ApiType.DEMO:
                 return BuildConfig.URL_DEMO;
