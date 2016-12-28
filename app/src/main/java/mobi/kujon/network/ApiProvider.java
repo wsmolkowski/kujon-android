@@ -32,8 +32,8 @@ public class ApiProvider implements ApiChoice {
         createKujonBackendApi();
     }
 
-    public void switchApiType(){
-        switch(currentApiType) {
+    public void switchApiType() {
+        switch (currentApiType) {
             case ApiType.DEMO:
                 setApiType(ApiType.PROD);
                 break;
