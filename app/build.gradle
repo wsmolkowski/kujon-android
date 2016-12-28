@@ -22,6 +22,9 @@ android {
         manifestPlaceholders = [manifestApplicationId          : "${applicationId}",
                                 onesignal_app_id               : "f01a20f9-bbe7-4c89-a017-bf8930c61cf4",
                                 onesignal_google_project_number: "896765768628"]
+
+        buildConfigField "String", "URL_PROD", "\"https://api.kujon.mobi/\""
+        buildConfigField "String", "URL_DEMO", "\"https://api-demo.kujon.mobi/\""
     }
 
     sourceSets {
@@ -39,9 +42,11 @@ android {
     }
 
     buildTypes {
+
         debug {
             applicationIdSuffix '.debug'
             buildConfigField "String", "API_URL", "\"https://api.kujon.mobi/\""
+
 //            buildConfigField "String", "API_URL", "\"https://api.kujon.mobi/\""
         }
         release {

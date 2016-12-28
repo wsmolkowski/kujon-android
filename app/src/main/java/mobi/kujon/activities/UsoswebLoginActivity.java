@@ -40,6 +40,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
+import mobi.kujon.network.ApiProvider;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.network.json.Usos;
 import mobi.kujon.utils.ErrorHandlerUtil;
@@ -48,8 +49,6 @@ import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-
-import static mobi.kujon.BuildConfig.API_URL;
 
 public class UsoswebLoginActivity extends BaseActivity {
 
@@ -62,6 +61,9 @@ public class UsoswebLoginActivity extends BaseActivity {
     @Bind(R.id.progressBar) ProgressBar progressBar;
 
     @Inject OkHttpClient client;
+    @Inject ApiProvider apiProvider;
+
+    private String API_URL;
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +71,7 @@ public class UsoswebLoginActivity extends BaseActivity {
         KujonApplication.getComponent().inject(this);
         CookieManager.getInstance().setAcceptCookie(true);
         setContentView(R.layout.activity_usos_login);
+        API_URL = apiProvider.getApiURL();
         ButterKnife.bind(this);
         getSupportActionBar().setTitle(R.string.login_title);
 

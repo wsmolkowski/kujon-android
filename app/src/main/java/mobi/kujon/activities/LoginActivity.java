@@ -2,10 +2,12 @@ package mobi.kujon.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +26,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
+import mobi.kujon.network.ApiProvider;
 import mobi.kujon.network.json.Config;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.utils.ErrorHandlerUtil;
@@ -35,7 +38,11 @@ import retrofit2.Response;
 
 public class LoginActivity extends BaseActivity {
 
-    @Inject KujonUtils utils;
+    private static final int DELAY_MILLIS = 3000;
+    @Inject
+    KujonUtils utils;
+    @Inject
+    ApiProvider apiProvider;
 
     private static final Logger log = LoggerFactory.getLogger(LoginActivity.class);
 
@@ -43,11 +50,20 @@ public class LoginActivity extends BaseActivity {
 
     public static final int RC_SIGN_IN = 1;
 
-    @Bind(R.id.sign_in_button) SignInButton signIn;
-    @Bind(R.id.progressBar) ProgressBar progressBar;
-    @Bind(R.id.regulations) TextView regulations;
-    @Bind(R.id.toolbar_title) TextView toolbarTitle;
-    @Bind(R.id.toolbar) Toolbar toolbar;
+    @Bind(R.id.sign_in_button)
+    SignInButton signIn;
+    @Bind(R.id.progressBar)
+    ProgressBar progressBar;
+    @Bind(R.id.regulations)
+    TextView regulations;
+    @Bind(R.id.toolbar_title)
+    TextView toolbarTitle;
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
+    @Bind(R.id.login_logo)
+    ImageView loginLogo;
+    private int counter = 0;
+    private Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,9 +77,30 @@ public class LoginActivity extends BaseActivity {
         KujonApplication.getComponent().inject(this);
 
         regulations.setText(Html.fromHtml(getString(R.string.regulations_info)));
+        loginLogo.setOnClickListener(view -> {
+            counter++;
+            if (counter != 5) {
+                startDelayInZeroingCounter();
+                return;
+            }
+            apiProvider.switchApiType();
+            utils.clearCache();
+            Toast.makeText(LoginActivity.this, R.string.change_api, Toast.LENGTH_SHORT).show();
+            KujonApplication.getComponent().inject(LoginActivity.this);
+            counter = 0;
+        });
     }
 
-    @Override protected void onStart() {
+    private void startDelayInZeroingCounter() {
+        if (handler == null) {
+            handler = new Handler();
+        }
+        handler.removeCallbacksAndMessages(null);
+        handler.postDelayed(() -> counter = 0, DELAY_MILLIS);
+    }
+
+    @Override
+    protected void onStart() {
         super.onStart();
         progress(true);
     }
@@ -91,27 +128,30 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
-    @Override public void handle(GoogleSignInResult result) {
+    @Override
+    public void handle(GoogleSignInResult result) {
         if (result.isSuccess()) {
             log.info("handle: Login successful. Checking usos paired status");
             progress(true);
             KujonApplication.getApplication().setLoginStatus(result);
             utils.clearCache();
             kujonBackendApi.config().enqueue(new Callback<KujonResponse<Config>>() {
-                @Override public void onResponse(Call<KujonResponse<Config>> call, Response<KujonResponse<Config>> response) {
+                @Override
+                public void onResponse(Call<KujonResponse<Config>> call, Response<KujonResponse<Config>> response) {
                     Integer code = response.body().code;
-                    if(code != null && code == 401){
+                    if (code != null && code == 401) {
                         Toast.makeText(LoginActivity.this, R.string.login_error, Toast.LENGTH_SHORT).show();
                         Auth.GoogleSignInApi.signOut(apiClient).setResultCallback(status -> {
                             progress(false);
                             Toast.makeText(LoginActivity.this, status.getStatusMessage(), Toast.LENGTH_SHORT).show();
                         });
-                    }else {
+                    } else {
                         proceedNormalResponse(response);
                     }
                 }
 
-                @Override public void onFailure(Call<KujonResponse<Config>> call, Throwable t) {
+                @Override
+                public void onFailure(Call<KujonResponse<Config>> call, Throwable t) {
                     ErrorHandlerUtil.handleError(t);
                 }
             });

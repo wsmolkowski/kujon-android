@@ -20,6 +20,7 @@ import javax.inject.Singleton;
 import bolts.Task;
 import dagger.Module;
 import dagger.Provides;
+import mobi.kujon.network.ApiProvider;
 import mobi.kujon.network.KujonBackendApi;
 import mobi.kujon.network.SettingsApi;
 import mobi.kujon.network.json.GradeClassType;
@@ -30,10 +31,6 @@ import okhttp3.JavaNetCookieJar;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
-import static mobi.kujon.BuildConfig.API_URL;
 
 @Module
 public class NetModule {
@@ -68,17 +65,14 @@ public class NetModule {
                 .create();
     }
 
-    @Provides @Singleton Retrofit provideRetrofit(OkHttpClient okHttpClient, Gson gson) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(API_URL)
-                .client(okHttpClient)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-        return retrofit;
+    @Provides @Singleton
+    ApiProvider provideApiProvider(OkHttpClient okHttpClient, Gson gson) {
+        return new ApiProvider(okHttpClient, gson);
     }
 
-    @Provides @Singleton KujonBackendApi provideBackendApi(Retrofit retrofit) {
-        return retrofit.create(KujonBackendApi.class);
+
+    @Provides KujonBackendApi provideBackendApi(ApiProvider apiProvider) {
+        return apiProvider.getKujonBackendApi();
     }
 
     @Provides @Singleton

@@ -5,9 +5,6 @@ import javax.inject.Inject;
 import mobi.kujon.network.json.KujonResponse;
 import retrofit2.Call;
 
-/**
- * Created by kacper on 20.12.16.
- */
 
 public class SettingsApi {
 
