@@ -3,12 +3,39 @@ package mobi.kujon.network;
 
 import com.google.gson.Gson;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
+import java.util.SortedMap;
 
+import mobi.kujon.BuildConfig;
+import mobi.kujon.network.json.CalendarEvent;
+import mobi.kujon.network.json.Config;
+import mobi.kujon.network.json.Course;
+import mobi.kujon.network.json.CourseDetails;
+import mobi.kujon.network.json.Grade;
+import mobi.kujon.network.json.KujonResponse;
+import mobi.kujon.network.json.Lecturer;
+import mobi.kujon.network.json.LecturerLong;
+import mobi.kujon.network.json.Message;
+import mobi.kujon.network.json.Preferences;
+import mobi.kujon.network.json.Programme;
+import mobi.kujon.network.json.ProgrammeSingle;
+import mobi.kujon.network.json.Term2;
+import mobi.kujon.network.json.TermGrades;
+import mobi.kujon.network.json.User;
+import mobi.kujon.network.json.Usos;
+import mobi.kujon.network.json.gen.CoursersSearchResult;
+import mobi.kujon.network.json.gen.FacultiesSearchResult;
+import mobi.kujon.network.json.gen.Faculty2;
+import mobi.kujon.network.json.gen.ProgrammeSearchResult;
+import mobi.kujon.network.json.gen.StudentSearchResult;
+import mobi.kujon.network.json.gen.ThesesSearchResult;
+import mobi.kujon.network.json.gen.Thesis_;
 import okhttp3.OkHttpClient;
+import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public class ApiProvider implements ApiChoice {
 
@@ -16,57 +43,52 @@ public class ApiProvider implements ApiChoice {
     private
     @ApiType.ApiTypes
     int currentApiType;
-    private Map<Integer, String> urls = new HashMap<>();
-    private Map<Integer, Retrofit> clients = new HashMap<>();
-    private Map<Integer, KujonBackendApi> kujonBackendApis = new HashMap<>();
-    private Map<Integer, SettingsApi> settingsApis = new HashMap<>();
+    private OkHttpClient client;
+    private Gson gson;
+    private Retrofit retrofit;
+    private KujonBackendApi kujonBackendApi;
 
     public ApiProvider(OkHttpClient okHttpClient, Gson gson) {
-        this.currentApiType = ApiType.PROD;
-        setURLs();
-        setClients(okHttpClient, gson);
-        setApis();
-    }
-
-    private void setURLs() {
-        urls.put(ApiType.PROD, "https://api.kujon.mobi/");
-        urls.put(ApiType.DEMO, "https://api-demo.kujon.mobi");
-    }
-
-    private void setClients(OkHttpClient okHttpClient, Gson gson) {
-        for (Map.Entry<Integer, String> urlsEntry : urls.entrySet()) {
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(urlsEntry.getValue())
-                    .client(okHttpClient)
-                    .addConverterFactory(GsonConverterFactory.create(gson))
-                    .build();
-            clients.put(urlsEntry.getKey(), retrofit);
-        }
-    }
-
-    private void setApis() {
-        for (Map.Entry<Integer, Retrofit> client : clients.entrySet()) {
-            int apiType = client.getKey();
-            kujonBackendApis.put(apiType, client.getValue().create(KujonBackendApi.class));
-            settingsApis.put(apiType, new SettingsApi(kujonBackendApis.get(apiType)));
-        }
-    }
-
-    public KujonBackendApi getKujonBackendApi() {
-        return kujonBackendApis.get(currentApiType);
-    }
-
-    public SettingsApi getSettingsApi() {
-        return settingsApis.get(currentApiType);
+        this.client = okHttpClient;
+        this.gson = gson;
+        setApiType(ApiType.PROD);
     }
 
     @Override
     public void setApiType(@ApiType.ApiTypes int apiType) {
         currentApiType = apiType;
+        createRetrofit();
+        createKujonBackendApi();
     }
 
     @Override
     public int getApiType() {
         return currentApiType;
+    }
+
+    private void createRetrofit() {
+        retrofit = new Retrofit.Builder()
+                .baseUrl(getApiURL())
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+    }
+
+    private String getApiURL() {
+        switch (currentApiType) {
+            case ApiType.DEMO:
+                return BuildConfig.URL_DEMO;
+            case ApiType.PROD:
+                return BuildConfig.URL_PROD;
+        }
+        return BuildConfig.URL_PROD;
+    }
+
+    public KujonBackendApi getKujonBackendApi()  {
+        return kujonBackendApi;
+    }
+
+    private void createKujonBackendApi() {
+        kujonBackendApi = retrofit.create(KujonBackendApi.class);
     }
 }

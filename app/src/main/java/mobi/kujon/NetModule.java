@@ -83,8 +83,8 @@ public class NetModule {
         return retrofit;
     }
 
-    @Provides @Singleton KujonBackendApi provideBackendApi(Retrofit retrofit) {
-        return retrofit.create(KujonBackendApi.class);
+    @Provides KujonBackendApi provideBackendApi(ApiProvider apiProvider) {
+        return apiProvider.getKujonBackendApi();
     }
 
     @Provides @Singleton
