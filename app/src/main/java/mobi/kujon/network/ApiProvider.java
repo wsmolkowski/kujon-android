@@ -16,7 +16,6 @@ public class ApiProvider implements ApiChoice {
     int currentApiType;
     private OkHttpClient client;
     private Gson gson;
-    private Retrofit retrofit;
     private KujonBackendApi kujonBackendApi;
 
     public ApiProvider(OkHttpClient okHttpClient, Gson gson) {
@@ -28,7 +27,6 @@ public class ApiProvider implements ApiChoice {
     @Override
     public void setApiType(@ApiType.ApiTypes int apiType) {
         currentApiType = apiType;
-        createRetrofit();
         createKujonBackendApi();
     }
 
@@ -48,13 +46,6 @@ public class ApiProvider implements ApiChoice {
         return currentApiType;
     }
 
-    private void createRetrofit() {
-        retrofit = new Retrofit.Builder()
-                .baseUrl(getApiURL())
-                .client(client)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-    }
 
     public String getApiURL() {
         switch (currentApiType) {
@@ -71,6 +62,11 @@ public class ApiProvider implements ApiChoice {
     }
 
     private void createKujonBackendApi() {
-        kujonBackendApi = retrofit.create(KujonBackendApi.class);
+        kujonBackendApi = new Retrofit.Builder()
+                .baseUrl(getApiURL())
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build()
+                .create(KujonBackendApi.class);
     }
 }

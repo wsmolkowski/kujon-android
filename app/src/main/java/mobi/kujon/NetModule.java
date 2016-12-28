@@ -31,10 +31,6 @@ import okhttp3.JavaNetCookieJar;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
-import static mobi.kujon.BuildConfig.API_URL;
 
 @Module
 public class NetModule {
@@ -74,14 +70,6 @@ public class NetModule {
         return new ApiProvider(okHttpClient, gson);
     }
 
-    @Provides @Singleton Retrofit provideRetrofit(OkHttpClient okHttpClient, Gson gson) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(API_URL)
-                .client(okHttpClient)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-        return retrofit;
-    }
 
     @Provides KujonBackendApi provideBackendApi(ApiProvider apiProvider) {
         return apiProvider.getKujonBackendApi();
