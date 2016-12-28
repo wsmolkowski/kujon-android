@@ -6,6 +6,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +25,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
+import mobi.kujon.network.ApiProvider;
 import mobi.kujon.network.json.Config;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.utils.ErrorHandlerUtil;
@@ -36,6 +38,7 @@ import retrofit2.Response;
 public class LoginActivity extends BaseActivity {
 
     @Inject KujonUtils utils;
+    @Inject ApiProvider apiProvider;
 
     private static final Logger log = LoggerFactory.getLogger(LoginActivity.class);
 
@@ -48,6 +51,7 @@ public class LoginActivity extends BaseActivity {
     @Bind(R.id.regulations) TextView regulations;
     @Bind(R.id.toolbar_title) TextView toolbarTitle;
     @Bind(R.id.toolbar) Toolbar toolbar;
+    @Bind(R.id.login_logo) ImageView loginLogo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +65,19 @@ public class LoginActivity extends BaseActivity {
         KujonApplication.getComponent().inject(this);
 
         regulations.setText(Html.fromHtml(getString(R.string.regulations_info)));
+        loginLogo.setOnClickListener(new View.OnClickListener() {
+            int counter = 0;
+            @Override
+            public void onClick(View view) {
+                counter++;
+                if(counter != 5) {
+                    return;
+                }
+                apiProvider.switchApiType();
+                utils.clearCache();
+                counter = 0;
+            }
+        });
     }
 
     @Override protected void onStart() {

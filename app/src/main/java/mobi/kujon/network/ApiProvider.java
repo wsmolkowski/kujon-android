@@ -3,39 +3,10 @@ package mobi.kujon.network;
 
 import com.google.gson.Gson;
 
-import java.util.List;
-import java.util.SortedMap;
-
 import mobi.kujon.BuildConfig;
-import mobi.kujon.network.json.CalendarEvent;
-import mobi.kujon.network.json.Config;
-import mobi.kujon.network.json.Course;
-import mobi.kujon.network.json.CourseDetails;
-import mobi.kujon.network.json.Grade;
-import mobi.kujon.network.json.KujonResponse;
-import mobi.kujon.network.json.Lecturer;
-import mobi.kujon.network.json.LecturerLong;
-import mobi.kujon.network.json.Message;
-import mobi.kujon.network.json.Preferences;
-import mobi.kujon.network.json.Programme;
-import mobi.kujon.network.json.ProgrammeSingle;
-import mobi.kujon.network.json.Term2;
-import mobi.kujon.network.json.TermGrades;
-import mobi.kujon.network.json.User;
-import mobi.kujon.network.json.Usos;
-import mobi.kujon.network.json.gen.CoursersSearchResult;
-import mobi.kujon.network.json.gen.FacultiesSearchResult;
-import mobi.kujon.network.json.gen.Faculty2;
-import mobi.kujon.network.json.gen.ProgrammeSearchResult;
-import mobi.kujon.network.json.gen.StudentSearchResult;
-import mobi.kujon.network.json.gen.ThesesSearchResult;
-import mobi.kujon.network.json.gen.Thesis_;
 import okhttp3.OkHttpClient;
-import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Path;
-import retrofit2.http.Query;
 
 public class ApiProvider implements ApiChoice {
 
@@ -61,6 +32,17 @@ public class ApiProvider implements ApiChoice {
         createKujonBackendApi();
     }
 
+    public void switchApiType(){
+        switch(currentApiType) {
+            case ApiType.DEMO:
+                setApiType(ApiType.PROD);
+                break;
+            case ApiType.PROD:
+                setApiType(ApiType.DEMO);
+                break;
+        }
+    }
+
     @Override
     public int getApiType() {
         return currentApiType;
@@ -84,7 +66,7 @@ public class ApiProvider implements ApiChoice {
         return BuildConfig.URL_PROD;
     }
 
-    public KujonBackendApi getKujonBackendApi()  {
+    public KujonBackendApi getKujonBackendApi() {
         return kujonBackendApi;
     }
 
