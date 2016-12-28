@@ -16,9 +16,12 @@ import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.holder.ImageHolder;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
+
+import javax.inject.Inject;
 
 import bolts.Task;
 import butterknife.Bind;
@@ -33,9 +36,13 @@ import mobi.kujon.fragments.PlanFragment;
 import mobi.kujon.fragments.PlanListFragment;
 import mobi.kujon.fragments.SearchFragment;
 import mobi.kujon.fragments.UserInfoFragment;
+import mobi.kujon.network.ApiProvider;
+import mobi.kujon.network.ApiType;
 import mobi.kujon.utils.ErrorHandlerUtil;
 
 public class MainActivity extends BaseActivity {
+
+    @Inject ApiProvider apiProvider;
 
     public static final int CALENDAR_POSITION = 1;
     @Bind(R.id.toolbar) Toolbar toolbar;
@@ -47,11 +54,14 @@ public class MainActivity extends BaseActivity {
     @Bind(R.id.toolbar_title) TextView toolbarTitle;
     private Drawer drawer;
     private AccountHeader headerResult;
+    private int headerBackground;
 
-    @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
         ButterKnife.bind(this);
+        KujonApplication.getComponent().inject(this);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
@@ -69,10 +79,9 @@ public class MainActivity extends BaseActivity {
             return null;
         }, Task.UI_THREAD_EXECUTOR).continueWith(ErrorHandlerUtil.ERROR_HANDLER);
 
-
         headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
-                .withHeaderBackground(R.color.colorPrimaryDark)
+                .withHeaderBackground(getHeaderBackground())
 //                .withHeaderBackground(new ImageHolder(Uri.parse("https://kujon.mobi/static/img/logo/logo-demo-64x64.jpg")))
 //                .withHeaderBackgroundScaleType(ImageView.ScaleType.CENTER)
 //                .addProfiles(profileDrawerItem)
@@ -146,4 +155,13 @@ public class MainActivity extends BaseActivity {
         toolbarTitle.setText(title);
     }
 
+    private int getHeaderBackground() {
+        switch (apiProvider.getApiType()) {
+            case ApiType.DEMO:
+                return R.drawable.demo;
+            case ApiType.PROD:
+                return R.color.primary;
+        }
+        return R.color.primary;
+    }
 }
