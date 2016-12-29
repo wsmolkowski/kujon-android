@@ -72,4 +72,5 @@
     <string name="programme">Kierunek</string>
     <string name="ects_sum">Suma Punktów ECTS</string>
     <string name="change_api">Zmiana Api</string>
+    <string name="title_activity_maps">Map</string>
 </resources>

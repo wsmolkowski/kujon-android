@@ -6,25 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-        <ImageView
-            android:id="@+id/back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/arrow_back"/>
-        <TextView
-            android:id="@+id/toolbar_title"
-            style="@style/Semibold"
-            tools:text="Toolbar Title"
-            />
-    </android.support.v7.widget.Toolbar>
+    <include layout="@layout/kujon_toolbar_with_back" />
 
     <FrameLayout
         android:id="@+id/placeholder"

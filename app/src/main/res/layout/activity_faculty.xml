@@ -1,27 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-
-        <TextView
-            android:id="@+id/toolbar_title"
-            style="@style/Semibold"
-            tools:text="Toolbar Title"
-            />
-    </android.support.v7.widget.Toolbar>
+    <include layout="@layout/kujon_toolbar_with_back" />
 
 
     <ScrollView
@@ -33,10 +17,16 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             >
-
+            <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/map"
+                android:name="com.google.android.gms.maps.MapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                tools:context="mobi.kujon.activities.MapsActivity" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -66,7 +56,6 @@
             <TextView
                 android:id="@+id/postal_address"
                 style="@style/Regular.Entry"
-                android:drawableRight="@drawable/place_black"
                 tools:text='Dobra 55, 00-312 Warszawa (\u015ar\u00f3dmie\u015bcie)"'/>
 
             <TextView
