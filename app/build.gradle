@@ -14,8 +14,8 @@ android {
         applicationId "mobi.kujon"
         minSdkVersion 16
         targetSdkVersion 21
-        versionCode 59
-        versionName "1.0.7"
+        versionCode 60
+        versionName "1.0.8"
 
         multiDexEnabled true
 
