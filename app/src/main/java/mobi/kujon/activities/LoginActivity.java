@@ -95,7 +95,7 @@ public class LoginActivity extends BaseActivity {
                     Toast.makeText(LoginActivity.this, R.string.change_api_demo, Toast.LENGTH_SHORT).show();
                     break;
                 case ApiType.PROD:
-                    Toast.makeText(LoginActivity.this, R.string.change_api_demo, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, R.string.change_api_prod, Toast.LENGTH_SHORT).show();
                     break;
             }
 
