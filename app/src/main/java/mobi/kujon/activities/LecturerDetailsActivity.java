@@ -2,6 +2,7 @@ package mobi.kujon.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -25,6 +26,7 @@ import butterknife.ButterKnife;
 import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
 import mobi.kujon.network.json.CourseEditionsConducted;
+import mobi.kujon.network.json.EmploymentPosition;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.network.json.LecturerLong;
 import mobi.kujon.ui.CircleTransform;
@@ -46,9 +48,9 @@ public class LecturerDetailsActivity extends BaseActivity {
     @Bind(R.id.lecturer_room) TextView lecturerRoom;
     @Bind(R.id.lecturer_email) TextView lecturerEmail;
     @Bind(R.id.lecturer_courses) LinearLayout lecturerCourses;
+    @Bind(R.id.lecturer_faculty) LinearLayout lecturersFaculty;
     @Bind(R.id.picture) ImageView picture;
     @Bind(R.id.lecturer_homepage) TextView lecturerHomepage;
-    @Bind(R.id.lecturer_employment_positions) TextView lecturerEmploymentPositions;
     @Bind(R.id.lecturer_office_hours) TextView lecturerOfficeHours;
     @Bind(R.id.lecturer_interests) TextView lecturerInterests;
     @Bind(R.id.swipeContainer) SwipeRefreshLayout swipeContainer;
@@ -107,8 +109,7 @@ public class LecturerDetailsActivity extends BaseActivity {
                     String email = String.format("<a href=\"%s\">Sprawdź w USOS</a>", lecturer.emailUrl);
                     lecturerEmail.setText(Html.fromHtml(email));
                     lecturerEmail.setMovementMethod(LinkMovementMethod.getInstance());
-                    lecturerInterests.setText(lecturer.interests);
-                    lecturerOfficeHours.setText(lecturer.officeHours);
+                    setUpConsultationField();
 
                     List<String> data = $.collect(lecturer.courseEditionsConducted, it -> String.format("%s (%s)", it.courseName, it.termId));
                     CommonUtils.showList(layoutInflater, lecturerCourses, data, position -> {
@@ -116,24 +117,10 @@ public class LecturerDetailsActivity extends BaseActivity {
                         CourseDetailsActivity.showCourseDetails(LecturerDetailsActivity.this, course.courseId, course.termId);
                     });
 
-                    String photoUrl = lecturer.photoUrl;
-                    picasso.load(photoUrl)
-                            .transform(new CircleTransform())
-                            .fit()
-                            .centerInside()
-                            .placeholder(R.drawable.photo_placeholder)
-                            .into(picture);
-
-                    picture.setOnClickListener(v -> {
-                        if (!isEmpty(photoUrl) && photoUrl.startsWith("http")) {
-                            ImageActivity.show(LecturerDetailsActivity.this, photoUrl, name);
-                        } else {
-                            Toast.makeText(LecturerDetailsActivity.this, "Brak zdjęcia", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-
+                    setUpPicture(name);
                     lecturerHomepage.setText(lecturer.homepageUrl);
-                    lecturerEmploymentPositions.setText($.join($.collect(lecturer.employmentPositions, it -> it.faculty.name + ", " + it.position.name), "\n\n"));
+                    showListOfLecturerFaculties();
+
                 }
 
                 handler.postDelayed(() -> {
@@ -148,6 +135,42 @@ public class LecturerDetailsActivity extends BaseActivity {
                 ErrorHandlerUtil.handleError(t);
             }
         });
+    }
+
+    private void setUpPicture(String name) {
+        String photoUrl = lecturer.photoUrl;
+        picasso.load(photoUrl)
+                .transform(new CircleTransform())
+                .fit()
+                .centerInside()
+                .placeholder(R.drawable.photo_placeholder)
+                .into(picture);
+
+        picture.setOnClickListener(v -> {
+            if (!isEmpty(photoUrl) && photoUrl.startsWith("http")) {
+                ImageActivity.show(LecturerDetailsActivity.this, photoUrl, name);
+            } else {
+                Toast.makeText(LecturerDetailsActivity.this, "Brak zdjęcia", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void showListOfLecturerFaculties() {
+        List<String> dataFacultys = $.collect(lecturer.employmentPositions, it -> it.faculty.name + ", " + it.position.name);
+        CommonUtils.showList(layoutInflater, lecturersFaculty, dataFacultys, position -> {
+            EmploymentPosition employmentPosition = lecturer.employmentPositions.get(position);
+            FacultyDetailsActivity.showFacultyDetails(LecturerDetailsActivity.this, employmentPosition.faculty.id);
+        });
+    }
+
+    private void setUpConsultationField() {
+        lecturerInterests.setText(lecturer.interests);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            lecturerOfficeHours.setText(Html.fromHtml(lecturer.officeHours,0));
+        }else {
+            lecturerOfficeHours.setText(Html.fromHtml(lecturer.officeHours));
+        }
+        lecturerOfficeHours.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     public static void showLecturerDatails(Activity activity, String lecturerId) {
