@@ -27,6 +27,7 @@ import butterknife.OnClick;
 import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
 import mobi.kujon.network.ApiProvider;
+import mobi.kujon.network.ApiType;
 import mobi.kujon.network.json.Config;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.utils.ErrorHandlerUtil;
@@ -77,6 +78,10 @@ public class LoginActivity extends BaseActivity {
         KujonApplication.getComponent().inject(this);
 
         regulations.setText(Html.fromHtml(getString(R.string.regulations_info)));
+        setChangeApi();
+    }
+
+    private void setChangeApi() {
         loginLogo.setOnClickListener(view -> {
             counter++;
             if (counter != 5) {
@@ -85,12 +90,19 @@ public class LoginActivity extends BaseActivity {
             }
             apiProvider.switchApiType();
             utils.clearCache();
-            Toast.makeText(LoginActivity.this, R.string.change_api, Toast.LENGTH_SHORT).show();
+            switch (apiProvider.getApiType()) {
+                case ApiType.DEMO:
+                    Toast.makeText(LoginActivity.this, R.string.change_api_demo, Toast.LENGTH_SHORT).show();
+                    break;
+                case ApiType.PROD:
+                    Toast.makeText(LoginActivity.this, R.string.change_api_demo, Toast.LENGTH_SHORT).show();
+                    break;
+            }
+
             KujonApplication.getComponent().inject(LoginActivity.this);
             counter = 0;
         });
     }
-
 
 
     private void startDelayInZeroingCounter() {

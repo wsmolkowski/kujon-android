@@ -42,7 +42,7 @@ public class ApiProvider implements ApiChoice {
     }
 
     @Override
-    public int getApiType() {
+    public @ApiType.ApiTypes int getApiType() {
         return currentApiType;
     }
 
