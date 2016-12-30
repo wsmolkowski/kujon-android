@@ -26,6 +26,7 @@ import mobi.kujon.R;
 import mobi.kujon.activities.BaseActivity;
 import mobi.kujon.activities.ImageActivity;
 import mobi.kujon.activities.ProgrammeDetailsActivity;
+import mobi.kujon.activities.StudentDetailsActivity;
 import mobi.kujon.network.KujonBackendApi;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.network.json.Programme;
@@ -87,7 +88,6 @@ public class StudentInfoFragment extends BaseFragment {
 
     private void loadData(boolean refresh) {
         handler.post(() -> swipeContainer.setRefreshing(true));
-//        swipeContainer.setRefreshing(true);
 
         String userId = getArguments().getString(USER_ID);
         if (refresh) {
@@ -112,8 +112,8 @@ public class StudentInfoFragment extends BaseFragment {
                             .centerInside()
                             .placeholder(R.drawable.photo_placeholder)
                             .into(picture);
-
-                    picture.setOnClickListener(v -> ImageActivity.show(getActivity(), user.picture, name));
+                    ((StudentDetailsActivity) getActivity()).setToolbarTitle(name);
+                    picture.setOnClickListener(v -> ImageActivity.show(getActivity(), user.photoUrl, name));
                     studentStatus.setText(user.student_status);
                     studentAccountNumber.setText(user.id);
                     List<String> collect = $.collect(user.student_programmes, it -> it.programme.description.split(",")[0]);

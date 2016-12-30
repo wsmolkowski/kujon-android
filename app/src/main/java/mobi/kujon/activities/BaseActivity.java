@@ -251,4 +251,5 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
     public void setToolbarTitle(int title) {
         getSupportActionBar().setTitle(title);
     }
+
 }
