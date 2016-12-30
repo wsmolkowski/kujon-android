@@ -56,6 +56,7 @@ public class CourseDetailsActivity extends BaseActivity {
     @Bind(R.id.swipeContainer) SwipeRefreshLayout swipeContainer;
     @Bind(R.id.toolbar_title) TextView toolbarTitle;
     @Bind(R.id.toolbar) Toolbar toolbar;
+    @Bind(R.id.before_layout) View beforeLayout;
 
     @Bind(R.id.description_label) TextView descriptionLabel;
     @Bind(R.id.bibliography_label) TextView bibliographyLabel;
@@ -104,12 +105,14 @@ public class CourseDetailsActivity extends BaseActivity {
 
                     courseFac.setText(courseDetails.facId.name);
 
-                    setText(description, descriptionLabel, Html.fromHtml(CourseDetailsActivity.this.courseDetails.description.replace("\n", "<br>")));
                     courseName.setText(courseDetails.name);
                     courseAdditionalInfo.setText(String.format("id: %s, język: %s, prowadzony: %s", courseDetails.courseId,
                             isEmpty(courseDetails.langId) ? "Brak" : courseDetails.langId, courseDetails.isCurrentlyConducted));
-                    setText(bibliography, bibliographyLabel, Html.fromHtml(courseDetails.bibliography.replace("\n", "<br/><br/>")));
-                    setText(assessmentCriteria, assessmentCriteriaLabel, Html.fromHtml(courseDetails.assessmentCriteria.replace("\n", "<br/><br/>")));
+
+
+                    handle4Layouts();
+
+
                     if (courseDetails.term != null && courseDetails.term.size() > 0 && courseDetails.term.get(0).name.length() > 0) {
                         courseTermName.setText(courseDetails.term.get(0).name);
                     } else {
@@ -117,7 +120,6 @@ public class CourseDetailsActivity extends BaseActivity {
                         courseTermNameLabel.setVisibility(View.GONE);
                     }
 
-                    setText(courseClassType, courseClassTypeLabel, $.join($.collect(courseDetails.groups, it -> it.classType + ", numer grupy: " + it.groupNumber), "\n"));
 
                     List<String> lecturers = $.collect(courseDetails.lecturers, it -> it.lastName + " " + it.firstName);
                     showList(CourseDetailsActivity.this.layoutInflater, courseLecturers, lecturers, position -> {
@@ -161,20 +163,33 @@ public class CourseDetailsActivity extends BaseActivity {
         });
     }
 
-    private void setText(TextView textView, TextView label, Spanned text) {
+    private void handle4Layouts() {
+        if(setText(bibliography, bibliographyLabel, Html.fromHtml(courseDetails.bibliography.replace("\n", "<br/><br/>"))) &
+        setText(assessmentCriteria, assessmentCriteriaLabel, Html.fromHtml(courseDetails.assessmentCriteria.replace("\n", "<br/><br/>"))) &
+        setText(description, descriptionLabel, Html.fromHtml(CourseDetailsActivity.this.courseDetails.description.replace("\n", "<br>"))) &
+        setText(courseClassType, courseClassTypeLabel, $.join($.collect(courseDetails.groups, it -> it.classType + ", numer grupy: " + it.groupNumber), "\n"))){
+            beforeLayout.setVisibility(View.GONE);
+        }
+    }
+
+    private boolean setText(TextView textView, TextView label, Spanned text) {
         textView.setText(text);
         if (text.toString().length() == 0) {
             textView.setVisibility(View.GONE);
             label.setVisibility(View.GONE);
+            return true;
         }
+        return false;
     }
 
-    private void setText(TextView textView, TextView label, String text) {
+    private boolean setText(TextView textView, TextView label, String text) {
         textView.setText(text);
         if (text.length() == 0) {
             textView.setVisibility(View.GONE);
             label.setVisibility(View.GONE);
+            return true;
         }
+        return false;
     }
 
     private Call<KujonResponse<CourseDetails>> getCourseCall(boolean refresh) {
