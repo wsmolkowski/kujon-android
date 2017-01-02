@@ -39,6 +39,8 @@ import mobi.kujon.network.ApiProvider;
 import mobi.kujon.network.ApiType;
 import mobi.kujon.utils.ErrorHandlerUtil;
 
+import static mobi.kujon.KujonApplication.FROM_NOTIFICATION;
+
 public class MainActivity extends BaseActivity {
 
     @Inject ApiProvider apiProvider;
@@ -121,8 +123,11 @@ public class MainActivity extends BaseActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         drawer.getActionBarDrawerToggle().setDrawerIndicatorEnabled(true);
+        showFragment(selectFragmentToShow(), false);
+    }
 
-        showFragment(FRAGMENTS[0], false);
+    private Fragment selectFragmentToShow() {
+        return getIntent().getBooleanExtra(FROM_NOTIFICATION, false) ? FRAGMENTS[5] : FRAGMENTS [0];
     }
 
     @Override

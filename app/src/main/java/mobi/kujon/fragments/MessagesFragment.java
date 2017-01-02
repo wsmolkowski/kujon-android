@@ -27,6 +27,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static mobi.kujon.KujonApplication.FROM_NOTIFICATION;
+
 public class MessagesFragment extends ListFragment {
 
     private Adapter adapter;
@@ -63,8 +65,7 @@ public class MessagesFragment extends ListFragment {
         adapter = new MessagesFragment.Adapter();
         recyclerView.setAdapter(adapter);
         activity.showProgress(true);
-
-        loadData(false);
+        loadData(getActivity().getIntent().getBooleanExtra(FROM_NOTIFICATION, false));
     }
 
     @Override public void onStart() {

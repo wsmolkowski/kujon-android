@@ -9,7 +9,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
 
-
     <application
         android:name=".KujonApplication"
         android:allowBackup="true"
@@ -21,6 +20,9 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+        <meta-data
+            android:name="com.onesignal.NotificationOpened.DEFAULT"
+            android:value="DISABLE" />
 
         <activity
             android:name=".activities.LoginActivity"
@@ -117,7 +119,6 @@
             android:name=".activities.ProgrammeDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ToolbarAppTheme" />
-
 
 
     </application>
