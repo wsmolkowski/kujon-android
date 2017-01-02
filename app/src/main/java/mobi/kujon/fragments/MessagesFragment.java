@@ -27,10 +27,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MessagesFragment extends ListFragment {
+import static mobi.kujon.KujonApplication.FROM_NOTIFICATION;
 
-    public static final String MENU_LABEL = "MESSAGES";
-    public static final String DO_REFRESH = "DO_REFRESH";
+public class MessagesFragment extends ListFragment {
 
     private Adapter adapter;
     private DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
@@ -66,8 +65,7 @@ public class MessagesFragment extends ListFragment {
         adapter = new MessagesFragment.Adapter();
         recyclerView.setAdapter(adapter);
         activity.showProgress(true);
-        boolean do_reload = getActivity().getIntent().getBooleanExtra(DO_REFRESH, false);
-        loadData(do_reload);
+        loadData(getActivity().getIntent().getBooleanExtra(FROM_NOTIFICATION, false));
     }
 
     @Override public void onStart() {

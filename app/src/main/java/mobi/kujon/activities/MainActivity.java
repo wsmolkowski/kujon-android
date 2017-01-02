@@ -39,11 +39,9 @@ import mobi.kujon.network.ApiProvider;
 import mobi.kujon.network.ApiType;
 import mobi.kujon.utils.ErrorHandlerUtil;
 
-import static mobi.kujon.fragments.MessagesFragment.MENU_LABEL;
+import static mobi.kujon.KujonApplication.FROM_NOTIFICATION;
 
 public class MainActivity extends BaseActivity {
-
-    public static final String MENU_FRAGMENT = "MENU_FRAGMENT";
 
     @Inject ApiProvider apiProvider;
 
@@ -125,11 +123,11 @@ public class MainActivity extends BaseActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         drawer.getActionBarDrawerToggle().setDrawerIndicatorEnabled(true);
-        int fragment_to_show = 0;
-        if (MENU_LABEL.equals(getIntent().getStringExtra(MENU_FRAGMENT))) {
-            fragment_to_show = 5;
-        }
-        showFragment(FRAGMENTS[fragment_to_show], false);
+        showFragment(selectFragmentToShow(), false);
+    }
+
+    private Fragment selectFragmentToShow() {
+        return getIntent().getBooleanExtra(FROM_NOTIFICATION, false) ? FRAGMENTS[5] : FRAGMENTS [0];
     }
 
     @Override
