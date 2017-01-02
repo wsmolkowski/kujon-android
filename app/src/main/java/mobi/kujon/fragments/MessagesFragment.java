@@ -29,6 +29,9 @@ import retrofit2.Response;
 
 public class MessagesFragment extends ListFragment {
 
+    public static final String MENU_LABEL = "MESSAGES";
+    public static final String DO_REFRESH = "DO_REFRESH";
+
     private Adapter adapter;
     private DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
@@ -63,8 +66,8 @@ public class MessagesFragment extends ListFragment {
         adapter = new MessagesFragment.Adapter();
         recyclerView.setAdapter(adapter);
         activity.showProgress(true);
-
-        loadData(false);
+        boolean do_reload = getActivity().getIntent().getBooleanExtra(DO_REFRESH, false);
+        loadData(do_reload);
     }
 
     @Override public void onStart() {

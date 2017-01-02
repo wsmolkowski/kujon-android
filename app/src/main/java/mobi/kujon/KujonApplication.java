@@ -3,6 +3,7 @@ package mobi.kujon;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -35,8 +36,12 @@ import javax.inject.Inject;
 import bolts.Task;
 import bolts.TaskCompletionSource;
 import io.fabric.sdk.android.Fabric;
+import mobi.kujon.activities.MainActivity;
+import mobi.kujon.fragments.MessagesFragment;
 import mobi.kujon.utils.KujonUtils;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+
+import static mobi.kujon.activities.MainActivity.MENU_FRAGMENT;
 
 public class KujonApplication extends Application implements OneSignal.NotificationOpenedHandler {
 
@@ -173,7 +178,11 @@ public class KujonApplication extends Application implements OneSignal.Notificat
     }
 
     @Override public void notificationOpened(String message, JSONObject additionalData, boolean isActive) {
-        utils.invalidateEntry("grades");
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra(MENU_FRAGMENT, MessagesFragment.MENU_LABEL);
+        intent.putExtra(MessagesFragment.DO_REFRESH, true);
+        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_NEW_TASK);
+        this.startActivity(intent);
     }
 
     public static KujonComponent getComponent() {
