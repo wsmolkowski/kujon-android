@@ -46,7 +46,7 @@ public class GradesFragment extends ListFragment {
                 emptyInfo.setVisibility(haveData ? View.GONE : View.VISIBLE);
             }
         });
-        activity.showProgress(true);
+        showSpinner(true);
         dark = ContextCompat.getColor(activity, R.color.dark);
         red = ContextCompat.getColor(activity, android.R.color.holo_red_light);
         loadData(false);
@@ -61,8 +61,7 @@ public class GradesFragment extends ListFragment {
         kujonResponseCall.enqueue(new Callback<KujonResponse<List<TermGrades>>>() {
             @Override
             public void onResponse(Call<KujonResponse<List<TermGrades>>> call, Response<KujonResponse<List<TermGrades>>> response) {
-                activity.showProgress(false);
-                swipeContainer.setRefreshing(false);
+                showSpinner(false);
                 if (ErrorHandlerUtil.handleResponse(response)) {
                     List<TermGrades> data = response.body().data;
                     adapter.setData(data);
@@ -70,8 +69,7 @@ public class GradesFragment extends ListFragment {
             }
 
             @Override public void onFailure(Call<KujonResponse<List<TermGrades>>> call, Throwable t) {
-                activity.showProgress(false);
-                swipeContainer.setRefreshing(false);
+                showSpinner(false);
                 ErrorHandlerUtil.handleError(t);
             }
         });

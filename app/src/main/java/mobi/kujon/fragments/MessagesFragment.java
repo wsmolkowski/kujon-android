@@ -43,8 +43,7 @@ public class MessagesFragment extends ListFragment {
         messages.enqueue(new Callback<KujonResponse<List<Message>>>() {
             @Override
             public void onResponse(Call<KujonResponse<List<Message>>> call, Response<KujonResponse<List<Message>>> response) {
-                activity.showProgress(false);
-                swipeContainer.setRefreshing(false);
+                showSpinner(false);
                 if(ErrorHandlerUtil.handleResponse(response)) {
                     List<Message> messageList = response.body().data;
                     adapter.setData(messageList);
@@ -53,8 +52,7 @@ public class MessagesFragment extends ListFragment {
 
             @Override
             public void onFailure(Call<KujonResponse<List<Message>>> call, Throwable t) {
-                activity.showProgress(false);
-                swipeContainer.setRefreshing(false);
+                showSpinner(false);
                 ErrorHandlerUtil.handleError(t);
             }
         });
@@ -64,7 +62,7 @@ public class MessagesFragment extends ListFragment {
         super.onActivityCreated(savedInstanceState);
         adapter = new MessagesFragment.Adapter();
         recyclerView.setAdapter(adapter);
-        activity.showProgress(true);
+        showSpinner(true);
         loadData(getActivity().getIntent().getBooleanExtra(FROM_NOTIFICATION, false));
     }
 

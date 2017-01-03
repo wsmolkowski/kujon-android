@@ -33,8 +33,7 @@ public class CoursesFragment extends ListFragment {
         super.onActivityCreated(savedInstanceState);
         adapter = new Adapter();
         recyclerView.setAdapter(adapter);
-        activity.showProgress(true);
-        swipeContainer.setRefreshing(true);
+        showSpinner(true);
 
         loadData(false);
     }
@@ -54,8 +53,7 @@ public class CoursesFragment extends ListFragment {
         kujonResponseCall.enqueue(new Callback<KujonResponse<List<SortedMap<String, List<Course>>>>>() {
             @Override
             public void onResponse(Call<KujonResponse<List<SortedMap<String, List<Course>>>>> call, Response<KujonResponse<List<SortedMap<String, List<Course>>>>> response) {
-                activity.showProgress(false);
-                swipeContainer.setRefreshing(false);
+                showSpinner(false);
                 if (ErrorHandlerUtil.handleResponse(response)) {
                     List<SortedMap<String, List<Course>>> data = response.body().data;
                     adapter.setData(data);
@@ -63,8 +61,7 @@ public class CoursesFragment extends ListFragment {
             }
 
             @Override public void onFailure(Call<KujonResponse<List<SortedMap<String, List<Course>>>>> call, Throwable t) {
-                activity.showProgress(false);
-                swipeContainer.setRefreshing(false);
+                showSpinner(false);
                 ErrorHandlerUtil.handleError(t);
             }
         });
