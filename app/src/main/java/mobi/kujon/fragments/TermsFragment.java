@@ -32,7 +32,7 @@ public class TermsFragment extends ListFragment {
         super.onActivityCreated(savedInstanceState);
         adapter = new Adapter();
         recyclerView.setAdapter(adapter);
-        activity.showProgress(true);
+        showSpinner(true);
         latoSemiBold = Typeface.createFromAsset(activity.getAssets(), "fonts/Lato-Semibold.ttf");
         loadData(false);
     }
@@ -46,8 +46,7 @@ public class TermsFragment extends ListFragment {
         Call<KujonResponse<List<Term2>>> terms = refresh ? backendApi.termsRefresh() : backendApi.terms();
         terms.enqueue(new Callback<KujonResponse<List<Term2>>>() {
             @Override public void onResponse(Call<KujonResponse<List<Term2>>> call, Response<KujonResponse<List<Term2>>> response) {
-                activity.showProgress(false);
-                swipeContainer.setRefreshing(false);
+                showSpinner(false);
                 if (ErrorHandlerUtil.handleResponse(response)) {
                     List<Term2> data = response.body().data;
                     adapter.setData(data);
@@ -55,8 +54,7 @@ public class TermsFragment extends ListFragment {
             }
 
             @Override public void onFailure(Call<KujonResponse<List<Term2>>> call, Throwable t) {
-                activity.showProgress(false);
-                swipeContainer.setRefreshing(false);
+                showSpinner(false);
                 ErrorHandlerUtil.handleError(t);
             }
         });

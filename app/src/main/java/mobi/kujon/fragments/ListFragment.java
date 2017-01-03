@@ -51,6 +51,11 @@ public abstract class ListFragment extends BaseFragment {
         return rootView;
     }
 
+    public void showSpinner(boolean show) {
+        activity.showProgress(show);
+        swipeContainer.setRefreshing(false);
+    }
+
     @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         activity = (BaseActivity) getActivity();
