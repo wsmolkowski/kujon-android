@@ -71,27 +71,47 @@ public class SearchFragment extends BaseFragment {
 
     @OnClick(R.id.student_search)
     public void studentSearch() {
-        StudentSearchActivity.start(getActivity(), studentQuery.getText().toString());
+        if(!"".equals(studentQuery.getText().toString())) {
+            StudentSearchActivity.start(getActivity(), studentQuery.getText().toString());
+        } else {
+            studentSearchMessage.setText(R.string.not_empty);
+        }
     }
 
     @OnClick(R.id.course_search)
     public void courseSearch() {
-        CoursesSearchActivity.start(getActivity(), courseQuery.getText().toString());
+        if(!"".equals(courseQuery.getText().toString())) {
+            CoursesSearchActivity.start(getActivity(), courseQuery.getText().toString());
+        } else {
+            courseSearchMessage.setText(R.string.not_empty);
+        }
     }
 
     @OnClick(R.id.faculty_search)
     public void facultySearch() {
-        FacultySearchActivity.start(getActivity(), facultyQuery.getText().toString());
+        if(!"".equals(facultyQuery.getText().toString())) {
+            FacultySearchActivity.start(getActivity(), facultyQuery.getText().toString());
+        } else {
+            facultySearchMessage.setText(R.string.not_empty);
+        }
     }
 
     @OnClick(R.id.programme_search)
     public void programmeSearch() {
-        ProgrammeSearchActivity.start(getActivity(), programmeQuery.getText().toString());
+        if(!"".equals(programmeQuery.getText().toString())) {
+            ProgrammeSearchActivity.start(getActivity(), programmeQuery.getText().toString());
+        } else {
+            programmeSearchMessage.setText(R.string.not_empty);
+        }
     }
 
     @OnClick(R.id.thesis_search)
     public void thesisSearch() {
-        ThesesSearchActivity.start(getActivity(), thesisQuery.getText().toString());
+        if(!"".equals(thesisQuery.getText().toString())) {
+            ThesesSearchActivity.start(getActivity(), thesisQuery.getText().toString());
+        } else {
+            thesisSearchMessage.setText(R.string.not_empty);
+        }
     }
 
     @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
