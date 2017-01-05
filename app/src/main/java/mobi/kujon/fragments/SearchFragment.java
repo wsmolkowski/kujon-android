@@ -43,24 +43,36 @@ import retrofit2.Response;
 
 public class SearchFragment extends BaseFragment {
 
-    @Inject KujonBackendApi kujonBackendApi;
+    @Inject
+    KujonBackendApi kujonBackendApi;
 
-    @Bind(R.id.student_query) EditText studentQuery;
-    @Bind(R.id.student_search_message) TextView studentSearchMessage;
+    @Bind(R.id.student_query)
+    EditText studentQuery;
+    @Bind(R.id.student_search_message)
+    TextView studentSearchMessage;
 
-    @Bind(R.id.faculty_query) EditText facultyQuery;
-    @Bind(R.id.faculty_search_message) TextView facultySearchMessage;
+    @Bind(R.id.faculty_query)
+    EditText facultyQuery;
+    @Bind(R.id.faculty_search_message)
+    TextView facultySearchMessage;
 
-    @Bind(R.id.course_query) EditText courseQuery;
-    @Bind(R.id.course_search_message) TextView courseSearchMessage;
+    @Bind(R.id.course_query)
+    EditText courseQuery;
+    @Bind(R.id.course_search_message)
+    TextView courseSearchMessage;
 
-    @Bind(R.id.programme_query) EditText programmeQuery;
-    @Bind(R.id.programme_search_message) TextView programmeSearchMessage;
+    @Bind(R.id.programme_query)
+    EditText programmeQuery;
+    @Bind(R.id.programme_search_message)
+    TextView programmeSearchMessage;
 
-    @Bind(R.id.thesis_query) EditText thesisQuery;
-    @Bind(R.id.thesis_search_message) TextView thesisSearchMessage;
+    @Bind(R.id.thesis_query)
+    EditText thesisQuery;
+    @Bind(R.id.thesis_search_message)
+    TextView thesisSearchMessage;
 
-    @Nullable @Override
+    @Nullable
+    @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_search, container, false);
         ButterKnife.bind(this, rootView);
@@ -71,50 +83,41 @@ public class SearchFragment extends BaseFragment {
 
     @OnClick(R.id.student_search)
     public void studentSearch() {
-        if(!"".equals(studentQuery.getText().toString())) {
+        if (studentQuery.getText().length()>3) {
             StudentSearchActivity.start(getActivity(), studentQuery.getText().toString());
-        } else {
-            studentSearchMessage.setText(R.string.not_empty);
         }
     }
 
     @OnClick(R.id.course_search)
     public void courseSearch() {
-        if(!"".equals(courseQuery.getText().toString())) {
+        if (courseQuery.getText().toString().length() > 3) {
             CoursesSearchActivity.start(getActivity(), courseQuery.getText().toString());
-        } else {
-            courseSearchMessage.setText(R.string.not_empty);
         }
     }
 
     @OnClick(R.id.faculty_search)
     public void facultySearch() {
-        if(!"".equals(facultyQuery.getText().toString())) {
+        if (facultyQuery.getText().length()>3) {
             FacultySearchActivity.start(getActivity(), facultyQuery.getText().toString());
-        } else {
-            facultySearchMessage.setText(R.string.not_empty);
         }
     }
 
     @OnClick(R.id.programme_search)
     public void programmeSearch() {
-        if(!"".equals(programmeQuery.getText().toString())) {
+        if (programmeQuery.getText().length()>3) {
             ProgrammeSearchActivity.start(getActivity(), programmeQuery.getText().toString());
-        } else {
-            programmeSearchMessage.setText(R.string.not_empty);
         }
     }
 
     @OnClick(R.id.thesis_search)
     public void thesisSearch() {
-        if(!"".equals(thesisQuery.getText().toString())) {
+        if (thesisQuery.getText().length()>3) {
             ThesesSearchActivity.start(getActivity(), thesisQuery.getText().toString());
-        } else {
-            thesisSearchMessage.setText(R.string.not_empty);
         }
     }
 
-    @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         ((BaseActivity) getActivity()).setToolbarTitle(R.string.search);
 
@@ -131,7 +134,8 @@ public class SearchFragment extends BaseFragment {
         thesisQuery.setOnEditorActionListener(startSearch(this::thesisSearch));
     }
 
-    @NonNull private TextView.OnEditorActionListener startSearch(Runnable runnable) {
+    @NonNull
+    private TextView.OnEditorActionListener startSearch(Runnable runnable) {
         return (v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 runnable.run();
@@ -144,29 +148,34 @@ public class SearchFragment extends BaseFragment {
 
     private int getItemsSize(Object data) {
         if (data instanceof StudentSearchResult) return ((StudentSearchResult) data).items.size();
-        if (data instanceof FacultiesSearchResult) return ((FacultiesSearchResult) data).items.size();
+        if (data instanceof FacultiesSearchResult)
+            return ((FacultiesSearchResult) data).items.size();
         if (data instanceof CoursersSearchResult) return ((CoursersSearchResult) data).items.size();
-        if (data instanceof ProgrammeSearchResult) return ((ProgrammeSearchResult) data).items.size();
+        if (data instanceof ProgrammeSearchResult)
+            return ((ProgrammeSearchResult) data).items.size();
         if (data instanceof ThesesSearchResult) return ((ThesesSearchResult) data).items.size();
 
         return 0;
     }
 
-    @NonNull private <T> TextWatcher getTextWatcher(final TextView searchMessage, Function1<String, Call<KujonResponse<T>>> search) {
+    @NonNull
+    private <T> TextWatcher getTextWatcher(final TextView searchMessage, Function1<String, Call<KujonResponse<T>>> search) {
         return new TextWatcher() {
 
             private Call<KujonResponse<T>> searchCall;
             private CancellationTokenSource cts;
 
-            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
 
-            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
             }
 
-            @Override public void afterTextChanged(Editable s) {
+            @Override
+            public void afterTextChanged(Editable s) {
                 String query = s.toString();
-                System.out.println("New query: " + query);
                 if (cts != null) {
                     cts.cancel();
                     cts = null;
@@ -185,7 +194,6 @@ public class SearchFragment extends BaseFragment {
                     cts = new CancellationTokenSource();
                     Task.delay(500, cts.getToken()).onSuccess(task -> {
                         searchMessage.setText(R.string.searching);
-                        // System.out.println("Searching " + query);
                         searchCall = search.apply(query);
                         searchCall.enqueue(new Callback<KujonResponse<T>>() {
                             @Override
@@ -199,7 +207,8 @@ public class SearchFragment extends BaseFragment {
                                 }
                             }
 
-                            @Override public void onFailure(Call<KujonResponse<T>> call, Throwable t) {
+                            @Override
+                            public void onFailure(Call<KujonResponse<T>> call, Throwable t) {
                                 if (!call.isCanceled()) {
                                     ErrorHandlerUtil.handleError(t);
                                 }
