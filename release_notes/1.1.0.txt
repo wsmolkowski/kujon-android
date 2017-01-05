@@ -1,0 +1,5 @@
+#176 poprawione na różnych ekranach nie tylko Przedmioty
+#175
+#136
+
+poprawka bugów na search screen (puste pola i szukanie robiło crash na aplikacji)
