@@ -153,10 +153,10 @@ public class MainActivity extends BaseActivity {
     }
 
     private void setHeaderText(String text, View headerView, int textViewId) {
-        TextView nameTextView = (TextView) headerView.findViewById(textViewId);
-        if (nameTextView != null) {
-            nameTextView.setVisibility(View.VISIBLE);
-            nameTextView.setText(text);
+        TextView textView = (TextView) headerView.findViewById(textViewId);
+        if (textView != null) {
+            textView.setVisibility(View.VISIBLE);
+            textView.setText(text);
         }
     }
 
