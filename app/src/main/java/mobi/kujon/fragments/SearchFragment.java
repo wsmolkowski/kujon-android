@@ -83,35 +83,39 @@ public class SearchFragment extends BaseFragment {
 
     @OnClick(R.id.student_search)
     public void studentSearch() {
-        if (studentQuery.getText().length()>3) {
+        if (isReadyToSearch(studentQuery)) {
             StudentSearchActivity.start(getActivity(), studentQuery.getText().toString());
         }
     }
 
     @OnClick(R.id.course_search)
     public void courseSearch() {
-        if (courseQuery.getText().toString().length() > 3) {
+        if (isReadyToSearch(courseQuery)) {
             CoursesSearchActivity.start(getActivity(), courseQuery.getText().toString());
         }
     }
 
+    private  boolean isReadyToSearch(EditText editText) {
+        return editText.getText().toString().length() > 3;
+    }
+
     @OnClick(R.id.faculty_search)
     public void facultySearch() {
-        if (facultyQuery.getText().length()>3) {
+        if (isReadyToSearch(facultyQuery)) {
             FacultySearchActivity.start(getActivity(), facultyQuery.getText().toString());
         }
     }
 
     @OnClick(R.id.programme_search)
     public void programmeSearch() {
-        if (programmeQuery.getText().length()>3) {
+        if (isReadyToSearch(programmeQuery)) {
             ProgrammeSearchActivity.start(getActivity(), programmeQuery.getText().toString());
         }
     }
 
     @OnClick(R.id.thesis_search)
     public void thesisSearch() {
-        if (thesisQuery.getText().length()>3) {
+        if (isReadyToSearch(thesisQuery)) {
             ThesesSearchActivity.start(getActivity(), thesisQuery.getText().toString());
         }
     }
