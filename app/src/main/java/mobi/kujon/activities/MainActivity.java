@@ -8,7 +8,9 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
@@ -19,6 +21,7 @@ import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
+import com.mikepenz.materialdrawer.view.BezelImageView;
 
 import javax.inject.Inject;
 
@@ -77,6 +80,7 @@ public class MainActivity extends BaseActivity {
                     .withIcon(photoUrl);
 
             headerResult.addProfiles(profileDrawerItem);
+            updateHeaderIfFailed(displayName, email, photoUrl);
             return null;
         }, Task.UI_THREAD_EXECUTOR).continueWith(ErrorHandlerUtil.ERROR_HANDLER);
 
@@ -124,6 +128,36 @@ public class MainActivity extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         drawer.getActionBarDrawerToggle().setDrawerIndicatorEnabled(true);
         showFragment(selectFragmentToShow(), false);
+    }
+
+    private void updateHeaderIfFailed(String displayName, String email, Uri photoUrl) {
+        if (headerResult == null || headerResult.getActiveProfile() != null) {
+            return;
+        }
+        View headerView = headerResult.getView();
+        if (headerView == null) {
+            Log.d("MaterialDrawer", "Header View not visible");
+            return;
+        }
+        setHeaderImage(photoUrl, headerView);
+        setHeaderText(displayName, headerView, R.id.material_drawer_account_header_name);
+        setHeaderText(email, headerView, R.id.material_drawer_account_header_email);
+    }
+
+    private void setHeaderImage(Uri photoUrl, View headerView) {
+        BezelImageView headerImageView = (BezelImageView) headerView.findViewById(R.id.material_drawer_account_header_current);
+        if (headerImageView != null) {
+            headerImageView.setVisibility(View.VISIBLE);
+            headerImageView.setImageURI(photoUrl);
+        }
+    }
+
+    private void setHeaderText(String text, View headerView, int textViewId) {
+        TextView nameTextView = (TextView) headerView.findViewById(textViewId);
+        if (nameTextView != null) {
+            nameTextView.setVisibility(View.VISIBLE);
+            nameTextView.setText(text);
+        }
     }
 
     private Fragment selectFragmentToShow() {
