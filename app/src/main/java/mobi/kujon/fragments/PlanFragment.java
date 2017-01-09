@@ -41,6 +41,7 @@ import mobi.kujon.utils.KujonUtils;
 import mobi.kujon.utils.KujonWeekViewEvent;
 import mobi.kujon.utils.plan_fragment.ActivityChange;
 import mobi.kujon.utils.plan_fragment.AskForDataOnPlan;
+import mobi.kujon.utils.plan_fragment.AskForLecturerDataOnPlan;
 import mobi.kujon.utils.plan_fragment.AskForStudentDataOnPlan;
 
 
@@ -59,11 +60,48 @@ public class PlanFragment extends BaseFragment implements MonthLoader.MonthChang
     private BaseActivity activity;
     private AskForDataOnPlan askForDataOnPlan;
 
+    private static final String IS_STUDENT = "IS_STUDENT";
+    private static final String LECTURER_ID = "LECTURER_ID";
+
+    public static PlanFragment newStudentPlanInstance() {
+        PlanFragment planFragment = new PlanFragment();
+
+        Bundle args = new Bundle();
+        args.putBoolean(IS_STUDENT, true);
+        planFragment.setArguments(args);
+
+        return planFragment;
+    }
+
+    public static PlanFragment newLecturerPlanInstance(String lecturerId) {
+        PlanFragment planFragment = new PlanFragment();
+
+        Bundle args = new Bundle();
+        args.putBoolean(IS_STUDENT, false);
+        args.putString(LECTURER_ID, lecturerId);
+        planFragment.setArguments(args);
+
+        return planFragment;
+    }
+
+    private boolean isStudentPlan() {
+        return getArguments().getBoolean(IS_STUDENT);
+    }
+
+    private String getLecturerId() {
+        return getArguments().getString(LECTURER_ID);
+    }
+
+    private AskForDataOnPlan getDataPlanProvider() {
+        return isStudentPlan() ? new AskForStudentDataOnPlan(this, utils, backendApi)
+                : new AskForLecturerDataOnPlan(this, utils, backendApi, getLecturerId());
+    }
+
     @Nullable @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_plan, container, false);
         ButterKnife.bind(this, rootView);
         KujonApplication.getComponent().inject(this);
-        askForDataOnPlan = new AskForStudentDataOnPlan(this,utils,backendApi);
+        askForDataOnPlan = getDataPlanProvider();
         weekView.setMonthChangeListener(this);
         weekView.setFirstDayOfWeek(Calendar.MONDAY);
         weekView.setShowNowLine(true);

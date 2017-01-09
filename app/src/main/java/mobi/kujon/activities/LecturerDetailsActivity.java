@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -25,6 +26,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
+import mobi.kujon.fragments.PlanFragment;
 import mobi.kujon.network.json.CourseEditionsConducted;
 import mobi.kujon.network.json.EmploymentPosition;
 import mobi.kujon.network.json.KujonResponse;
@@ -53,6 +55,7 @@ public class LecturerDetailsActivity extends BaseActivity {
     @Bind(R.id.lecturer_homepage) TextView lecturerHomepage;
     @Bind(R.id.lecturer_office_hours) TextView lecturerOfficeHours;
     @Bind(R.id.lecturer_interests) TextView lecturerInterests;
+    @Bind(R.id.lecturer_plan) ImageView lecturerPlan;
     @Bind(R.id.swipeContainer) SwipeRefreshLayout swipeContainer;
     @Bind(R.id.toolbar_title) TextView toolbarTitle;
     @Bind(R.id.toolbar) Toolbar toolbar;
@@ -75,6 +78,12 @@ public class LecturerDetailsActivity extends BaseActivity {
         swipeContainer.setOnRefreshListener(() -> loadData(true));
         showProgress(true);
         handler.post(() -> loadData(false));
+        lecturerPlan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(LecturerDetailsActivity.this, "Plan here", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void loadData(boolean refresh) {
