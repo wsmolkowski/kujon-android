@@ -65,4 +65,5 @@
     <string name="programme">Programme</string>
     <string name="ects_sum">Sum of ECTS points</string>
     <string name="not_empty">Not empty</string>
+    <string name="lecturers_plan">Lecturer\'s Schedule</string>
 </resources>

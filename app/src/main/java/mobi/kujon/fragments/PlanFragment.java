@@ -60,41 +60,25 @@ public class PlanFragment extends BaseFragment implements MonthLoader.MonthChang
     private BaseActivity activity;
     private AskForDataOnPlan askForDataOnPlan;
 
-    private static final String IS_STUDENT = "IS_STUDENT";
     private static final String LECTURER_ID = "LECTURER_ID";
-
-    public static PlanFragment newStudentPlanInstance() {
-        PlanFragment planFragment = new PlanFragment();
-
-        Bundle args = new Bundle();
-        args.putBoolean(IS_STUDENT, true);
-        planFragment.setArguments(args);
-
-        return planFragment;
-    }
 
     public static PlanFragment newLecturerPlanInstance(String lecturerId) {
         PlanFragment planFragment = new PlanFragment();
 
         Bundle args = new Bundle();
-        args.putBoolean(IS_STUDENT, false);
         args.putString(LECTURER_ID, lecturerId);
         planFragment.setArguments(args);
 
         return planFragment;
     }
 
-    private boolean isStudentPlan() {
-        return getArguments().getBoolean(IS_STUDENT);
-    }
-
-    private String getLecturerId() {
-        return getArguments().getString(LECTURER_ID);
-    }
-
     private AskForDataOnPlan getDataPlanProvider() {
-        return isStudentPlan() ? new AskForStudentDataOnPlan(this, utils, backendApi)
-                : new AskForLecturerDataOnPlan(this, utils, backendApi, getLecturerId());
+        Bundle args = getArguments();
+        if (args == null) {
+            return new AskForStudentDataOnPlan(this, utils, backendApi);
+        }
+        return getArguments().containsKey(LECTURER_ID) ? new AskForLecturerDataOnPlan(this, utils, backendApi, getArguments().getString(LECTURER_ID))
+                : new AskForStudentDataOnPlan(this, utils, backendApi);
     }
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -188,9 +172,6 @@ public class PlanFragment extends BaseFragment implements MonthLoader.MonthChang
     public void onDestroyView() {
         super.onDestroyView();
         askForDataOnPlan.destroy();
-        if (isStudentPlan()) {
-            activity.setToolbarTitle(R.string.lecturer_title);
-        }
     }
 
     @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
