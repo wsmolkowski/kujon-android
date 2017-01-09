@@ -107,6 +107,11 @@ public interface KujonBackendApi {
 
     @GET("tt/{day}?lecturers_info=False") @Headers(X_KUJONREFRESH_TRUE) Call<KujonResponse<List<CalendarEvent>>> planRefresh(@Path("day") String day);
 
+    @GET("ttlecturers/{lecturerId}/{day}") Call<KujonResponse<List<CalendarEvent>>> lecturerPlan(@Path("lecturerId") String lecturerId, @Path("day") String day);
+
+    @GET("ttlecturers/{lecturerId}/{day}") @Headers(X_KUJONREFRESH_TRUE)
+    Call<KujonResponse<List<CalendarEvent>>> lecturerPlanRefresh(@Path("lecturerId") String lecturerId, @Path("day") String day);
+
     @POST("authentication/archive") Call<Object> deleteAccount();
 
     @GET("search/users/{query}")
