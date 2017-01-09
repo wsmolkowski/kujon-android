@@ -24,7 +24,6 @@ import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
 import mobi.kujon.activities.LoginActivity;
 import mobi.kujon.network.json.KujonResponse;
-import mobi.kujon.network.json.Participant;
 import retrofit2.Response;
 
 public class ErrorHandlerUtil {

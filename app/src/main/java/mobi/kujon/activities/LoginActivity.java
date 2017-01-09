@@ -153,7 +153,9 @@ public class LoginActivity extends BaseActivity {
                 @Override
                 public void onResponse(Call<KujonResponse<Config>> call, Response<KujonResponse<Config>> response) {
                     Integer code = utils.getResponseCode(response);
-                    if (code == null || code == 401) {
+                    if (code == null) {
+                        Toast.makeText(LoginActivity.this, R.string.server_communication_error, Toast.LENGTH_SHORT).show();
+                    } else if (code == 401) {
                         handleLoginFailure();
                     } else {
                         proceedNormalResponse(response);
