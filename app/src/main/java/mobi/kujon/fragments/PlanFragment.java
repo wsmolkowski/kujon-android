@@ -188,6 +188,9 @@ public class PlanFragment extends BaseFragment implements MonthLoader.MonthChang
     public void onDestroyView() {
         super.onDestroyView();
         askForDataOnPlan.destroy();
+        if (isStudentPlan()) {
+            activity.setToolbarTitle(R.string.lecturer_title);
+        }
     }
 
     @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
