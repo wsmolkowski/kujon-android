@@ -11,8 +11,11 @@ import java.util.Iterator;
 import javax.inject.Inject;
 
 import mobi.kujon.KujonApplication;
+import mobi.kujon.network.json.Config;
+import mobi.kujon.network.json.KujonResponse;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
+import retrofit2.Response;
 
 public class KujonUtils {
 
@@ -52,6 +55,14 @@ public class KujonUtils {
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public <T> Integer getResponseCode(Response<KujonResponse<T>> response) {
+        try {
+            return response.body().code;
+        } catch (NullPointerException e) {
+            return null;
         }
     }
 }

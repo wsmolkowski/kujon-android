@@ -24,6 +24,7 @@ import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
 import mobi.kujon.activities.LoginActivity;
 import mobi.kujon.network.json.KujonResponse;
+import mobi.kujon.network.json.Participant;
 import retrofit2.Response;
 
 public class ErrorHandlerUtil {
@@ -105,6 +106,9 @@ public class ErrorHandlerUtil {
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 KujonApplication.getApplication().startActivity(intent);
             }
+        } else {
+            Toast.makeText(KujonApplication.getApplication(), R.string.server_communication_error, Toast.LENGTH_SHORT).show();
+            return false;
         }
 
         if (!response.body().isSuccessful()) {
