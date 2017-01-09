@@ -72,7 +72,7 @@ public class AskForDataOnPlan {
         this.refresh = refresh;
     }
 
-    public void destroy(){
+    public void destroy() {
         stopAllCurrentCalls();
         activityChange = null;
         backendApi = null;
@@ -98,34 +98,30 @@ public class AskForDataOnPlan {
         downloadedMonth.add(key);
         activityChange.startLoading();
         DateTime day = new DateTime(year, month, 1, 12, 0, 0);
-        while (day.getMonthOfYear() == month) {
-            String restSuffix = PlanEventsDownloader.REST_DATE_FORMAT.format(day.toDate());
-            System.out.println(restSuffix);
-            day = day.plusDays(7);
+        String restSuffix = PlanEventsDownloader.REST_DATE_FORMAT.format(day.toDate());
+        System.out.println(restSuffix);
 
-            Call<KujonResponse<List<CalendarEvent>>> call = refresh ? backendApi.planRefresh(restSuffix) : backendApi.plan(restSuffix);
-            callList.add(call);
-            counter.incrementAndGet();
-            call.enqueue(new Callback<KujonResponse<List<CalendarEvent>>>() {
-                @Override
-                public void onResponse(Call<KujonResponse<List<CalendarEvent>>> call, Response<KujonResponse<List<CalendarEvent>>> response) {
-                    if (ErrorHandlerUtil.handleResponse(response)) {
-                        List<CalendarEvent> data = response.body().data;
-                        handleIncomingEvents(call, data, year, month);
-                    }else {
-                        checkForRefreshCondition();
-                        callList.remove(call);
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<KujonResponse<List<CalendarEvent>>> call, Throwable t) {
+        Call<KujonResponse<List<CalendarEvent>>> call = refresh ? backendApi.planRefresh(restSuffix) : backendApi.plan(restSuffix);
+        callList.add(call);
+        counter.incrementAndGet();
+        call.enqueue(new Callback<KujonResponse<List<CalendarEvent>>>() {
+            @Override
+            public void onResponse(Call<KujonResponse<List<CalendarEvent>>> call, Response<KujonResponse<List<CalendarEvent>>> response) {
+                if (ErrorHandlerUtil.handleResponse(response)) {
+                    List<CalendarEvent> data = response.body().data;
+                    handleIncomingEvents(call, data, year, month);
+                } else {
+                    checkForRefreshCondition();
                     callList.remove(call);
-                    ErrorHandlerUtil.handleError(t);
                 }
-            });
+            }
 
-        }
+            @Override
+            public void onFailure(Call<KujonResponse<List<CalendarEvent>>> call, Throwable t) {
+                callList.remove(call);
+                ErrorHandlerUtil.handleError(t);
+            }
+        });
     }
 
     private void handleIncomingEvents(Call<KujonResponse<List<CalendarEvent>>> call, List<CalendarEvent> data, int year, int month) {
