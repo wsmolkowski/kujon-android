@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
@@ -78,12 +80,7 @@ public class LecturerDetailsActivity extends BaseActivity {
         swipeContainer.setOnRefreshListener(() -> loadData(true));
         showProgress(true);
         handler.post(() -> loadData(false));
-        lecturerPlan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(LecturerDetailsActivity.this, "Plan here", Toast.LENGTH_SHORT).show();
-            }
-        });
+        lecturerPlan.setOnClickListener(view -> showFragment(PlanFragment.newLecturerPlanInstance(lecturerId), true));
     }
 
     private void loadData(boolean refresh) {
@@ -186,5 +183,18 @@ public class LecturerDetailsActivity extends BaseActivity {
         Intent intent = new Intent(activity, LecturerDetailsActivity.class);
         intent.putExtra(LECTURER_ID, lecturerId);
         activity.startActivity(intent);
+    }
+
+    private void showFragment(Fragment fragment, boolean addToBackStack) {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.place_holder, fragment);
+        if (addToBackStack) {
+            fragmentTransaction.addToBackStack(null);
+        }
+        fragmentTransaction.commit();
+    }
+
+    public void setToolbarTitle(int title) {
+        toolbarTitle.setText(title);
     }
 }
