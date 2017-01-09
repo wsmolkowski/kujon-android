@@ -30,10 +30,10 @@ import retrofit2.Response;
  *
  */
 
-public class AskForDataOnPlan {
-    private WeakReference<ActivityChange> activityChange;
-    private KujonBackendApi backendApi;
-    private KujonUtils utils;
+public abstract class AskForDataOnPlan {
+    protected WeakReference<ActivityChange> activityChange;
+    protected KujonBackendApi backendApi;
+    protected KujonUtils utils;
 
     public AskForDataOnPlan(ActivityChange activityChange, KujonUtils utils, KujonBackendApi backendApi) {
         this.activityChange = new WeakReference<>(activityChange);
@@ -41,10 +41,10 @@ public class AskForDataOnPlan {
         this.backendApi = backendApi;
     }
 
-    private List<Call<KujonResponse<List<CalendarEvent>>>> callList = new ArrayList<>();
+    protected List<Call<KujonResponse<List<CalendarEvent>>>> callList = new ArrayList<>();
     private List<String> downloadedMonth = new ArrayList<>();
     private Map<String, List<WeekViewEvent>> eventsForDate = new HashMap<>();
-    private boolean refresh;
+    protected boolean refresh;
     private final AtomicLong counter = new AtomicLong();
 
 
@@ -102,7 +102,7 @@ public class AskForDataOnPlan {
         String restSuffix = PlanEventsDownloader.REST_DATE_FORMAT.format(day.toDate());
         System.out.println(restSuffix);
 
-        Call<KujonResponse<List<CalendarEvent>>> call = refresh ? backendApi.planRefresh(restSuffix) : backendApi.plan(restSuffix);
+        Call<KujonResponse<List<CalendarEvent>>> call = getKujonResponseCall(restSuffix);
         callList.add(call);
         counter.incrementAndGet();
         call.enqueue(new Callback<KujonResponse<List<CalendarEvent>>>() {
@@ -124,6 +124,8 @@ public class AskForDataOnPlan {
             }
         });
     }
+
+    protected abstract Call<KujonResponse<List<CalendarEvent>>> getKujonResponseCall(String restSuffix);
 
     private void handleIncomingEvents(Call<KujonResponse<List<CalendarEvent>>> call, List<CalendarEvent> data, int year, int month) {
         List<WeekViewEvent> events = $.map(data, EventUtils::from);

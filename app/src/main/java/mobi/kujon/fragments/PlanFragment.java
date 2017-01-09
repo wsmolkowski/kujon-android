@@ -41,6 +41,7 @@ import mobi.kujon.utils.KujonUtils;
 import mobi.kujon.utils.KujonWeekViewEvent;
 import mobi.kujon.utils.plan_fragment.ActivityChange;
 import mobi.kujon.utils.plan_fragment.AskForDataOnPlan;
+import mobi.kujon.utils.plan_fragment.AskForStudentDataOnPlan;
 
 
 public class PlanFragment extends BaseFragment implements MonthLoader.MonthChangeListener,ActivityChange {
@@ -62,7 +63,7 @@ public class PlanFragment extends BaseFragment implements MonthLoader.MonthChang
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_plan, container, false);
         ButterKnife.bind(this, rootView);
         KujonApplication.getComponent().inject(this);
-        askForDataOnPlan = new AskForDataOnPlan(this,utils,backendApi);
+        askForDataOnPlan = new AskForStudentDataOnPlan(this,utils,backendApi);
         weekView.setMonthChangeListener(this);
         weekView.setFirstDayOfWeek(Calendar.MONDAY);
         weekView.setShowNowLine(true);
