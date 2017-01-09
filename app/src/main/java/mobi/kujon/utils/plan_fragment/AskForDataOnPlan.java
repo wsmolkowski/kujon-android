@@ -31,7 +31,7 @@ import retrofit2.Response;
  */
 
 public abstract class AskForDataOnPlan {
-    protected WeakReference<ActivityChange> activityChange;
+    private WeakReference<ActivityChange> activityChange;
     protected KujonBackendApi backendApi;
     protected KujonUtils utils;
 
@@ -41,7 +41,7 @@ public abstract class AskForDataOnPlan {
         this.backendApi = backendApi;
     }
 
-    protected List<Call<KujonResponse<List<CalendarEvent>>>> callList = new ArrayList<>();
+    private List<Call<KujonResponse<List<CalendarEvent>>>> callList = new ArrayList<>();
     private List<String> downloadedMonth = new ArrayList<>();
     private Map<String, List<WeekViewEvent>> eventsForDate = new HashMap<>();
     protected boolean refresh;

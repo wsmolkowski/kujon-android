@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -31,6 +32,7 @@ import mobi.kujon.fragments.PlanFragment;
 import mobi.kujon.network.json.CourseEditionsConducted;
 import mobi.kujon.network.json.EmploymentPosition;
 import mobi.kujon.network.json.KujonResponse;
+import mobi.kujon.network.json.Lecturer;
 import mobi.kujon.network.json.LecturerLong;
 import mobi.kujon.ui.CircleTransform;
 import mobi.kujon.utils.CommonUtils;
@@ -79,7 +81,7 @@ public class LecturerDetailsActivity extends BaseActivity {
         swipeContainer.setOnRefreshListener(() -> loadData(true));
         showProgress(true);
         handler.post(() -> loadData(false));
-        lecturerPlan.setOnClickListener(view -> showFragment(PlanFragment.newLecturerPlanInstance(lecturerId), true));
+        lecturerPlan.setOnClickListener(view -> LecturerPlanActivity.showLecturerPlan(LecturerDetailsActivity.this, lecturerId));
     }
 
     private void loadData(boolean refresh) {
@@ -182,18 +184,5 @@ public class LecturerDetailsActivity extends BaseActivity {
         Intent intent = new Intent(activity, LecturerDetailsActivity.class);
         intent.putExtra(LECTURER_ID, lecturerId);
         activity.startActivity(intent);
-    }
-
-    private void showFragment(Fragment fragment, boolean addToBackStack) {
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.place_holder, fragment);
-        if (addToBackStack) {
-            fragmentTransaction.addToBackStack(null);
-        }
-        fragmentTransaction.commit();
-    }
-
-    public void setToolbarTitle(int title) {
-        toolbarTitle.setText(title);
     }
 }
