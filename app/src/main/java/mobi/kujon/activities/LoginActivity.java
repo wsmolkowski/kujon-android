@@ -152,13 +152,11 @@ public class LoginActivity extends BaseActivity {
             kujonBackendApi.config().enqueue(new Callback<KujonResponse<Config>>() {
                 @Override
                 public void onResponse(Call<KujonResponse<Config>> call, Response<KujonResponse<Config>> response) {
-                    Integer code = response.body().code;
-                    if (code != null && code == 401) {
-                        Toast.makeText(LoginActivity.this, R.string.login_error, Toast.LENGTH_SHORT).show();
-                        Auth.GoogleSignInApi.signOut(apiClient).setResultCallback(status -> {
-                            progress(false);
-                            Toast.makeText(LoginActivity.this, status.getStatusMessage(), Toast.LENGTH_SHORT).show();
-                        });
+                    Integer code = utils.getResponseCode(response);
+                    if (code == null) {
+                        Toast.makeText(LoginActivity.this, R.string.server_communication_error, Toast.LENGTH_SHORT).show();
+                    } else if (code == 401) {
+                        handleLoginFailure();
                     } else {
                         proceedNormalResponse(response);
                     }
@@ -173,6 +171,14 @@ public class LoginActivity extends BaseActivity {
             progress(false);
             Log.i(TAG, "Login not successful: " + result.getStatus().getStatusMessage());
         }
+    }
+
+    private void handleLoginFailure() {
+        Toast.makeText(LoginActivity.this, R.string.login_error, Toast.LENGTH_SHORT).show();
+        Auth.GoogleSignInApi.signOut(apiClient).setResultCallback(status -> {
+            progress(false);
+            Toast.makeText(LoginActivity.this, status.getStatusMessage(), Toast.LENGTH_SHORT).show();
+        });
     }
 
     private void proceedNormalResponse(Response<KujonResponse<Config>> response) {
