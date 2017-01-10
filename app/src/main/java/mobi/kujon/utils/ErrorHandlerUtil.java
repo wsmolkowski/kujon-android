@@ -105,6 +105,9 @@ public class ErrorHandlerUtil {
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 KujonApplication.getApplication().startActivity(intent);
             }
+        } else {
+            Toast.makeText(KujonApplication.getApplication(), R.string.server_communication_error, Toast.LENGTH_SHORT).show();
+            return false;
         }
 
         if (!response.body().isSuccessful()) {
