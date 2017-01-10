@@ -27,7 +27,6 @@ public class LecturerPlanActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lecturer_plan);
         ButterKnife.bind(this);
-        KujonApplication.getComponent().inject(this);
         toolbarTitle.setText(R.string.lecturers_plan);
         String lecturerId = getIntent().getStringExtra(LECTURER_ID);
         showFragment(PlanFragment.newLecturerPlanInstance(lecturerId), false);
