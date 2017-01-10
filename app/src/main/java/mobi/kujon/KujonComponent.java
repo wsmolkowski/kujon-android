@@ -110,5 +110,4 @@ public interface KujonComponent {
 
     void inject(MessagesFragment messagesFragment);
 
-    void inject(LecturerPlanActivity lecturerPlanActivity);
 }
