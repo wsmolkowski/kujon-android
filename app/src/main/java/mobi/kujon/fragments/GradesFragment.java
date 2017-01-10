@@ -73,12 +73,13 @@ public class GradesFragment extends AbstractFragmentSearchWidget<TermGrades> {
         List<TermGrades> filteredTermGrades = new ArrayList<>();
         List<TermGrades> copyOfData = new ArrayList<>(dataFromApi);
         for (TermGrades termGrades : copyOfData) {
-            List<CourseGrades> filteredCourseGrades = new ArrayList<>($.filter(termGrades.courses,gradesPredicate));
-            if(filteredCourseGrades.size()>0){
+            List<CourseGrades> filteredCourseGrades = new ArrayList<>($.filter(termGrades.courses, gradesPredicate));
+            if (filteredCourseGrades.size() > 0) {
                 termGrades.courses = filteredCourseGrades;
                 filteredTermGrades.add(termGrades);
             }
         }
+
         return filteredTermGrades;
     }
 
