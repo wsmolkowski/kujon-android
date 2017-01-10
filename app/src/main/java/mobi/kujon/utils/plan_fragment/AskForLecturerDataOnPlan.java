@@ -20,6 +20,6 @@ public class AskForLecturerDataOnPlan extends AskForDataOnPlan {
 
     @Override
     protected Call<KujonResponse<List<CalendarEvent>>> getKujonResponseCall(String restSuffix) {
-        return refresh ? backendApi.lecturerPlanRefresh(lecturerId, restSuffix) : backendApi.lecturerPlan(lecturerId, restSuffix);
+        return backendApi.lecturerPlan(String.valueOf(refresh), lecturerId, restSuffix);
     }
 }
