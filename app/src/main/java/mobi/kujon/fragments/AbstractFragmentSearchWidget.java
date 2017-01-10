@@ -22,7 +22,7 @@ import mobi.kujon.R;
  *
  */
 
-public abstract class AbstractSearchFragment<T> extends ListFragment {
+public abstract class AbstractFragmentSearchWidget<T> extends ListFragment {
     protected List<T> dataFromApi = new ArrayList<>();
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -44,8 +44,7 @@ public abstract class AbstractSearchFragment<T> extends ListFragment {
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Predicate<T> pred =createPredicate(query);
-                setDataToAdapter($.filter(dataFromApi, pred));
+                setDataToAdapter(performFiltering(query));
                 return true;
             }
             @Override
@@ -59,6 +58,11 @@ public abstract class AbstractSearchFragment<T> extends ListFragment {
         });
 
         super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    protected List<T> performFiltering(String query) {
+        Predicate<T> pred =createPredicate(query);
+        return $.filter(dataFromApi, pred);
     }
 
     protected abstract void setDataToAdapter(List<T> filter);

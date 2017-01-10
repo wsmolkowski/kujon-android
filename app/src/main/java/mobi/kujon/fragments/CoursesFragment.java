@@ -1,6 +1,7 @@
 package mobi.kujon.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,10 +11,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.afollestad.sectionedrecyclerview.SectionedRecyclerViewAdapter;
+import com.github.underscore.$;
+import com.github.underscore.Predicate;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedMap;
+import java.util.TreeMap;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -21,11 +25,12 @@ import mobi.kujon.R;
 import mobi.kujon.network.json.Course;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.utils.ErrorHandlerUtil;
+import mobi.kujon.utils.predicates.CoursesPredicate;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CoursesFragment extends ListFragment {
+public class CoursesFragment extends AbstractFragmentSearchWidget<SortedMap<String, List<Course>>> {
 
     private Adapter adapter;
 
@@ -36,6 +41,41 @@ public class CoursesFragment extends ListFragment {
         showSpinner(true);
 
         loadData(false);
+    }
+
+    @Override
+    protected void setDataToAdapter(List<SortedMap<String, List<Course>>> filter) {
+        adapter.setData(filter);
+    }
+
+    @Override
+    protected Predicate<SortedMap<String, List<Course>>> createPredicate(String query) {
+        return arg -> true;
+    }
+
+    @Override
+    protected List<SortedMap<String, List<Course>>> performFiltering(String query) {
+        CoursesPredicate coursesPredicate = new CoursesPredicate(query);
+        List<SortedMap<String, List<Course>>> filteredData = new ArrayList<>();
+        for(SortedMap<String ,List<Course>> sortedMap:dataFromApi){
+            SortedMap<String, List<Course>> filteredMap = createMapIfAnyCoursePassesPredict(coursesPredicate, sortedMap);
+            if(filteredMap.keySet().size()>0){
+                filteredData.add(filteredMap);
+            }
+        }
+        return filteredData;
+    }
+
+    @NonNull
+    private SortedMap<String, List<Course>> createMapIfAnyCoursePassesPredict(CoursesPredicate coursesPredicate, SortedMap<String, List<Course>> sortedMap) {
+        SortedMap<String,List<Course>> filteredMap = new TreeMap<>();
+        for(String key:sortedMap.keySet()){
+            List<Course> courses = new ArrayList<>($.filter(sortedMap.get(key), coursesPredicate));
+            if(courses.size()>0){
+                filteredMap.put(key,courses);
+            }
+        }
+        return filteredMap;
     }
 
     @Override protected String getRequestUrl() {
@@ -56,6 +96,7 @@ public class CoursesFragment extends ListFragment {
                 showSpinner(false);
                 if (ErrorHandlerUtil.handleResponse(response)) {
                     List<SortedMap<String, List<Course>>> data = response.body().data;
+                    dataFromApi = data;
                     adapter.setData(data);
                 }
             }

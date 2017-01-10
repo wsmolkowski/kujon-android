@@ -26,7 +26,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LecturersFragment extends AbstractSearchFragment<Lecturer> {
+public class LecturersFragment extends AbstractFragmentSearchWidget<Lecturer> {
 
     private Adapter adapter;
     @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {

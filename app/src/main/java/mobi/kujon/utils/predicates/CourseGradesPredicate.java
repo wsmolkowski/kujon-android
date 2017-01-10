@@ -18,6 +18,6 @@ public class CourseGradesPredicate implements Predicate<CourseGrades> {
 
     @Override
     public Boolean apply(CourseGrades arg) {
-        return arg.courseName.startsWith(query);
+        return arg.courseName.toLowerCase().startsWith(query);
     }
 }

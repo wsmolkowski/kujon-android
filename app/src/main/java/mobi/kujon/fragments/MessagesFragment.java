@@ -31,7 +31,7 @@ import retrofit2.Response;
 
 import static mobi.kujon.KujonApplication.FROM_NOTIFICATION;
 
-public class MessagesFragment extends AbstractSearchFragment<Message> {
+public class MessagesFragment extends AbstractFragmentSearchWidget<Message> {
 
     private Adapter adapter;
     private DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
