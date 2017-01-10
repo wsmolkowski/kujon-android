@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.github.underscore.$;
+import com.github.underscore.Predicate;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -20,14 +21,14 @@ import mobi.kujon.activities.LecturerDetailsActivity;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.network.json.Lecturer;
 import mobi.kujon.utils.ErrorHandlerUtil;
+import mobi.kujon.utils.predicates.LecutrerPredicate;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LecturersFragment extends ListFragment {
+public class LecturersFragment extends AbstractSearchFragment<Lecturer> {
 
     private Adapter adapter;
-
     @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         adapter = new Adapter();
@@ -35,6 +36,16 @@ public class LecturersFragment extends ListFragment {
         showSpinner(true);
 
         loadData(false);
+    }
+
+    @Override
+    protected void setDataToAdapter(List<Lecturer> filter) {
+        adapter.setData(filter);
+    }
+
+    @Override
+    protected Predicate<Lecturer> createPredicate(String query) {
+        return new LecutrerPredicate(query);
     }
 
     @Override protected String getRequestUrl() {
@@ -48,6 +59,7 @@ public class LecturersFragment extends ListFragment {
                 showSpinner(false);
                 if (ErrorHandlerUtil.handleResponse(response)) {
                     List<Lecturer> data = response.body().data;
+                    dataFromApi = data;
                     adapter.setData(data);
                 }
             }
@@ -63,6 +75,9 @@ public class LecturersFragment extends ListFragment {
         super.onStart();
         activity.setToolbarTitle(R.string.teachers);
     }
+
+
+
 
     protected class Adapter extends RecyclerView.Adapter<ViewHolder> {
 

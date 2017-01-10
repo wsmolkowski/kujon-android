@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.github.underscore.$;
+import com.github.underscore.Predicate;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -23,13 +24,14 @@ import mobi.kujon.activities.MessageDetailsActivity;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.network.json.Message;
 import mobi.kujon.utils.ErrorHandlerUtil;
+import mobi.kujon.utils.predicates.MessagePredicate;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 import static mobi.kujon.KujonApplication.FROM_NOTIFICATION;
 
-public class MessagesFragment extends ListFragment {
+public class MessagesFragment extends AbstractSearchFragment<Message> {
 
     private Adapter adapter;
     private DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
@@ -46,6 +48,7 @@ public class MessagesFragment extends ListFragment {
                 showSpinner(false);
                 if(ErrorHandlerUtil.handleResponse(response)) {
                     List<Message> messageList = response.body().data;
+                    dataFromApi = messageList;
                     adapter.setData(messageList);
                 }
             }
@@ -64,6 +67,16 @@ public class MessagesFragment extends ListFragment {
         recyclerView.setAdapter(adapter);
         showSpinner(true);
         loadData(getActivity().getIntent().getBooleanExtra(FROM_NOTIFICATION, false));
+    }
+
+    @Override
+    protected void setDataToAdapter(List<Message> filter) {
+        adapter.setData(filter);
+    }
+
+    @Override
+    protected Predicate<Message> createPredicate(String query) {
+        return new MessagePredicate(query);
     }
 
     @Override public void onStart() {
