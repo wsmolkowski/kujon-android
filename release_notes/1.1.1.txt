@@ -1,0 +1,4 @@
+#169 zmiana na odpytywanie pojedyńczego miesiąca
+#185 dodanie planu zajęć wykładowcy spod szczegółów wykładowcy
+#188 zabezpieczenie przed brakiem code w resposne na LoginActivity
+#186 filtrowania na ekranach ocen/wiadomości/wykładowców/przedmiotów

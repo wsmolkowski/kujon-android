@@ -72,6 +72,8 @@ public class LecturerDetailsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lecturer_details);
         ButterKnife.bind(this);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         KujonApplication.getComponent().inject(this);
         layoutInflater = getLayoutInflater();
         toolbarTitle.setText(R.string.lecturer_title);

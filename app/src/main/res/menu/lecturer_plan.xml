@@ -5,6 +5,5 @@
         android:title="@string/lecturers_plan"
         android:icon="@drawable/plan"
         app:showAsAction="collapseActionView|ifRoom"
-        app:actionViewClass="android.support.v7.widget.SearchView"
         />
 </menu>
