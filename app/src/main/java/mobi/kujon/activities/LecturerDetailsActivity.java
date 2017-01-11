@@ -2,6 +2,8 @@ package mobi.kujon.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,6 +12,9 @@ import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -53,7 +58,6 @@ public class LecturerDetailsActivity extends BaseActivity {
     @Bind(R.id.lecturer_homepage) TextView lecturerHomepage;
     @Bind(R.id.lecturer_office_hours) TextView lecturerOfficeHours;
     @Bind(R.id.lecturer_interests) TextView lecturerInterests;
-    @Bind(R.id.lecturer_plan) ImageView lecturerPlan;
     @Bind(R.id.swipeContainer) SwipeRefreshLayout swipeContainer;
     @Bind(R.id.toolbar_title) TextView toolbarTitle;
     @Bind(R.id.toolbar) Toolbar toolbar;
@@ -76,7 +80,6 @@ public class LecturerDetailsActivity extends BaseActivity {
         swipeContainer.setOnRefreshListener(() -> loadData(true));
         showProgress(true);
         handler.post(() -> loadData(false));
-        lecturerPlan.setOnClickListener(view -> LecturerPlanActivity.showLecturerPlan(LecturerDetailsActivity.this, lecturerId));
     }
 
     private void loadData(boolean refresh) {
@@ -137,6 +140,26 @@ public class LecturerDetailsActivity extends BaseActivity {
                 ErrorHandlerUtil.handleError(t);
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.lecturer_plan, menu);
+        Drawable drawable = menu.findItem(R.id.lecturer_plan_menu).getIcon();
+        if(drawable != null) {
+            drawable.mutate();
+            drawable.setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_ATOP);
+        }
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.lecturer_plan_menu){
+            LecturerPlanActivity.showLecturerPlan(LecturerDetailsActivity.this, lecturerId);
+            return true;
+        }
+        return false;
     }
 
     private void setUpPicture(String name) {
