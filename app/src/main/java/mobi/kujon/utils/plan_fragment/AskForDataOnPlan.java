@@ -119,7 +119,6 @@ public abstract class AskForDataOnPlan {
             public void onFailure(Call<KujonResponse<List<CalendarEvent>>> call, Throwable t) {
                 callList.remove(call);
                 ErrorHandlerUtil.handleError(t);
-                checkForRefreshCondition();
             }
         });
     }
