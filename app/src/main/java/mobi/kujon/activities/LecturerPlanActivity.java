@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
 import mobi.kujon.fragments.PlanFragment;
 
@@ -19,7 +18,7 @@ public class LecturerPlanActivity extends BaseActivity {
 
     @Bind(R.id.toolbar_title)
     TextView toolbarTitle;
-
+    @Bind(R.id.toolbar) Toolbar toolbar;
     public static final String LECTURER_ID = "LECTURER_ID";
 
     @Override
@@ -27,6 +26,8 @@ public class LecturerPlanActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lecturer_plan);
         ButterKnife.bind(this);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         toolbarTitle.setText(R.string.lecturers_plan);
         String lecturerId = getIntent().getStringExtra(LECTURER_ID);
         showFragment(PlanFragment.newLecturerPlanInstance(lecturerId), false);

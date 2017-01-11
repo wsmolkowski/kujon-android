@@ -100,8 +100,6 @@ public abstract class AskForDataOnPlan {
         activityChange.get().startLoading();
         DateTime day = new DateTime(year, month, 1, 12, 0, 0);
         String restSuffix = PlanEventsDownloader.REST_DATE_FORMAT.format(day.toDate());
-        System.out.println(restSuffix);
-
         Call<KujonResponse<List<CalendarEvent>>> call = getKujonResponseCall(restSuffix);
         callList.add(call);
         counter.incrementAndGet();
@@ -121,6 +119,7 @@ public abstract class AskForDataOnPlan {
             public void onFailure(Call<KujonResponse<List<CalendarEvent>>> call, Throwable t) {
                 callList.remove(call);
                 ErrorHandlerUtil.handleError(t);
+                checkForRefreshCondition();
             }
         });
     }
