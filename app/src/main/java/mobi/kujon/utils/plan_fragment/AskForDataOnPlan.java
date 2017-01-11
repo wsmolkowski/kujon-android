@@ -7,6 +7,7 @@ import com.github.underscore.$;
 
 import org.joda.time.DateTime;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,13 +30,13 @@ import retrofit2.Response;
  *
  */
 
-public class AskForDataOnPlan {
-    private ActivityChange activityChange;
-    private KujonBackendApi backendApi;
-    private KujonUtils utils;
+public abstract class AskForDataOnPlan {
+    private WeakReference<ActivityChange> activityChange;
+    protected KujonBackendApi backendApi;
+    protected KujonUtils utils;
 
     public AskForDataOnPlan(ActivityChange activityChange, KujonUtils utils, KujonBackendApi backendApi) {
-        this.activityChange = activityChange;
+        this.activityChange = new WeakReference<>(activityChange);
         this.utils = utils;
         this.backendApi = backendApi;
     }
@@ -43,7 +44,7 @@ public class AskForDataOnPlan {
     private List<Call<KujonResponse<List<CalendarEvent>>>> callList = new ArrayList<>();
     private List<String> downloadedMonth = new ArrayList<>();
     private Map<String, List<WeekViewEvent>> eventsForDate = new HashMap<>();
-    private boolean refresh;
+    protected boolean refresh;
     private final AtomicLong counter = new AtomicLong();
 
 
@@ -53,7 +54,7 @@ public class AskForDataOnPlan {
         downloadedMonth.clear();
         eventsForDate.clear();
         stopAllCurrentCalls();
-        activityChange.startLoading();
+        activityChange.get().startLoading();
     }
 
     public List<WeekViewEvent> getEvents(int year, int month) {
@@ -96,12 +97,10 @@ public class AskForDataOnPlan {
     private void downloadEventsFor(int year, int month) {
         String key = getKey(year, month);
         downloadedMonth.add(key);
-        activityChange.startLoading();
+        activityChange.get().startLoading();
         DateTime day = new DateTime(year, month, 1, 12, 0, 0);
         String restSuffix = PlanEventsDownloader.REST_DATE_FORMAT.format(day.toDate());
-        System.out.println(restSuffix);
-
-        Call<KujonResponse<List<CalendarEvent>>> call = refresh ? backendApi.planRefresh(restSuffix) : backendApi.plan(restSuffix);
+        Call<KujonResponse<List<CalendarEvent>>> call = getKujonResponseCall(restSuffix);
         callList.add(call);
         counter.incrementAndGet();
         call.enqueue(new Callback<KujonResponse<List<CalendarEvent>>>() {
@@ -124,10 +123,12 @@ public class AskForDataOnPlan {
         });
     }
 
+    protected abstract Call<KujonResponse<List<CalendarEvent>>> getKujonResponseCall(String restSuffix);
+
     private void handleIncomingEvents(Call<KujonResponse<List<CalendarEvent>>> call, List<CalendarEvent> data, int year, int month) {
         List<WeekViewEvent> events = $.map(data, EventUtils::from);
         eventsForDate.get(getKey(year, month)).addAll(events);
-        activityChange.dataDowloaded();
+        activityChange.get().dataDowloaded();
         callList.remove(call);
         checkForRefreshCondition();
     }
@@ -135,7 +136,7 @@ public class AskForDataOnPlan {
     private void checkForRefreshCondition() {
         long value = counter.decrementAndGet();
         if (value == 0) {
-            activityChange.stopLoading();
+            activityChange.get().stopLoading();
             refresh = false;
         }
     }

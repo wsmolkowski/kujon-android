@@ -41,6 +41,8 @@ import mobi.kujon.utils.KujonUtils;
 import mobi.kujon.utils.KujonWeekViewEvent;
 import mobi.kujon.utils.plan_fragment.ActivityChange;
 import mobi.kujon.utils.plan_fragment.AskForDataOnPlan;
+import mobi.kujon.utils.plan_fragment.AskForLecturerDataOnPlan;
+import mobi.kujon.utils.plan_fragment.AskForStudentDataOnPlan;
 
 
 public class PlanFragment extends BaseFragment implements MonthLoader.MonthChangeListener,ActivityChange {
@@ -58,11 +60,32 @@ public class PlanFragment extends BaseFragment implements MonthLoader.MonthChang
     private BaseActivity activity;
     private AskForDataOnPlan askForDataOnPlan;
 
+    private static final String LECTURER_ID = "LECTURER_ID";
+
+    public static PlanFragment newLecturerPlanInstance(String lecturerId) {
+        PlanFragment planFragment = new PlanFragment();
+
+        Bundle args = new Bundle();
+        args.putString(LECTURER_ID, lecturerId);
+        planFragment.setArguments(args);
+
+        return planFragment;
+    }
+
+    private AskForDataOnPlan getDataPlanProvider() {
+        Bundle args = getArguments();
+        if (args == null) {
+            return new AskForStudentDataOnPlan(this, utils, backendApi);
+        }
+        return getArguments().containsKey(LECTURER_ID) ? new AskForLecturerDataOnPlan(this, utils, backendApi, getArguments().getString(LECTURER_ID))
+                : new AskForStudentDataOnPlan(this, utils, backendApi);
+    }
+
     @Nullable @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_plan, container, false);
         ButterKnife.bind(this, rootView);
         KujonApplication.getComponent().inject(this);
-        askForDataOnPlan = new AskForDataOnPlan(this,utils,backendApi);
+        askForDataOnPlan = getDataPlanProvider();
         weekView.setMonthChangeListener(this);
         weekView.setFirstDayOfWeek(Calendar.MONDAY);
         weekView.setShowNowLine(true);

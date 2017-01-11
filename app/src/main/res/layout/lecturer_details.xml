@@ -9,7 +9,6 @@
     >
 
     <include layout="@layout/kujon_toolbar_with_back" />
-
     <android.support.v4.widget.SwipeRefreshLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -66,6 +65,14 @@
                     android:id="@+id/lecturer_office_hours"
                     style="@style/Regular.Entry"
                     tools:text='Lorem ipsum'/>
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/plan"
+                    android:layout_gravity="center"
+                    android:id="@+id/lecturer_plan"
+                    />
 
                 <TextView
                     style="@style/Regular.Label"

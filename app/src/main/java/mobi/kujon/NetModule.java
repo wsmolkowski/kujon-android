@@ -31,6 +31,7 @@ import okhttp3.JavaNetCookieJar;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
 
 @Module
 public class NetModule {
@@ -44,10 +45,13 @@ public class NetModule {
     }
 
     @Provides @Singleton OkHttpClient provideOkHttpClient(Cache cache) {
-
+        HttpLoggingInterceptor.Logger myLogger = message -> Log.d("CustomLogRetrofit", message);
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(myLogger);
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         CookieManager cookieManager = new CookieManager();
         OkHttpClient httpClient = new OkHttpClient.Builder()
                 .addNetworkInterceptor(REWRITE_RESPONSE_INTERCEPTOR)
+                .addNetworkInterceptor(loggingInterceptor)
                 .addNetworkInterceptor(new AuthenticationInterceptor())
                 .addInterceptor(OFFLINE_INTERCEPTOR)
                 .cache(cache)
@@ -102,7 +106,6 @@ public class NetModule {
             Task<GoogleSignInResult> loginStatus = KujonApplication.getApplication().getLoginStatus();
 
             Request originalRequest = chain.request();
-            Log.i(TAG, "AuthenticationInterceptor: modifying request" + originalRequest.url());
             String email = "";
             String token = "";
             if (loginStatus.isCompleted() && loginStatus.getResult() != null && loginStatus.getResult().getSignInAccount() != null) {

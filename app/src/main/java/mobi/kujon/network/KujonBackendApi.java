@@ -28,6 +28,7 @@ import mobi.kujon.network.json.gen.ThesesSearchResult;
 import mobi.kujon.network.json.gen.Thesis_;
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -36,6 +37,7 @@ import retrofit2.http.Query;
 public interface KujonBackendApi {
 
     String X_KUJONREFRESH_TRUE = "X-Kujonrefresh: true";
+    String X_KUJONREFRESH = "X-Kujonrefresh";
 
     @GET("usoses") Call<KujonResponse<List<Usos>>> usoses();
 
@@ -106,6 +108,8 @@ public interface KujonBackendApi {
     @GET("tt/{day}?lecturers_info=False") Call<KujonResponse<List<CalendarEvent>>> plan(@Path("day") String day);
 
     @GET("tt/{day}?lecturers_info=False") @Headers(X_KUJONREFRESH_TRUE) Call<KujonResponse<List<CalendarEvent>>> planRefresh(@Path("day") String day);
+
+    @GET("ttlecturers/{lecturerId}/{day}") Call<KujonResponse<List<CalendarEvent>>> lecturerPlan(@Header(X_KUJONREFRESH) String refresh, @Path("lecturerId") String lecturerId, @Path("day") String day);
 
     @POST("authentication/archive") Call<Object> deleteAccount();
 

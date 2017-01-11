@@ -53,6 +53,7 @@ public class LecturerDetailsActivity extends BaseActivity {
     @Bind(R.id.lecturer_homepage) TextView lecturerHomepage;
     @Bind(R.id.lecturer_office_hours) TextView lecturerOfficeHours;
     @Bind(R.id.lecturer_interests) TextView lecturerInterests;
+    @Bind(R.id.lecturer_plan) ImageView lecturerPlan;
     @Bind(R.id.swipeContainer) SwipeRefreshLayout swipeContainer;
     @Bind(R.id.toolbar_title) TextView toolbarTitle;
     @Bind(R.id.toolbar) Toolbar toolbar;
@@ -75,6 +76,7 @@ public class LecturerDetailsActivity extends BaseActivity {
         swipeContainer.setOnRefreshListener(() -> loadData(true));
         showProgress(true);
         handler.post(() -> loadData(false));
+        lecturerPlan.setOnClickListener(view -> LecturerPlanActivity.showLecturerPlan(LecturerDetailsActivity.this, lecturerId));
     }
 
     private void loadData(boolean refresh) {
