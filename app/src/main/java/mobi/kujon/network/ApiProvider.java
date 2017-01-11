@@ -21,7 +21,11 @@ public class ApiProvider implements ApiChoice {
     public ApiProvider(OkHttpClient okHttpClient, Gson gson) {
         this.client = okHttpClient;
         this.gson = gson;
-        setApiType(ApiType.PROD);
+        if(BuildConfig.DEBUG){
+            setApiType(ApiType.DEMO);
+        }else {
+            setApiType(ApiType.PROD);
+        }
     }
 
     @Override
