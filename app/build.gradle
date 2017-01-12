@@ -87,17 +87,17 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
 //    compile(name: 'foam-release', ext: 'aar')
     compile(name: 'khacpv-android-week-view', ext: 'aar')
-    compile('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
+    compile("com.crashlytics.sdk.android:crashlytics:$crashlytics_version") {
         transitive = true;
     }
-    compile('com.mikepenz:materialdrawer:5.8.1@aar') {
+    compile("com.mikepenz:materialdrawer:$material_drawer_version") {
         transitive = true
     }
-    compile('com.github.tony19:logback-android-classic:1.1.1-5') {
+    compile("com.github.tony19:logback-android-classic:$logback_version") {
         // workaround issue #73
         exclude group: 'com.google.android', module: 'android'
     }
-    compile('com.github.afollestad:sectioned-recyclerview:0.2.2') {
+    compile("com.github.afollestad:sectioned-recyclerview:$sectioned_recycler_view_version") {
         transitive = true
     }
 
