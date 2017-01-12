@@ -103,11 +103,13 @@ public class LecturerDetailsActivity extends BaseActivity {
             @Override public void onResponse(Call<KujonResponse<LecturerLong>> call, Response<KujonResponse<LecturerLong>> response) {
                 if (ErrorHandlerUtil.handleResponse(response)) {
                     lecturer = response.body().data;
-                    String title = "";
+                    String titleBefore = "";
+                    String titleAfter = "";
                     if (lecturer.titles != null) {
-                        title = isEmpty(lecturer.titles.before) ? "" : lecturer.titles.before;
+                        titleBefore = isEmpty(lecturer.titles.before) ? "" : lecturer.titles.before;
+                        titleAfter = isEmpty(lecturer.titles.after) ? "" : ", " + lecturer.titles.after;
                     }
-                    String name = title + " " + lecturer.firstName + " " + lecturer.lastName;
+                    String name = titleBefore + " " + lecturer.firstName + " " + lecturer.lastName + titleAfter;
                     lecturerName.setText(name);
                     lecturerStatus.setText(lecturer.staffStatus);
                     if (lecturer.room != null) {
