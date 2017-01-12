@@ -18,6 +18,6 @@ public class MessagePredicate implements Predicate<Message> {
 
     @Override
     public Boolean apply(Message arg) {
-        return arg.from.toLowerCase().startsWith(query);
+        return arg.from.toLowerCase().contains(query);
     }
 }

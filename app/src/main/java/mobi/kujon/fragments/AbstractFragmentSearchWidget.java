@@ -44,7 +44,7 @@ public abstract class AbstractFragmentSearchWidget<T> extends ListFragment {
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                setDataToAdapter(performFiltering(query));
+                search.clearFocus();
                 return true;
             }
             @Override
@@ -53,6 +53,7 @@ public abstract class AbstractFragmentSearchWidget<T> extends ListFragment {
                     setDataToAdapter(dataFromApi);
                     return true;
                 }
+                setDataToAdapter(performFiltering(newText));
                 return false;
             }
         });

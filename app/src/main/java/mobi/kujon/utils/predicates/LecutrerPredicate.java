@@ -19,7 +19,7 @@ public class LecutrerPredicate implements Predicate<Lecturer> {
     @Override
     public Boolean apply(Lecturer arg) {
         if (query.length() == 0) return true;
-        return (arg.firstName.toLowerCase().startsWith(query) || arg.lastName.toLowerCase().startsWith(query) || (arg.lastName.toLowerCase() + " " + arg.firstName.toLowerCase()).startsWith(query));
+        return (arg.firstName.toLowerCase().contains(query) || arg.lastName.toLowerCase().contains(query) || (arg.lastName.toLowerCase() + " " + arg.firstName.toLowerCase()).startsWith(query));
 
     }
 }
