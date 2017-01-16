@@ -135,7 +135,7 @@ public class ErrorHandlerUtil {
             text.setText(message);
 
             Toast toast = new Toast(KujonApplication.getApplication());
-            toast.setGravity(Gravity.TOP | Gravity.LEFT | Gravity.RIGHT, 0, 0);
+            toast.setGravity(Gravity.CENTER | Gravity.FILL_HORIZONTAL, 0, 0);
             toast.setDuration(Toast.LENGTH_LONG);
             toast.setView(layout);
             toast.show();

@@ -1,12 +1,26 @@
-<TextView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/text"
+    android:paddingTop="50dp"
+    android:paddingBottom="50dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#EF5350"
+    android:background="@android:color/white"
     android:gravity="center"
-    android:padding="32dp"
-    android:textColor="@android:color/white"
+    android:orientation="vertical"
     android:textSize="20sp"
-    tools:text="ABC"/>
+    tools:text="ABC">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/empty_state_przerwa_w_dostpie" />
+
+    <TextView
+        android:paddingTop="20dp"
+        android:id="@+id/text"
+        android:gravity="center"
+        android:textSize="17sp"
+        android:textColor="@color/dark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>
