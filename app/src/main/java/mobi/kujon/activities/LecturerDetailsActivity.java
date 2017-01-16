@@ -153,7 +153,7 @@ public class LecturerDetailsActivity extends BaseActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.lecturer_plan_menu){
-            LecturerPlanActivity.showLecturerPlan(LecturerDetailsActivity.this, lecturerId);
+            LecturerPlanActivity.showLecturerPlan(LecturerDetailsActivity.this, lecturerId,lecturerName.getText().toString());
             return true;
         }
         return false;

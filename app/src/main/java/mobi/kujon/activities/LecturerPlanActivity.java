@@ -18,8 +18,11 @@ public class LecturerPlanActivity extends BaseActivity {
 
     @Bind(R.id.toolbar_title)
     TextView toolbarTitle;
-    @Bind(R.id.toolbar) Toolbar toolbar;
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
     public static final String LECTURER_ID = "LECTURER_ID";
+    public static final String LECTURER_NAME = "LECTURER_NAME";
+    private String text;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -28,14 +31,17 @@ public class LecturerPlanActivity extends BaseActivity {
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        toolbarTitle.setText(R.string.lecturers_plan);
         String lecturerId = getIntent().getStringExtra(LECTURER_ID);
+        String lecturerName = getIntent().getStringExtra(LECTURER_NAME);
         showFragment(PlanFragment.newLecturerPlanInstance(lecturerId), false);
+        text = new StringBuilder().append(getText(R.string.lecturers_plan)).append(" ").append(lecturerName).toString();
+        toolbarTitle.setText(text);
     }
 
-    public static void showLecturerPlan(Activity activity, String lecturerId) {
+    public static void showLecturerPlan(Activity activity, String lecturerId, String lecturerName) {
         Intent intent = new Intent(activity, LecturerPlanActivity.class);
         intent.putExtra(LECTURER_ID, lecturerId);
+        intent.putExtra(LECTURER_NAME, lecturerName);
         activity.startActivity(intent);
     }
 
@@ -50,7 +56,7 @@ public class LecturerPlanActivity extends BaseActivity {
     }
 
     public void setToolbarTitle(int title) {
-        toolbarTitle.setText(title);
+        toolbarTitle.setText(text);
     }
 
 }
