@@ -2,8 +2,6 @@ package mobi.kujon.activities;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -150,11 +148,6 @@ public class LecturerDetailsActivity extends BaseActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.lecturer_plan, menu);
-        Drawable drawable = menu.findItem(R.id.lecturer_plan_menu).getIcon();
-        if(drawable != null) {
-            drawable.mutate();
-            drawable.setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_ATOP);
-        }
         return true;
     }
     @Override

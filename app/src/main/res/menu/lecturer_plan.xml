@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:id="@+id/lecturer_plan_menu"
         android:title="@string/lecturers_plan"
-        android:icon="@drawable/plan"
+        android:icon="@drawable/ic_lecturer_plan"
         app:showAsAction="collapseActionView|ifRoom"
         />
 </menu>

@@ -2,6 +2,7 @@ package mobi.kujon.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.text.format.DateFormat;
@@ -202,5 +203,10 @@ public class PlanFragment extends BaseFragment implements MonthLoader.MonthChang
     @Override
     public void stopLoading() {
         activity.showProgress(false);
+    }
+
+    @Override
+    public void showToast(@StringRes int id, String text) {
+        Toast.makeText(getContext(),getString(id) + " " + text,Toast.LENGTH_SHORT).show();
     }
 }

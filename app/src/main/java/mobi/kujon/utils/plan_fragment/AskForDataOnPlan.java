@@ -8,6 +8,7 @@ import com.github.underscore.$;
 import org.joda.time.DateTime;
 
 import java.lang.ref.WeakReference;
+import java.text.DateFormatSymbols;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
 import hugo.weaving.DebugLog;
+import mobi.kujon.R;
 import mobi.kujon.network.KujonBackendApi;
 import mobi.kujon.network.json.CalendarEvent;
 import mobi.kujon.network.json.KujonResponse;
@@ -128,11 +130,25 @@ public abstract class AskForDataOnPlan {
     private void handleIncomingEvents(Call<KujonResponse<List<CalendarEvent>>> call, List<CalendarEvent> data, int year, int month) {
         List<WeekViewEvent> events = $.map(data, EventUtils::from);
         eventsForDate.get(getKey(year, month)).addAll(events);
-        activityChange.get().dataDowloaded();
+        if(events.size()==0){
+
+            activityChange.get().showToast(R.string.no_data_for_month,getMonthForInt(month-1));
+        }else {
+            activityChange.get().dataDowloaded();
+        }
         callList.remove(call);
         checkForRefreshCondition();
     }
 
+    private String getMonthForInt(int num) {
+        String month = "wrong";
+        DateFormatSymbols dfs = new DateFormatSymbols();
+        String[] months = dfs.getMonths();
+        if (num >= 0 && num <= 11 ) {
+            month = months[num];
+        }
+        return month;
+    }
     private void checkForRefreshCondition() {
         long value = counter.decrementAndGet();
         if (value == 0) {

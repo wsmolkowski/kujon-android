@@ -66,4 +66,5 @@
     <string name="ects_sum">Sum of ECTS points</string>
     <string name="not_empty">Not empty</string>
     <string name="lecturers_plan">Lecturer\'s Schedule</string>
+    <string name="no_data_for_month">No data for </string>
 </resources>
