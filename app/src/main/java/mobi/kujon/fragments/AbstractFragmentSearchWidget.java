@@ -39,7 +39,7 @@ public abstract class AbstractFragmentSearchWidget<T> extends ListFragment {
         Drawable drawable = menu.findItem(R.id.search).getIcon();
         if(drawable != null) {
             drawable.mutate();
-            drawable.setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_ATOP);
+            drawable.setColorFilter(getResources().getColor(android.R.color.white), PorterDuff.Mode.SRC_ATOP);
         }
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
