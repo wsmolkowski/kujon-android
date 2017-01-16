@@ -8,10 +8,13 @@ import com.github.underscore.$;
 import org.joda.time.DateTime;
 
 import java.lang.ref.WeakReference;
-import java.text.DateFormatSymbols;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -141,13 +144,10 @@ public abstract class AskForDataOnPlan {
     }
 
     private String getMonthForInt(int num) {
-        String month = "wrong";
-        DateFormatSymbols dfs = new DateFormatSymbols();
-        String[] months = dfs.getMonths();
-        if (num >= 0 && num <= 11 ) {
-            month = months[num];
-        }
-        return month;
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.MONTH,num);
+        Date date = calendar.getTime();
+        return (new SimpleDateFormat("LLLL", Locale.getDefault())).format(date);
     }
     private void checkForRefreshCondition() {
         long value = counter.decrementAndGet();

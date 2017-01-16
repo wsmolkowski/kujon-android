@@ -46,17 +46,24 @@ import mobi.kujon.utils.plan_fragment.AskForLecturerDataOnPlan;
 import mobi.kujon.utils.plan_fragment.AskForStudentDataOnPlan;
 
 
-public class PlanFragment extends BaseFragment implements MonthLoader.MonthChangeListener,ActivityChange {
+public class PlanFragment extends BaseFragment implements MonthLoader.MonthChangeListener, ActivityChange {
 
-    @Bind(R.id.weekView) WeekView weekView;
-    @Bind(R.id.fab) FloatingActionButton fab;
-    @BindColor(R.color.event_color) int eventColor;
-    @BindColor(R.color.dark_blue_sky) int darkBlueSky;
-    @BindColor(R.color.dark) int dark;
+    @Bind(R.id.weekView)
+    WeekView weekView;
+    @Bind(R.id.fab)
+    FloatingActionButton fab;
+    @BindColor(R.color.event_color)
+    int eventColor;
+    @BindColor(R.color.dark_blue_sky)
+    int darkBlueSky;
+    @BindColor(R.color.dark)
+    int dark;
 
 
-    @Inject KujonBackendApi backendApi;
-    @Inject KujonUtils utils;
+    @Inject
+    KujonBackendApi backendApi;
+    @Inject
+    KujonUtils utils;
     private AlertDialog alertDialog;
     private BaseActivity activity;
     private AskForDataOnPlan askForDataOnPlan;
@@ -82,7 +89,9 @@ public class PlanFragment extends BaseFragment implements MonthLoader.MonthChang
                 : new AskForStudentDataOnPlan(this, utils, backendApi);
     }
 
-    @Nullable @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_plan, container, false);
         ButterKnife.bind(this, rootView);
         KujonApplication.getComponent().inject(this);
@@ -141,16 +150,20 @@ public class PlanFragment extends BaseFragment implements MonthLoader.MonthChang
         return rootView;
     }
 
-    @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         activity = ((BaseActivity) getActivity());
     }
 
-    @DebugLog @Override public List<? extends WeekViewEvent> onMonthChange(int year, int month) {
-        return askForDataOnPlan.getEvents(year,month);
+    @DebugLog
+    @Override
+    public List<? extends WeekViewEvent> onMonthChange(int year, int month) {
+        return askForDataOnPlan.getEvents(year, month);
     }
 
-    @Override public void onStart() {
+    @Override
+    public void onStart() {
         super.onStart();
         activity.setToolbarTitle(R.string.plan_title);
     }
@@ -161,7 +174,8 @@ public class PlanFragment extends BaseFragment implements MonthLoader.MonthChang
         weekView.goToHour(now.getHourOfDay());
     }
 
-    @Override public void onPause() {
+    @Override
+    public void onPause() {
         super.onPause();
         if (alertDialog != null && alertDialog.isShowing()) {
             alertDialog.dismiss();
@@ -175,12 +189,14 @@ public class PlanFragment extends BaseFragment implements MonthLoader.MonthChang
         askForDataOnPlan.destroy();
     }
 
-    @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.calendar_plan_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
-    @Override public boolean onOptionsItemSelected(MenuItem item) {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.refresh) {
             askForDataOnPlan.reload();
             gotoNow();
@@ -207,6 +223,6 @@ public class PlanFragment extends BaseFragment implements MonthLoader.MonthChang
 
     @Override
     public void showToast(@StringRes int id, String text) {
-        Toast.makeText(getContext(),getString(id) + " " + text,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), text + " " + getString(id), Toast.LENGTH_SHORT).show();
     }
 }
