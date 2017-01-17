@@ -10,8 +10,6 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.crashlytics.android.Crashlytics;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -62,8 +60,6 @@ public class ErrorHandlerUtil {
 
     public static <T> void handleResponseError(Response<KujonResponse<T>> response, String message) {
         translateAndToastErrorMessage(message);
-        String detailMessage = message + " " + response.raw() + " " + response.headers() + " " + response.body();
-        Crashlytics.logException(new Exception(response.body() + " " + response.raw(), new Exception(detailMessage)));
     }
 
     public static void handleError(Throwable throwable) {
@@ -74,7 +70,6 @@ public class ErrorHandlerUtil {
         throwable.printStackTrace();
         log.error(throwable.getMessage());
         if (showToast) translateAndToastErrorMessage(throwable.getMessage());
-        Crashlytics.logException(throwable);
     }
 
     public static <T> boolean handleResponse(Response<KujonResponse<T>> response) {
@@ -98,7 +93,6 @@ public class ErrorHandlerUtil {
         if (code != null) {
             if (code == 504) {
                 showErrorInRed(response.body().message);
-                Crashlytics.logException(new Exception(response.body() + " " + response.raw()));
                 return false;
             } else if (code == 401) {
                 Intent intent = new Intent(KujonApplication.getApplication(), LoginActivity.class);
@@ -147,7 +141,6 @@ public class ErrorHandlerUtil {
         if (error != null) {
             System.err.println(error);
             error.printStackTrace();
-            Crashlytics.logException(error);
         }
         return null;
     };
