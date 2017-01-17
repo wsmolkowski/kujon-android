@@ -42,12 +42,8 @@ android {
 
         debug {
             applicationIdSuffix '.debug'
-            buildConfigField "String", "API_URL", "\"https://api.kujon.mobi/\""
-
-//            buildConfigField "String", "API_URL", "\"https://api.kujon.mobi/\""
         }
         release {
-            buildConfigField "String", "API_URL", "\"https://api.kujon.mobi/\""
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             ext.betaDistributionReleaseNotesFilePath = "release_notes/${android.defaultConfig.versionName}.txt"
