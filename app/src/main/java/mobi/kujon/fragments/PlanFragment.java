@@ -1,5 +1,6 @@
 package mobi.kujon.fragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
@@ -55,10 +56,13 @@ public class PlanFragment extends BaseFragment implements MonthLoader.MonthChang
     WeekView weekView;
     @Bind(R.id.fab)
     FloatingActionButton fab;
+    @SuppressLint("ResourceType")
     @BindColor(R.color.event_color)
     int eventColor;
+    @SuppressLint("ResourceType")
     @BindColor(R.color.dark_blue_sky)
     int darkBlueSky;
+    @SuppressLint("ResourceType")
     @BindColor(R.color.dark)
     int dark;
 
