@@ -83,6 +83,8 @@ repositories {
     maven { url 'https://maven.fabric.io/public' }
 }
 
+apply plugin: 'com.neenbedankt.android-apt'
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
 //    compile(name: 'foam-release', ext: 'aar')
@@ -112,40 +114,58 @@ dependencies {
     compile "com.google.android.gms:play-services-gcm:$google_play_services"
 
     //helpers
-    compile 'com.jakewharton:butterknife:7.0.1'
+    compile "com.jakewharton:butterknife:$butterknife_version"
     compile "com.squareup.picasso:picasso:$picasso_version"
-    compile 'com.jakewharton.picasso:picasso2-okhttp3-downloader:1.0.2'
+    compile "com.jakewharton.picasso:picasso2-okhttp3-downloader:$picasso_okhttp_downloader_version"
+
+    //rx
+    compile "io.reactivex:rxjava:$rx_java"
+    compile "io.reactivex:rxandroid:$rx_android"
+    compile "com.jakewharton.rxbinding:rxbinding-appcompat-v7:$rx_bindings"
 
 
     //network
-    compile 'com.parse.bolts:bolts-tasks:1.4.0'
+    compile "com.parse.bolts:bolts-tasks:$bolts_version"
     compile "com.squareup.retrofit2:retrofit:$retrofitVersion"
     compile "com.squareup.retrofit2:converter-gson:$retrofitVersion"
-    compile 'com.squareup.okhttp3:logging-interceptor:3.5.0'
-    compile 'com.squareup.okhttp3:okhttp-urlconnection:3.2.0'
+    compile "com.squareup.retrofit2:adapter-rxjava:$retrofitVersion"
+    compile "com.squareup.okhttp3:logging-interceptor:$logging_interceptor_version"
+    compile "com.squareup.okhttp3:okhttp-urlconnection:$okhttp_url_connection_version"
 
 
     //one signal
-    compile 'com.onesignal:OneSignal:2.+@aar'
+    compile "com.onesignal:OneSignal:$onesignal_version"
 
 
     //dagger
     compile "com.google.dagger:dagger:$daggerVersion"
-    provided 'javax.annotation:jsr250-api:1.0'
+    apt "com.google.dagger:dagger-compiler:$daggerVersion"
+    provided "javax.annotation:jsr250-api:$jsr_annotation_version"
 
     //rest
-    compile 'com.github.javadev:underscore:1.21'
-    compile 'net.danlew:android.joda:2.9.3'
-    compile 'org.slf4j:slf4j-api:1.7.21'
-    compile 'com.github.tony19:logback-android-core:1.1.1-5'
-    compile 'commons-lang:commons-lang:2.6'
-    compile 'com.rockerhieu:rv-adapter-endless:1.1'
-    compile 'uk.co.chrisjenx:calligraphy:2.2.0'
-    compile 'com.annimon:stream:1.1.4'
-    compile 'com.facebook.android:facebook-android-sdk:[4,5]'
+    compile "com.github.javadev:underscore:$underscore_version"
+    compile "net.danlew:android.joda:$jodatime_version"
+    compile "org.slf4j:slf4j-api:$slf4j_version"
+    compile "com.github.tony19:logback-android-core:$logback_version"
+    compile "commons-lang:commons-lang:$commons_lang_version"
+    compile "com.rockerhieu:rv-adapter-endless:$rv_endless_adapter_version"
+    compile "uk.co.chrisjenx:calligraphy:$calligraphy_version"
+    compile "com.annimon:stream:$stream_version"
+    compile "com.facebook.android:facebook-android-sdk:$facebook_version"
 
-    testCompile 'junit:junit:4.12'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.8'
+    annotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
+
+    //TEST
+    testCompile "junit:junit:$junit_version"
+    testCompile "org.mockito:mockito-core:$mockito_version"
+    androidTestCompile "com.android.support:support-annotations:$support_version"
+    androidTestCompile "com.android.support.test:runner:$testrunner_version"
+    androidTestCompile "com.android.support.test:rules:$testrunner_version"
+    androidTestCompile "org.mockito:mockito-core:$mockito_version"
+    androidTestCompile "com.google.dexmaker:dexmaker:$dexmarker_version"
+    androidTestCompile "com.google.dexmaker:dexmaker-mockito:$dexmarker_version"
+    androidTestApt "com.google.dagger:dagger-compiler:$daggerVersion"
+
 }
 
 if (project.properties.keySet().containsAll(['storeFile', 'storePassword', 'keyAlias', 'keyPassword'])) {

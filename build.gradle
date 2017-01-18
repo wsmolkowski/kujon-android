@@ -1,20 +1,52 @@
 buildscript {
-
-
-
     ext.support_version = '25.1.0'
 
+    ext.multidex_version = '1.0.1'
+
+    ext.crashlytics_version = '2.6.5@aar'
+    ext.material_drawer_version = '5.8.1@aar'
+    ext.sectioned_recycler_view_version = '0.2.2'
+
+    ext.rx_java = '1.1.5'
+    ext.rx_android = '1.2.0'
+    ext.rx_bindings = '0.4.0'
 
 
     ext.daggerVersion = '2.8'
-
+    ext.butterknife_version = '7.0.1'
+    ext.jsr_annotation_version = '1.0'
 
     ext.retrofitVersion = '2.1.0'
-
+    ext.gson_converter_version = '2.0.2'
+    ext.rxadapter_version = '2.0.2'
+    ext.logging_interceptor_version = '3.5.0'
+    ext.okhttp_url_connection_version = '3.2.0'
+    ext.bolts_version = '1.4.0'
 
     ext.picasso_version = '2.5.2'
+    ext.picasso_okhttp_downloader_version = '1.0.2'
+
+    ext.slf4j_version = '1.7.21'
+    ext.logback_version = '1.1.1-5'
+
+    ext.jodatime_version = '2.9.3'
 
     ext.google_play_services = '10.0.1'
+
+    ext.onesignal_version = '2.+@aar'
+    ext.facebook_version = '[4,5]'
+    ext.commons_lang_version = '2.6'
+    ext.rv_endless_adapter_version = '1.1'
+    ext.calligraphy_version = '2.2.0'
+    ext.stream_version = '1.1.4'
+    ext.underscore_version = '1.21'
+
+
+    //TEST
+    ext.junit_version = '4.12'
+    ext.mockito_version = '1.10.19'
+    ext.dexmarker_version = '1.2'
+    ext.testrunner_version = '0.5'
 
     repositories {
         jcenter()
