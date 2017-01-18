@@ -12,7 +12,7 @@ public class ShareFileTarget {
     public String fileId;
 
     @SerializedName("share_with") @Expose
-    @ShareFileTargetType.ShareFileTargetTypes
+    @ShareFileTargetType
     public String shareWithTargetType;
 
     @SerializedName("list_share") @Expose
