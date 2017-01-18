@@ -45,9 +45,8 @@ public interface KujonFilesharingApi {
     @POST("filesupload")
     Observable<KujonResponse<UploadedFile>> uploadFile(@Part("coures_id") String courseId,
                                                        @Part("term_id") String termId,
-                                                       @Part("file_share_with") @ShareFileTargetType.ShareFileTargetTypes String shareFileWith,
+                                                       @Part("file_share_with") @ShareFileTargetType String shareFileWith,
                                                        @Part("share_list") List<Integer> shareTargets,
                                                        @Part("files") RequestBody file);
-
-
+    
 }
