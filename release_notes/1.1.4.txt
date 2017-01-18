@@ -1,0 +1,5 @@
+#196
+#197
+#198
+czyszczenie gradl-a
+usunięcie nieużywanych bibliotek

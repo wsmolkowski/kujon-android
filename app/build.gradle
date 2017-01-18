@@ -1,23 +1,20 @@
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'io.fabric'
-//apply plugin: 'com.getkeepsafe.dexcount'
 apply plugin: "androidsvgdrawable"
 apply plugin: 'jsonschema2pojo'
 apply plugin: 'com.jakewharton.hugo'
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "25.0.1"
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
 
     defaultConfig {
         applicationId "mobi.kujon"
         minSdkVersion 16
         targetSdkVersion 21
-        versionCode 63
-        versionName "1.1.1"
-
-        multiDexEnabled true
+        versionCode 66
+        versionName "1.1.4"
 
         manifestPlaceholders = [manifestApplicationId          : "${applicationId}",
                                 onesignal_app_id               : "f01a20f9-bbe7-4c89-a017-bf8930c61cf4",
@@ -45,12 +42,8 @@ android {
 
         debug {
             applicationIdSuffix '.debug'
-            buildConfigField "String", "API_URL", "\"https://api.kujon.mobi/\""
-
-//            buildConfigField "String", "API_URL", "\"https://api.kujon.mobi/\""
         }
         release {
-            buildConfigField "String", "API_URL", "\"https://api.kujon.mobi/\""
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             ext.betaDistributionReleaseNotesFilePath = "release_notes/${android.defaultConfig.versionName}.txt"
@@ -59,17 +52,6 @@ android {
         }
     }
 
-//    productFlavors {
-//        demo {
-//            applicationId "mobi.kujon.demo"
-//            buildConfigField "String", "API_URL", "\"https://demo-api.kujon.mobi/\""
-//        }
-//
-//        prod {
-//            applicationId "mobi.kujon"
-//            buildConfigField "String", "API_URL", "\"https://api.kujon.mobi\""
-//        }
-//    }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -107,76 +89,83 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
 //    compile(name: 'foam-release', ext: 'aar')
     compile(name: 'khacpv-android-week-view', ext: 'aar')
-    compile('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
+    compile("com.crashlytics.sdk.android:crashlytics:$crashlytics_version") {
         transitive = true;
     }
-    compile('com.mikepenz:materialdrawer:5.8.1@aar') {
+    compile("com.mikepenz:materialdrawer:$material_drawer_version") {
         transitive = true
     }
-    compile('com.github.tony19:logback-android-classic:1.1.1-5') {
+    compile("com.github.tony19:logback-android-classic:$logback_version") {
         // workaround issue #73
         exclude group: 'com.google.android', module: 'android'
     }
-    compile('com.github.afollestad:sectioned-recyclerview:0.2.2') {
+    compile("com.github.afollestad:sectioned-recyclerview:$sectioned_recycler_view_version") {
         transitive = true
     }
 
 
-    compile 'com.android.support:multidex:1.0.1'
-    compile 'com.android.support:appcompat-v7:24.2.1'
-    compile 'com.android.support:design:24.2.1'
-    compile 'com.android.support:cardview-v7:24.2.1'
+    //Support
+    compile "com.android.support:appcompat-v7:$support_version"
+    compile "com.android.support:design:$support_version"
+    compile "com.android.support:cardview-v7:$support_version"
+    //Google play services
+    compile "com.google.android.gms:play-services-auth:$google_play_services"
+    compile "com.google.android.gms:play-services-maps:$google_play_services"
+    compile "com.google.android.gms:play-services-gcm:$google_play_services"
 
-    compile "io.reactivex:rxjava:1.1.5"
-    compile "io.reactivex:rxandroid:1.2.0"
-    compile "com.jakewharton.rxbinding:rxbinding-appcompat-v7:0.4.0"
+    //helpers
+    compile "com.jakewharton:butterknife:$butterknife_version"
+    compile "com.squareup.picasso:picasso:$picasso_version"
+    compile "com.jakewharton.picasso:picasso2-okhttp3-downloader:$picasso_okhttp_downloader_version"
 
-    compile 'com.jakewharton:butterknife:7.0.1'
-    apt "com.google.dagger:dagger-compiler:2.0.1"
-    compile 'com.google.dagger:dagger:2.8'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.8'
-    provided 'javax.annotation:jsr250-api:1.0'
+    //rx
+    compile "io.reactivex:rxjava:$rx_java"
+    compile "io.reactivex:rxandroid:$rx_android"
+    compile "com.jakewharton.rxbinding:rxbinding-appcompat-v7:$rx_bindings"
 
-    compile 'com.squareup.retrofit2:retrofit:2.1.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
-    compile "com.squareup.retrofit2:adapter-rxjava:2.1.0"
-    compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.jakewharton.picasso:picasso2-okhttp3-downloader:1.0.2'
-    compile 'com.squareup.okhttp3:logging-interceptor:3.5.0'
-    compile 'com.squareup.okhttp3:okhttp-urlconnection:3.2.0'
 
-    compile 'com.google.android.gms:play-services-gcm:10.0.1'
-    compile 'com.google.android.gms:play-services-analytics:10.0.1'
-    compile 'com.google.android.gms:play-services-location:10.0.1'
-    compile 'com.google.android.gms:play-services-auth:10.0.1'
-    compile "com.google.android.gms:play-services-maps:10.0.1"
+    //network
+    compile "com.parse.bolts:bolts-tasks:$bolts_version"
+    compile "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    compile "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    compile "com.squareup.retrofit2:adapter-rxjava:$retrofitVersion"
+    compile "com.squareup.okhttp3:logging-interceptor:$logging_interceptor_version"
+    compile "com.squareup.okhttp3:okhttp-urlconnection:$okhttp_url_connection_version"
 
-    compile 'org.slf4j:slf4j-api:1.7.21'
-    compile 'com.github.tony19:logback-android-core:1.1.1-5'
 
-    compile 'net.danlew:android.joda:2.9.3'
+    //one signal
+    compile "com.onesignal:OneSignal:$onesignal_version"
 
-    compile 'com.onesignal:OneSignal:2.+@aar'
 
-    compile 'com.facebook.android:facebook-android-sdk:[4,5]'
+    //dagger
+    compile "com.google.dagger:dagger:$daggerVersion"
+    apt "com.google.dagger:dagger-compiler:$daggerVersion"
+    provided "javax.annotation:jsr250-api:$jsr_annotation_version"
 
-    compile 'commons-lang:commons-lang:2.6'
-    compile 'com.rockerhieu:rv-adapter-endless:1.1'
-    compile 'uk.co.chrisjenx:calligraphy:2.2.0'
-    compile 'com.annimon:stream:1.1.4'
-    compile 'com.github.javadev:underscore:1.21'
-    compile 'com.parse.bolts:bolts-tasks:1.4.0'
+    //rest
+    compile "com.github.javadev:underscore:$underscore_version"
+    compile "net.danlew:android.joda:$jodatime_version"
+    compile "org.slf4j:slf4j-api:$slf4j_version"
+    compile "com.github.tony19:logback-android-core:$logback_version"
+    compile "commons-lang:commons-lang:$commons_lang_version"
+    compile "com.rockerhieu:rv-adapter-endless:$rv_endless_adapter_version"
+    compile "uk.co.chrisjenx:calligraphy:$calligraphy_version"
+    compile "com.annimon:stream:$stream_version"
+    compile "com.facebook.android:facebook-android-sdk:$facebook_version"
+
+    annotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
 
     //TEST
-    testCompile 'junit:junit:4.12'
-    testCompile 'org.mockito:mockito-core:1.10.19'
-    androidTestCompile "com.android.support:support-annotations:25.0.1"
-    androidTestCompile 'com.android.support.test:runner:0.5'
-    androidTestCompile 'com.android.support.test:rules:0.5'
-    androidTestCompile 'org.mockito:mockito-core:1.10.19'
-    androidTestCompile 'com.google.dexmaker:dexmaker:1.2'
-    androidTestCompile 'com.google.dexmaker:dexmaker-mockito:1.2'
-    androidTestApt "com.google.dagger:dagger-compiler:2.0.1"
+    testCompile "junit:junit:$junit_version"
+    testCompile "org.mockito:mockito-core:$mockito_version"
+    androidTestCompile "com.android.support:support-annotations:$support_version"
+    androidTestCompile "com.android.support.test:runner:$testrunner_version"
+    androidTestCompile "com.android.support.test:rules:$testrunner_version"
+    androidTestCompile "org.mockito:mockito-core:$mockito_version"
+    androidTestCompile "com.google.dexmaker:dexmaker:$dexmarker_version"
+    androidTestCompile "com.google.dexmaker:dexmaker-mockito:$dexmarker_version"
+    androidTestApt "com.google.dagger:dagger-compiler:$daggerVersion"
+
 }
 
 if (project.properties.keySet().containsAll(['storeFile', 'storePassword', 'keyAlias', 'keyPassword'])) {

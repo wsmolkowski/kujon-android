@@ -57,15 +57,14 @@ public abstract class AskForDataOnPlan {
         activityChange.get().startLoading();
     }
 
-    public List<WeekViewEvent> getEvents(int year, int month) {
-        Log.d("Date asked", "year = [" + year + "], month = [" + month + "]");
+    public List<WeekViewEvent> getEvents(int year, int month) throws NoDataDownloaded {
+
         String key = getKey(year, month);
         if (!eventsForDate.containsKey(key)) {
-            eventsForDate.put(key, new ArrayList<>());
+           dowloadDataIfNeed(year, month);
+           throw new NoDataDownloaded();
+
         }
-        dowloadDataIfNeed(year, month);
-
-
         return eventsForDate.get(key);
     }
 
@@ -96,6 +95,9 @@ public abstract class AskForDataOnPlan {
     @DebugLog
     private void downloadEventsFor(int year, int month) {
         String key = getKey(year, month);
+        if(downloadedMonth.contains(key))
+            return;
+        Log.d("Date asked", "year = [" + year + "], month = [" + month + "]");
         downloadedMonth.add(key);
         activityChange.get().startLoading();
         DateTime day = new DateTime(year, month, 1, 12, 0, 0);
@@ -127,11 +129,16 @@ public abstract class AskForDataOnPlan {
 
     private void handleIncomingEvents(Call<KujonResponse<List<CalendarEvent>>> call, List<CalendarEvent> data, int year, int month) {
         List<WeekViewEvent> events = $.map(data, EventUtils::from);
-        eventsForDate.get(getKey(year, month)).addAll(events);
+        String key = getKey(year, month);
+        if (!eventsForDate.containsKey(key)) {
+            eventsForDate.put(key, new ArrayList<>());
+        }
+        eventsForDate.get(key).addAll(events);
         activityChange.get().dataDowloaded();
         callList.remove(call);
         checkForRefreshCondition();
     }
+
 
     private void checkForRefreshCondition() {
         long value = counter.decrementAndGet();
