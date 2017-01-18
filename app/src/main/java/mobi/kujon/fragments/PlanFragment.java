@@ -1,7 +1,7 @@
 package mobi.kujon.fragments;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.design.widget.FloatingActionButton;
@@ -56,15 +56,15 @@ public class PlanFragment extends BaseFragment implements MonthLoader.MonthChang
     WeekView weekView;
     @Bind(R.id.fab)
     FloatingActionButton fab;
-    @SuppressLint("ResourceType")
+
     @BindColor(R.color.event_color)
-    int eventColor;
-    @SuppressLint("ResourceType")
+    @ColorInt int eventColor;
+
     @BindColor(R.color.dark_blue_sky)
-    int darkBlueSky;
-    @SuppressLint("ResourceType")
+    @ColorInt int darkBlueSky;
+
     @BindColor(R.color.dark)
-    int dark;
+    @ColorInt int dark;
 
 
     @Inject
@@ -76,7 +76,6 @@ public class PlanFragment extends BaseFragment implements MonthLoader.MonthChang
     private AskForDataOnPlan askForDataOnPlan;
     private List<String> showedInfo;
     private static final String LECTURER_ID = "LECTURER_ID";
-    private Toast toast;
 
     public static PlanFragment newLecturerPlanInstance(String lecturerId) {
         PlanFragment planFragment = new PlanFragment();
@@ -224,7 +223,6 @@ public class PlanFragment extends BaseFragment implements MonthLoader.MonthChang
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        toast = null;
         askForDataOnPlan.destroy();
     }
 
