@@ -14,8 +14,8 @@ import static mobi.kujon.google_drive.model.ShareFileTargetType.NONE;
 @StringDef({ALL, NONE, LIST})
 @Retention(RetentionPolicy.SOURCE)
 public @interface ShareFileTargetType {
-    public static final String ALL = "All";
-    public static final String NONE = "None";
-    public static final String LIST = "List";
+    String ALL = "All";
+    String NONE = "None";
+    String LIST = "List";
 }
 
