@@ -3,14 +3,17 @@ package mobi.kujon.google_drive.dagger;
 import dagger.Module;
 import dagger.Provides;
 import mobi.kujon.NetModule;
-import mobi.kujon.google_drive.network.FileDownload;
-import mobi.kujon.google_drive.network.FileDownloadKujon;
-import mobi.kujon.google_drive.network.GetFiles;
-import mobi.kujon.google_drive.network.GetFilesKujon;
-import mobi.kujon.google_drive.network.SemesterApi;
-import mobi.kujon.google_drive.network.SemesterApiKujon;
-import mobi.kujon.google_drive.network.ShareFile;
-import mobi.kujon.google_drive.network.ShareFileKujon;
+import mobi.kujon.google_drive.network.api.DeleteFileKujon;
+import mobi.kujon.google_drive.network.facade.DeleteFileFacade;
+import mobi.kujon.google_drive.network.unwrapped_api.DeleteFile;
+import mobi.kujon.google_drive.network.unwrapped_api.FileDownload;
+import mobi.kujon.google_drive.network.api.FileDownloadKujon;
+import mobi.kujon.google_drive.network.unwrapped_api.GetFiles;
+import mobi.kujon.google_drive.network.api.GetFilesKujon;
+import mobi.kujon.google_drive.network.unwrapped_api.SemesterApi;
+import mobi.kujon.google_drive.network.api.SemesterApiKujon;
+import mobi.kujon.google_drive.network.unwrapped_api.ShareFile;
+import mobi.kujon.google_drive.network.api.ShareFileKujon;
 import mobi.kujon.google_drive.network.facade.FileDownloadFacade;
 import mobi.kujon.google_drive.network.facade.GetFilesFacade;
 import mobi.kujon.google_drive.network.facade.SemsterApiFacade;
@@ -43,6 +46,11 @@ public class FilesApiFacadesModule {
     @Provides
     FileDownload provideFileDownload(Retrofit retrofit) {
         return new FileDownloadFacade(retrofit.create(FileDownloadKujon.class));
+    }
+
+    @Provides
+    DeleteFile provideDeleteFile(Retrofit retrofit) {
+        return new DeleteFileFacade(retrofit.create(DeleteFileKujon.class));
     }
 
 }

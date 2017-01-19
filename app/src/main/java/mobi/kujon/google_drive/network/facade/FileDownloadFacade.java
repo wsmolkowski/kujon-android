@@ -2,8 +2,8 @@ package mobi.kujon.google_drive.network.facade;
 
 
 import mobi.kujon.google_drive.network.BackendWrapper;
-import mobi.kujon.google_drive.network.FileDownload;
-import mobi.kujon.google_drive.network.FileDownloadKujon;
+import mobi.kujon.google_drive.network.unwrapped_api.FileDownload;
+import mobi.kujon.google_drive.network.api.FileDownloadKujon;
 import okhttp3.ResponseBody;
 import rx.Observable;
 
