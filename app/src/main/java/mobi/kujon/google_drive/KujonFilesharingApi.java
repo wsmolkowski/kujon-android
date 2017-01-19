@@ -26,28 +26,29 @@ import rx.Observable;
 
 public interface KujonFilesharingApi {
 
-//    @GET("files")
-//    Observable<KujonResponse<List<KujonFile>>> getAllFiles();
-//
-//    @GET("files")
-//    Observable<KujonResponse<List<KujonFile>>> getFiles(@Query("course_id") String courseId, @Query("term_id") String termId);
-//
-//    @POST("filesshare")
-//    Observable<KujonResponse<SharedFile>> shareFile(@Body ShareFileTarget shareFileTarget);
-//
-//    @Streaming
-//    @GET("files/{fileId}")
-//    Observable<KujonResponse<ResponseBody>> downloadFile(@Path("fileId") String fileId);
-//
-//    @DELETE("files/{fileId}")
-//    Observable<KujonResponse<String>> deleteFile(@Path("fileId") String fileId);
+    @GET("files")
+    Observable<KujonResponse<List<KujonFile>>> getAllFiles();
+
+    @GET("files")
+    Observable<KujonResponse<List<KujonFile>>> getFiles(@Query("course_id") String courseId, @Query("term_id") String termId);
+
+    @POST("filesshare")
+    Observable<KujonResponse<SharedFile>> shareFile(@Body ShareFileTarget shareFileTarget);
+
+    @Streaming
+    @GET("files/{fileId}")
+    Observable<KujonResponse<ResponseBody>> downloadFile(@Path("fileId") String fileId);
+
+    @DELETE("files/{fileId}")
+    Observable<KujonResponse<String>> deleteFile(@Path("fileId") String fileId);
 
     @Multipart
     @POST("filesupload")
-    Call<KujonResponse<List<UploadedFile>>> uploadFile(
+    Observable<KujonResponse<List<UploadedFile>>> uploadFile(
                                                        @Part("course_id") RequestBody courseId,
                                                        @Part("term_id") RequestBody termId,
                                                        @Part("file_shared_with") RequestBody shareWith,
-                                                       @Part("files") RequestBody files);
+                                                       @Part("file_shared_with_list") RequestBody sharedWith,
+                                                       @Part MultipartBody.Part files);
 
 }
