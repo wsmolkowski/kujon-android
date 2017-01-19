@@ -35,6 +35,7 @@ import mobi.kujon.fragments.SearchFragment;
 import mobi.kujon.fragments.StudentInfoFragment;
 import mobi.kujon.fragments.TermsFragment;
 import mobi.kujon.fragments.UserInfoFragment;
+import mobi.kujon.google_drive.DummyActivity;
 import mobi.kujon.network.json.Lecturer;
 import mobi.kujon.utils.KujonUtils;
 import mobi.kujon.utils.PlanEventsDownloader;
@@ -109,5 +110,10 @@ public interface KujonComponent {
     void inject(SearchFragment searchFragment);
 
     void inject(MessagesFragment messagesFragment);
+
+
+
+
+    void inject(DummyActivity dummyActivity);
 
 }

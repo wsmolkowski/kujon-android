@@ -39,6 +39,7 @@ import javax.inject.Inject;
 import bolts.Task;
 import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
+import mobi.kujon.google_drive.KujonFilesharingApi;
 import mobi.kujon.network.KujonBackendApi;
 import mobi.kujon.network.SettingsApi;
 import mobi.kujon.network.json.KujonResponse;
@@ -57,6 +58,7 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
     private static final String TAG = "BaseActivity";
 
     @Inject protected KujonBackendApi kujonBackendApi;
+    @Inject protected KujonFilesharingApi kujonFilesharingApi;
     @Inject protected SettingsApi settingsApi;
     @Inject protected KujonApplication kujonApplication;
     @Inject protected Picasso picasso;
