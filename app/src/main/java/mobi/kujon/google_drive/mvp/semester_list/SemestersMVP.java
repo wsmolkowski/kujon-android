@@ -11,13 +11,13 @@ import rx.Observable;
  *
  */
 
-public interface SemesterMVP {
+public interface SemestersMVP {
 
-    interface Presenter extends ClearSubscribtions{
-        void askForSemester(boolean refresh);
+    interface Presenter extends ClearSubscribtions {
+        void askForSemesters(boolean refresh);
     }
-    interface View extends HandleException{
-        void semeseterLoaded(List<SemesterDTO> list);
+    interface View extends HandleException {
+        void semesetersLoaded(List<SemesterDTO> list);
     }
     interface Model{
         Observable<List<SemesterDTO>> getListOfSemesters(boolean refresh);
