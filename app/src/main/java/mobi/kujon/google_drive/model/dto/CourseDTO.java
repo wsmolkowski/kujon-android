@@ -8,9 +8,9 @@ public class CourseDTO {
 
     private String courseName, courseId;
 
-    public CourseDTO(String subjectName, String subjectId) {
-        this.courseName = subjectName;
-        this.courseId = subjectId;
+    public CourseDTO(String courseName, String courseId) {
+        this.courseName = courseName;
+        this.courseId = courseId;
     }
 
     public String getCourseId() {
