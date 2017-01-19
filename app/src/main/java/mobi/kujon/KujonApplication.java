@@ -36,6 +36,10 @@ import bolts.Task;
 import bolts.TaskCompletionSource;
 import io.fabric.sdk.android.Fabric;
 import mobi.kujon.activities.MainActivity;
+import mobi.kujon.google_drive.dagger.DaggerFilesComponent;
+import mobi.kujon.google_drive.dagger.FilesApiFacadesModule;
+import mobi.kujon.google_drive.dagger.FilesComponent;
+import mobi.kujon.google_drive.dagger.FilesModule;
 import mobi.kujon.utils.KujonUtils;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
@@ -52,6 +56,7 @@ public class KujonApplication extends Application implements OneSignal.Notificat
 
     private static KujonApplication instance;
     private static KujonComponent component;
+    private static FilesComponent filesComponent;
 
     private Activity topActivity;
     private TaskCompletionSource<GoogleSignInResult> googleSignInResultTCS = new TaskCompletionSource<>();
@@ -138,6 +143,11 @@ public class KujonApplication extends Application implements OneSignal.Notificat
                 .build();
 
         component.inject(this);
+
+        filesComponent = DaggerFilesComponent.builder()
+                .filesModule(new FilesModule())
+                .filesApiFacadesModule(new FilesApiFacadesModule())
+                .build();
 
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
                 .setDefaultFontPath("fonts/Lato-Regular.ttf")
