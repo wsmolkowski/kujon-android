@@ -30,7 +30,7 @@ public class FileUploadFacade implements FileUpload {
                                                      @ShareFileTargetType String shareWith,
                                                      List<Integer> sharedWithList,
                                                      String filePath) {
-        return backendWrapper.doSmething(fileUploadKujon.uploadFile(
+        return backendWrapper.doSomething(fileUploadKujon.uploadFile(
                 multipartUtils.createPartFromString(courseId),
                 multipartUtils.createPartFromString(termId),
                 multipartUtils.createPartFromString(shareWith),

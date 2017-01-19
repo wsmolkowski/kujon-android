@@ -18,6 +18,6 @@ public class DeleteFileFacade implements DeleteFile {
 
     @Override
     public Observable<String> deleteFile(String fileId) {
-        return backendWrapper.doSmething(deleteFileKujon.deleteFile(fileId));
+        return backendWrapper.doSomething(deleteFileKujon.deleteFile(fileId));
     }
 }

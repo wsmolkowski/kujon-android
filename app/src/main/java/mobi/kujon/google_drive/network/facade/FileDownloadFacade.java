@@ -19,6 +19,6 @@ public class FileDownloadFacade implements FileDownload {
 
     @Override
     public Observable<ResponseBody> downloadFile(String fileId) {
-        return responseBodyBackendWrapper.doSmething(fileDownloadKujon.downloadFile(fileId));
+        return responseBodyBackendWrapper.doSomething(fileDownloadKujon.downloadFile(fileId));
     }
 }

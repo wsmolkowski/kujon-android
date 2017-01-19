@@ -10,7 +10,7 @@ import rx.exceptions.Exceptions;
 
 public class BackendWrapper<T> {
 
-    public Observable<T> doSmething(Observable<KujonResponse<T>> observable){
+    public Observable<T> doSomething(Observable<KujonResponse<T>> observable){
         return observable.map(it-> {
             if(it.code == 200)   return it.data;
              else{

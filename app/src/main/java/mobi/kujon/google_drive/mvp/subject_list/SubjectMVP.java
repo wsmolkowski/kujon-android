@@ -13,14 +13,14 @@ import rx.Observable;
 
 public interface SubjectMVP {
     interface View extends HandleException {
-        void onSubjectsLoaded(List<SubjectDTO> subjectDTOs);
+        void onCoursesLoaded(List<SubjectDTO> subjectDTOs);
     }
 
     interface Presenter extends ClearSubscribtions {
-        void loadListOfSubjectsForSemester(String semesterId, boolean refresh);
+        void loadCoursesForSemester(String semesterId, boolean refresh);
     }
 
     interface Model {
-        Observable<SubjectDTO> loadListOfSubjects(String semesterId, boolean refresh);
+        Observable<List<SubjectDTO>> loadCourses(String semesterId, boolean refresh);
     }
 }
