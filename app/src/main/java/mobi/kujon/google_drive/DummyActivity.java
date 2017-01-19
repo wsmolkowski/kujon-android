@@ -78,7 +78,7 @@ public class DummyActivity extends BaseActivity {
                 RequestBody cid = RequestBody.create(null, "1000-2D97SR");
                 RequestBody tid = RequestBody.create(null, "2015");
                 RequestBody share = RequestBody.create(null, "*");
-                builder.addFormDataPart("files", "test_img.png", RequestBody.create(MediaType.parse("multipart/form-data"), byteArray));
+                MultipartBody.Part body =MultipartBody.Part.createFormData("files", "test_img.png", RequestBody.create(MediaType.parse("multipart/form-data"), byteArray));
                 builder.addFormDataPart("course_id", "1000-2D97SR");
                 builder.addFormDataPart("term_id", "2015");
                 builder.addFormDataPart("file_shared_with", "*");
