@@ -7,10 +7,6 @@
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.MANAGE_DOCUMENTS" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:name=".KujonApplication"
@@ -128,7 +124,6 @@
             android:name=".activities.LecturerPlanActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ToolbarAppTheme" />
-        <activity android:name=".google_drive.DummyActivity"></activity>
     </application>
 
 </manifest>

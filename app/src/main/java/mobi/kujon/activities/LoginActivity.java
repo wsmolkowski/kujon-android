@@ -26,7 +26,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
-import mobi.kujon.google_drive.DummyActivity;
 import mobi.kujon.network.ApiProvider;
 import mobi.kujon.network.ApiType;
 import mobi.kujon.network.json.Config;
@@ -192,7 +191,7 @@ public class LoginActivity extends BaseActivity {
             log.debug("Response: " + data);
             if (data.usosPaired) {
                 if (data.usosWorks) {
-                    startActivity(new Intent(LoginActivity.this, DummyActivity.class));
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 } else {
                     ErrorActivity.open(LoginActivity.this);
                 }
