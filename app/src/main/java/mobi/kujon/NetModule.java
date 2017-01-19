@@ -87,17 +87,8 @@ public class NetModule {
         return new SettingsApi(kujonBackendApi);
     }
 
-    @Provides @Singleton
-    KujonFilesharingApi provideKujonFilesharingApi(ApiProvider apiProvider) {
-        return apiProvider.getKujonFilesharingApi();
-    }
-
     @Provides @Singleton KujonUtils provideUtils() {
         return new KujonUtils();
-    }
-
-    @Provides @Singleton MultipartUtils provideMultipartUtils() {
-        return new MultipartUtils();
     }
 
     @Provides @Singleton Picasso providePicasso(Application application, OkHttpClient httpClient) {

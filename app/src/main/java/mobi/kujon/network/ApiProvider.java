@@ -19,7 +19,6 @@ public class ApiProvider implements ApiChoice,ProvideRetrofit {
     private OkHttpClient client;
     private Gson gson;
     private KujonBackendApi kujonBackendApi;
-    private KujonFilesharingApi filesharingApi;
     private Retrofit retrofit;
 
     public ApiProvider(OkHttpClient okHttpClient, Gson gson) {
@@ -36,7 +35,6 @@ public class ApiProvider implements ApiChoice,ProvideRetrofit {
     public void setApiType(@ApiType.ApiTypes int apiType) {
         currentApiType = apiType;
         createKujonBackendApi();
-        createKujonFileSharpingApi();
     }
 
     public void switchApiType() {
@@ -75,11 +73,6 @@ public class ApiProvider implements ApiChoice,ProvideRetrofit {
         kujonBackendApi = retrofit.create(KujonBackendApi.class);
     }
 
-    private void createKujonFileSharpingApi() {
-        assignRetrofit();
-        filesharingApi =  retrofit.create(KujonFilesharingApi.class);
-    }
-
     private void assignRetrofit() {
         retrofit = new Retrofit.Builder()
                 .baseUrl(getApiURL())
@@ -87,10 +80,6 @@ public class ApiProvider implements ApiChoice,ProvideRetrofit {
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
-    }
-
-    public KujonFilesharingApi getKujonFilesharingApi() {
-        return filesharingApi;
     }
 
     @Override
