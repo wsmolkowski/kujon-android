@@ -34,7 +34,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
-import retrofit2.http.Part;
+import retrofit2.Retrofit;
 
 @Module
 public class NetModule {
@@ -101,13 +101,15 @@ public class NetModule {
     }
 
     @Provides @Singleton Picasso providePicasso(Application application, OkHttpClient httpClient) {
-        Picasso picasso = new Picasso.Builder(application)
+        return new Picasso.Builder(application)
                 .downloader(new OkHttp3Downloader(httpClient))
                 .build();
+    }
 
-//        picasso.setIndicatorsEnabled(BuildConfig.DEBUG);
-//        picasso.setLoggingEnabled(BuildConfig.DEBUG);
-        return picasso;
+    @Provides
+    @Singleton
+    Retrofit provideRetrofitProvider(ApiProvider apiProvider){
+        return apiProvider.provideRetrofit();
     }
 
     private static class AuthenticationInterceptor implements Interceptor {
