@@ -21,7 +21,7 @@ public class CoursesApiFacade implements CoursesApi {
     }
 
     @Override
-    public Observable<List<Pair<String, List<Course>>>> coursesEditionsByTermRefresh(boolean refresh) {
+    public Observable<List<Pair<String, List<Course>>>> getCoursesBySemesters(boolean refresh) {
         return backendWrapper.doSomething(coursesApiKujon.coursesEditionsByTermRefresh(refresh));
     }
 }
