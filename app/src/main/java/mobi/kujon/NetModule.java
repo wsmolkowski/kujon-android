@@ -20,6 +20,7 @@ import javax.inject.Singleton;
 import bolts.Task;
 import dagger.Module;
 import dagger.Provides;
+import mobi.kujon.google_drive.KujonFilesharingApi;
 import mobi.kujon.network.ApiProvider;
 import mobi.kujon.network.KujonBackendApi;
 import mobi.kujon.network.SettingsApi;
@@ -84,6 +85,11 @@ public class NetModule {
         return new SettingsApi(kujonBackendApi);
     }
 
+    @Provides @Singleton
+    KujonFilesharingApi provideKujonFilesharingApi(ApiProvider apiProvider) {
+        return apiProvider.getKujonFilesharingApi();
+    }
+
     @Provides @Singleton KujonUtils provideUtils() {
         return new KujonUtils();
     }
@@ -112,6 +118,8 @@ public class NetModule {
                 GoogleSignInAccount account = loginStatus.getResult().getSignInAccount();
                 email = account.getEmail();
                 token = account.getIdToken();
+                Log.i(TAG, email);
+                Log.i(TAG, token);
             }
 
             Request request = originalRequest.newBuilder()

@@ -4,8 +4,10 @@ package mobi.kujon.network;
 import com.google.gson.Gson;
 
 import mobi.kujon.BuildConfig;
+import mobi.kujon.google_drive.KujonFilesharingApi;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiProvider implements ApiChoice {
@@ -17,6 +19,7 @@ public class ApiProvider implements ApiChoice {
     private OkHttpClient client;
     private Gson gson;
     private KujonBackendApi kujonBackendApi;
+    private KujonFilesharingApi filesharingApi;
 
     public ApiProvider(OkHttpClient okHttpClient, Gson gson) {
         this.client = okHttpClient;
@@ -32,6 +35,7 @@ public class ApiProvider implements ApiChoice {
     public void setApiType(@ApiType.ApiTypes int apiType) {
         currentApiType = apiType;
         createKujonBackendApi();
+        createKujonFileSharpingApi();
     }
 
     public void switchApiType() {
@@ -72,5 +76,19 @@ public class ApiProvider implements ApiChoice {
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
                 .create(KujonBackendApi.class);
+    }
+
+    private void createKujonFileSharpingApi() {
+        filesharingApi = new Retrofit.Builder()
+                .baseUrl(getApiURL())
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                //.addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .build()
+                .create(KujonFilesharingApi.class);
+    }
+
+    public KujonFilesharingApi getKujonFilesharingApi() {
+        return filesharingApi;
     }
 }
