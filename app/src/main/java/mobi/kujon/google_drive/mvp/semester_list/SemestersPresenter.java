@@ -23,7 +23,7 @@ public class SemestersPresenter implements SemestersMVP.Presenter {
                 .subscribeOn(schedulersHolder.subscribe())
                 .observeOn(schedulersHolder.observ())
                 .subscribe(semesterDTOs -> {
-                    view.semesetersLoaded(semesterDTOs);
+                    view.semestersLoaded(semesterDTOs);
                 }, throwable -> {
                     view.handleException(throwable);
                 });

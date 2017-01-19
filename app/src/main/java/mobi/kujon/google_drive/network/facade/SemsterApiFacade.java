@@ -8,6 +8,7 @@ import mobi.kujon.google_drive.network.BackendWrapper;
 import mobi.kujon.google_drive.network.unwrapped_api.SemesterApi;
 import mobi.kujon.google_drive.network.api.SemesterApiKujon;
 import mobi.kujon.network.json.Course;
+import mobi.kujon.network.json.Term2;
 import rx.Observable;
 
 /**
@@ -17,7 +18,7 @@ import rx.Observable;
 public class SemsterApiFacade implements SemesterApi {
 
     private SemesterApiKujon semesterApiKujon;
-    private BackendWrapper<List<Pair<String, List<Course>>>> listBackendWrapper;
+    private BackendWrapper<List<Term2>> listBackendWrapper;
 
     public SemsterApiFacade(SemesterApiKujon semesterApiKujon) {
         this.semesterApiKujon = semesterApiKujon;
@@ -25,7 +26,7 @@ public class SemsterApiFacade implements SemesterApi {
     }
 
     @Override
-    public Observable<List<Pair<String, List<Course>>>> getListOfSubjcetsInSemester(boolean b) {
-        return listBackendWrapper.doSmething(semesterApiKujon.getListOfSubjcetsInSemester(b));
+    public Observable<List<Term2>> getSemesters(boolean b) {
+        return listBackendWrapper.doSmething(semesterApiKujon.getSemesters(b));
     }
 }
