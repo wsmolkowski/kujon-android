@@ -1,4 +1,4 @@
-package mobi.kujon.google_drive;
+package mobi.kujon.google_drive.utils;
 
 
 import android.net.Uri;

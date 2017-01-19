@@ -6,6 +6,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import mobi.kujon.google_drive.utils.MultipartUtils;
 import mobi.kujon.google_drive.utils.SchedulersHolder;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -18,13 +19,16 @@ import rx.schedulers.Schedulers;
 @Module
 public class FilesModule {
 
-
+    @Provides
+    @Singleton
+    SchedulersHolder providesSchedulersHolder() {
+        return new SchedulersHolder(AndroidSchedulers.mainThread(), Schedulers.from(Executors.newFixedThreadPool(4)));
+    }
 
     @Provides
     @Singleton
-    SchedulersHolder providesSchedulersHolder(){
-      return   new SchedulersHolder(AndroidSchedulers.mainThread(),Schedulers.from(Executors.newFixedThreadPool(4)));
+    MultipartUtils providesMultipartUtils() {
+        return new MultipartUtils();
     }
-
 
 }
