@@ -23,9 +23,6 @@ import rx.Observable;
 public interface KujonFilesharingApi {
 
 
-    @POST("filesshare")
-    Observable<KujonResponse<SharedFile>> shareFile(@Body ShareFileTarget shareFileTarget);
-
     @Streaming
     @GET("files/{fileId}")
     Observable<KujonResponse<ResponseBody>> downloadFile(@Path("fileId") String fileId);
