@@ -1,8 +1,8 @@
-package mobi.kujon.google_drive.mvp.subject_list;
+package mobi.kujon.google_drive.mvp.courses_list;
 
 import java.util.List;
 
-import mobi.kujon.google_drive.model.dto.SubjectDTO;
+import mobi.kujon.google_drive.model.dto.CourseDTO;
 import mobi.kujon.google_drive.mvp.ClearSubscribtions;
 import mobi.kujon.google_drive.mvp.HandleException;
 import rx.Observable;
@@ -11,9 +11,9 @@ import rx.Observable;
  *
  */
 
-public interface SubjectMVP {
+public interface CoursesMVP {
     interface View extends HandleException {
-        void onCoursesLoaded(List<SubjectDTO> subjectDTOs);
+        void onCoursesLoaded(List<CourseDTO> courseDTOs);
     }
 
     interface Presenter extends ClearSubscribtions {
@@ -21,6 +21,6 @@ public interface SubjectMVP {
     }
 
     interface Model {
-        Observable<List<SubjectDTO>> loadCourses(String semesterId, boolean refresh);
+        Observable<List<CourseDTO>> loadCourses(String semesterId, boolean refresh);
     }
 }
