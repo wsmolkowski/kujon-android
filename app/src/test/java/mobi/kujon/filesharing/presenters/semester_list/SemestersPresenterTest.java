@@ -43,7 +43,7 @@ public class SemestersPresenterTest extends UnitTest {
         List<SemesterDTO> semesters = getSemestersResponse(false);
         Mockito.when(model.getListOfSemesters(false)).thenReturn(Observable.just(semesters));
         semestersPresenter.askForSemesters(false);
-        Mockito.verify(view).semesetersLoaded(semesters);
+        Mockito.verify(view).semestersLoaded(semesters);
     }
 
     @Test

@@ -17,7 +17,7 @@ public interface SemestersMVP {
         void askForSemesters(boolean refresh);
     }
     interface View extends HandleException {
-        void semesetersLoaded(List<SemesterDTO> list);
+        void semestersLoaded(List<SemesterDTO> list);
     }
     interface Model{
         Observable<List<SemesterDTO>> getListOfSemesters(boolean refresh);
