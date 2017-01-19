@@ -9,5 +9,5 @@ import mobi.kujon.network.json.Course;
 import rx.Observable;
 
 public interface CoursesApi {
-    Observable<List<Pair<String, List<Course>>>> coursesEditionsByTermRefresh(boolean refresh);
+    Observable<List<Pair<String, List<Course>>>> getCoursesBySemesters(boolean refresh);
 }
