@@ -59,8 +59,6 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
     private static final String TAG = "BaseActivity";
 
     @Inject protected KujonBackendApi kujonBackendApi;
-    @Inject protected KujonFilesharingApi kujonFilesharingApi;
-    @Inject protected MultipartUtils multipartUtils;
     @Inject protected SettingsApi settingsApi;
     @Inject protected KujonApplication kujonApplication;
     @Inject protected Picasso picasso;
