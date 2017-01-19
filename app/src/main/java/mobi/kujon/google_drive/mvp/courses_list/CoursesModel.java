@@ -2,11 +2,10 @@ package mobi.kujon.google_drive.mvp.courses_list;
 
 
 import android.support.annotation.NonNull;
-import android.support.v4.util.Pair;
-
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedMap;
 
 import mobi.kujon.google_drive.model.dto.CourseDTO;
 import mobi.kujon.google_drive.network.facade.CoursesApiFacade;
@@ -29,10 +28,10 @@ public class CoursesModel implements CoursesMVP.Model {
         });
     }
 
-    private List<Course> getCoursesForSemester(String semesterId, List<Pair<String, List<Course>>> coursesBySemesters) {
-        for(Pair<String, List<Course>> coursesBySemester : coursesBySemesters) {
-            if(semesterId.equals(coursesBySemester.first)) {
-                return coursesBySemester.second;
+    private List<Course> getCoursesForSemester(String semesterId, List<SortedMap<String, List<Course>>> coursesBySemesters) {
+        for(SortedMap<String, List<Course>> coursesBySemester : coursesBySemesters) {
+            if(coursesBySemester.get(semesterId) != null) {
+                return coursesBySemester.get(semesterId);
             }
         }
         return new ArrayList<>();

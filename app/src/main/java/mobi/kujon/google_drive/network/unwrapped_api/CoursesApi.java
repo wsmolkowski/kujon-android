@@ -1,13 +1,12 @@
 package mobi.kujon.google_drive.network.unwrapped_api;
 
 
-import android.support.v4.util.Pair;
-
 import java.util.List;
+import java.util.SortedMap;
 
 import mobi.kujon.network.json.Course;
 import rx.Observable;
 
 public interface CoursesApi {
-    Observable<List<Pair<String, List<Course>>>> getCoursesBySemesters(boolean refresh);
+    Observable<List<SortedMap<String, List<Course>>>> getCoursesBySemesters(boolean refresh);
 }

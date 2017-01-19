@@ -1,14 +1,13 @@
 package mobi.kujon.filesharing.model.courses_list;
 
 
-import android.support.v4.util.Pair;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import java.util.List;
+import java.util.SortedMap;
 
 import mobi.kujon.UnitTest;
 import mobi.kujon.google_drive.mvp.courses_list.CoursesModel;
@@ -30,7 +29,7 @@ public class CoursesModelTest extends UnitTest {
 
     @Test
     public void testGetCourses() {
-        List<Pair<String, List<Course>>> mockResponse = CoursesModelTestHelper.mockCoursesBySemesters();
+        List<SortedMap<String, List<Course>>> mockResponse = CoursesModelTestHelper.mockCoursesBySemesters();
         Mockito.when(coursesApiFacade.getCoursesBySemesters(Mockito.anyBoolean())).thenReturn(Observable.just(mockResponse));
         coursesModel.loadCourses(CoursesModelTestHelper.SEMESTER_ID, false)
                 .subscribe(courseDTOs -> {
