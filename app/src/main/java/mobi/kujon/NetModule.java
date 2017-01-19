@@ -21,6 +21,7 @@ import bolts.Task;
 import dagger.Module;
 import dagger.Provides;
 import mobi.kujon.google_drive.KujonFilesharingApi;
+import mobi.kujon.google_drive.MultipartUtils;
 import mobi.kujon.network.ApiProvider;
 import mobi.kujon.network.KujonBackendApi;
 import mobi.kujon.network.SettingsApi;
@@ -33,6 +34,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.http.Part;
 
 @Module
 public class NetModule {
@@ -94,6 +96,10 @@ public class NetModule {
         return new KujonUtils();
     }
 
+    @Provides @Singleton MultipartUtils provideMultipartUtils() {
+        return new MultipartUtils();
+    }
+
     @Provides @Singleton Picasso providePicasso(Application application, OkHttpClient httpClient) {
         Picasso picasso = new Picasso.Builder(application)
                 .downloader(new OkHttp3Downloader(httpClient))
@@ -118,8 +124,6 @@ public class NetModule {
                 GoogleSignInAccount account = loginStatus.getResult().getSignInAccount();
                 email = account.getEmail();
                 token = account.getIdToken();
-                Log.i(TAG, email);
-                Log.i(TAG, token);
             }
 
             Request request = originalRequest.newBuilder()
