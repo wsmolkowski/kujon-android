@@ -30,7 +30,7 @@ public class SemestersModel implements SemestersMVP.Model {
     private List<SemesterDTO> convertTerms2Semesters(List<Term2> term2s) {
         List<SemesterDTO> semesters = new ArrayList<>();
         for(Term2 term : term2s) {
-            semesters.add(new SemesterDTO(term.name,term.termId));
+            semesters.add(new SemesterDTO(term));
         }
         return semesters;
     }

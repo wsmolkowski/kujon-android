@@ -1,5 +1,7 @@
 package mobi.kujon.google_drive.model.dto;
 
+import mobi.kujon.network.json.Term2;
+
 /**
  *
  */
@@ -12,6 +14,10 @@ public class SemesterDTO {
     public SemesterDTO(String semesterCode, String semesterId) {
         this.semesterCode = semesterCode;
         this.semesterId = semesterId;
+    }
+
+    public SemesterDTO(Term2 term) {
+        this(term.name,term.termId);
     }
 
 
