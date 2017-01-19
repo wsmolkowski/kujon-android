@@ -20,7 +20,7 @@ import javax.inject.Singleton;
 import bolts.Task;
 import dagger.Module;
 import dagger.Provides;
-import mobi.kujon.google_drive.KujonFilesharingApi;
+import mobi.kujon.google_drive.network.KujonFilesharingApi;
 import mobi.kujon.google_drive.MultipartUtils;
 import mobi.kujon.network.ApiProvider;
 import mobi.kujon.network.KujonBackendApi;

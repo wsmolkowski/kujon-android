@@ -39,7 +39,7 @@ import javax.inject.Inject;
 import bolts.Task;
 import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
-import mobi.kujon.google_drive.KujonFilesharingApi;
+import mobi.kujon.google_drive.network.KujonFilesharingApi;
 import mobi.kujon.google_drive.MultipartUtils;
 import mobi.kujon.network.KujonBackendApi;
 import mobi.kujon.network.SettingsApi;
