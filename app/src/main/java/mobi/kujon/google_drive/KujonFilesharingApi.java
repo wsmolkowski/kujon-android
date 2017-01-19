@@ -48,5 +48,5 @@ public interface KujonFilesharingApi {
                                                        @Part("file_share_with") @ShareFileTargetType String shareFileWith,
                                                        @Part("share_list") List<Integer> shareTargets,
                                                        @Part("files") RequestBody file);
-    
+
 }
