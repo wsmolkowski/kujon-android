@@ -3,7 +3,7 @@ package mobi.kujon.google_drive.mvp.files_list;
 import java.util.List;
 
 import mobi.kujon.google_drive.model.dto.file.FileDTO;
-import mobi.kujon.google_drive.mvp.ClearSubscribtions;
+import mobi.kujon.google_drive.mvp.ClearSubscriptions;
 import mobi.kujon.google_drive.mvp.HandleException;
 import rx.Observable;
 
@@ -14,7 +14,7 @@ import rx.Observable;
 public interface FileListMVP {
 
 
-    interface Presenter extends ClearSubscribtions {
+    interface Presenter extends ClearSubscriptions {
         void loadListOfFiles(String semesterId, String subjectId, boolean reload);
     }
 

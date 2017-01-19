@@ -30,7 +30,7 @@ public class SemestersPresenter implements SemestersMVP.Presenter {
     }
 
     @Override
-    public void clearSubsribtions() {
+    public void clearSubscriptions() {
         if(subscription != null) {
             subscription.unsubscribe();
         }

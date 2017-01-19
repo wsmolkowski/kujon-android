@@ -7,17 +7,17 @@ import rx.subscriptions.CompositeSubscription;
  *
  */
 
-public class AbstractClearSubsribtions implements ClearSubscribtions {
+public class AbstractClearSubsriptions implements ClearSubscriptions {
 
     private CompositeSubscription compositeSubscription;
 
-    protected void addToSubsribtionList(Subscription subscription) {
+    protected void addToSubsriptionList(Subscription subscription) {
         compositeSubscription.add(subscription);
     }
 
 
     @Override
-    public void clearSubsribtions() {
+    public void clearSubscriptions() {
         compositeSubscription.clear();
     }
 }
