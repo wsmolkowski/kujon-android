@@ -1,7 +1,7 @@
 package mobi.kujon.filesharing.model.courses_list;
 
 
-import android.util.Pair;
+import android.support.v4.util.Pair;
 
 import org.junit.Assert;
 import org.junit.Test;
