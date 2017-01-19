@@ -5,8 +5,8 @@ import android.util.Pair;
 import java.util.List;
 
 import mobi.kujon.google_drive.network.BackendWrapper;
-import mobi.kujon.google_drive.network.SemesterApi;
-import mobi.kujon.google_drive.network.SemesterApiKujon;
+import mobi.kujon.google_drive.network.unwrapped_api.SemesterApi;
+import mobi.kujon.google_drive.network.api.SemesterApiKujon;
 import mobi.kujon.network.json.Course;
 import rx.Observable;
 

@@ -4,8 +4,8 @@ package mobi.kujon.google_drive.network.facade;
 import mobi.kujon.google_drive.model.ShareFileTarget;
 import mobi.kujon.google_drive.model.SharedFile;
 import mobi.kujon.google_drive.network.BackendWrapper;
-import mobi.kujon.google_drive.network.ShareFile;
-import mobi.kujon.google_drive.network.ShareFileKujon;
+import mobi.kujon.google_drive.network.unwrapped_api.ShareFile;
+import mobi.kujon.google_drive.network.api.ShareFileKujon;
 import rx.Observable;
 
 public class ShareFileFacade implements ShareFile {

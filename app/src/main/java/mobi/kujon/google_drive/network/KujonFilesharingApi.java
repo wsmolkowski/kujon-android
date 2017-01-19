@@ -16,8 +16,7 @@ import rx.Observable;
 
 public interface KujonFilesharingApi {
 
-    @DELETE("files/{fileId}")
-    Observable<KujonResponse<String>> deleteFile(@Path("fileId") String fileId);
+
 
     @Multipart
     @POST("filesupload")

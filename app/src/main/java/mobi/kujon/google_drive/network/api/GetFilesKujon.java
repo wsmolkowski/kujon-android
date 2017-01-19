@@ -1,4 +1,4 @@
-package mobi.kujon.google_drive.network;
+package mobi.kujon.google_drive.network.api;
 
 import java.util.List;
 
