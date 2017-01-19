@@ -1,9 +1,8 @@
 package mobi.kujon.google_drive.network.facade;
 
 
-import android.support.v4.util.Pair;
-
 import java.util.List;
+import java.util.SortedMap;
 
 import mobi.kujon.google_drive.network.BackendWrapper;
 import mobi.kujon.google_drive.network.api.CoursesApiKujon;
@@ -14,14 +13,14 @@ import rx.Observable;
 public class CoursesApiFacade implements CoursesApi {
 
     private CoursesApiKujon coursesApiKujon;
-    private BackendWrapper<List<Pair<String, List<Course>>>> backendWrapper;
+    private BackendWrapper<List<SortedMap<String, List<Course>>>> backendWrapper;
 
     public CoursesApiFacade(CoursesApiKujon coursesApiKujon) {
         this.coursesApiKujon = coursesApiKujon;
     }
 
     @Override
-    public Observable<List<Pair<String, List<Course>>>> getCoursesBySemesters(boolean refresh) {
+    public Observable<List<SortedMap<String, List<Course>>>> getCoursesBySemesters(boolean refresh) {
         return backendWrapper.doSomething(coursesApiKujon.coursesEditionsByTermRefresh(refresh));
     }
 }
