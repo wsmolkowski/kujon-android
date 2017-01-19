@@ -23,11 +23,11 @@ public class GetFilesFacade implements GetFiles {
 
     @Override
     public Observable<List<KujonFile>> getAllFiles() {
-        return listBackendWrapper.doSmething(getFilesKujon.getAllFiles());
+        return listBackendWrapper.doSomething(getFilesKujon.getAllFiles());
     }
 
     @Override
     public Observable<List<KujonFile>> getFiles(String courseId, String termId) {
-        return listBackendWrapper.doSmething(getFilesKujon.getFiles(courseId,termId));
+        return listBackendWrapper.doSomething(getFilesKujon.getFiles(courseId,termId));
     }
 }

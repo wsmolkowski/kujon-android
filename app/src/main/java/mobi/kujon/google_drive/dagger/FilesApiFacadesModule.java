@@ -3,18 +3,21 @@ package mobi.kujon.google_drive.dagger;
 import dagger.Module;
 import dagger.Provides;
 import mobi.kujon.NetModule;
+import mobi.kujon.google_drive.network.api.CoursesApiKujon;
 import mobi.kujon.google_drive.network.api.DeleteFileKujon;
 import mobi.kujon.google_drive.network.api.FileDownloadKujon;
 import mobi.kujon.google_drive.network.api.FileUploadKujon;
 import mobi.kujon.google_drive.network.api.GetFilesKujon;
 import mobi.kujon.google_drive.network.api.SemesterApiKujon;
 import mobi.kujon.google_drive.network.api.ShareFileKujon;
+import mobi.kujon.google_drive.network.facade.CoursesApiFacade;
 import mobi.kujon.google_drive.network.facade.DeleteFileFacade;
 import mobi.kujon.google_drive.network.facade.FileDownloadFacade;
 import mobi.kujon.google_drive.network.facade.FileUploadFacade;
 import mobi.kujon.google_drive.network.facade.GetFilesFacade;
 import mobi.kujon.google_drive.network.facade.SemsterApiFacade;
 import mobi.kujon.google_drive.network.facade.ShareFileFacade;
+import mobi.kujon.google_drive.network.unwrapped_api.CoursesApi;
 import mobi.kujon.google_drive.network.unwrapped_api.DeleteFile;
 import mobi.kujon.google_drive.network.unwrapped_api.FileDownload;
 import mobi.kujon.google_drive.network.unwrapped_api.FileUpload;
@@ -33,8 +36,13 @@ import retrofit2.Retrofit;
 public class FilesApiFacadesModule {
 
     @Provides
-    SemesterApi provideSemseterApi(Retrofit retrofit) {
+    SemesterApi provideSemesterApi(Retrofit retrofit) {
         return new SemsterApiFacade(retrofit.create(SemesterApiKujon.class));
+    }
+
+    @Provides
+    CoursesApi provideCoursesApi(Retrofit retrofit) {
+        return new CoursesApiFacade(retrofit.create(CoursesApiKujon.class));
     }
 
     @Provides
@@ -61,5 +69,7 @@ public class FilesApiFacadesModule {
     FileUpload provideUploadFile(Retrofit retrofit, MultipartUtils multipartUtils) {
         return new FileUploadFacade(retrofit.create(FileUploadKujon.class), multipartUtils);
     }
+
+
 
 }

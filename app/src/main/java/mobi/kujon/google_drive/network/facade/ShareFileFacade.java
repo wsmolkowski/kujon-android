@@ -20,6 +20,6 @@ public class ShareFileFacade implements ShareFile {
 
     @Override
     public Observable<SharedFile> shareFile(ShareFileTarget shareFileTarget) {
-        return backendWrapper.doSmething(shareFileKujon.shareFile(shareFileTarget));
+        return backendWrapper.doSomething(shareFileKujon.shareFile(shareFileTarget));
     }
 }
