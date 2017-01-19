@@ -4,7 +4,6 @@ package mobi.kujon.network;
 import com.google.gson.Gson;
 
 import mobi.kujon.BuildConfig;
-import mobi.kujon.google_drive.network.KujonFilesharingApi;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
