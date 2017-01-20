@@ -1,5 +1,10 @@
 package mobi.kujon.google_drive.model.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import mobi.kujon.network.json.Course;
+
 /**
  *
  */
@@ -11,6 +16,10 @@ public class CourseDTO {
     public CourseDTO(String courseName, String courseId) {
         this.courseName = courseName;
         this.courseId = courseId;
+    }
+
+    public CourseDTO(Course course) {
+        this(course.courseName,course.courseId);
     }
 
     public String getCourseId() {
@@ -47,5 +56,13 @@ public class CourseDTO {
         int result = courseName != null ? courseName.hashCode() : 0;
         result = 31 * result + (courseId != null ? courseId.hashCode() : 0);
         return result;
+    }
+
+    public static List<CourseDTO> convertCourses2CourseDTOs(List<Course> courses){
+        List<CourseDTO> dtos = new ArrayList<>();
+        for(Course course : courses) {
+            dtos.add(new CourseDTO(course));
+        }
+        return dtos;
     }
 }
