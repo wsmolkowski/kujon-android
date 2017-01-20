@@ -28,6 +28,7 @@ public class FilesModule {
 
     public FilesModule(KujonApplication application) {
         this.application = application;
+        application.injectorProvider = new RuntimeInjectorProvider();
     }
 
     @Provides

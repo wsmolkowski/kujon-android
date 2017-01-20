@@ -1,5 +1,7 @@
 package mobi.kujon.google_drive.ui.activities.semesters;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -26,6 +28,11 @@ import mobi.kujon.google_drive.ui.activities.semesters.recycler_classes.Semester
 public class SemestersActivity extends BaseFileActivity implements SemestersMVP.View, SemesterAdapter.OnSemesterClick {
 
 
+    public static void openSemesterActivity(Activity activity){
+        Intent intent = new Intent(activity,SemestersActivity.class);
+        activity.startActivity(intent);
+    }
+
     @Bind(R.id.toolbar_title)
     TextView toolbarTitle;
     @Bind(R.id.toolbar)
@@ -38,19 +45,21 @@ public class SemestersActivity extends BaseFileActivity implements SemestersMVP.
     SwipeRefreshLayout swipeRefreshLayout;
     @Inject
     SemestersMVP.Presenter presenter;
+    private SemesterAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ((KujonApplication) this.getApplication()).getInjectorProvider().provideInjector().inject(this);
-        ButterKnife.bind(this);
         setContentView(R.layout.activity_semesters);
+        ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         toolbarTitle.setText(R.string.semester_choose);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(new SemesterAdapter(new ArrayList<>(),this));
+        adapter = new SemesterAdapter(new ArrayList<>(), this);
+        recyclerView.setAdapter(adapter);
         swipeRefreshLayout.setRefreshing(true);
         presenter.askForSemesters(false);
         swipeRefreshLayout.setOnRefreshListener(() -> presenter.askForSemesters(true));
@@ -58,12 +67,13 @@ public class SemestersActivity extends BaseFileActivity implements SemestersMVP.
 
     @Override
     public void semestersLoaded(List<SemesterDTO> list) {
-
+        adapter.setSemesterDTOs(list);
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
     protected void setProgress(boolean t) {
-
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override

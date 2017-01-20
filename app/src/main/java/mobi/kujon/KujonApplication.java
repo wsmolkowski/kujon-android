@@ -49,8 +49,7 @@ public class KujonApplication extends Application implements OneSignal.Notificat
     public static final String USER_EMAIL_TAG = "user_email";
     public static final String FROM_NOTIFICATION = "FROM_NOTIFICATION";
     @Inject KujonUtils utils;
-    @Inject
-    InjectorProvider injectorProvider;
+    public InjectorProvider injectorProvider;
     private static final Logger log = LoggerFactory.getLogger(KujonApplication.class);
     public static String DEVICE_ID;
 
@@ -153,7 +152,7 @@ public class KujonApplication extends Application implements OneSignal.Notificat
                 .filesModule(new FilesModule(this))
                 .filesApiFacadesModule(new FilesApiFacadesModule())
                 .build();
-        filesComponent.inject(this);
+
 
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
                 .setDefaultFontPath("fonts/Lato-Regular.ttf")
