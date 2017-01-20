@@ -36,10 +36,11 @@ import bolts.Task;
 import bolts.TaskCompletionSource;
 import io.fabric.sdk.android.Fabric;
 import mobi.kujon.activities.MainActivity;
-import mobi.kujon.google_drive.dagger.DaggerFilesComponent;
+import mobi.kujon.google_drive.dagger.DaggerRuntimeFilesComponent;
 import mobi.kujon.google_drive.dagger.FilesApiFacadesModule;
 import mobi.kujon.google_drive.dagger.FilesComponent;
 import mobi.kujon.google_drive.dagger.FilesModule;
+import mobi.kujon.google_drive.dagger.injectors.InjectorProvider;
 import mobi.kujon.utils.KujonUtils;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
@@ -48,7 +49,8 @@ public class KujonApplication extends Application implements OneSignal.Notificat
     public static final String USER_EMAIL_TAG = "user_email";
     public static final String FROM_NOTIFICATION = "FROM_NOTIFICATION";
     @Inject KujonUtils utils;
-
+    @Inject
+    InjectorProvider injectorProvider;
     private static final Logger log = LoggerFactory.getLogger(KujonApplication.class);
     public static String DEVICE_ID;
 
@@ -56,10 +58,12 @@ public class KujonApplication extends Application implements OneSignal.Notificat
 
     private static KujonApplication instance;
     private static KujonComponent component;
-    private static FilesComponent filesComponent;
+    private FilesComponent filesComponent;
 
     private Activity topActivity;
     private TaskCompletionSource<GoogleSignInResult> googleSignInResultTCS = new TaskCompletionSource<>();
+
+
 
     @Override public void onCreate() {
         super.onCreate();
@@ -142,12 +146,14 @@ public class KujonApplication extends Application implements OneSignal.Notificat
                 .netModule(new NetModule())
                 .build();
 
+
         component.inject(this);
 
-        filesComponent = DaggerFilesComponent.builder()
-                .filesModule(new FilesModule())
+        filesComponent = DaggerRuntimeFilesComponent.builder()
+                .filesModule(new FilesModule(this))
                 .filesApiFacadesModule(new FilesApiFacadesModule())
                 .build();
+        filesComponent.inject(this);
 
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
                 .setDefaultFontPath("fonts/Lato-Regular.ttf")
@@ -196,5 +202,13 @@ public class KujonApplication extends Application implements OneSignal.Notificat
 
     public Activity getTopActivity() {
         return topActivity;
+    }
+
+    public FilesComponent getFilesComponent() {
+        return filesComponent;
+    }
+
+    public InjectorProvider getInjectorProvider() {
+        return injectorProvider;
     }
 }

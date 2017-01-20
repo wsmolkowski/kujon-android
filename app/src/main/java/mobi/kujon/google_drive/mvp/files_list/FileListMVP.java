@@ -19,12 +19,12 @@ public interface FileListMVP {
     }
 
     interface ChooseTypePresenter {
-        void chooseType(@FilesType int fileType);
+        void chooseType(@FilesOwnerType int fileType);
     }
 
     interface Model {
         Observable<FileDTO> getFilesDto(String semesterId, String subjectId, boolean reload);
-        void seDataType(@FilesType int fileType);
+        void seDataType(@FilesOwnerType int fileType);
     }
 
     interface FilesView extends HandleException {
