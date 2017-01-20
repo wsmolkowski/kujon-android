@@ -8,7 +8,7 @@ import mobi.kujon.google_drive.ui.activities.semesters.dagger.SemesterActivityMo
  *
  */
 
-public class SemesterActivityInjector extends AbtractInjector<SemestersActivity> {
+public class SemesterActivityInjector extends AbstractInjector<SemestersActivity> {
     @Override
     public void inject(SemestersActivity injectTo) {
         DaggerRuntimeSemesterActivityComponent.builder()

@@ -9,6 +9,7 @@ import java.util.List;
 
 import mobi.kujon.R;
 import mobi.kujon.google_drive.model.dto.SemesterDTO;
+import mobi.kujon.google_drive.ui.util.OnDtoClick;
 
 /**
  *
@@ -17,16 +18,13 @@ import mobi.kujon.google_drive.model.dto.SemesterDTO;
 public class SemesterAdapter extends RecyclerView.Adapter<SemesterVH> {
 
     private List<SemesterDTO> semesterDTOs;
-    private OnSemesterClick onSemesterClick;
+    private OnDtoClick<SemesterDTO> onSemesterClick;
 
-    public SemesterAdapter(List<SemesterDTO> semesterDTOs, OnSemesterClick onSemesterClick) {
+    public SemesterAdapter(List<SemesterDTO> semesterDTOs, OnDtoClick<SemesterDTO> onSemesterClick) {
         this.semesterDTOs = semesterDTOs;
         this.onSemesterClick = onSemesterClick;
     }
 
-    public SemesterAdapter(List<SemesterDTO> semesterDTOs) {
-        this.semesterDTOs = semesterDTOs;
-    }
 
     @Override
     public SemesterVH onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -38,7 +36,7 @@ public class SemesterAdapter extends RecyclerView.Adapter<SemesterVH> {
     public void onBindViewHolder(SemesterVH holder, int position) {
         SemesterDTO currentSemester = semesterDTOs.get(position);
         holder.bind(currentSemester);
-        holder.itemView.setOnClickListener(view -> this.onSemesterClick.click(currentSemester));
+        holder.itemView.setOnClickListener(view -> this.onSemesterClick.onDtoClick(currentSemester));
     }
 
     @Override
@@ -51,7 +49,5 @@ public class SemesterAdapter extends RecyclerView.Adapter<SemesterVH> {
         this.notifyDataSetChanged();
     }
 
-    public interface OnSemesterClick {
-        void click(SemesterDTO semesterDTO);
-    }
+
 }

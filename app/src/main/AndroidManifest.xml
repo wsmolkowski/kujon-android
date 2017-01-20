@@ -127,6 +127,10 @@
         <activity
             android:name=".google_drive.ui.activities.semesters.SemestersActivity"
             android:label="@string/title_activity_semesters"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".google_drive.ui.activities.courses.CoursesInSemseterActivity"
+            android:label="@string/title_activity_courses_in_semseter"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
