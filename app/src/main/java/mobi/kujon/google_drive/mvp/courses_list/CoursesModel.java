@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.SortedMap;
 
 import mobi.kujon.google_drive.model.dto.CourseDTO;
 import mobi.kujon.google_drive.network.facade.CoursesApiFacade;
@@ -22,19 +21,10 @@ public class CoursesModel implements CoursesMVP.Model {
 
     @Override
     public Observable<List<CourseDTO>> loadCourses(@NonNull String semesterId, boolean refresh) {
-        return coursesApiFacade.getCoursesBySemesters(refresh).map(pairs -> {
-            List<Course> courses = getCoursesForSemester(semesterId, pairs);
-            return convertCourses2CourseDTOs(courses);
-        });
-    }
-
-    private List<Course> getCoursesForSemester(String semesterId, List<SortedMap<String, List<Course>>> coursesBySemesters) {
-        for(SortedMap<String, List<Course>> coursesBySemester : coursesBySemesters) {
-            if(coursesBySemester.get(semesterId) != null) {
-                return coursesBySemester.get(semesterId);
-            }
-        }
-        return new ArrayList<>();
+        return coursesApiFacade.getCoursesBySemesters(refresh)
+                .flatMap(Observable::from)
+                .filter(it-> it.getTermId().equals(semesterId))
+                .map(courseWithTerms -> convertCourses2CourseDTOs(courseWithTerms.getCourses()));
     }
 
     private List<CourseDTO> convertCourses2CourseDTOs(List<Course> courses){

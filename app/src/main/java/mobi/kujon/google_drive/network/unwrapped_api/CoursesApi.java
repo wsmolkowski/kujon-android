@@ -2,11 +2,10 @@ package mobi.kujon.google_drive.network.unwrapped_api;
 
 
 import java.util.List;
-import java.util.SortedMap;
 
-import mobi.kujon.network.json.Course;
+import mobi.kujon.google_drive.model.CourseWithTerms;
 import rx.Observable;
 
 public interface CoursesApi {
-    Observable<List<SortedMap<String, List<Course>>>> getCoursesBySemesters(boolean refresh);
+    Observable<List<CourseWithTerms>> getCoursesBySemesters(boolean refresh);
 }
