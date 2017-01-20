@@ -38,6 +38,7 @@ import mobi.kujon.fragments.PlanFragment;
 import mobi.kujon.fragments.PlanListFragment;
 import mobi.kujon.fragments.SearchFragment;
 import mobi.kujon.fragments.UserInfoFragment;
+import mobi.kujon.google_drive.ui.activities.semesters.SemestersActivity;
 import mobi.kujon.network.ApiProvider;
 import mobi.kujon.network.ApiType;
 import mobi.kujon.utils.ErrorHandlerUtil;
@@ -51,8 +52,8 @@ public class MainActivity extends BaseActivity {
     public static final int CALENDAR_POSITION = 1;
     @Bind(R.id.toolbar) Toolbar toolbar;
 
-    public String[] TITLES = new String[]{"Użytkownik", "Plan zajęć", "Przedmioty", "Oceny", "Wykładowcy", "Wiadomości","Szukaj"};
-    public int[] ICONS = new int[]{R.drawable.user, R.drawable.plan, R.drawable.courses, R.drawable.grades, R.drawable.teachers, R.drawable.ic_messages, R.drawable.search};
+    public String[] TITLES = new String[]{"Użytkownik", "Plan zajęć", "Przedmioty", "Oceny", "Wykładowcy", "Wiadomości","Szukaj","Pliki"};
+    public int[] ICONS = new int[]{R.drawable.user, R.drawable.plan, R.drawable.courses, R.drawable.grades, R.drawable.teachers, R.drawable.ic_messages, R.drawable.search,R.drawable.search};
     public Fragment[] FRAGMENTS = new Fragment[]{
             new UserInfoFragment(), new PlanFragment(), new CoursesFragment(), new GradesFragment(), new LecturersFragment(), new MessagesFragment(), new SearchFragment()};
     @Bind(R.id.toolbar_title) TextView toolbarTitle;
@@ -101,14 +102,18 @@ public class MainActivity extends BaseActivity {
 
         Typeface latoSemiBold = Typeface.createFromAsset(getAssets(), "fonts/Lato-Semibold.ttf");
 
-        for (int i = 0; i < FRAGMENTS.length; i++) {
+        for (int i = 0; i < FRAGMENTS.length+1; i++) {
             final int finalI = i;
             drawer.addItem(new PrimaryDrawerItem()
                     .withName(TITLES[i])
                     .withIcon(ICONS[i])
                     .withTypeface(latoSemiBold)
                     .withOnDrawerItemClickListener((view, position, drawerItem) -> {
-                        showFragment(FRAGMENTS[finalI], true);
+                        if(position==8){
+                            SemestersActivity.openSemesterActivity(this);
+                        }else {
+                            showFragment(FRAGMENTS[finalI], true);
+                        }
                         return true;
                     }));
         }

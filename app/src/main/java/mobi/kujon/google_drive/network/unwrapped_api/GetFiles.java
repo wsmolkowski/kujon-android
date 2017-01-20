@@ -11,8 +11,8 @@ import rx.Observable;
 
 public interface GetFiles {
 
-    Observable<List<KujonFile>> getAllFiles();
+    Observable<List<KujonFile>> getAllFiles(boolean refresh);
 
 
-    Observable<List<KujonFile>> getFiles(String courseId,String termId);
+    Observable<List<KujonFile>> getFiles(boolean refresh,String courseId,String termId);
 }

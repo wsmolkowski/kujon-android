@@ -18,7 +18,7 @@ public class SemesterVH extends RecyclerView.ViewHolder {
 
     public SemesterVH(View itemView) {
         super(itemView);
-        ButterKnife.bind(itemView);
+        ButterKnife.bind(this,itemView);
     }
 
     public void bind(SemesterDTO semesterDTO) {
