@@ -124,6 +124,10 @@
             android:name=".activities.LecturerPlanActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ToolbarAppTheme" />
+        <activity
+            android:name=".google_drive.ui.activities.semesters.SemestersActivity"
+            android:label="@string/title_activity_semesters"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

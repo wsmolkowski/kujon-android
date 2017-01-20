@@ -6,15 +6,21 @@ import android.support.annotation.NonNull;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
+import mobi.kujon.google_drive.dagger.scopes.ActivityScope;
 import mobi.kujon.google_drive.model.dto.SemesterDTO;
 import mobi.kujon.google_drive.network.unwrapped_api.SemesterApi;
 import mobi.kujon.network.json.Term2;
 import rx.Observable;
 
+
+@ActivityScope
 public class SemestersModel implements SemestersMVP.Model {
 
     private SemesterApi semesterApi;
 
+    @Inject
     public SemestersModel(SemesterApi semesterApi) {
         this.semesterApi = semesterApi;
     }

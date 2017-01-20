@@ -81,4 +81,5 @@
     <string name="search_title">Szukaj</string>
     <string name="server_communication_error">Błąd komunikacji z serwerem</string>
     <string name="no_data_for_month"> - Brak zajęć w USOS</string>
+    <string name="title_activity_semesters">SemestersActivity</string>
 </resources>
