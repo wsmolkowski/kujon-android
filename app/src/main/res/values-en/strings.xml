@@ -67,4 +67,5 @@
     <string name="not_empty">Not empty</string>
     <string name="lecturers_plan">Schedule</string>
     <string name="no_data_for_month">No data for </string>
+    <string name="semester_choose">Choose semester</string>
 </resources>

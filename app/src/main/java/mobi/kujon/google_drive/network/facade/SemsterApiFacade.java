@@ -8,6 +8,8 @@ import mobi.kujon.google_drive.network.api.SemesterApiKujon;
 import mobi.kujon.network.json.Term2;
 import rx.Observable;
 
+import static mobi.kujon.google_drive.network.api.ApiConst.getCacheValue;
+
 /**
  *
  */
@@ -24,6 +26,6 @@ public class SemsterApiFacade implements SemesterApi {
 
     @Override
     public Observable<List<Term2>> getSemesters(boolean b) {
-        return listBackendWrapper.doSomething(semesterApiKujon.getSemesters(b));
+        return listBackendWrapper.doSomething(semesterApiKujon.getSemesters(b,getCacheValue(b)));
     }
 }

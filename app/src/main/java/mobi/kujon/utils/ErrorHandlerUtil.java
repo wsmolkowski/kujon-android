@@ -21,6 +21,7 @@ import bolts.Continuation;
 import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
 import mobi.kujon.activities.LoginActivity;
+import mobi.kujon.google_drive.network.KujonException;
 import mobi.kujon.network.json.KujonResponse;
 import retrofit2.Response;
 
@@ -74,6 +75,21 @@ public class ErrorHandlerUtil {
 
     public static <T> boolean handleResponse(Response<KujonResponse<T>> response) {
         return handleResponse(response, false);
+    }
+
+    public static void handleKujonError(KujonException e){
+        Integer code  = e.getCode();
+        if (code != null) {
+            if (code == 504) {
+                showErrorInRed(e.getMessage());
+            } else if (code == 401) {
+                Intent intent = new Intent(KujonApplication.getApplication(), LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                KujonApplication.getApplication().startActivity(intent);
+            }
+        } else {
+            Toast.makeText(KujonApplication.getApplication(), R.string.server_communication_error, Toast.LENGTH_SHORT).show();
+        }
     }
 
     public static <T> boolean handleResponse(Response<KujonResponse<T>> response, boolean acceptNull) {

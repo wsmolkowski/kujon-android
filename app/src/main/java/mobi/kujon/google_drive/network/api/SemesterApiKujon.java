@@ -8,7 +8,9 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import rx.Observable;
 
-import static mobi.kujon.network.KujonBackendApi.X_KUJONREFRESH_TRUE;
+import static mobi.kujon.google_drive.network.api.ApiConst.CACHE_CONTROL;
+import static mobi.kujon.google_drive.network.api.ApiConst.X_KUJONREFRESH;
+
 
 /**
  *
@@ -16,5 +18,5 @@ import static mobi.kujon.network.KujonBackendApi.X_KUJONREFRESH_TRUE;
 
 public interface SemesterApiKujon {
     @GET("terms")
-    Observable<KujonResponse<List<Term2>>> getSemesters(@Header(X_KUJONREFRESH_TRUE) boolean refresh);
+    Observable<KujonResponse<List<Term2>>> getSemesters(@Header(X_KUJONREFRESH) boolean refresh,@Header(CACHE_CONTROL) String value);
 }

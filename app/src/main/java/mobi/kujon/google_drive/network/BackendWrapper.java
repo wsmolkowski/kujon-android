@@ -14,7 +14,7 @@ public class BackendWrapper<T> {
         return observable.map(it-> {
             if(it.code == 200)   return it.data;
              else{
-                throw Exceptions.propagate(new KujonException(it.message));
+                throw Exceptions.propagate(new KujonException(it.message,it.code));
             }
         });
     }
