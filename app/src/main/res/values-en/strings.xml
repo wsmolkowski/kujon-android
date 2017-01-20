@@ -73,4 +73,5 @@
     <string name="search_title">Search</string>
     <string name="server_communication_error">Error in server communication</string>
     <string name="title_activity_lecturer_plan"></string>
+    <string name="semester_choose">Choose semester</string>
 </resources>

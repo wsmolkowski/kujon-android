@@ -9,6 +9,8 @@ import mobi.kujon.google_drive.network.api.CoursesApiKujon;
 import mobi.kujon.google_drive.network.unwrapped_api.CoursesApi;
 import rx.Observable;
 
+import static mobi.kujon.google_drive.network.api.ApiConst.getCacheValue;
+
 public class CoursesApiFacade implements CoursesApi {
 
     private CoursesApiKujon coursesApiKujon;
@@ -21,6 +23,6 @@ public class CoursesApiFacade implements CoursesApi {
 
     @Override
     public Observable<List<CourseWithTerms>> getCoursesBySemesters(boolean refresh) {
-        return backendWrapper.doSomething(coursesApiKujon.coursesEditionsByTermRefresh(refresh));
+        return backendWrapper.doSomething(coursesApiKujon.coursesEditionsByTermRefresh(refresh, getCacheValue(refresh)));
     }
 }

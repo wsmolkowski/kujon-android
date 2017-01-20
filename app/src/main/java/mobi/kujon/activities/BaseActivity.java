@@ -98,6 +98,10 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
 
     @Override protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
+        setBack();
+    }
+
+    private void setBack() {
         View backView = findViewById(R.id.back);
         if (backView != null) backView.setOnClickListener(v -> onBackPressed());
     }
