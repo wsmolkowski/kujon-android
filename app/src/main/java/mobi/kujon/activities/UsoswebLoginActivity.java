@@ -134,10 +134,12 @@ public class UsoswebLoginActivity extends BaseActivity {
 
                     client.newCall(request).enqueue(new Callback() {
                         @Override public void onFailure(Call call, IOException e) {
-                            Toast.makeText(UsoswebLoginActivity.this, "Network error", Toast.LENGTH_SHORT).show();
-                            Crashlytics.logException(e);
-                            log.error("Network error:" + e.getMessage());
-                            finish();
+                            runOnUiThread(() -> {
+                                Toast.makeText(UsoswebLoginActivity.this, "Network error", Toast.LENGTH_SHORT).show();
+                                Crashlytics.logException(e);
+                                log.error("Network error:" + e.getMessage());
+                                finish();
+                            });
                         }
 
                         @Override public void onResponse(Call call, Response response) throws IOException {

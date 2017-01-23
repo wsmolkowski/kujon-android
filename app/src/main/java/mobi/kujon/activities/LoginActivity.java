@@ -129,15 +129,16 @@ public class LoginActivity extends BaseActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == RC_SIGN_IN) {
-            progress(false);
-            if (resultCode == RESULT_OK) {
-                GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-                handle(result);
-            } else {
-                log.error(String.format("Login error requestCode=%s, resultCode=%s, data=%s", requestCode, resultCode, data));
-                Toast.makeText(LoginActivity.this, R.string.login_error, Toast.LENGTH_SHORT).show();
+        if (resultCode != RESULT_CANCELED) {
+            if (requestCode == RC_SIGN_IN) {
+                progress(false);
+                if (resultCode == RESULT_OK) {
+                    GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+                    handle(result);
+                } else {
+                    log.error(String.format("Login error requestCode=%s, resultCode=%s, data=%s", requestCode, resultCode, data));
+                    Toast.makeText(LoginActivity.this, R.string.login_error, Toast.LENGTH_SHORT).show();
+                }
             }
         }
     }
