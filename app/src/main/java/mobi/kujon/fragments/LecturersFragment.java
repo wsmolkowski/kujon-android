@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.github.underscore.$;
 import com.github.underscore.Predicate;
 
 import java.util.LinkedList;
@@ -99,7 +98,7 @@ public class LecturersFragment extends AbstractFragmentSearchWidget<Lecturer> {
         }
 
         public void setData(List<Lecturer> data) {
-            this.data = $.sortBy(data, it -> it.lastName);
+            this.data = data;
             notifyDataSetChanged();
         }
     }
