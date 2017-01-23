@@ -155,10 +155,12 @@ public class GradesFragment extends AbstractFragmentSearchWidget<TermGrades> {
             holder.binding.desc.setText(Html.fromHtml(String.format("%s, termin: %s", grade.second.classType.name, grade.second.examSessionNumber)));
             String symbol = grade.second.valueSymbol;
             holder.binding.gradeValueSymbol.setText(symbol);
-            int color = "2".equals(symbol) || "nzal".equals(symbol.toLowerCase()) ? red : dark;
-            holder.binding.gradeValueSymbol.setTextColor(color);
+            if(symbol!=null){
+                int color = "2".equals(symbol) || "nzal".equals(symbol.toLowerCase()) ? red : dark;
+                holder.binding.gradeValueSymbol.setTextColor(color);
+                holder.binding.gradeValueDesc.setTextColor(color);
+            }
             holder.binding.gradeValueDesc.setText(grade.second.valueDescription);
-            holder.binding.gradeValueDesc.setTextColor(color);
             holder.courseId = grade.first.courseId;
             holder.termId = termGrades.termId;
             holder.binding.section.setVisibility(View.GONE);

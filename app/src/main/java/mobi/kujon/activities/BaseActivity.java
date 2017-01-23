@@ -52,7 +52,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import static android.content.Intent.createChooser;
 
 
-public abstract class BaseActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
+public abstract class BaseActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
 
     private static final String TAG = "BaseActivity";
 
@@ -82,8 +82,8 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
         apiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .addConnectionCallbacks(this)
                 .build();
-
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle("");
@@ -232,8 +232,17 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
             }
         });
     }
-
+    private boolean googleToLogout = false;
     private void googleLogout() {
+        if(apiClient.isConnected()){
+            performGoogleLogout();
+        }else {
+            apiClient.connect();
+            googleToLogout = true;
+        }
+    }
+
+    private void performGoogleLogout() {
         Auth.GoogleSignInApi.signOut(apiClient).setResultCallback(status -> checkLoggingStatus(BaseActivity.this::handle));
         utils.clearCache();
         kujonApplication.finishAllAcitities();
@@ -252,4 +261,15 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
         getSupportActionBar().setTitle(title);
     }
 
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        if(googleToLogout){
+            performGoogleLogout();
+        }
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
 }
