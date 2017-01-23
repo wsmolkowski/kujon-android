@@ -13,8 +13,8 @@ android {
         applicationId "mobi.kujon"
         minSdkVersion 16
         targetSdkVersion 21
-        versionCode 66
-        versionName "1.1.4"
+        versionCode 67
+        versionName "1.1.5"
 
         manifestPlaceholders = [manifestApplicationId          : "${applicationId}",
                                 onesignal_app_id               : "f01a20f9-bbe7-4c89-a017-bf8930c61cf4",
@@ -87,7 +87,7 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
 //    compile(name: 'foam-release', ext: 'aar')
     compile(name: 'khacpv-android-week-view', ext: 'aar')
-    compile('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
+    compile('com.crashlytics.sdk.android:crashlytics:2.6.6@aar') {
         transitive = true;
     }
     compile('com.mikepenz:materialdrawer:5.8.1@aar') {
