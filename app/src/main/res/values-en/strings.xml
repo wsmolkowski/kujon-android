@@ -23,7 +23,7 @@
     <string name="email_subject">Comment</string>
     <string name="no_events">No events</string>
     <string name="search_minimum">Min. 4 chars</string>
-    <string name="searching">Searching...</string>
+    <string name="searching">Szukam...</string>
     <string name="no_results_found">No results found</string>
 
     <string-array name="months">
@@ -67,4 +67,10 @@
     <string name="not_empty">Not empty</string>
     <string name="lecturers_plan">Schedule</string>
     <string name="no_data_for_month">No data for </string>
+    <string name="action_settings">Ustawienia</string>
+    <string name="change_api_demo" translatable="false">demo mode on</string>
+    <string name="change_api_prod" translatable="false">production mode on</string>
+    <string name="search_title">Search</string>
+    <string name="server_communication_error">Error in server communication</string>
+    <string name="title_activity_lecturer_plan"></string>
 </resources>

@@ -62,7 +62,6 @@
         <item>Listopad</item>
         <item>Grudzień</item>
     </string-array>
-    <string name="title_activity_programmes">ProgrammesActivity</string>
     <string name="study_level">Poziom studiów</string>
     <string name="programme_duration">Czas trwania</string>
     <string name="none">Brak</string>
@@ -71,11 +70,9 @@
     <string name="programme_name">Opis</string>
     <string name="programme">Kierunek</string>
     <string name="ects_sum">Suma Punktów ECTS</string>
-    <string name="change_api_prod">Tryb produkcyjny włączony</string>
+    <string name="change_api_prod" translatable="false">Tryb produkcyjny włączony</string>
     <string name="change_api_demo">Tryb demo włączony</string>
-    <string name="title_activity_maps">Map</string>
     <string name="not_empty">Nie puste</string>
-    <string name="title_activity_lecturer_plan">LecturerPlanActivity</string>
     <string name="action_settings">Settings</string>
     <string name="lecturers_plan">Plan zajęć -</string>
     <string name="search_title">Szukaj</string>
