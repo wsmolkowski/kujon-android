@@ -50,7 +50,8 @@ public abstract class AskForDataOnPlan {
 
     public void reload() {
         this.setRefresh(true);
-        utils.invalidateEntry("tt");
+        utils.invalidateEntry("ttusers");
+        utils.invalidateEntry("ttlecturers");
         downloadedMonth.clear();
         eventsForDate.clear();
         stopAllCurrentCalls();
