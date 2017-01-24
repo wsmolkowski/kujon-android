@@ -62,6 +62,7 @@ public class StudentInfoFragment extends BaseFragment {
     private BaseActivity activity;
     private AlertDialog alertDialog;
     private User user;
+    private Call<KujonResponse<User>> users;
 
     public static StudentInfoFragment getFragment(String userId) {
         Bundle bundle = new Bundle();
@@ -97,7 +98,7 @@ public class StudentInfoFragment extends BaseFragment {
             }
         }
 
-        Call<KujonResponse<User>> users = refresh ? kujonBackendApi.usersRefresh(userId) : kujonBackendApi.users(userId);
+        users = refresh ? kujonBackendApi.usersRefresh(userId) : kujonBackendApi.users(userId);
         users.enqueue(new Callback<KujonResponse<User>>() {
             @Override
             public void onResponse(Call<KujonResponse<User>> call, Response<KujonResponse<User>> response) {
@@ -145,6 +146,7 @@ public class StudentInfoFragment extends BaseFragment {
 
             @Override public void onFailure(Call<KujonResponse<User>> call, Throwable t) {
                 activity.showProgress(false);
+                if(swipeContainer != null)
                 swipeContainer.setRefreshing(false);
                 ErrorHandlerUtil.handleError(t);
             }
@@ -160,6 +162,7 @@ public class StudentInfoFragment extends BaseFragment {
         swipeContainer.setRefreshing(false);
         swipeContainer.destroyDrawingCache();
         swipeContainer.clearAnimation();
+
     }
 
     private void showUsosLogo(String usosId, ImageView imageView) {
@@ -189,6 +192,7 @@ public class StudentInfoFragment extends BaseFragment {
 
     @Override public void onDestroyView() {
         super.onDestroyView();
+        users.cancel();
         ButterKnife.unbind(this);
     }
 }
