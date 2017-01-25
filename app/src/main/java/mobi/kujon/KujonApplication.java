@@ -149,7 +149,8 @@ public class KujonApplication extends Application implements OneSignal.Notificat
         component.inject(this);
 
         filesComponent = DaggerRuntimeFilesComponent.builder()
-                .filesModule(new FilesModule(this))
+                .kujonComponent(component)
+                .filesModule(new FilesModule())
                 .filesApiFacadesModule(new FilesApiFacadesModule())
                 .build();
 
