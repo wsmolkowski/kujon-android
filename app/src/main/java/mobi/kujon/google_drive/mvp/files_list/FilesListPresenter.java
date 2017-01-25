@@ -21,6 +21,9 @@ public class FilesListPresenter extends AbstractClearSubsriptions implements Fil
 
     @Override
     public void loadListOfFiles(boolean reload, @FilesOwnerType int fileType) {
-
+        addToSubsriptionList(model.getFilesDto(reload, fileType)
+                .subscribeOn(schedulersHolder.subscribe())
+                .observeOn(schedulersHolder.observ())
+                .subscribe(it -> filesView.listOfFilesLoaded(it), error -> filesView.handleException(error)));
     }
 }
