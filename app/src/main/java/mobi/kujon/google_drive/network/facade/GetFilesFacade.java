@@ -5,8 +5,8 @@ import java.util.List;
 import mobi.kujon.google_drive.model.KujonFile;
 import mobi.kujon.google_drive.network.BackendWrapper;
 import mobi.kujon.google_drive.network.api.ApiConst;
-import mobi.kujon.google_drive.network.unwrapped_api.GetFiles;
 import mobi.kujon.google_drive.network.api.GetFilesKujon;
+import mobi.kujon.google_drive.network.unwrapped_api.GetFiles;
 import rx.Observable;
 
 /**

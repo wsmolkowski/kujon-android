@@ -11,21 +11,24 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import mobi.kujon.google_drive.dagger.injectors.Injector;
+import mobi.kujon.google_drive.mvp.HandleException;
+import mobi.kujon.google_drive.network.KujonException;
+import mobi.kujon.utils.ErrorHandlerUtil;
 
 /**
  *
  */
 
-public abstract class BaseFileFragment<T> extends Fragment {
+public abstract class BaseFileFragment<T> extends Fragment implements HandleException {
 
 
-    private Injector<T> filesListFragmentInjector;
+    private Injector<T> injector;
 
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        injectYourself(filesListFragmentInjector);
+        injectYourself(injector);
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
@@ -37,7 +40,7 @@ public abstract class BaseFileFragment<T> extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-            filesListFragmentInjector = ((ProvideInjector<T>)this.getActivity()).provideInjector();
+            injector = ((ProvideInjector<T>)this.getActivity()).provideInjector();
         }catch (ClassCastException e){
             throw new RuntimeException("Activity does not implements Correct ProvideInjector");
         }
@@ -47,9 +50,30 @@ public abstract class BaseFileFragment<T> extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            filesListFragmentInjector = ((ProvideInjector<T>)this.getActivity()).provideInjector();
+            injector = ((ProvideInjector<T>)this.getActivity()).provideInjector();
         }catch (ClassCastException e){
             throw new RuntimeException("Activity does not implements Correct ProvideInjector");
         }
     }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        injector = null;
+    }
+
+
+    @Override
+    public void handleException(Throwable throwable) {
+        this.setProgress(false);
+        try {
+            throw  throwable;
+        }catch (KujonException e){
+            ErrorHandlerUtil.handleKujonError(e);
+        }catch (Throwable t){
+            ErrorHandlerUtil.handleError(t);
+        }
+    }
+
+    protected abstract void setProgress(boolean b);
 }

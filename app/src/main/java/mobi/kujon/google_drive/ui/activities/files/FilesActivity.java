@@ -10,13 +10,19 @@ import android.support.v7.widget.Toolbar;
 
 import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
+import mobi.kujon.google_drive.dagger.injectors.FileActivityInjector;
+import mobi.kujon.google_drive.dagger.injectors.FilesListFragmentInjector;
+import mobi.kujon.google_drive.dagger.injectors.Injector;
+import mobi.kujon.google_drive.ui.fragments.ProvideInjector;
+import mobi.kujon.google_drive.ui.fragments.files.FilesListFragment;
 
 
-public class FilesActivity extends AppCompatActivity {
+public class FilesActivity extends AppCompatActivity implements ProvideInjector<FilesListFragment> {
 
 
     public static final String COURSE_ID_KEY = "COURSE_ID_KEY";
     public static final String TERM_ID_KEY = "TERM_ID_KEY";
+    private FileActivityInjector fileActivityInjector;
 
     public static void openActivity(Context context, String courseId, String termId){
         Intent intent  = new Intent(context,FilesActivity.class);
@@ -34,7 +40,8 @@ public class FilesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         coursId = getIntent().getStringExtra(COURSE_ID_KEY);
         termId = getIntent().getStringExtra(COURSE_ID_KEY);
-        ((KujonApplication)getApplication()).getInjectorProvider().provideFileActivityInjector().inject(this);
+        fileActivityInjector = ((KujonApplication) getApplication()).getInjectorProvider().provideFileActivityInjector();
+        fileActivityInjector.inject(this);
         setContentView(R.layout.activity_files);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -50,5 +57,16 @@ public class FilesActivity extends AppCompatActivity {
 
     public String getTermId() {
         return termId;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        fileActivityInjector = null;
+    }
+
+    @Override
+    public Injector<FilesListFragment> provideInjector() {
+        return new FilesListFragmentInjector(fileActivityInjector.getFilesActivityComponent());
     }
 }

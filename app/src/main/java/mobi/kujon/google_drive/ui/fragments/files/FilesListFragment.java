@@ -3,6 +3,7 @@ package mobi.kujon.google_drive.ui.fragments.files;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,17 +11,22 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mobi.kujon.R;
 import mobi.kujon.google_drive.dagger.injectors.Injector;
+import mobi.kujon.google_drive.model.dto.file.FileDTO;
+import mobi.kujon.google_drive.mvp.files_list.FileListMVP;
 import mobi.kujon.google_drive.mvp.files_list.FilesOwnerType;
 import mobi.kujon.google_drive.ui.fragments.BaseFileFragment;
 import mobi.kujon.google_drive.ui.fragments.files.recycler_classes.FilesRecyclerAdapter;
 
 
-public class FilesListFragment extends BaseFileFragment<FilesListFragment> {
+public class FilesListFragment extends BaseFileFragment<FilesListFragment> implements FileListMVP.FilesView {
 
     private static final String OWNER_ID = "param1";
 
@@ -36,6 +42,12 @@ public class FilesListFragment extends BaseFileFragment<FilesListFragment> {
 
     @Bind(R.id.file_recycler_view)
     RecyclerView recyclerView;
+
+    @Bind(R.id.refresh_layout)
+    SwipeRefreshLayout swipeRefreshLayout;
+
+    @Inject
+    FileListMVP.LoadPresenter presenter;
 
 
     public static FilesListFragment newInstance(@FilesOwnerType  int param1) {
@@ -63,7 +75,16 @@ public class FilesListFragment extends BaseFileFragment<FilesListFragment> {
         adapter = new FilesRecyclerAdapter(new ArrayList<>());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        presenter.loadListOfFiles(false,fileOwnerType);
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            presenter.loadListOfFiles(true,fileOwnerType);
+        });
         return rootView;
+    }
+
+    @Override
+    protected void setProgress(boolean b) {
+        swipeRefreshLayout.setEnabled(b);
     }
 
     @Override
@@ -71,6 +92,12 @@ public class FilesListFragment extends BaseFileFragment<FilesListFragment> {
         injector.inject(this);
     }
 
+
+    @Override
+    public void listOfFilesLoaded(List<FileDTO> fileDTOs) {
+        adapter.setFileDTOs(fileDTOs);
+        swipeRefreshLayout.setRefreshing(false);
+    }
 
 
 }

@@ -10,7 +10,7 @@ import mobi.kujon.google_drive.ui.fragments.files.FilesListFragment;
  */
 
 @ActivityScope
-@Component(dependencies = FilesActivityComponent.class)
+@Component(modules = FilesFragmentModule.class, dependencies = FilesActivityComponent.class)
 public interface FilesFragmentComponent {
     void inject(FilesListFragment filesListFragment);
 }
