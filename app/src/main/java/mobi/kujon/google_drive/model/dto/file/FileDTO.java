@@ -57,6 +57,34 @@ public abstract class FileDTO {
     public abstract @DrawableRes int getImageIcon();
 
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof FileDTO)) return false;
 
+        FileDTO fileDTO = (FileDTO) o;
 
+        if (numberOfShares != fileDTO.numberOfShares) return false;
+        if (shareType != null ? !shareType.equals(fileDTO.shareType) : fileDTO.shareType != null)
+            return false;
+        if (fileName != null ? !fileName.equals(fileDTO.fileName) : fileDTO.fileName != null)
+            return false;
+        if (fileSize != null ? !fileSize.equals(fileDTO.fileSize) : fileDTO.fileSize != null)
+            return false;
+        if (userName != null ? !userName.equals(fileDTO.userName) : fileDTO.userName != null)
+            return false;
+        return fileId != null ? fileId.equals(fileDTO.fileId) : fileDTO.fileId == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = shareType != null ? shareType.hashCode() : 0;
+        result = 31 * result + numberOfShares;
+        result = 31 * result + (fileName != null ? fileName.hashCode() : 0);
+        result = 31 * result + (fileSize != null ? fileSize.hashCode() : 0);
+        result = 31 * result + (userName != null ? userName.hashCode() : 0);
+        result = 31 * result + (fileId != null ? fileId.hashCode() : 0);
+        return result;
+    }
 }

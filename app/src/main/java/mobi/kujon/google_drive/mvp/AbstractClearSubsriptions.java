@@ -9,9 +9,10 @@ import rx.subscriptions.CompositeSubscription;
 
 public class AbstractClearSubsriptions implements ClearSubscriptions {
 
-    private CompositeSubscription compositeSubscription;
+    private CompositeSubscription compositeSubscription = new CompositeSubscription();
 
     protected void addToSubsriptionList(Subscription subscription) {
+
         compositeSubscription.add(subscription);
     }
 

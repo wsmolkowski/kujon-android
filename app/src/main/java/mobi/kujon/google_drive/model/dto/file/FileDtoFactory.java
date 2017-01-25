@@ -9,7 +9,7 @@ import mobi.kujon.google_drive.model.KujonFile;
  *
  */
 
-public class FileDtoFabric {
+public class FileDtoFactory {
 
     public static FileDTO createFileDto(KujonFile kujonFile){
         switch (kujonFile.contentType){

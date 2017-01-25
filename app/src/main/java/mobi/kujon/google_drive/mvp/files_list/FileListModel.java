@@ -3,7 +3,7 @@ package mobi.kujon.google_drive.mvp.files_list;
 import java.util.List;
 
 import mobi.kujon.google_drive.model.dto.file.FileDTO;
-import mobi.kujon.google_drive.model.dto.file.FileDtoFabric;
+import mobi.kujon.google_drive.model.dto.file.FileDtoFactory;
 import mobi.kujon.google_drive.network.unwrapped_api.GetFiles;
 import mobi.kujon.google_drive.utils.FilesFilter;
 import rx.Observable;
@@ -29,7 +29,7 @@ public class FileListModel implements FileListMVP.Model {
     @Override
     public Observable<List<FileDTO>> getFilesDto(boolean reload, @FilesOwnerType int fileType) {
         return getFiles.getFiles(reload,courseId,termId)
-                .map(it-> FileDtoFabric.createListOfDTOFiles(myFilesFilter.filterFiles(it,fileType))
+                .map(it-> FileDtoFactory.createListOfDTOFiles(myFilesFilter.filterFiles(it,fileType))
         );
     }
 }
