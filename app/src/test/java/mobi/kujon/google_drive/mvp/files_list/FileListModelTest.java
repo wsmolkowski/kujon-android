@@ -61,7 +61,7 @@ public class FileListModelTest extends UnitTest {
     }
 
 
-    private List<KujonFile> provideKujonFiles(int begin, int size) {
+    public static List<KujonFile> provideKujonFiles(int begin, int size) {
         List<KujonFile> kujonFiles = new ArrayList<>();
         for (int i = begin; i < begin + size; i++) {
             KujonFile kujonFile = new KujonFile();

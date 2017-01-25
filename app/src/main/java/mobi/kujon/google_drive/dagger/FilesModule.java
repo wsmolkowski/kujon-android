@@ -4,6 +4,7 @@ import java.util.concurrent.Executors;
 
 import dagger.Module;
 import dagger.Provides;
+import mobi.kujon.KujonApplication;
 import mobi.kujon.google_drive.dagger.injectors.InjectorProvider;
 import mobi.kujon.google_drive.dagger.injectors.RuntimeInjectorProvider;
 import mobi.kujon.google_drive.dagger.scopes.GoogleDriveScope;
@@ -19,7 +20,9 @@ import rx.schedulers.Schedulers;
 
 @Module
 public class FilesModule {
-
+    public FilesModule(KujonApplication application) {
+        application.injectorProvider = new RuntimeInjectorProvider();
+    }
 
     @Provides
     @GoogleDriveScope
