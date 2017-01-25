@@ -36,6 +36,7 @@ import mobi.kujon.fragments.TermsFragment;
 import mobi.kujon.fragments.UserInfoFragment;
 import mobi.kujon.utils.KujonUtils;
 import mobi.kujon.utils.PlanEventsDownloader;
+import retrofit2.Retrofit;
 
 @Singleton
 @Component(modules = {AppModule.class, NetModule.class})
@@ -107,5 +108,7 @@ public interface KujonComponent {
     void inject(SearchFragment searchFragment);
 
     void inject(MessagesFragment messagesFragment);
+
+    Retrofit provideRetrofit();
 
 }

@@ -112,6 +112,9 @@ dependencies {
     compile "com.google.android.gms:play-services-auth:$google_play_services"
     compile "com.google.android.gms:play-services-maps:$google_play_services"
     compile "com.google.android.gms:play-services-gcm:$google_play_services"
+    compile "com.google.android.gms:play-services-drive:$google_play_services"
+
+
 
     //helpers
     compile "com.jakewharton:butterknife:$butterknife_version"

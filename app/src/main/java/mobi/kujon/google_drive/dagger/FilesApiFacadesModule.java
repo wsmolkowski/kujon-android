@@ -2,7 +2,6 @@ package mobi.kujon.google_drive.dagger;
 
 import dagger.Module;
 import dagger.Provides;
-import mobi.kujon.NetModule;
 import mobi.kujon.google_drive.network.api.CoursesApiKujon;
 import mobi.kujon.google_drive.network.api.DeleteFileKujon;
 import mobi.kujon.google_drive.network.api.FileDownloadKujon;
@@ -32,7 +31,7 @@ import retrofit2.Retrofit;
  */
 
 
-@Module(includes = NetModule.class)
+@Module
 public class FilesApiFacadesModule {
 
     @Provides

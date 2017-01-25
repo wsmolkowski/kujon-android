@@ -1,15 +1,15 @@
 package mobi.kujon.google_drive.dagger;
 
-import javax.inject.Singleton;
-
 import dagger.Component;
+import mobi.kujon.KujonComponent;
+import mobi.kujon.google_drive.dagger.scopes.GoogleDriveScope;
 
 /**
  *
  */
 
-@Singleton
-@Component(modules = {FilesModule.class, FilesApiFacadesModule.class})
+@GoogleDriveScope
+@Component(modules = {FilesModule.class, FilesApiFacadesModule.class},dependencies = KujonComponent.class)
 public interface RuntimeFilesComponent extends FilesComponent {
 
 }
