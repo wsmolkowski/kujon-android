@@ -16,7 +16,10 @@ public class KujonFile {
     public String termId;
 
     @SerializedName("file_shared_with") @Expose
-    public String[] fileSharedWith;
+    public @ShareFileTargetType String shareType;
+
+    @SerializedName("file_shared_with_ids") @Expose
+    public String[] fileSharedWith = {};
 
     @SerializedName("content_type") @Expose
     public String contentType;
@@ -38,4 +41,7 @@ public class KujonFile {
 
     @SerializedName("file_size") @Expose
     public String fileSize;
+
+    @SerializedName("my_file") @Expose
+    public boolean myFile;
 }

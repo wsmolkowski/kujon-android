@@ -5,13 +5,14 @@ import android.support.annotation.StringDef;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-import static mobi.kujon.google_drive.model.dto.file.FileType.DEFAULT;
+import static mobi.kujon.google_drive.model.dto.file.ContentType.IMAGE;
 
 /**
  *
  */
-@StringDef(DEFAULT)
+
+@StringDef({IMAGE})
 @Retention(RetentionPolicy.SOURCE)
-public @interface FileType {
-    String DEFAULT = "default";
+public @interface ContentType {
+    String IMAGE = "image/png";
 }

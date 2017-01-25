@@ -83,4 +83,8 @@
     <string name="title_activity_courses_in_semseter">CoursesInSemseterActivity</string>
     <string name="courses_in">Zajęcia w</string>
     <string name="title_activity_google_drive">GoogleDriveActivity</string>
+
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_files">FilesActivity</string>
 </resources>

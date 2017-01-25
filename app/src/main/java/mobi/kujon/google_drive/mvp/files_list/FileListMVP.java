@@ -14,13 +14,13 @@ import rx.Observable;
 public interface FileListMVP {
 
 
-    interface Presenter extends ClearSubscriptions {
-        void loadListOfFiles(String semesterId, String subjectId, boolean reload,@FilesOwnerType int fileType);
+    interface LoadPresenter extends ClearSubscriptions {
+        void loadListOfFiles(boolean reload,@FilesOwnerType int fileType);
     }
 
 
     interface Model {
-        Observable<FileDTO> getFilesDto(String semesterId, String subjectId, boolean reload,@FilesOwnerType int fileType);
+        Observable<List<FileDTO>> getFilesDto(boolean reload,@FilesOwnerType int fileType);
     }
 
     interface FilesView extends HandleException {

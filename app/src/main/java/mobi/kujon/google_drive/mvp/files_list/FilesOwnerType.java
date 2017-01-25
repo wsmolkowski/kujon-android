@@ -15,6 +15,6 @@ import static mobi.kujon.google_drive.mvp.files_list.FilesOwnerType.MY;
 @IntDef({ALL,MY})
 @Retention(RetentionPolicy.SOURCE)
 public @interface FilesOwnerType {
-    int ALL = 1;
-    int MY =0;
+    int ALL = 0;
+    int MY =1;
 }
