@@ -21,7 +21,6 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.ContentViewEvent;
 import com.google.android.gms.auth.api.Auth;
@@ -178,7 +177,6 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
                     }
 
                     @Override public void onFailure(Call<Object> call, Throwable t) {
-                        Crashlytics.logException(t);
                         googleLogout();
                     }
                 });

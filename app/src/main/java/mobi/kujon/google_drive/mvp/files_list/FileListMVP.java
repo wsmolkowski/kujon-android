@@ -15,16 +15,12 @@ public interface FileListMVP {
 
 
     interface Presenter extends ClearSubscriptions {
-        void loadListOfFiles(String semesterId, String subjectId, boolean reload);
+        void loadListOfFiles(String semesterId, String subjectId, boolean reload,@FilesOwnerType int fileType);
     }
 
-    interface ChooseTypePresenter {
-        void chooseType(@FilesOwnerType int fileType);
-    }
 
     interface Model {
-        Observable<FileDTO> getFilesDto(String semesterId, String subjectId, boolean reload);
-        void seDataType(@FilesOwnerType int fileType);
+        Observable<FileDTO> getFilesDto(String semesterId, String subjectId, boolean reload,@FilesOwnerType int fileType);
     }
 
     interface FilesView extends HandleException {

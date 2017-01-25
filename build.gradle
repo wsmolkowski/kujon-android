@@ -3,7 +3,7 @@ buildscript {
 
     ext.multidex_version = '1.0.1'
 
-    ext.crashlytics_version = '2.6.5@aar'
+    ext.crashlytics_version = '2.6.6@aar'
     ext.material_drawer_version = '5.8.1@aar'
     ext.sectioned_recycler_view_version = '0.2.2'
 

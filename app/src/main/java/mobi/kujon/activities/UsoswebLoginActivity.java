@@ -136,7 +136,6 @@ public class UsoswebLoginActivity extends BaseActivity {
                         @Override public void onFailure(Call call, IOException e) {
                             runOnUiThread(() -> {
                                 Toast.makeText(UsoswebLoginActivity.this, "Network error", Toast.LENGTH_SHORT).show();
-                                Crashlytics.logException(e);
                                 log.error("Network error:" + e.getMessage());
                                 finish();
                             });
