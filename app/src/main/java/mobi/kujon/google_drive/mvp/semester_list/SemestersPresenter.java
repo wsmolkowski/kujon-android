@@ -1,15 +1,14 @@
 package mobi.kujon.google_drive.mvp.semester_list;
 
 
+import mobi.kujon.google_drive.mvp.AbstractClearSubsriptions;
 import mobi.kujon.google_drive.utils.SchedulersHolder;
-import rx.Subscription;
 
-public class SemestersPresenter implements SemestersMVP.Presenter {
+public class SemestersPresenter extends AbstractClearSubsriptions implements SemestersMVP.Presenter {
 
     private SemestersMVP.View view;
     private SemestersMVP.Model model;
     private SchedulersHolder schedulersHolder;
-    private Subscription subscription;
 
     public SemestersPresenter(SemestersMVP.View view, SemestersMVP.Model model, SchedulersHolder schedulersHolder) {
         this.view = view;
@@ -19,20 +18,15 @@ public class SemestersPresenter implements SemestersMVP.Presenter {
 
     @Override
     public void askForSemesters(boolean refresh) {
-        subscription = model.getListOfSemesters(refresh)
+        addToSubsriptionList(model.getListOfSemesters(refresh)
                 .subscribeOn(schedulersHolder.subscribe())
                 .observeOn(schedulersHolder.observ())
                 .subscribe(semesterDTOs -> {
                     view.semestersLoaded(semesterDTOs);
                 }, throwable -> {
                     view.handleException(throwable);
-                });
+                }));
     }
 
-    @Override
-    public void clearSubscriptions() {
-        if(subscription != null) {
-            subscription.unsubscribe();
-        }
-    }
+
 }

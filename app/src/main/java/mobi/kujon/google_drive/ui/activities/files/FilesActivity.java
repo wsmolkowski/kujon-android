@@ -1,32 +1,54 @@
 package mobi.kujon.google_drive.ui.activities.files;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 
+import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
 
 
 public class FilesActivity extends AppCompatActivity {
 
+
+    public static final String COURSE_ID_KEY = "COURSE_ID_KEY";
+    public static final String TERM_ID_KEY = "TERM_ID_KEY";
+
+    public static void openActivity(Context context, String courseId, String termId){
+        Intent intent  = new Intent(context,FilesActivity.class);
+        intent.putExtra(COURSE_ID_KEY,courseId);
+        intent.putExtra(TERM_ID_KEY,termId);
+        context.startActivity(intent);
+    }
+
+
+
+    private String coursId,termId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        coursId = getIntent().getStringExtra(COURSE_ID_KEY);
+        termId = getIntent().getStringExtra(COURSE_ID_KEY);
+        ((KujonApplication)getApplication()).getInjectorProvider().provideFileActivityInjector().inject(this);
         setContentView(R.layout.activity_files);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show());
     }
 
+    public String getCoursId() {
+        return coursId;
+    }
+
+    public String getTermId() {
+        return termId;
+    }
 }

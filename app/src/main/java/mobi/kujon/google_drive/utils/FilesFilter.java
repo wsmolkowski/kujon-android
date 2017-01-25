@@ -11,7 +11,7 @@ import mobi.kujon.google_drive.mvp.files_list.FilesOwnerType;
  *
  */
 
-public class MyFilesFilter {
+public class FilesFilter {
 
     public List<KujonFile> filterFiles(List<KujonFile> kujonFiles,@FilesOwnerType int condition){
        return  $.filter(kujonFiles, arg -> {

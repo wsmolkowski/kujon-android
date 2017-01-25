@@ -5,7 +5,7 @@ import java.util.List;
 import mobi.kujon.google_drive.model.dto.file.FileDTO;
 import mobi.kujon.google_drive.model.dto.file.FileDtoFabric;
 import mobi.kujon.google_drive.network.unwrapped_api.GetFiles;
-import mobi.kujon.google_drive.utils.MyFilesFilter;
+import mobi.kujon.google_drive.utils.FilesFilter;
 import rx.Observable;
 
 /**
@@ -15,14 +15,16 @@ import rx.Observable;
 public class FileListModel implements FileListMVP.Model {
     private String courseId,termId;
     private GetFiles getFiles;
-    private MyFilesFilter myFilesFilter;
+    private FilesFilter myFilesFilter;
 
-    public FileListModel(String courseId, String termId, GetFiles getFiles) {
+    public FileListModel(String courseId, String termId, GetFiles getFiles, FilesFilter myFilesFilter) {
         this.courseId = courseId;
         this.termId = termId;
         this.getFiles = getFiles;
-        this.myFilesFilter = new MyFilesFilter();
+        this.myFilesFilter = myFilesFilter;
     }
+
+
 
     @Override
     public Observable<List<FileDTO>> getFilesDto(boolean reload, @FilesOwnerType int fileType) {

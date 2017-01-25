@@ -29,7 +29,7 @@ public class FilesListFragment extends BaseFileFragment<FilesListFragment> {
     private FilesRecyclerAdapter adapter;
 
     public FilesListFragment() {
-        // Required empty public constructor
+
     }
 
 

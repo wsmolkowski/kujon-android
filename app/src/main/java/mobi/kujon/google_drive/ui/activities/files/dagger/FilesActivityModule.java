@@ -6,6 +6,7 @@ import mobi.kujon.google_drive.dagger.scopes.ActivityScope;
 import mobi.kujon.google_drive.mvp.files_list.FileListMVP;
 import mobi.kujon.google_drive.mvp.files_list.FileListModel;
 import mobi.kujon.google_drive.network.unwrapped_api.GetFiles;
+import mobi.kujon.google_drive.utils.FilesFilter;
 
 /**
  *
@@ -23,6 +24,6 @@ public class FilesActivityModule {
     @ActivityScope
     @Provides
     FileListMVP.Model provideFileListModel(GetFiles getFiles){
-        return new  FileListModel(courseId,termId,getFiles);
+        return new  FileListModel(courseId,termId,getFiles,new FilesFilter());
     }
 }
