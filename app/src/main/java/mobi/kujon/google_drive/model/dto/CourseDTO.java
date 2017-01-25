@@ -11,7 +11,13 @@ import mobi.kujon.network.json.Course;
 
 public class CourseDTO {
 
-    private String courseName, courseId;
+    private String courseName, courseId,termId;
+
+    private CourseDTO(String courseName, String courseId, String termId) {
+        this.courseName = courseName;
+        this.courseId = courseId;
+        this.termId = termId;
+    }
 
     public CourseDTO(String courseName, String courseId) {
         this.courseName = courseName;
@@ -19,7 +25,7 @@ public class CourseDTO {
     }
 
     public CourseDTO(Course course) {
-        this(course.courseName,course.courseId);
+        this(course.courseName,course.courseId,course.termId);
     }
 
     public String getCourseId() {
@@ -36,6 +42,10 @@ public class CourseDTO {
 
     public void setCourseName(String courseName) {
         this.courseName = courseName;
+    }
+
+    public String getTermId() {
+        return termId;
     }
 
     @Override

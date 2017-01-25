@@ -29,7 +29,7 @@ public abstract class BaseFileFragment<T> extends Fragment implements HandleExce
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         injectYourself(injector);
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return createView(inflater, container, savedInstanceState);
     }
 
     protected abstract void injectYourself(Injector<T> injector);

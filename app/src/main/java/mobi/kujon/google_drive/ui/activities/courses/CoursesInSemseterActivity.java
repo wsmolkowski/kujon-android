@@ -23,7 +23,7 @@ import mobi.kujon.google_drive.model.dto.CourseDTO;
 import mobi.kujon.google_drive.mvp.courses_list.CoursesMVP;
 import mobi.kujon.google_drive.ui.activities.BaseFileActivity;
 import mobi.kujon.google_drive.ui.activities.courses.recycler_classes.CoursesAdapter;
-import mobi.kujon.google_drive.ui.activities.google_drive_activity.GoogleDriveActivity;
+import mobi.kujon.google_drive.ui.activities.files.FilesActivity;
 import mobi.kujon.google_drive.ui.util.OnDtoClick;
 
 public class CoursesInSemseterActivity extends BaseFileActivity implements CoursesMVP.View, OnDtoClick<CourseDTO> {
@@ -95,7 +95,6 @@ public class CoursesInSemseterActivity extends BaseFileActivity implements Cours
 
     @Override
     public void onDtoClick(CourseDTO courseDTO) {
-        Intent intent = new Intent(this, GoogleDriveActivity.class);
-        startActivity(intent);
+        FilesActivity.openActivity(this,courseDTO.getCourseId(),courseDTO.getTermId());
     }
 }

@@ -76,6 +76,7 @@ public class FilesListFragment extends BaseFileFragment<FilesListFragment> imple
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         presenter.loadListOfFiles(false,fileOwnerType);
+        this.setProgress(true);
         swipeRefreshLayout.setOnRefreshListener(() -> {
             presenter.loadListOfFiles(true,fileOwnerType);
         });
@@ -96,7 +97,7 @@ public class FilesListFragment extends BaseFileFragment<FilesListFragment> imple
     @Override
     public void listOfFilesLoaded(List<FileDTO> fileDTOs) {
         adapter.setFileDTOs(fileDTOs);
-        swipeRefreshLayout.setRefreshing(false);
+        this.setProgress(false);
     }
 
 

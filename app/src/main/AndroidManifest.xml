@@ -137,9 +137,9 @@
             android:label="@string/title_activity_google_drive"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".google_drive.ui.activities.files.FilesActivity"
+            android:name="mobi.kujon.google_drive.ui.activities.files.FilesActivity"
             android:label="@string/title_activity_files"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>
