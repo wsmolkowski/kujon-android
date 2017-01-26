@@ -129,7 +129,7 @@
     <style name="textDialog">
         <item name="android:textColor">@color/dark</item>
         <item name="android:fontFamily">sans-serif-medium</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">@dimen/medium_text</item>
         <item name="android:gravity">center</item>
         <item name="android:layout_gravity">center_horizontal</item>
     </style>
