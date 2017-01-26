@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/textDialog"
+        android:drawableStart="@drawable/file_details"
+        android:drawableLeft="@drawable/file_details"
+        android:drawablePadding="@dimen/medium_margin"
+        android:text="@string/file_details"
+        android:paddingTop="@dimen/big_margin"
+        android:paddingBottom="@dimen/medium_margin"
+        android:background="?attr/selectableItemBackground"
+        android:id="@+id/file_details"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/textDialog"
+        android:drawableStart="@drawable/ic_add_to_google_drive"
+        android:drawableLeft="@drawable/ic_add_to_google_drive"
+        android:drawablePadding="@dimen/medium_margin"
+        android:text="@string/add_to_google_drive"
+        android:paddingTop="@dimen/medium_margin"
+        android:paddingBottom="@dimen/medium_margin"
+        android:background="?attr/selectableItemBackground"
+        android:id="@+id/add_to_google_drive"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/textDialog"
+        android:textColor="@color/delete_red"
+        android:drawableStart="@drawable/delete"
+        android:drawableLeft="@drawable/delete"
+        android:drawablePadding="@dimen/medium_margin"
+        android:text="@string/delete"
+        android:paddingTop="@dimen/medium_margin"
+        android:paddingBottom="@dimen/big_margin"
+        android:background="?attr/selectableItemBackground"
+        android:id="@+id/delete_file"/>
+
+</LinearLayout>

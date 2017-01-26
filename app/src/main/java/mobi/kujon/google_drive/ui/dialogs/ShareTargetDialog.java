@@ -22,22 +22,19 @@ public class ShareTargetDialog extends DialogFragment {
     @Bind(R.id.share_with_chosen)
     TextView shareWithChosen;
 
-    private Dialog dialog;
-
     @Override
     public Dialog onCreateDialog(Bundle savedInstaceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AppTheme_DialogStyle);
         View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_choose_share_target, null);
         builder.setView(view);
         ButterKnife.bind(this, view);
-        dialog = builder.create();
         setOnClickListeners();
-        return dialog;
+        return builder.create();
     }
 
     private void setOnClickListeners() {
-        shareWithChosen.setOnClickListener(v -> dialog.dismiss());
+        shareWithChosen.setOnClickListener(v -> dismiss());
 
-        shareWithEveryone.setOnClickListener(v -> dialog.dismiss());
+        shareWithEveryone.setOnClickListener(v -> dismiss());
     }
 }

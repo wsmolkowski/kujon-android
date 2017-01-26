@@ -91,4 +91,7 @@
     <string name="my_files">Moje</string>
     <string name="share_with_everyone">Udostępnij wszystkim</string>
     <string name="share_with_chosen">Udostępnij wybranym</string>
+    <string name="file_details">Szczegóły pliku</string>
+    <string name="add_to_google_drive">Dodaj do Google Drive</string>
+    <string name="delete">Usuń</string>
 </resources>

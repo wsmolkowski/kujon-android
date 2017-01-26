@@ -6,32 +6,28 @@
     android:layout_margin="8dp">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/textDialog"
-        android:drawableStart="@drawable/teachers"
-        android:drawableLeft="@drawable/teachers"
+        android:drawableStart="@drawable/share_with_everyone"
+        android:drawableLeft="@drawable/share_with_everyone"
         android:drawablePadding="@dimen/medium_margin"
         android:text="@string/share_with_everyone"
-        android:layout_marginTop="@dimen/big_margin"
-        android:layout_marginBottom="@dimen/medium_margin"
-        android:layout_marginEnd="@dimen/medium_margin"
-        android:layout_marginRight="@dimen/medium_margin"
+        android:paddingTop="@dimen/big_margin"
+        android:paddingBottom="@dimen/medium_margin"
         android:background="?attr/selectableItemBackground"
         android:id="@+id/share_with_everyone"/>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/textDialog"
-        android:drawableStart="@drawable/teachers"
-        android:drawableLeft="@drawable/teachers"
-        android:layout_marginEnd="@dimen/medium_margin"
-        android:layout_marginRight="@dimen/medium_margin"
+        android:drawableStart="@drawable/share_with_chosen"
+        android:drawableLeft="@drawable/share_with_chosen"
         android:drawablePadding="@dimen/medium_margin"
         android:text="@string/share_with_chosen"
-        android:layout_marginTop="@dimen/medium_margin"
-        android:layout_marginBottom="@dimen/big_margin"
+        android:paddingTop="@dimen/medium_margin"
+        android:paddingBottom="@dimen/big_margin"
         android:background="?attr/selectableItemBackground"
         android:id="@+id/share_with_chosen"/>
 
