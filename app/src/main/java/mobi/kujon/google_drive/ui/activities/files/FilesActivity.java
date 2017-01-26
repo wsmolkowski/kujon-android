@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -19,6 +18,7 @@ import mobi.kujon.google_drive.dagger.injectors.FilesListFragmentInjector;
 import mobi.kujon.google_drive.dagger.injectors.Injector;
 import mobi.kujon.google_drive.mvp.files_list.FilesOwnerType;
 import mobi.kujon.google_drive.ui.activities.BaseFileActivity;
+import mobi.kujon.google_drive.ui.dialogs.ShareTargetDialog;
 import mobi.kujon.google_drive.ui.fragments.ProvideInjector;
 import mobi.kujon.google_drive.ui.fragments.files.FilesListFragment;
 
@@ -30,16 +30,15 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
     public static final String TERM_ID_KEY = "TERM_ID_KEY";
     private FileActivityInjector fileActivityInjector;
 
-    public static void openActivity(Activity context, String courseId, String termId){
-        Intent intent  = new Intent(context,FilesActivity.class);
-        intent.putExtra(COURSE_ID_KEY,courseId);
-        intent.putExtra(TERM_ID_KEY,termId);
+    public static void openActivity(Activity context, String courseId, String termId) {
+        Intent intent = new Intent(context, FilesActivity.class);
+        intent.putExtra(COURSE_ID_KEY, courseId);
+        intent.putExtra(TERM_ID_KEY, termId);
         context.startActivity(intent);
     }
 
 
-
-    private String coursId,termId;
+    private String coursId, termId;
     @Bind(R.id.viewpager)
     ViewPager viewPager;
     @Bind(R.id.sliding_tabs)
@@ -56,14 +55,17 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
         ButterKnife.bind(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        String[] titles = {getString(R.string.all_files),getString(R.string.my_files)};
-        Fragment[] fragments = {FilesListFragment.newInstance(FilesOwnerType.ALL),FilesListFragment.newInstance(FilesOwnerType.MY)};
-        viewPager.setAdapter(new FilesFragmentPagerAdapter(getSupportFragmentManager(),titles,fragments));
+        String[] titles = {getString(R.string.all_files), getString(R.string.my_files)};
+        Fragment[] fragments = {FilesListFragment.newInstance(FilesOwnerType.ALL), FilesListFragment.newInstance(FilesOwnerType.MY)};
+        viewPager.setAdapter(new FilesFragmentPagerAdapter(getSupportFragmentManager(), titles, fragments));
 
         tabLayout.setupWithViewPager(viewPager);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show());
+        fab.setOnClickListener(view -> {
+                    ShareTargetDialog shareTargetDialog = new ShareTargetDialog();
+                    shareTargetDialog.show(getFragmentManager(), "tag");
+                }
+        );
     }
 
     public String getCoursId() {

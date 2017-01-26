@@ -28,6 +28,9 @@ public abstract class BaseFileFragment<T> extends Fragment implements HandleExce
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        if(injector == null){
+            setUpInjector();
+        }
         injectYourself(injector);
         return createView(inflater, container, savedInstanceState);
     }
@@ -39,21 +42,23 @@ public abstract class BaseFileFragment<T> extends Fragment implements HandleExce
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        setUpInjector();
+    }
+
+    private void setUpInjector() {
         try {
             injector = ((ProvideInjector<T>)this.getActivity()).provideInjector();
         }catch (ClassCastException e){
             throw new RuntimeException("Activity does not implements Correct ProvideInjector");
+        }catch (NullPointerException npe){
+            npe.printStackTrace();
         }
     }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        try {
-            injector = ((ProvideInjector<T>)this.getActivity()).provideInjector();
-        }catch (ClassCastException e){
-            throw new RuntimeException("Activity does not implements Correct ProvideInjector");
-        }
+        setUpInjector();
     }
 
     @Override
