@@ -118,4 +118,19 @@
     <style name="MySearchViewStyle" parent="Widget.AppCompat.SearchView">
 
     </style>
+
+    <style name="AppTheme.DialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:textColorPrimary">@color/colorPrimary</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="android:textColorHighlight">@color/colorPrimary</item>
+
+    </style>
+
+    <style name="textDialog">
+        <item name="android:textColor">@color/dark</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+    </style>
 </resources>

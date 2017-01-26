@@ -89,4 +89,6 @@
     <string name="title_activity_files">FilesActivity</string>
     <string name="all_files">Wszystkie</string>
     <string name="my_files">Moje</string>
+    <string name="share_with_everyone">Udostępnij wszystkim</string>
+    <string name="share_with_chosen">Udostępnij wybranym</string>
 </resources>
