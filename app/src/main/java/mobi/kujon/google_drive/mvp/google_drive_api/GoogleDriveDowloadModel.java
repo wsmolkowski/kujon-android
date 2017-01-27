@@ -25,6 +25,7 @@ public class GoogleDriveDowloadModel implements GoogleDriveDowloadMVP.Model {
     private static final String TAG = "GOOGLE_DOWLOAD";
     private GoogleApiClient googleApiClient;
     private FileStreamUpdateMVP.Model model;
+
     public GoogleDriveDowloadModel(GoogleApiClient googleApiClient, FileStreamUpdateMVP.Model model) {
         this.googleApiClient = googleApiClient;
         this.model = model;
@@ -39,13 +40,13 @@ public class GoogleDriveDowloadModel implements GoogleDriveDowloadMVP.Model {
 
     @Override
     public Observable<byte[]> dowloadFile(DriveId fileId) {
-       return Observable.just(fileId.asDriveFile())
-                .map(driveFile ->{
+        return Observable.just(fileId.asDriveFile())
+                .map(driveFile -> {
                     DriveResource.MetadataResult mdRslt = driveFile.getMetadata(googleApiClient).await();
                     String title = mdRslt.getMetadata().getTitle();
-                    return new InsideHelper(driveFile,getDownloadProgressListener(title));
+                    return new InsideHelper(driveFile, getDownloadProgressListener(title));
                 })
-                .map(insideHelper-> insideHelper.driveFile.open(googleApiClient, DriveFile.MODE_READ_ONLY, insideHelper.downloadProgressListener).await())
+                .map(insideHelper -> insideHelper.driveFile.open(googleApiClient, DriveFile.MODE_READ_ONLY, insideHelper.downloadProgressListener).await())
                 .map(driveContents -> {
                     try {
                         return readFully(driveContents.getDriveContents().getInputStream());
@@ -60,12 +61,12 @@ public class GoogleDriveDowloadModel implements GoogleDriveDowloadMVP.Model {
     @NonNull
     private DriveFile.DownloadProgressListener getDownloadProgressListener(String title) {
         return (bytesDownloaded, bytesExpected) -> {
-                            int progress = (int)(bytesDownloaded*100/bytesExpected);
-                            model.updateStream(new FileUpdateDto(title,progress));
-                        };
+            int progress = (int) (bytesDownloaded * 100 / bytesExpected);
+            model.updateStream(new FileUpdateDto(title, progress));
+        };
     }
 
-    private class InsideHelper{
+    private class InsideHelper {
         DriveFile driveFile;
         DriveFile.DownloadProgressListener downloadProgressListener;
 
@@ -76,15 +77,19 @@ public class GoogleDriveDowloadModel implements GoogleDriveDowloadMVP.Model {
     }
 
 
-    public  byte[] readFully(InputStream input) throws IOException
-    {
-        byte[] buffer = new byte[8192];
-        int bytesRead;
-        ByteArrayOutputStream output = new ByteArrayOutputStream();
-        while ((bytesRead = input.read(buffer)) != -1)
-        {
-            output.write(buffer, 0, bytesRead);
+    public byte[] readFully(InputStream responseStream) throws IOException {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        try {
+            int read = responseStream.read();
+            while (read != -1) {
+                byteArrayOutputStream.write(read);
+                read = responseStream.read();
+            }
+            return byteArrayOutputStream.toByteArray();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
         }
-        return output.toByteArray();
+
     }
 }
