@@ -83,14 +83,14 @@ public class CoursesInSemseterActivity extends BaseFileActivity implements Cours
     }
 
     @Override
-    protected void setProgress(boolean t) {
+    protected void setLoading(boolean t) {
         swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
     public void onCoursesLoaded(List<CourseDTO> courseDTOs) {
         adapter.setCourseDTOs(courseDTOs);
-        setProgress(false);
+        setLoading(false);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package mobi.kujon.google_drive.dagger;
 
+import mobi.kujon.google_drive.mvp.file_stream_update.FileStreamUpdateMVP;
 import mobi.kujon.google_drive.network.unwrapped_api.CoursesApi;
 import mobi.kujon.google_drive.network.unwrapped_api.DeleteFile;
 import mobi.kujon.google_drive.network.unwrapped_api.FileDownload;
@@ -21,4 +22,5 @@ public interface FilesComponent {
     FileDownload provideFileDownload() ;
     DeleteFile provideDeleteFile() ;
     FileUpload provideUploadFile() ;
+    FileStreamUpdateMVP.Model provideModel();
 }

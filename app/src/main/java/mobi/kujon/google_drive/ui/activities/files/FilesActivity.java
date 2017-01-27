@@ -44,6 +44,8 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
     @Bind(R.id.sliding_tabs)
     TabLayout tabLayout;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,7 +90,7 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
     }
 
     @Override
-    protected void setProgress(boolean t) {
+    protected void setLoading(boolean t) {
 
     }
 }

@@ -7,7 +7,6 @@ import org.apache.commons.lang.StringUtils;
 
 import java.io.File;
 import java.util.Collection;
-import java.util.List;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -33,5 +32,12 @@ public class MultipartUtils {
         RequestBody requestFile =
                 RequestBody.create(okhttp3.MultipartBody.FORM, file);
         return MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
+    }
+
+    @NonNull
+    public MultipartBody.Part prepareFilePart(String partName, byte[] bytes,String fileName) {
+        RequestBody requestFile =
+                RequestBody.create(okhttp3.MultipartBody.FORM, bytes);
+        return MultipartBody.Part.createFormData(partName, fileName, requestFile);
     }
 }

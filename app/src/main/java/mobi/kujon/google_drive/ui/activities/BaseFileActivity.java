@@ -26,10 +26,10 @@ public abstract class BaseFileActivity extends AppCompatActivity implements Hand
         if (backView != null) backView.setOnClickListener(v -> onBackPressed());
     }
 
-    protected abstract void setProgress(boolean t);
+    protected abstract void setLoading(boolean t);
     @Override
     public void handleException(Throwable throwable) {
-        this.setProgress(false);
+        this.setLoading(false);
         try {
             throw  throwable;
         }catch (KujonException e){

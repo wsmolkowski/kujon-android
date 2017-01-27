@@ -76,7 +76,7 @@ public class SemestersActivity extends BaseFileActivity implements SemestersMVP.
 
 
     @Override
-    protected void setProgress(boolean t) {
+    protected void setLoading(boolean t) {
         swipeRefreshLayout.setRefreshing(false);
     }
 

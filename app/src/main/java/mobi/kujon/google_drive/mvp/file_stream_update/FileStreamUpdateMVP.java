@@ -17,7 +17,7 @@ public interface FileStreamUpdateMVP {
     }
 
     interface Presenter extends ClearSubscriptions{
-        void subscribeToStream();
+        void subscribeToStream(View view);
     }
 
     interface View{

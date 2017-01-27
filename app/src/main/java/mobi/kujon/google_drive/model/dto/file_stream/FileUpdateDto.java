@@ -11,7 +11,7 @@ public class FileUpdateDto {
     private String id;
 
 
-    public FileUpdateDto(String fileName, int progress, String id) {
+    public FileUpdateDto(String fileName, int progress) {
         this.fileName = fileName;
         this.progress = progress;
         this.id = id;
