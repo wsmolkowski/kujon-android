@@ -7,9 +7,9 @@ import com.google.android.gms.drive.DriveFile;
 import com.google.android.gms.drive.DriveId;
 import com.google.android.gms.drive.DriveResource;
 
-import org.apache.commons.io.IOUtils;
-
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import mobi.kujon.google_drive.model.dto.file_stream.FileUpdateDto;
 import mobi.kujon.google_drive.mvp.file_stream_update.FileStreamUpdateMVP;
@@ -31,9 +31,11 @@ public class GoogleDriveDowloadModel implements GoogleDriveDowloadMVP.Model {
     }
 
 
-    public void setGoogleApiClient(GoogleApiClient googleApiClient) {
-        this.googleApiClient = googleApiClient;
+    @Override
+    public void setGoogleClient(GoogleApiClient googleClient) {
+        this.googleApiClient = googleClient;
     }
+
 
     @Override
     public Observable<byte[]> dowloadFile(DriveId fileId) {
@@ -43,10 +45,10 @@ public class GoogleDriveDowloadModel implements GoogleDriveDowloadMVP.Model {
                     String title = mdRslt.getMetadata().getTitle();
                     return new InsideHelper(driveFile,getDownloadProgressListener(title));
                 })
-                .map(insideHelper-> insideHelper.driveFile.open(googleApiClient, DriveFile.MODE_READ_ONLY, insideHelper.downloadProgressListener).await().getDriveContents())
+                .map(insideHelper-> insideHelper.driveFile.open(googleApiClient, DriveFile.MODE_READ_ONLY, insideHelper.downloadProgressListener).await())
                 .map(driveContents -> {
                     try {
-                        return IOUtils.toByteArray(driveContents.getInputStream());
+                        return readFully(driveContents.getDriveContents().getInputStream());
                     } catch (IOException e) {
                         e.printStackTrace();
                         return null;
@@ -71,5 +73,18 @@ public class GoogleDriveDowloadModel implements GoogleDriveDowloadMVP.Model {
             this.driveFile = driveFile;
             this.downloadProgressListener = downloadProgressListener;
         }
+    }
+
+
+    public  byte[] readFully(InputStream input) throws IOException
+    {
+        byte[] buffer = new byte[8192];
+        int bytesRead;
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        while ((bytesRead = input.read(buffer)) != -1)
+        {
+            output.write(buffer, 0, bytesRead);
+        }
+        return output.toByteArray();
     }
 }
