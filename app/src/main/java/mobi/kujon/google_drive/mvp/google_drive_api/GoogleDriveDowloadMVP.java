@@ -15,4 +15,7 @@ public interface GoogleDriveDowloadMVP {
         void setGoogleClient(GoogleApiClient googleClient);
         Observable<byte[]> dowloadFile(DriveId fileId);
     }
+    interface Presenter{
+        void uploadFile(String courseId,String termId,byte[] bytes);
+    }
 }
