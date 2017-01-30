@@ -19,4 +19,8 @@ public class Participant {
     @Expose
     public String id;
 
+    public String getName(){
+        return this.lastName + this.firstName;
+    }
+
 }
