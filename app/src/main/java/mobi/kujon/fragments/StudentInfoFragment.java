@@ -119,7 +119,6 @@ public class StudentInfoFragment extends BaseFragment {
                     List<String> collect = $.collect(user.student_programmes, it -> it.programme.description.split(",")[0]);
                     studentProgrammes.removeAllViews();
                     CommonUtils.showList(activity.getLayoutInflater(), studentProgrammes, collect, position -> {
-                        activity.showProgress(true);
                         StudentProgramme studentProgramme = user.student_programmes.get(position);
                         Programme programme = studentProgramme.programme;
                         ProgrammeDetailsActivity.showProgrammeDetailsWithLoad(StudentInfoFragment.this.getActivity(), programme.id);
