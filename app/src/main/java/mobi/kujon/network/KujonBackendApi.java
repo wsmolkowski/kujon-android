@@ -67,7 +67,7 @@ public interface KujonBackendApi {
 
     @GET("programmes") Call<KujonResponse<List<Programme>>> programmes();
 
-    @GET("programmes/{id}") Call<KujonResponse<ProgrammeSingle>> programmes(@Path("id") String id);
+    @GET("programmes/{id}") Call<KujonResponse<ProgrammeSingle>> programmes(@Path("id") String id,@Header(X_KUJONREFRESH) String refresh);
 
     @GET("faculties") Call<KujonResponse<List<Faculty2>>> faculties();
 

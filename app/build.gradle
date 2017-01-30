@@ -13,8 +13,8 @@ android {
         applicationId "mobi.kujon"
         minSdkVersion 16
         targetSdkVersion 21
-        versionCode 66
-        versionName "1.1.4"
+        versionCode 69
+        versionName "1.1.7"
 
         manifestPlaceholders = [manifestApplicationId          : "${applicationId}",
                                 onesignal_app_id               : "f01a20f9-bbe7-4c89-a017-bf8930c61cf4",
@@ -83,13 +83,11 @@ repositories {
     maven { url 'https://maven.fabric.io/public' }
 }
 
-apply plugin: 'com.neenbedankt.android-apt'
-
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
 //    compile(name: 'foam-release', ext: 'aar')
     compile(name: 'khacpv-android-week-view', ext: 'aar')
-    compile("com.crashlytics.sdk.android:crashlytics:$crashlytics_version") {
+    compile('com.crashlytics.sdk.android:crashlytics:2.6.6@aar') {
         transitive = true;
     }
     compile("com.mikepenz:materialdrawer:$material_drawer_version") {
@@ -102,6 +100,7 @@ dependencies {
     compile("com.github.afollestad:sectioned-recyclerview:$sectioned_recycler_view_version") {
         transitive = true
     }
+
 
     //Support
     compile "com.android.support:appcompat-v7:$support_version"

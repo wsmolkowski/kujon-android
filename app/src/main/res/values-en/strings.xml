@@ -68,7 +68,7 @@
     <string name="lecturers_plan">Schedule</string>
     <string name="no_data_for_month">No data for </string>
     <string name="action_settings">Ustawienia</string>
-    <string name="change_api_demo" >demo mode on</string>
+    <string name="change_api_demo">demo mode on</string>
     <string name="change_api_prod" >production mode on</string>
     <string name="search_title">Search</string>
     <string name="server_communication_error">Error in server communication</string>

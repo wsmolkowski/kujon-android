@@ -5,6 +5,8 @@ import com.google.gson.annotations.SerializedName;
 
 import javax.annotation.Generated;
 
+import static android.text.TextUtils.isEmpty;
+
 @Generated("org.jsonschema2pojo")
 public class ProgrammeSingle {
 
@@ -26,5 +28,10 @@ public class ProgrammeSingle {
     @SerializedName("level_of_studies")
     @Expose
     public String levelOfStudies;
+
+
+    public String getFullName(){
+        return  !isEmpty(this.name) ? this.name.split(",")[0] : "";
+    }
 
 }

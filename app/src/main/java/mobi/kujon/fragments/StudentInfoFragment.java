@@ -30,7 +30,6 @@ import mobi.kujon.activities.StudentDetailsActivity;
 import mobi.kujon.network.KujonBackendApi;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.network.json.Programme;
-import mobi.kujon.network.json.ProgrammeSingle;
 import mobi.kujon.network.json.StudentProgramme;
 import mobi.kujon.network.json.User;
 import mobi.kujon.network.json.Usos;
@@ -120,26 +119,9 @@ public class StudentInfoFragment extends BaseFragment {
                     List<String> collect = $.collect(user.student_programmes, it -> it.programme.description.split(",")[0]);
                     studentProgrammes.removeAllViews();
                     CommonUtils.showList(activity.getLayoutInflater(), studentProgrammes, collect, position -> {
-                        activity.showProgress(true);
                         StudentProgramme studentProgramme = user.student_programmes.get(position);
                         Programme programme = studentProgramme.programme;
-                        kujonBackendApi.programmes(programme.id).enqueue(new Callback<KujonResponse<ProgrammeSingle>>() {
-                            @Override
-                            public void onResponse(Call<KujonResponse<ProgrammeSingle>> call, Response<KujonResponse<ProgrammeSingle>> response) {
-                                activity.showProgress(false);
-                                if (ErrorHandlerUtil.handleResponse(response)) {
-                                    ProgrammeSingle prog = response.body().data;
-                                    String name = !isEmpty(prog.name) ? prog.name.split(",")[0] : "";
-                                    ProgrammeDetailsActivity.showProgrammeDetails(StudentInfoFragment.this.getActivity(), prog, name);
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call<KujonResponse<ProgrammeSingle>> call, Throwable t) {
-                                activity.showProgress(false);
-                                ErrorHandlerUtil.handleError(t);
-                            }
-                        });
+                        ProgrammeDetailsActivity.showProgrammeDetailsWithLoad(StudentInfoFragment.this.getActivity(), programme.id);
                     });
                 }
             }
