@@ -15,7 +15,7 @@ android {
         targetSdkVersion 21
         versionCode 69
         versionName "1.1.7"
-
+        multiDexEnabled true
         manifestPlaceholders = [manifestApplicationId          : "${applicationId}",
                                 onesignal_app_id               : "f01a20f9-bbe7-4c89-a017-bf8930c61cf4",
                                 onesignal_google_project_number: "896765768628"]
@@ -73,6 +73,10 @@ android {
 
     dataBinding {
         enabled = true
+    }
+
+    dexOptions {
+        jumboMode = true
     }
 }
 
@@ -143,6 +147,7 @@ dependencies {
     compile 'uk.co.chrisjenx:calligraphy:2.2.0'
     compile 'com.annimon:stream:1.1.4'
     compile 'com.facebook.android:facebook-android-sdk:4.17.0'
+    compile 'com.android.support:multidex:1.0.1'
 
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.8'
