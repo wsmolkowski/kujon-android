@@ -65,7 +65,7 @@ public class DowloadUploadFileServices extends Service implements GoogleApiClien
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if (intent != null && intent.getExtras() == null) {
+        if (intent != null && intent.getExtras() == null && intent.getStringExtra(FILE_UPLOAD_DTO)==null) {
             stopSelf();
         }
         fileUpdateDto = gson.fromJson(intent.getStringExtra(FILE_UPLOAD_DTO), FileUpdateDto.class);
@@ -81,7 +81,7 @@ public class DowloadUploadFileServices extends Service implements GoogleApiClien
                 .subscribeOn(schedulersHolder.subscribe())
                 .observeOn(schedulersHolder.observ())
                 .subscribe(it -> {
-                    //TODO create presenter which will update this byte[] woth fileUpdateDto
+                    //TODO create presenter which will update this byte[] with fileUpdateDto
                 }, error -> {
 
                 });

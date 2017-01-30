@@ -34,7 +34,7 @@ buildscript {
     ext.google_play_services = '10.0.1'
 
     ext.onesignal_version = '2.+@aar'
-    ext.facebook_version = '4.19.0'
+    ext.facebook_version = '4.17.0'
     ext.commons_lang_version = '2.6'
     ext.rv_endless_adapter_version = '1.1'
     ext.calligraphy_version = '2.2.0'
