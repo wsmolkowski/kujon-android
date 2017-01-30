@@ -142,7 +142,7 @@ dependencies {
     compile 'com.rockerhieu:rv-adapter-endless:1.1'
     compile 'uk.co.chrisjenx:calligraphy:2.2.0'
     compile 'com.annimon:stream:1.1.4'
-    compile 'com.facebook.android:facebook-android-sdk:[4,5]'
+    compile 'com.facebook.android:facebook-android-sdk:4.17.0'
 
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.8'

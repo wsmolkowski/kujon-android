@@ -7,111 +7,114 @@
     android:orientation="vertical">
 
     <include layout="@layout/kujon_toolbar_with_back" />
-
-
-    <ScrollView
-        android:id="@+id/scrollView"
+    <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
+        android:layout_height="match_parent"
+        android:id="@+id/refresh_layout">
+        <ScrollView
+            android:id="@+id/scrollView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/programme_full_name"
-                style="@style/Regular.Entry.Semibold"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@android:color/black"
-                android:textSize="22sp" />
+                android:orientation="vertical">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/white" />
+                <TextView
+                    android:id="@+id/programme_full_name"
+                    style="@style/Regular.Entry.Semibold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="22sp" />
 
-            <TextView
-                style="@style/Regular.Label.Left"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="@string/study_level" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/white" />
 
-            <TextView
-                android:id="@+id/programme_level"
-                style="@style/Regular.Entry"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/none" />
+                <TextView
+                    style="@style/Regular.Label.Left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/study_level" />
 
-            <TextView
-                style="@style/Regular.Label.Left"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="@string/programme_duration" />
+                <TextView
+                    android:id="@+id/programme_level"
+                    style="@style/Regular.Entry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/none" />
 
-            <TextView
-                android:id="@+id/programme_duration"
-                style="@style/Regular.Entry"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/none" />
+                <TextView
+                    style="@style/Regular.Label.Left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/programme_duration" />
 
-            <TextView
-                style="@style/Regular.Label.Left"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="@string/programme_id" />
+                <TextView
+                    android:id="@+id/programme_duration"
+                    style="@style/Regular.Entry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/none" />
 
-            <TextView
-                android:id="@+id/programme_id"
-                style="@style/Regular.Entry"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/none" />
+                <TextView
+                    style="@style/Regular.Label.Left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/programme_id" />
 
-            <TextView
-                style="@style/Regular.Label.Left"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="@string/programme_mode" />
+                <TextView
+                    android:id="@+id/programme_id"
+                    style="@style/Regular.Entry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/none" />
 
-            <TextView
-                android:id="@+id/programme_mode"
-                style="@style/Regular.Entry"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/none" />
+                <TextView
+                    style="@style/Regular.Label.Left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/programme_mode" />
 
-            <TextView
-                android:id="@+id/ects_sum_label"
-                style="@style/Regular.Label.Left"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="@string/ects_sum" />
+                <TextView
+                    android:id="@+id/programme_mode"
+                    style="@style/Regular.Entry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/none" />
 
-            <TextView
-                android:id="@+id/programme_ects_sum"
-                style="@style/Regular.Entry"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/none" />
+                <TextView
+                    android:id="@+id/ects_sum_label"
+                    style="@style/Regular.Label.Left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/ects_sum" />
 
-            <TextView
-                style="@style/Regular.Label.Left"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="@string/programme_name" />
+                <TextView
+                    android:id="@+id/programme_ects_sum"
+                    style="@style/Regular.Entry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/none" />
 
-            <TextView
-                android:id="@+id/programme_name"
-                style="@style/Regular.Entry"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/none" />
+                <TextView
+                    style="@style/Regular.Label.Left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/programme_name" />
 
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/programme_name"
+                    style="@style/Regular.Entry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/none" />
 
-    </ScrollView>
+            </LinearLayout>
+
+        </ScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>
