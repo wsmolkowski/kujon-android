@@ -36,6 +36,8 @@ public abstract class AbstractSearchActivity<S, T> extends BaseActivity implemen
     @Bind(R.id.recyclerView) RecyclerView recyclerView;
     protected EndlessRecyclerViewAdapter endlessRecyclerViewAdapter;
 
+    @Bind(R.id.empty_text) TextView emptyTextView;
+
     @Inject KujonBackendApi kujonBackendApi;
 
     protected int start = 0;
@@ -116,7 +118,14 @@ public abstract class AbstractSearchActivity<S, T> extends BaseActivity implemen
 
         public void addItems(@NonNull List<T> newItems) {
             items.addAll(newItems);
-            notifyDataSetChanged();
+            if(items.isEmpty()) {
+                emptyTextView.setVisibility(View.VISIBLE);
+                recyclerView.setVisibility(View.GONE);
+            } else {
+                emptyTextView.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
+                notifyDataSetChanged();
+            }
         }
     }
 

@@ -72,4 +72,5 @@
     <string name="change_api_prod" >production mode on</string>
     <string name="search_title">Search</string>
     <string name="server_communication_error">Error in server communication</string>
+    <string name="empty_results">No Results Found</string>
 </resources>
