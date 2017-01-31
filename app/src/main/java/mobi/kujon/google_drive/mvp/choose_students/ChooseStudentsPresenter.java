@@ -8,13 +8,13 @@ import mobi.kujon.google_drive.utils.SchedulersHolder;
  *
  */
 
-public class ChooseStudentPresenter extends AbstractClearSubsriptions implements ChooseStudentsMVP.Presenter {
+public class ChooseStudentsPresenter extends AbstractClearSubsriptions implements ChooseStudentsMVP.Presenter {
     private ChooseStudentsMVP.Model model;
     private ChooseStudentsMVP.View view;
     private SchedulersHolder schedulersHolder;
 
 
-    public ChooseStudentPresenter(ChooseStudentsMVP.Model model, ChooseStudentsMVP.View view, SchedulersHolder schedulersHolder) {
+    public ChooseStudentsPresenter(ChooseStudentsMVP.Model model, ChooseStudentsMVP.View view, SchedulersHolder schedulersHolder) {
         this.model = model;
         this.view = view;
         this.schedulersHolder = schedulersHolder;
