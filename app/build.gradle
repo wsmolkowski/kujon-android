@@ -15,7 +15,7 @@ android {
         targetSdkVersion 21
         versionCode 69
         versionName "1.1.7"
-
+        multiDexEnabled true
         manifestPlaceholders = [manifestApplicationId          : "${applicationId}",
                                 onesignal_app_id               : "f01a20f9-bbe7-4c89-a017-bf8930c61cf4",
                                 onesignal_google_project_number: "896765768628"]
@@ -74,6 +74,10 @@ android {
     dataBinding {
         enabled = true
     }
+
+    dexOptions {
+        jumboMode = true
+    }
 }
 
 repositories {
@@ -82,6 +86,8 @@ repositories {
     }
     maven { url 'https://maven.fabric.io/public' }
 }
+
+apply plugin: 'com.neenbedankt.android-apt'
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
@@ -135,6 +141,7 @@ dependencies {
 
     //dagger
     compile "com.google.dagger:dagger:$daggerVersion"
+    apt "com.google.dagger:dagger-compiler:$daggerVersion"
     provided "javax.annotation:jsr250-api:$jsr_annotation_version"
 
     //rest
@@ -148,7 +155,17 @@ dependencies {
     compile "com.annimon:stream:$stream_version"
     compile "com.facebook.android:facebook-android-sdk:$facebook_version"
 
-    testCompile 'junit:junit:4.12'
+
+    //TEST
+    testCompile "junit:junit:$junit_version"
+    testCompile "org.mockito:mockito-core:$mockito_version"
+    androidTestCompile "com.android.support:support-annotations:$support_version"
+    androidTestCompile "com.android.support.test:runner:$testrunner_version"
+    androidTestCompile "com.android.support.test:rules:$testrunner_version"
+    androidTestCompile "org.mockito:mockito-core:$mockito_version"
+    androidTestCompile "com.google.dexmaker:dexmaker:$dexmarker_version"
+    androidTestCompile "com.google.dexmaker:dexmaker-mockito:$dexmarker_version"
+    androidTestApt "com.google.dagger:dagger-compiler:$daggerVersion"
     annotationProcessor 'com.google.dagger:dagger-compiler:2.8'
 }
 

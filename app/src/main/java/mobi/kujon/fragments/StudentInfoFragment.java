@@ -174,7 +174,9 @@ public class StudentInfoFragment extends BaseFragment {
 
     @Override public void onDestroyView() {
         super.onDestroyView();
-        users.cancel();
+        if (users != null) {
+            users.cancel();
+        }
         ButterKnife.unbind(this);
     }
 }
