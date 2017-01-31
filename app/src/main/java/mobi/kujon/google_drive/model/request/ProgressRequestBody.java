@@ -48,7 +48,8 @@ public class ProgressRequestBody extends RequestBody {
         try {
             int read;
             while ((read = in.read(buffer)) != -1) {
-
+                uploaded += read;
+                sink.write(buffer, 0, read);
                 mListener.onProgressUpdate((int)(100 * uploaded / fileLength));
             }
         } finally {
