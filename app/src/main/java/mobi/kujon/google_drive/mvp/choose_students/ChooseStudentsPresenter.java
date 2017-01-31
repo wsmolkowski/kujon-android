@@ -22,6 +22,12 @@ public class ChooseStudentsPresenter extends AbstractClearSubsriptions implement
 
     @Override
     public void loadListOfStudents(AskForStudentDto askForStudentDto, boolean refresh) {
-
+        addToSubsriptionList(
+                model.provideListOfStudents(askForStudentDto.getCourseId(), askForStudentDto.getTermId(), refresh)
+                .subscribeOn(schedulersHolder.subscribe())
+                .observeOn(schedulersHolder.observ())
+                .subscribe(studentShareDtos -> {
+                    view.showStudentList(studentShareDtos);
+                }, throwable -> view.handleException(throwable)));
     }
 }
