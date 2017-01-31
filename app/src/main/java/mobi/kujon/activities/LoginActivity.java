@@ -133,7 +133,7 @@ public class LoginActivity extends BaseActivity {
             if (requestCode == RC_SIGN_IN) {
                 progress(false);
                 if (resultCode == RESULT_OK) {
-                    GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data); //TODO: make sure result is not null
+                    GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
                     handle(result);
                 } else {
                     log.error(String.format("Login error requestCode=%s, resultCode=%s, data=%s", requestCode, resultCode, data));
