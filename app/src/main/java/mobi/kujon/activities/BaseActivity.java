@@ -80,7 +80,8 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
                 .build();
 
         apiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
+                .addOnConnectionFailedListener(this)
+                .addConnectionCallbacks(this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .addConnectionCallbacks(this)
                 .build();
@@ -113,6 +114,9 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
 
     @Override protected void onStart() {
         super.onStart();
+        if (!apiClient.isConnected()) {
+            apiClient.connect();
+        }
         checkLoggingStatus(this::handle);
         Answers.getInstance().logContentView(new ContentViewEvent()
                 .putContentName(this.getClass().getSimpleName()));
@@ -121,6 +125,13 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
     @Override protected void onRestart() {
         super.onRestart();
         checkLoggingStatus(this::handle);
+    }
+
+    @Override protected void onStop() {
+        super.onStop();
+        if (apiClient.isConnected()) {
+            apiClient.disconnect();
+        }
     }
 
     @Override protected void onDestroy() {
