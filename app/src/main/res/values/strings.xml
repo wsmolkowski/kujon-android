@@ -78,6 +78,7 @@
     <string name="search_title">Szukaj</string>
     <string name="server_communication_error">Błąd komunikacji z serwerem</string>
     <string name="no_data_for_month"> - Brak zajęć w USOS</string>
+    <string name="empty_results">Brak Wyników</string>
     <string name="title_activity_semesters">SemestersActivity</string>
     <string name="semester_choose">Wybierz semestr</string>
     <string name="title_activity_courses_in_semseter">CoursesInSemseterActivity</string>
