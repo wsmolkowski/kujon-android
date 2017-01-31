@@ -96,8 +96,8 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
         content = (FrameLayout) findViewById(android.R.id.content);
     }
 
-    @Override protected void onPostCreate(@Nullable Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
+    @Override protected void onPostResume(){
+        super.onPostResume();
         View backView = findViewById(R.id.back);
         if (backView != null) backView.setOnClickListener(v -> onBackPressed());
     }
