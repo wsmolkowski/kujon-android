@@ -71,12 +71,10 @@ public abstract class BaseFileFragment<T> extends Fragment implements HandleExce
     @Override
     public void handleException(Throwable throwable) {
         this.setProgress(false);
-        try {
-            throw  throwable;
-        }catch (KujonException e){
-            ErrorHandlerUtil.handleKujonError(e);
-        }catch (Throwable t){
-            ErrorHandlerUtil.handleError(t);
+        if(throwable instanceof KujonException){
+            ErrorHandlerUtil.handleKujonError((KujonException)throwable);
+        }else {
+            ErrorHandlerUtil.handleError(throwable);
         }
     }
 

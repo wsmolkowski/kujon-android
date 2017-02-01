@@ -30,12 +30,10 @@ public abstract class BaseFileActivity extends AppCompatActivity implements Hand
     @Override
     public void handleException(Throwable throwable) {
         this.setLoading(false);
-        try {
-            throw  throwable;
-        }catch (KujonException e){
-            ErrorHandlerUtil.handleKujonError(e);
-        }catch (Throwable t){
-            ErrorHandlerUtil.handleError(t);
+        if(throwable instanceof KujonException){
+            ErrorHandlerUtil.handleKujonError((KujonException)throwable);
+        }else {
+            ErrorHandlerUtil.handleError(throwable);
         }
     }
 }
