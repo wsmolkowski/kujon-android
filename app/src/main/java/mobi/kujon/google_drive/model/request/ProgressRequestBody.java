@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import mobi.kujon.google_drive.model.dto.file_upload.DataForFileUpload;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import okio.BufferedSink;
@@ -21,16 +22,15 @@ public class ProgressRequestBody extends RequestBody {
         void onFinish();
     }
 
-    public ProgressRequestBody(final byte[] file, final  UploadCallbacks listener,MediaType mediaType) {
-        bytes = file;
+    public ProgressRequestBody(DataForFileUpload file, final  UploadCallbacks listener) {
+        bytes = file.getBytes();
         mListener = listener;
-        this.mediaType = mediaType;
+        this.mediaType = file.getMediaType();
     }
 
     @Override
     public MediaType contentType() {
-        // i want to upload only images
-        return MediaType.parse("application/octet-stream");
+        return this.mediaType;
     }
 
     @Override

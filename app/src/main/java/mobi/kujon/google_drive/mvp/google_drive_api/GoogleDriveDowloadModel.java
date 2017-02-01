@@ -3,6 +3,7 @@ package mobi.kujon.google_drive.mvp.google_drive_api;
 import android.support.annotation.NonNull;
 
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.drive.DriveApi;
 import com.google.android.gms.drive.DriveFile;
 import com.google.android.gms.drive.DriveId;
 import com.google.android.gms.drive.DriveResource;
@@ -12,6 +13,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import mobi.kujon.google_drive.model.dto.file_stream.FileUpdateDto;
+import mobi.kujon.google_drive.model.dto.file_upload.DataForFileUpload;
 import mobi.kujon.google_drive.mvp.file_stream_update.FileStreamUpdateMVP;
 import rx.Observable;
 
@@ -39,22 +41,25 @@ public class GoogleDriveDowloadModel implements GoogleDriveDowloadMVP.Model {
 
 
     @Override
-    public Observable<byte[]> dowloadFile(DriveId fileId) {
+    public Observable<DataForFileUpload> dowloadFile(DriveId fileId) {
         return Observable.just(fileId.asDriveFile())
                 .map(driveFile -> {
                     DriveResource.MetadataResult mdRslt = driveFile.getMetadata(googleApiClient).await();
                     String title = mdRslt.getMetadata().getTitle();
-                    return new InsideHelper(driveFile, getDownloadProgressListener(title));
+                    return new InsideHelper(driveFile, getDownloadProgressListener(title),mdRslt);
                 })
-                .map(insideHelper -> insideHelper.driveFile.open(googleApiClient, DriveFile.MODE_READ_ONLY, insideHelper.downloadProgressListener).await())
-                .map(driveContents -> {
+                .map(insideHelper ->{
+                    DriveApi.DriveContentsResult driveContents = insideHelper.driveFile.open(googleApiClient, DriveFile.MODE_READ_ONLY, insideHelper.downloadProgressListener).await();
+                    return new InsideHelper2(insideHelper.metadataResult,driveContents);
+                })
+                .map(insideHelper2 -> {
                     try {
-                        return readFully(driveContents.getDriveContents().getInputStream());
+                        return new DataForFileUpload(readFully(insideHelper2.driveContentsResult.getDriveContents().getInputStream()),
+                                insideHelper2.metadataResult.getMetadata().getMimeType());
                     } catch (IOException e) {
                         e.printStackTrace();
                         return null;
                     }
-
                 });
     }
 
@@ -69,15 +74,26 @@ public class GoogleDriveDowloadModel implements GoogleDriveDowloadMVP.Model {
     private class InsideHelper {
         DriveFile driveFile;
         DriveFile.DownloadProgressListener downloadProgressListener;
+        DriveResource.MetadataResult metadataResult;
 
-        public InsideHelper(DriveFile driveFile, DriveFile.DownloadProgressListener downloadProgressListener) {
+         InsideHelper(DriveFile driveFile, DriveFile.DownloadProgressListener downloadProgressListener,DriveResource.MetadataResult metadataResult) {
             this.driveFile = driveFile;
             this.downloadProgressListener = downloadProgressListener;
+            this.metadataResult = metadataResult;
+        }
+    }
+    private class InsideHelper2{
+        DriveResource.MetadataResult metadataResult;
+        DriveApi.DriveContentsResult driveContentsResult;
+
+         InsideHelper2(DriveResource.MetadataResult metadataResult, DriveApi.DriveContentsResult driveContentsResult) {
+            this.metadataResult = metadataResult;
+            this.driveContentsResult = driveContentsResult;
         }
     }
 
 
-    public byte[] readFully(InputStream responseStream) throws IOException {
+    private byte[] readFully(InputStream responseStream) throws IOException {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         try {
             int read = responseStream.read();
