@@ -20,6 +20,8 @@ import com.google.android.gms.drive.Drive;
 import com.google.android.gms.drive.DriveId;
 import com.google.android.gms.drive.OpenFileActivityBuilder;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import butterknife.Bind;
@@ -34,12 +36,14 @@ import mobi.kujon.google_drive.mvp.file_stream_update.FileStreamUpdateMVP;
 import mobi.kujon.google_drive.mvp.files_list.FilesOwnerType;
 import mobi.kujon.google_drive.mvp.google_drive_api.GoogleDriveDowloadMVP;
 import mobi.kujon.google_drive.ui.activities.BaseFileActivity;
+import mobi.kujon.google_drive.ui.dialogs.share_target.ChooseShareStudentsListener;
+import mobi.kujon.google_drive.ui.dialogs.share_target.ShareTargetDialog;
 import mobi.kujon.google_drive.ui.fragments.ProvideInjector;
 import mobi.kujon.google_drive.ui.fragments.files.FilesListFragment;
 import mobi.kujon.google_drive.utils.SchedulersHolder;
 
 
-public class FilesActivity extends BaseFileActivity implements ProvideInjector<FilesListFragment>, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, FileStreamUpdateMVP.View {
+public class FilesActivity extends BaseFileActivity implements ProvideInjector<FilesListFragment>, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, FileStreamUpdateMVP.View, ChooseShareStudentsListener {
 
     private static final int RESOLVE_CONNECTION_REQUEST_CODE = 539;
     private static final int REQUEST_CODE_OPENER = 1;
@@ -173,8 +177,13 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
                 .subscribeOn(schedulersHolder.subscribe())
                 .observeOn(schedulersHolder.observ())
                 .subscribe(it->{
-                    Log.d("FILE","dowloaded !!!!!");
+                    showChooseStudentsDialog();
                 });
+    }
+
+    private void showChooseStudentsDialog() {
+        ShareTargetDialog dialog = new ShareTargetDialog();
+        dialog.show(getFragmentManager(), ShareTargetDialog.NAME);
     }
 
     @Override
@@ -208,5 +217,15 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
     @Override
     public void onUpdate(FileUpdateDto fileUpdateDto) {
         Log.d(fileUpdateDto.getFileName(), String.format("Loading progress: %d percent", fileUpdateDto.getProgress()));
+    }
+
+    @Override
+    public void shareWithAll() {
+
+    }
+
+    @Override
+    public void shareWithChosen(List<String> chosenStudentIds) {
+
     }
 }

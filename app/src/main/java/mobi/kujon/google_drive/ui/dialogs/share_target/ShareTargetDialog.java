@@ -1,9 +1,10 @@
-package mobi.kujon.google_drive.ui.dialogs;
+package mobi.kujon.google_drive.ui.dialogs.share_target;
 
 
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -22,6 +23,8 @@ public class ShareTargetDialog extends DialogFragment {
     @Bind(R.id.share_with_chosen)
     TextView shareWithChosen;
 
+    private ChooseShareStudentsListener chooseShareTargetListener;
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstaceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AppTheme_DialogStyle);
@@ -33,8 +36,33 @@ public class ShareTargetDialog extends DialogFragment {
     }
 
     private void setOnClickListeners() {
-        shareWithChosen.setOnClickListener(v -> dismiss());
+        shareWithChosen.setOnClickListener(v -> {
+            dismiss();
+        });
 
-        shareWithEveryone.setOnClickListener(v -> dismiss());
+        shareWithEveryone.setOnClickListener(v -> {
+            chooseShareTargetListener.shareWithAll();
+            dismiss();
+        });
+    }
+
+    private void setUpListener(Context context) {
+        if (context instanceof ChooseShareStudentsListener) {
+            chooseShareTargetListener = (ChooseShareStudentsListener) context;
+        } else {
+            throw new RuntimeException(context.toString() + " must implement ChooseShareTarget");
+        }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        setUpListener(context);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        chooseShareTargetListener = null;
     }
 }
