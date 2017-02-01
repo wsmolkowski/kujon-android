@@ -31,7 +31,7 @@ public class FileUploadDto {
         return termId;
     }
 
-    public String getShareFileTargetType() {
+    public  @ShareFileTargetType String getShareFileTargetType() {
         return shareFileTargetType;
     }
 

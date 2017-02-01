@@ -23,9 +23,14 @@ public class MultipartUtils {
 
     @NonNull
     public RequestBody createPartFromCollection(Collection collection) {
-        String joined = StringUtils.join(collection, ",");
-        joined = "[" + joined + "]";
-        return RequestBody.create(MultipartBody.FORM, joined);
+        if (collection == null) {
+            return RequestBody.create(MultipartBody.FORM, "[]");
+        } else {
+            String joined;
+            joined = StringUtils.join(collection, ",");
+            joined = "[" + joined + "]";
+            return RequestBody.create(MultipartBody.FORM, joined);
+        }
     }
 
     @NonNull
@@ -37,7 +42,7 @@ public class MultipartUtils {
     }
 
     @NonNull
-    public MultipartBody.Part prepareFilePart(String partName,DataForFileUpload upload, ProgressRequestBody.UploadCallbacks callbacks) {
+    public MultipartBody.Part prepareFilePart(String partName, DataForFileUpload upload, ProgressRequestBody.UploadCallbacks callbacks) {
         RequestBody requestFile = new ProgressRequestBody(upload, callbacks);
         return MultipartBody.Part.createFormData(partName, upload.getTitle(), requestFile);
     }

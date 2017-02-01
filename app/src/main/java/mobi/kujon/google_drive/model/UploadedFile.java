@@ -8,6 +8,15 @@ import java.util.List;
 
 public class UploadedFile {
 
+    public UploadedFile() {
+    }
+
+    public UploadedFile(String fileId, String fileName, List<String> sharedWith) {
+        this.fileId = fileId;
+        this.fileName = fileName;
+        this.sharedWith = sharedWith;
+    }
+
     @SerializedName("file_id") @Expose
     public String fileId;
 

@@ -6,6 +6,7 @@ import java.util.List;
 import mobi.kujon.google_drive.model.ShareFileTargetType;
 import mobi.kujon.google_drive.model.UploadedFile;
 import mobi.kujon.google_drive.model.dto.file_upload.DataForFileUpload;
+import mobi.kujon.google_drive.model.dto.file_upload.FileUploadDto;
 import rx.Observable;
 
 public interface FileUpload {
@@ -22,5 +23,7 @@ public interface FileUpload {
             String termId,
             @ShareFileTargetType String shareWith,
             List<Integer> sharedWithList,
+            DataForFileUpload dataForFileUpload);
+    Observable<List<UploadedFile>> uploadFile(FileUploadDto fileUploadDto,
             DataForFileUpload dataForFileUpload);
 }
