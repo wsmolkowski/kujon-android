@@ -5,19 +5,31 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mobi.kujon.R;
+import mobi.kujon.google_drive.ui.activities.choose_share_students.ChooseStudentActivity;
+import mobi.kujon.network.json.Participant;
+
+import static mobi.kujon.google_drive.ui.activities.choose_share_students.ChooseStudentActivity.CHOOSE_STUDENTS_REQUEST;
+import static mobi.kujon.google_drive.ui.activities.choose_share_students.ChooseStudentActivity.CHOOSE_STUDENTS_RESPONSE;
+import static mobi.kujon.google_drive.ui.activities.choose_share_students.ChooseStudentActivity.CHOSEN;
 
 public class ShareTargetDialog extends DialogFragment {
 
     public static final String NAME = "SHARE_TARGET_DIALOG";
     public static final String COURSE_ID = "COURSE_ID";
     public static final String TERM_ID = "TERM_ID";
+
 
     @Bind(R.id.share_with_everyone)
     TextView shareWithEveryone;
@@ -48,13 +60,36 @@ public class ShareTargetDialog extends DialogFragment {
 
     private void setOnClickListeners() {
         shareWithChosen.setOnClickListener(v -> {
-            dismiss();
+            showStudentChoiceList();
         });
 
         shareWithEveryone.setOnClickListener(v -> {
             chooseShareTargetListener.shareWithAll();
             dismiss();
         });
+    }
+
+    private void showStudentChoiceList() {
+        Intent chooseStudentsIntent = new Intent(getActivity(), ChooseStudentActivity.class);
+        chooseStudentsIntent.putExtras(getArguments());
+        startActivityForResult(chooseStudentsIntent, CHOOSE_STUDENTS_REQUEST);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == CHOOSE_STUDENTS_REQUEST) {
+            if(resultCode == CHOSEN) {
+                String chosenStudentIds[] = data.getStringArrayExtra(CHOOSE_STUDENTS_RESPONSE);
+                if(chosenStudentIds.length == 0) {
+                    chooseShareTargetListener.shareWithNone();
+                } else {
+                    chooseShareTargetListener.shareWithChosen(Arrays.asList(chosenStudentIds));
+                }
+            } else {
+                chooseShareTargetListener.cancelled();
+            }
+        }
+        dismiss();
     }
 
     private void setUpListener(Context context) {

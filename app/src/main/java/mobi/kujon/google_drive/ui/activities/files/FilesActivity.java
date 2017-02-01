@@ -12,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -221,11 +222,21 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
 
     @Override
     public void shareWithAll() {
-
+        Toast.makeText(this, "Share with all", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void shareWithChosen(List<String> chosenStudentIds) {
+        Toast.makeText(this, "Share with chosen", Toast.LENGTH_SHORT).show();
+    }
 
+    @Override
+    public void cancelled() {
+        Toast.makeText(this, "Cancel", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void shareWithNone() {
+        Toast.makeText(this, "Share with none", Toast.LENGTH_SHORT).show();
     }
 }

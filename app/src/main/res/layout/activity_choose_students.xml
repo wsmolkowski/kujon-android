@@ -22,10 +22,10 @@
             android:minHeight="?attr/actionBarSize"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            tools:showIn="@layout/activity_message_details">
+            tools:showIn="@layout/activity_choose_students">
 
             <ImageView
-                android:id="@+id/back"
+                android:id="@+id/cancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingRight="10dp"
@@ -38,6 +38,18 @@
                 android:id="@+id/toolbar_title"
                 style="@style/Semibold"
                 tools:text="Toolbar Title" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textColor="@android:color/white"
+                android:layout_gravity="end|center_vertical"
+                android:text="@string/share"
+                android:id="@+id/share"
+                android:paddingLeft="3dp"
+                android:paddingStart="3dp"
+                android:paddingRight="@dimen/small_margin"
+                android:paddingEnd="@dimen/small_margin"/>
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>

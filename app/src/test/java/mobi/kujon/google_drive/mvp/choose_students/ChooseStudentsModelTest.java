@@ -1,12 +1,10 @@
 package mobi.kujon.google_drive.mvp.choose_students;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import mobi.kujon.UnitTest;
 import mobi.kujon.google_drive.network.unwrapped_api.CourseDetailsApi;
@@ -42,7 +40,7 @@ public class ChooseStudentsModelTest extends UnitTest {
         model.provideListOfStudents("any", "any", true)
                 .subscribe(studentShareDtos -> {
                     assertEquals(studentShareDtos.size(), 1);
-                    assertEquals(studentShareDtos.get(0).isChoosen(), false);
+                    assertEquals(studentShareDtos.get(0).isChosen(), false);
                     assertEquals(studentShareDtos.get(0).getStudentId(), USER_ID);
                     assertEquals(studentShareDtos.get(0).getStudentName(), NAME);
                 }, throwable -> fail());

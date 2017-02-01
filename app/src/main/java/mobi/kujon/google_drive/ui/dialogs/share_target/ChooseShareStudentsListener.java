@@ -6,4 +6,6 @@ import java.util.List;
 public interface ChooseShareStudentsListener {
     void shareWithAll();
     void shareWithChosen(List<String> chosenStudentIds);
+    void shareWithNone();
+    void cancelled();
 }
