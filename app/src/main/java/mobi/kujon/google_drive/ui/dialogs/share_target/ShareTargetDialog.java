@@ -16,6 +16,8 @@ import mobi.kujon.R;
 public class ShareTargetDialog extends DialogFragment {
 
     public static final String NAME = "SHARE_TARGET_DIALOG";
+    public static final String COURSE_ID = "COURSE_ID";
+    public static final String TERM_ID = "TERM_ID";
 
     @Bind(R.id.share_with_everyone)
     TextView shareWithEveryone;
@@ -24,6 +26,15 @@ public class ShareTargetDialog extends DialogFragment {
     TextView shareWithChosen;
 
     private ChooseShareStudentsListener chooseShareTargetListener;
+
+    public static ShareTargetDialog newInstance(String courseId, String termId) {
+        ShareTargetDialog dialog = new ShareTargetDialog();
+        Bundle args = new Bundle();
+        args.putString(COURSE_ID, courseId);
+        args.putString(TERM_ID, termId);
+        dialog.setArguments(args);
+        return dialog;
+    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstaceState) {

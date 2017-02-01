@@ -182,7 +182,7 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
     }
 
     private void showChooseStudentsDialog() {
-        ShareTargetDialog dialog = new ShareTargetDialog();
+        ShareTargetDialog dialog = ShareTargetDialog.newInstance(coursId, termId);
         dialog.show(getFragmentManager(), ShareTargetDialog.NAME);
     }
 
