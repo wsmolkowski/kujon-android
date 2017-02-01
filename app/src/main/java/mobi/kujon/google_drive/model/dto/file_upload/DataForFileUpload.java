@@ -1,5 +1,7 @@
 package mobi.kujon.google_drive.model.dto.file_upload;
 
+import com.google.android.gms.drive.DriveResource;
+
 import java.util.Arrays;
 
 import okhttp3.MediaType;
@@ -11,10 +13,16 @@ import okhttp3.MediaType;
 public class DataForFileUpload {
     private byte[] bytes;
     private MediaType mediaType;
+    private String title;
 
-    public DataForFileUpload(byte[] bytes, String mediaType) {
+    public DataForFileUpload(byte[] bytes, String mediaType,String title) {
         this.bytes = bytes;
         this.mediaType = MediaType.parse(mediaType);
+        this.title = title;
+    }
+
+    public DataForFileUpload(byte[] bytes,DriveResource.MetadataResult metadataResult) {
+        this(bytes,metadataResult.getMetadata().getMimeType(),metadataResult.getMetadata().getTitle());
     }
 
     public byte[] getBytes() {
@@ -31,6 +39,14 @@ public class DataForFileUpload {
 
     public void setMediaType(MediaType mediaType) {
         this.mediaType = mediaType;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     @Override

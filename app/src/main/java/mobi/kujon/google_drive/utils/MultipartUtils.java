@@ -8,6 +8,8 @@ import org.apache.commons.lang.StringUtils;
 import java.io.File;
 import java.util.Collection;
 
+import mobi.kujon.google_drive.model.dto.file_upload.DataForFileUpload;
+import mobi.kujon.google_drive.model.request.ProgressRequestBody;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
@@ -35,9 +37,8 @@ public class MultipartUtils {
     }
 
     @NonNull
-    public MultipartBody.Part prepareFilePart(String partName, byte[] bytes,String fileName) {
-        RequestBody requestFile =
-                RequestBody.create(okhttp3.MultipartBody.FORM, bytes);
-        return MultipartBody.Part.createFormData(partName, fileName, requestFile);
+    public MultipartBody.Part prepareFilePart(String partName,DataForFileUpload upload, ProgressRequestBody.UploadCallbacks callbacks) {
+        RequestBody requestFile = new ProgressRequestBody(upload, callbacks);
+        return MultipartBody.Part.createFormData(partName, upload.getTitle(), requestFile);
     }
 }

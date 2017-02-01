@@ -18,8 +18,6 @@ public class ProgressRequestBody extends RequestBody {
 
     public interface UploadCallbacks {
         void onProgressUpdate(int percentage);
-        void onError();
-        void onFinish();
     }
 
     public ProgressRequestBody(DataForFileUpload file, final  UploadCallbacks listener) {

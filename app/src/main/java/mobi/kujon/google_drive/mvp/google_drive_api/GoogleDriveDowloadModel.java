@@ -55,7 +55,7 @@ public class GoogleDriveDowloadModel implements GoogleDriveDowloadMVP.Model {
                 .map(insideHelper2 -> {
                     try {
                         return new DataForFileUpload(readFully(insideHelper2.driveContentsResult.getDriveContents().getInputStream()),
-                                insideHelper2.metadataResult.getMetadata().getMimeType());
+                                insideHelper2.metadataResult);
                     } catch (IOException e) {
                         e.printStackTrace();
                         return null;

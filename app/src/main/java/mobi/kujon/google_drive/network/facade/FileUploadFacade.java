@@ -5,6 +5,10 @@ import java.util.List;
 
 import mobi.kujon.google_drive.model.ShareFileTargetType;
 import mobi.kujon.google_drive.model.UploadedFile;
+import mobi.kujon.google_drive.model.dto.file_stream.FileUpdateDto;
+import mobi.kujon.google_drive.model.dto.file_upload.DataForFileUpload;
+import mobi.kujon.google_drive.model.request.ProgressRequestBody;
+import mobi.kujon.google_drive.mvp.file_stream_update.FileStreamUpdateMVP;
 import mobi.kujon.google_drive.network.BackendWrapper;
 import mobi.kujon.google_drive.network.api.FileUploadKujon;
 import mobi.kujon.google_drive.network.unwrapped_api.FileUpload;
@@ -17,11 +21,13 @@ public class FileUploadFacade implements FileUpload {
     private FileUploadKujon fileUploadKujon;
     private MultipartUtils multipartUtils;
     private BackendWrapper<List<UploadedFile>> backendWrapper;
+    private FileStreamUpdateMVP.Model updateModel;
 
-    public FileUploadFacade(FileUploadKujon fileUploadKujon, MultipartUtils multipartUtils) {
+    public FileUploadFacade(FileUploadKujon fileUploadKujon, MultipartUtils multipartUtils, FileStreamUpdateMVP.Model model) {
         this.fileUploadKujon = fileUploadKujon;
         this.multipartUtils = multipartUtils;
         backendWrapper = new BackendWrapper<>();
+        this.updateModel = model;
     }
 
     @Override
@@ -36,5 +42,16 @@ public class FileUploadFacade implements FileUpload {
                 multipartUtils.createPartFromString(shareWith),
                 multipartUtils.createPartFromCollection(sharedWithList),
                 multipartUtils.prepareFilePart(FILES_PART_NAME, filePath)));
+    }
+
+    @Override
+    public Observable<List<UploadedFile>> uploadFile(String courseId, String termId, @ShareFileTargetType String shareWith, List<Integer> sharedWithList, DataForFileUpload dataForFileUpload) {
+        ProgressRequestBody.UploadCallbacks callbacks = percentage -> updateModel.updateStream(new FileUpdateDto(dataForFileUpload.getTitle(),percentage/2));
+        return backendWrapper.doSomething(fileUploadKujon.uploadFile(
+                multipartUtils.createPartFromString(courseId),
+                multipartUtils.createPartFromString(termId),
+                multipartUtils.createPartFromString(shareWith),
+                multipartUtils.createPartFromCollection(sharedWithList),
+                multipartUtils.prepareFilePart(FILES_PART_NAME, dataForFileUpload, callbacks)));
     }
 }

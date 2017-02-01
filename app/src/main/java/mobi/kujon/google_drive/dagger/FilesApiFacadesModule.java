@@ -2,6 +2,7 @@ package mobi.kujon.google_drive.dagger;
 
 import dagger.Module;
 import dagger.Provides;
+import mobi.kujon.google_drive.mvp.file_stream_update.FileStreamUpdateMVP;
 import mobi.kujon.google_drive.network.api.CoursesApiKujon;
 import mobi.kujon.google_drive.network.api.DeleteFileKujon;
 import mobi.kujon.google_drive.network.api.FileDownloadKujon;
@@ -65,10 +66,9 @@ public class FilesApiFacadesModule {
     }
 
     @Provides
-    FileUpload provideUploadFile(Retrofit retrofit, MultipartUtils multipartUtils) {
-        return new FileUploadFacade(retrofit.create(FileUploadKujon.class), multipartUtils);
+    FileUpload provideUploadFile(Retrofit retrofit, MultipartUtils multipartUtils, FileStreamUpdateMVP.Model model) {
+        return new FileUploadFacade(retrofit.create(FileUploadKujon.class), multipartUtils, model);
     }
-
 
 
 }
