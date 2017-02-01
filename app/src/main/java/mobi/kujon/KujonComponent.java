@@ -1,5 +1,7 @@
 package mobi.kujon;
 
+import com.google.gson.Gson;
+
 import javax.inject.Singleton;
 
 import dagger.Component;
@@ -110,5 +112,7 @@ public interface KujonComponent {
     void inject(MessagesFragment messagesFragment);
 
     Retrofit provideRetrofit();
+
+    Gson provideGson();
 
 }

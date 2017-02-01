@@ -16,17 +16,19 @@ import com.google.gson.Gson;
 import javax.inject.Inject;
 
 import mobi.kujon.KujonApplication;
-import mobi.kujon.google_drive.model.dto.file_stream.FileUpdateDto;
+import mobi.kujon.google_drive.dagger.injectors.Injector;
+import mobi.kujon.google_drive.model.dto.file_upload.FileUploadDto;
 import mobi.kujon.google_drive.mvp.google_drive_api.GoogleDriveDowloadMVP;
+import mobi.kujon.google_drive.mvp.upload_file.UploadFileMVP;
 import mobi.kujon.google_drive.utils.SchedulersHolder;
 
 
-public class DowloadUploadFileServices extends Service implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class DowloadUploadFileServices extends Service implements UploadFileMVP.View, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     public static final String FILE_UPLOAD_DTO = "fileUploadDto";
     public static final String DRIVE_ID_KEY = "driveIdKey";
 
-    private FileUpdateDto fileUpdateDto;
+    private FileUploadDto fileUploadDto;
 
     private DriveId driveId;
     private GoogleApiClient apiClient;
@@ -37,6 +39,9 @@ public class DowloadUploadFileServices extends Service implements GoogleApiClien
 
     @Inject
     SchedulersHolder schedulersHolder;
+
+    @Inject
+    UploadFileMVP.Presenter presenter;
 
     @Inject
     Gson gson;
@@ -60,15 +65,16 @@ public class DowloadUploadFileServices extends Service implements GoogleApiClien
     @Override
     public void onCreate() {
         super.onCreate();
-        ((KujonApplication) this.getApplication()).getInjectorProvider();
+        Injector<DowloadUploadFileServices> injector = ((KujonApplication) this.getApplication()).getInjectorProvider().provideInjectorForService();
+        injector.inject(this);
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if (intent != null && intent.getExtras() == null && intent.getStringExtra(FILE_UPLOAD_DTO)==null) {
+        if (intent != null && intent.getExtras() == null && intent.getStringExtra(FILE_UPLOAD_DTO) == null) {
             stopSelf();
         }
-        fileUpdateDto = gson.fromJson(intent.getStringExtra(FILE_UPLOAD_DTO), FileUpdateDto.class);
+        fileUploadDto = gson.fromJson(intent.getStringExtra(FILE_UPLOAD_DTO), FileUploadDto.class);
         driveId = intent.getParcelableExtra(DRIVE_ID_KEY);
         apiClient.connect();
         return START_REDELIVER_INTENT;
@@ -81,9 +87,9 @@ public class DowloadUploadFileServices extends Service implements GoogleApiClien
                 .subscribeOn(schedulersHolder.subscribe())
                 .observeOn(schedulersHolder.observ())
                 .subscribe(it -> {
-                    //TODO create presenter which will update this byte[] with fileUpdateDto
+                    presenter.uploadFile(it, fileUploadDto);
                 }, error -> {
-
+                    //TODO restart Service with same parameters
                 });
     }
 
@@ -95,5 +101,15 @@ public class DowloadUploadFileServices extends Service implements GoogleApiClien
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         stopSelf();
+    }
+
+    @Override
+    public void onFileUploaded() {
+        this.stopSelf();
+    }
+
+    @Override
+    public void handleException(Throwable throwable) {
+//TODO restart Service with same parameters
     }
 }

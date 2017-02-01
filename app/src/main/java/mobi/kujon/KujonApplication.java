@@ -1,7 +1,6 @@
 package mobi.kujon;
 
 import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -146,11 +145,7 @@ public class KujonApplication extends MultiDexApplication implements OneSignal.N
 
         component.inject(this);
 
-        filesComponent = DaggerRuntimeFilesComponent.builder()
-                .kujonComponent(component)
-                .filesModule(new FilesModule(this))
-                .filesApiFacadesModule(new FilesApiFacadesModule())
-                .build();
+
 
 
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
@@ -203,7 +198,18 @@ public class KujonApplication extends MultiDexApplication implements OneSignal.N
     }
 
     public FilesComponent getFilesComponent() {
+        if(filesComponent ==null){
+            buildFilesComponent();
+        }
         return filesComponent;
+    }
+
+    private void buildFilesComponent() {
+        filesComponent = DaggerRuntimeFilesComponent.builder()
+                .kujonComponent(component)
+                .filesModule(new FilesModule(this))
+                .filesApiFacadesModule(new FilesApiFacadesModule())
+                .build();
     }
 
     public InjectorProvider getInjectorProvider() {
