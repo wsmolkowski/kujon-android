@@ -140,6 +140,11 @@
             android:name="mobi.kujon.google_drive.ui.activities.files.FilesActivity"
             android:label="@string/title_activity_files"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name="mobi.kujon.google_drive.ui.activities.choose_share_students.ChooseStudentActivity"
+            android:label="@string/title_activity_files"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>
