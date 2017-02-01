@@ -3,9 +3,8 @@ package mobi.kujon.google_drive.ui.dialogs.share_target;
 
 import java.util.List;
 
+import mobi.kujon.google_drive.model.ShareFileTargetType;
+
 public interface ChooseShareStudentsListener {
-    void shareWithAll();
-    void shareWithChosen(List<String> chosenStudentIds);
-    void shareWithNone();
-    void cancelled();
+    void shareWith(@ShareFileTargetType String targetType, List<String> chosenStudentIds);
 }

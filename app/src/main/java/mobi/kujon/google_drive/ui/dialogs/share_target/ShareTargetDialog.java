@@ -1,6 +1,7 @@
 package mobi.kujon.google_drive.ui.dialogs.share_target;
 
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -17,6 +18,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mobi.kujon.R;
+import mobi.kujon.google_drive.model.ShareFileTargetType;
 import mobi.kujon.google_drive.ui.activities.choose_share_students.ChooseStudentActivity;
 import mobi.kujon.network.json.Participant;
 
@@ -29,6 +31,7 @@ public class ShareTargetDialog extends DialogFragment {
     public static final String NAME = "SHARE_TARGET_DIALOG";
     public static final String COURSE_ID = "COURSE_ID";
     public static final String TERM_ID = "TERM_ID";
+    public static final String TITLE = "TITLE";
 
 
     @Bind(R.id.share_with_everyone)
@@ -39,11 +42,12 @@ public class ShareTargetDialog extends DialogFragment {
 
     private ChooseShareStudentsListener chooseShareTargetListener;
 
-    public static ShareTargetDialog newInstance(String courseId, String termId) {
+    public static ShareTargetDialog newInstance(String courseId, String termId, String title) {
         ShareTargetDialog dialog = new ShareTargetDialog();
         Bundle args = new Bundle();
         args.putString(COURSE_ID, courseId);
         args.putString(TERM_ID, termId);
+        args.putString(TITLE, title);
         dialog.setArguments(args);
         return dialog;
     }
@@ -64,7 +68,7 @@ public class ShareTargetDialog extends DialogFragment {
         });
 
         shareWithEveryone.setOnClickListener(v -> {
-            chooseShareTargetListener.shareWithAll();
+            chooseShareTargetListener.shareWith(ShareFileTargetType.ALL, null);
             dismiss();
         });
     }
@@ -81,12 +85,10 @@ public class ShareTargetDialog extends DialogFragment {
             if(resultCode == CHOSEN) {
                 String chosenStudentIds[] = data.getStringArrayExtra(CHOOSE_STUDENTS_RESPONSE);
                 if(chosenStudentIds.length == 0) {
-                    chooseShareTargetListener.shareWithNone();
+                    chooseShareTargetListener.shareWith(ShareFileTargetType.NONE, null);
                 } else {
-                    chooseShareTargetListener.shareWithChosen(Arrays.asList(chosenStudentIds));
+                    chooseShareTargetListener.shareWith(ShareFileTargetType.LIST, Arrays.asList(chosenStudentIds));
                 }
-            } else {
-                chooseShareTargetListener.cancelled();
             }
         }
         dismiss();
@@ -98,6 +100,12 @@ public class ShareTargetDialog extends DialogFragment {
         } else {
             throw new RuntimeException(context.toString() + " must implement ChooseShareTarget");
         }
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        setUpListener(activity);
     }
 
     @Override

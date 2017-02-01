@@ -70,7 +70,7 @@ public class ChooseStudentActivity extends AppCompatActivity implements HandleEx
         termId = getIntent().getStringExtra(ShareTargetDialog.TERM_ID);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        toolbarTitle.setText(R.string.details);
+        toolbarTitle.setText(getIntent().getStringExtra(ShareTargetDialog.TITLE));
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         adapter = new ChooseStudentAdapter(new ArrayList<>());

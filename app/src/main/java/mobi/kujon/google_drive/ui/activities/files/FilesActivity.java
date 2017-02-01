@@ -17,8 +17,10 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.drive.Drive;
 import com.google.android.gms.drive.DriveId;
+import com.google.android.gms.drive.DriveResource;
 import com.google.android.gms.drive.OpenFileActivityBuilder;
 
 import java.util.List;
@@ -32,6 +34,7 @@ import mobi.kujon.R;
 import mobi.kujon.google_drive.dagger.injectors.FileActivityInjector;
 import mobi.kujon.google_drive.dagger.injectors.FilesListFragmentInjector;
 import mobi.kujon.google_drive.dagger.injectors.Injector;
+import mobi.kujon.google_drive.model.ShareFileTargetType;
 import mobi.kujon.google_drive.model.dto.file_stream.FileUpdateDto;
 import mobi.kujon.google_drive.mvp.file_stream_update.FileStreamUpdateMVP;
 import mobi.kujon.google_drive.mvp.files_list.FilesOwnerType;
@@ -173,18 +176,19 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
     private void handleGoodResponseFile(Intent data) {
         mSelectedFileDriveId = data.getParcelableExtra(
                 OpenFileActivityBuilder.EXTRA_RESPONSE_DRIVE_ID);
-        googleDowloadModel.setGoogleClient(apiClient);
-        googleDowloadModel.dowloadFile(mSelectedFileDriveId)
-                .subscribeOn(schedulersHolder.subscribe())
-                .observeOn(schedulersHolder.observ())
-                .subscribe(it->{
-                    showChooseStudentsDialog();
-                });
+        showChoiceDialog();
     }
 
-    private void showChooseStudentsDialog() {
-        ShareTargetDialog dialog = ShareTargetDialog.newInstance(coursId, termId);
+    private void showChooseStudentsDialog(String fileTitle) {
+        ShareTargetDialog dialog = ShareTargetDialog.newInstance(coursId, termId, fileTitle);
         dialog.show(getFragmentManager(), ShareTargetDialog.NAME);
+    }
+
+    private void showChoiceDialog() {
+        mSelectedFileDriveId.asDriveFile()
+                .getMetadata(apiClient)
+                .setResultCallback(metadataResult ->
+                        showChooseStudentsDialog(metadataResult.getMetadata().getTitle()));
     }
 
     @Override
@@ -221,22 +225,7 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
     }
 
     @Override
-    public void shareWithAll() {
-        Toast.makeText(this, "Share with all", Toast.LENGTH_SHORT).show();
-    }
+    public void shareWith(@ShareFileTargetType String targetType, List<String> chosenStudentIds) {
 
-    @Override
-    public void shareWithChosen(List<String> chosenStudentIds) {
-        Toast.makeText(this, "Share with chosen", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void cancelled() {
-        Toast.makeText(this, "Cancel", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void shareWithNone() {
-        Toast.makeText(this, "Share with none", Toast.LENGTH_SHORT).show();
     }
 }
