@@ -12,15 +12,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.drive.Drive;
 import com.google.android.gms.drive.DriveId;
-import com.google.android.gms.drive.DriveResource;
 import com.google.android.gms.drive.OpenFileActivityBuilder;
 
 import java.util.List;
@@ -36,15 +33,15 @@ import mobi.kujon.google_drive.dagger.injectors.FilesListFragmentInjector;
 import mobi.kujon.google_drive.dagger.injectors.Injector;
 import mobi.kujon.google_drive.model.ShareFileTargetType;
 import mobi.kujon.google_drive.model.dto.file_stream.FileUpdateDto;
+import mobi.kujon.google_drive.model.dto.file_upload.FileUploadDto;
 import mobi.kujon.google_drive.mvp.file_stream_update.FileStreamUpdateMVP;
 import mobi.kujon.google_drive.mvp.files_list.FilesOwnerType;
-import mobi.kujon.google_drive.mvp.google_drive_api.GoogleDriveDowloadMVP;
+import mobi.kujon.google_drive.services.ServiceOpener;
 import mobi.kujon.google_drive.ui.activities.BaseFileActivity;
 import mobi.kujon.google_drive.ui.dialogs.share_target.ChooseShareStudentsListener;
 import mobi.kujon.google_drive.ui.dialogs.share_target.ShareTargetDialog;
 import mobi.kujon.google_drive.ui.fragments.ProvideInjector;
 import mobi.kujon.google_drive.ui.fragments.files.FilesListFragment;
-import mobi.kujon.google_drive.utils.SchedulersHolder;
 
 
 public class FilesActivity extends BaseFileActivity implements ProvideInjector<FilesListFragment>, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, FileStreamUpdateMVP.View, ChooseShareStudentsListener {
@@ -79,11 +76,7 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
     FileStreamUpdateMVP.Presenter presenter;
 
     @Inject
-    GoogleDriveDowloadMVP.Model googleDowloadModel;
-
-
-    @Inject
-    SchedulersHolder schedulersHolder;
+    ServiceOpener serviceOpener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +102,7 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
                     startFileSearching();
                 }
         );
+        apiClient.connect();
         presenter.subscribeToStream(this);
     }
 
@@ -179,16 +173,16 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
         showChoiceDialog();
     }
 
-    private void showChooseStudentsDialog(String fileTitle) {
-        ShareTargetDialog dialog = ShareTargetDialog.newInstance(coursId, termId, fileTitle);
-        dialog.show(getFragmentManager(), ShareTargetDialog.NAME);
-    }
-
     private void showChoiceDialog() {
         mSelectedFileDriveId.asDriveFile()
                 .getMetadata(apiClient)
                 .setResultCallback(metadataResult ->
                         showChooseStudentsDialog(metadataResult.getMetadata().getTitle()));
+    }
+
+    private void showChooseStudentsDialog(String fileTitle) {
+        ShareTargetDialog dialog = ShareTargetDialog.newInstance(coursId, termId, fileTitle);
+        dialog.show(getFragmentManager(), ShareTargetDialog.NAME);
     }
 
     @Override
@@ -226,6 +220,7 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
 
     @Override
     public void shareWith(@ShareFileTargetType String targetType, List<String> chosenStudentIds) {
-
+        FileUploadDto fileUploadDto = new FileUploadDto(coursId,termId,targetType,chosenStudentIds);
+        serviceOpener.openUploadService(fileUploadDto,mSelectedFileDriveId);
     }
 }

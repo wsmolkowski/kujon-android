@@ -3,7 +3,7 @@ package mobi.kujon.google_drive.network;
 /**
  *
  */
-public class KujonException extends Throwable {
+public class KujonException extends Exception {
     private String message;
     private Integer code;
     public KujonException(String message, Integer code) {

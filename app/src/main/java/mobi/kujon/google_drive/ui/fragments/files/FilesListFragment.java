@@ -85,7 +85,7 @@ public class FilesListFragment extends BaseFileFragment<FilesListFragment> imple
 
     @Override
     protected void setProgress(boolean b) {
-        swipeRefreshLayout.setEnabled(b);
+        swipeRefreshLayout.setRefreshing(b);
     }
 
     @Override

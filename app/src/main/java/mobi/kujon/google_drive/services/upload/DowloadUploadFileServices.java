@@ -1,6 +1,7 @@
-package mobi.kujon.google_drive.services;
+package mobi.kujon.google_drive.services.upload;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -28,6 +29,12 @@ public class DowloadUploadFileServices extends Service implements UploadFileMVP.
     public static final String FILE_UPLOAD_DTO = "fileUploadDto";
     public static final String DRIVE_ID_KEY = "driveIdKey";
 
+    public static void startService(Context context,String fileUploadDto,DriveId driveId){
+        Intent intent = new Intent(context, DowloadUploadFileServices.class);
+        intent.putExtra(FILE_UPLOAD_DTO,fileUploadDto);
+        intent.putExtra(DRIVE_ID_KEY,driveId);
+        context.startService(intent);
+    }
     private FileUploadDto fileUploadDto;
 
     private DriveId driveId;
@@ -47,12 +54,7 @@ public class DowloadUploadFileServices extends Service implements UploadFileMVP.
     Gson gson;
 
     public DowloadUploadFileServices() {
-        apiClient = new GoogleApiClient.Builder(this)
-                .addApi(Drive.API)
-                .addScope(Drive.SCOPE_FILE)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .build();
+
     }
 
     @Nullable
@@ -67,6 +69,12 @@ public class DowloadUploadFileServices extends Service implements UploadFileMVP.
         super.onCreate();
         Injector<DowloadUploadFileServices> injector = ((KujonApplication) this.getApplication()).getInjectorProvider().provideInjectorForService();
         injector.inject(this);
+        apiClient = new GoogleApiClient.Builder(this)
+                .addApi(Drive.API)
+                .addScope(Drive.SCOPE_FILE)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .build();
     }
 
     @Override
@@ -76,12 +84,21 @@ public class DowloadUploadFileServices extends Service implements UploadFileMVP.
         }
         fileUploadDto = gson.fromJson(intent.getStringExtra(FILE_UPLOAD_DTO), FileUploadDto.class);
         driveId = intent.getParcelableExtra(DRIVE_ID_KEY);
-        apiClient.connect();
+        if(apiClient.isConnected()){
+            handleApiCalls();
+        }else {
+            apiClient.connect();
+        }
+
         return START_REDELIVER_INTENT;
     }
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
+        handleApiCalls();
+    }
+
+    private void handleApiCalls() {
         googleDowloadModel.setGoogleClient(apiClient);
         googleDowloadModel.dowloadFile(driveId)
                 .subscribeOn(schedulersHolder.subscribe())

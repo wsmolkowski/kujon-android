@@ -213,6 +213,9 @@ public class KujonApplication extends MultiDexApplication implements OneSignal.N
     }
 
     public InjectorProvider getInjectorProvider() {
+        if(filesComponent ==null){
+            buildFilesComponent();
+        }
         return injectorProvider;
     }
 }

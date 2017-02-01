@@ -1,5 +1,7 @@
 package mobi.kujon.google_drive.model.dto.file_upload;
 
+import com.google.gson.annotations.Expose;
+
 import java.util.List;
 
 import mobi.kujon.google_drive.model.ShareFileTargetType;
@@ -9,13 +11,17 @@ import mobi.kujon.google_drive.model.ShareFileTargetType;
  */
 
 public class FileUploadDto {
+    @Expose
     private String courseId;
+    @Expose
     private String termId;
+    @Expose
     private @ShareFileTargetType String shareFileTargetType;
-    private List<Integer> listOfShares;
+    @Expose
+    private List<String> listOfShares;
 
 
-    public FileUploadDto(String courseId, String termId, String shareFileTargetType, List<Integer> listOfShares) {
+    public FileUploadDto(String courseId, String termId, String shareFileTargetType, List<String> listOfShares) {
         this.courseId = courseId;
         this.termId = termId;
         this.shareFileTargetType = shareFileTargetType;
@@ -35,7 +41,7 @@ public class FileUploadDto {
         return shareFileTargetType;
     }
 
-    public List<Integer> getListOfShares() {
+    public List<String> getListOfShares() {
         return listOfShares;
     }
 

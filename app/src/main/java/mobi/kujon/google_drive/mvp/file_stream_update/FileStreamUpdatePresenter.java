@@ -1,5 +1,7 @@
 package mobi.kujon.google_drive.mvp.file_stream_update;
 
+import java.util.concurrent.TimeUnit;
+
 import mobi.kujon.google_drive.mvp.AbstractClearSubsriptions;
 import mobi.kujon.google_drive.utils.SchedulersHolder;
 
@@ -22,6 +24,7 @@ public class FileStreamUpdatePresenter extends AbstractClearSubsriptions impleme
     public void subscribeToStream(FileStreamUpdateMVP.View view) {
         addToSubsriptionList(this.model.subscribeToStream()
                 .subscribeOn(holder.subscribe())
+                .debounce(100, TimeUnit.MILLISECONDS)
                 .observeOn(holder.observ())
                 .subscribe(it->{
                     view.onUpdate(it);

@@ -1,4 +1,4 @@
-package mobi.kujon.google_drive.services.dagger;
+package mobi.kujon.google_drive.services.upload.dagger;
 
 import dagger.Module;
 import dagger.Provides;

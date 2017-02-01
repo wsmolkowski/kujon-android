@@ -15,14 +15,14 @@ public interface FileUpload {
             String courseId,
             String termId,
             @ShareFileTargetType String shareWith,
-            List<Integer> sharedWithList,
+            List<String> sharedWithList,
             String filePath);
 
     Observable<List<UploadedFile>> uploadFile(
             String courseId,
             String termId,
             @ShareFileTargetType String shareWith,
-            List<Integer> sharedWithList,
+            List<String> sharedWithList,
             DataForFileUpload dataForFileUpload);
     Observable<List<UploadedFile>> uploadFile(FileUploadDto fileUploadDto,
             DataForFileUpload dataForFileUpload);

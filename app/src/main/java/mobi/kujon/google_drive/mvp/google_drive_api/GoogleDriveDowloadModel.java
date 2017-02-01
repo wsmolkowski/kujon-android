@@ -67,6 +67,9 @@ public class GoogleDriveDowloadModel implements GoogleDriveDowloadMVP.Model {
     private DriveFile.DownloadProgressListener getDownloadProgressListener(String title) {
         return (bytesDownloaded, bytesExpected) -> {
             int progress = (int) (bytesDownloaded * 100 / bytesExpected);
+            if(bytesExpected==0){
+                progress = 50;
+            }
             model.updateStream(new FileUpdateDto(title, progress));
         };
     }

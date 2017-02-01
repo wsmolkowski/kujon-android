@@ -11,7 +11,6 @@ import okio.BufferedSink;
 
 public class ProgressRequestBody extends RequestBody {
     private byte[] bytes;
-    private String mPath;
     private UploadCallbacks mListener;
     private MediaType mediaType;
     private static final int DEFAULT_BUFFER_SIZE = 2048;
@@ -35,7 +34,7 @@ public class ProgressRequestBody extends RequestBody {
     public long contentLength() throws IOException {
       return bytes.length;
     }
-
+    private int lastValue = 50;
     @Override
     public void writeTo(BufferedSink sink) throws IOException {
         long fileLength = bytes.length;
@@ -46,9 +45,13 @@ public class ProgressRequestBody extends RequestBody {
         try {
             int read;
             while ((read = in.read(buffer)) != -1) {
+                int newValue = 50 + (int) (50 * uploaded / fileLength);
+                if(newValue>lastValue){
+                    mListener.onProgressUpdate(newValue);
+                    lastValue =newValue;
+                }
                 uploaded += read;
                 sink.write(buffer, 0, read);
-                mListener.onProgressUpdate((int)(100 * uploaded / fileLength));
             }
         } finally {
             in.close();

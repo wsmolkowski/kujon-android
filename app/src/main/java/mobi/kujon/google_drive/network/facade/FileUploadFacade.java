@@ -35,7 +35,7 @@ public class FileUploadFacade implements FileUpload {
     public Observable<List<UploadedFile>> uploadFile(String courseId,
                                                      String termId,
                                                      @ShareFileTargetType String shareWith,
-                                                     List<Integer> sharedWithList,
+                                                     List<String> sharedWithList,
                                                      String filePath) {
         return backendWrapper.doSomething(fileUploadKujon.uploadFile(
                 multipartUtils.createPartFromString(courseId),
@@ -46,8 +46,8 @@ public class FileUploadFacade implements FileUpload {
     }
 
     @Override
-    public Observable<List<UploadedFile>> uploadFile(String courseId, String termId, @ShareFileTargetType String shareWith, List<Integer> sharedWithList, DataForFileUpload dataForFileUpload) {
-        ProgressRequestBody.UploadCallbacks callbacks = percentage -> updateModel.updateStream(new FileUpdateDto(dataForFileUpload.getTitle(),percentage/2));
+    public Observable<List<UploadedFile>> uploadFile(String courseId, String termId, @ShareFileTargetType String shareWith, List<String> sharedWithList, DataForFileUpload dataForFileUpload) {
+        ProgressRequestBody.UploadCallbacks callbacks = percentage -> updateModel.updateStream(new FileUpdateDto(dataForFileUpload.getTitle(),percentage));
         return backendWrapper.doSomething(fileUploadKujon.uploadFile(
                 multipartUtils.createPartFromString(courseId),
                 multipartUtils.createPartFromString(termId),

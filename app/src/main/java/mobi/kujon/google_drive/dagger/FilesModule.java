@@ -1,5 +1,9 @@
 package mobi.kujon.google_drive.dagger;
 
+import android.app.Application;
+
+import com.google.gson.Gson;
+
 import java.util.concurrent.Executors;
 
 import dagger.Module;
@@ -10,6 +14,8 @@ import mobi.kujon.google_drive.dagger.injectors.RuntimeInjectorProvider;
 import mobi.kujon.google_drive.dagger.scopes.GoogleDriveScope;
 import mobi.kujon.google_drive.mvp.file_stream_update.FileStreamUpdateMVP;
 import mobi.kujon.google_drive.mvp.file_stream_update.FileStreamUpdateModel;
+import mobi.kujon.google_drive.services.ServiceOpener;
+import mobi.kujon.google_drive.services.ServiceOpenerImpl;
 import mobi.kujon.google_drive.utils.MultipartUtils;
 import mobi.kujon.google_drive.utils.SchedulersHolder;
 import rx.android.schedulers.AndroidSchedulers;
@@ -50,6 +56,12 @@ public class FilesModule {
     @GoogleDriveScope
     FileStreamUpdateMVP.Model provideFileStreamModel(){
         return new FileStreamUpdateModel();
+    }
+
+    @Provides
+    @GoogleDriveScope
+    ServiceOpener provideServiceOpener(Gson gson, Application application){
+        return new ServiceOpenerImpl(application,gson);
     }
 
 

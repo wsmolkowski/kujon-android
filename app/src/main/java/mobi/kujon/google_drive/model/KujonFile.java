@@ -23,7 +23,7 @@ public class KujonFile {
     @SerializedName("file_shared_with_ids") @Expose
     public String[] fileSharedWith = {};
 
-    @SerializedName("content_type") @Expose
+    @SerializedName("file_content_type") @Expose
     public String contentType;
 
     @SerializedName("first_name") @Expose

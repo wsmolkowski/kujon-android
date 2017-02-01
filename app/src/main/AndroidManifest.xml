@@ -145,6 +145,8 @@
             android:label="@string/title_activity_files"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
+
+        <service android:name=".google_drive.services.upload.DowloadUploadFileServices"/>
     </application>
 
 </manifest>

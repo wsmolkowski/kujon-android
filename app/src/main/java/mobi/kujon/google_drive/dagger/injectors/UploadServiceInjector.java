@@ -1,8 +1,8 @@
 package mobi.kujon.google_drive.dagger.injectors;
 
-import mobi.kujon.google_drive.services.DowloadUploadFileServices;
-import mobi.kujon.google_drive.services.dagger.DaggerDownloadUploadServiceComponent;
-import mobi.kujon.google_drive.services.dagger.DownloadUploadServiceModule;
+import mobi.kujon.google_drive.services.upload.DowloadUploadFileServices;
+import mobi.kujon.google_drive.services.upload.dagger.DaggerDownloadUploadServiceComponent;
+import mobi.kujon.google_drive.services.upload.dagger.DownloadUploadServiceModule;
 
 /**
  *

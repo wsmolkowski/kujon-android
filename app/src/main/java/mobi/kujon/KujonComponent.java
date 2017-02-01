@@ -1,5 +1,7 @@
 package mobi.kujon;
 
+import android.app.Application;
+
 import com.google.gson.Gson;
 
 import javax.inject.Singleton;
@@ -114,5 +116,6 @@ public interface KujonComponent {
     Retrofit provideRetrofit();
 
     Gson provideGson();
+    Application provideApplication();
 
 }
