@@ -9,12 +9,18 @@ import mobi.kujon.network.json.Participant;
 public class StudentShareDto {
 
     private String studentName,studentId;
-    private boolean isChoosen;
+    private boolean isChosen;
 
-    public StudentShareDto(Participant participant, boolean isChoosen) {
+    public StudentShareDto(String name, String id, boolean isChosen) {
+        this.studentId = id;
+        this.studentName = name;
+        this.isChosen = isChosen;
+    }
+
+    public StudentShareDto(Participant participant, boolean isChosen) {
         this.studentName = participant.getName();
         this.studentId = participant.userId;
-        this.isChoosen = isChoosen;
+        this.isChosen = isChosen;
     }
 
     public String getStudentName() {
@@ -25,8 +31,12 @@ public class StudentShareDto {
         return studentId;
     }
 
-    public boolean isChoosen() {
-        return isChoosen;
+    public boolean isChosen() {
+        return isChosen;
+    }
+
+    public void setChosen(boolean isChosen) {
+        this.isChosen = isChosen;
     }
 
     @Override
@@ -36,7 +46,7 @@ public class StudentShareDto {
 
         StudentShareDto that = (StudentShareDto) o;
 
-        if (isChoosen != that.isChoosen) return false;
+        if (isChosen != that.isChosen) return false;
         if (studentName != null ? !studentName.equals(that.studentName) : that.studentName != null)
             return false;
         return studentId != null ? studentId.equals(that.studentId) : that.studentId == null;
@@ -47,7 +57,7 @@ public class StudentShareDto {
     public int hashCode() {
         int result = studentName != null ? studentName.hashCode() : 0;
         result = 31 * result + (studentId != null ? studentId.hashCode() : 0);
-        result = 31 * result + (isChoosen ? 1 : 0);
+        result = 31 * result + (isChosen ? 1 : 0);
         return result;
     }
 }

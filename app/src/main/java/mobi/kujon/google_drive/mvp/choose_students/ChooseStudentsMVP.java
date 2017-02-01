@@ -25,7 +25,7 @@ public interface ChooseStudentsMVP {
     }
 
     interface Model{
-        Observable<List<StudentShareDto>> provideListOfStudents(String courseId,String termId);
+        Observable<List<StudentShareDto>> provideListOfStudents(String courseId,String termId, boolean refresh);
     }
 
     interface View extends HandleException{
