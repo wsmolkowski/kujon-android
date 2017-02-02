@@ -8,4 +8,9 @@
     <dimen name="small_margin">8dp</dimen>
 
     <dimen name="medium_text">19sp</dimen>
+    <dimen name="font_size_vh_header">14sp</dimen>
+    <dimen name="font_size_vh_details">11sp</dimen>
+    <dimen name="vh_file_padding_large">24dp</dimen>
+    <dimen name="vh_file_padding_small">10dp</dimen>
+    <dimen name="vh_file_padding_med">16dp</dimen>
 </resources>

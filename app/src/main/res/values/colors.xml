@@ -13,6 +13,7 @@
 
     <color name="opacityBlack">#5A000000</color>
     <color name="dark">#2a333e</color>
+    <color name="dark_60">#9A2a333e</color>
     <color name="dark_blue_sky">#3fbad9</color>
     <color name="white">#d8d8d8</color>
     <color name="pale_grey">#eff2f8</color>
