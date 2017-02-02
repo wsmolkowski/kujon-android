@@ -9,13 +9,13 @@ import mobi.kujon.google_drive.model.KujonFile;
  *
  */
 
-public class NormalFileType extends FileDTO {
-    public NormalFileType(KujonFile kujonFile) {
+public class XlsFileType extends FileDTO {
+    public XlsFileType(KujonFile kujonFile) {
         super(kujonFile);
     }
 
     @Override
     public @DrawableRes int getImageIcon() {
-        return R.drawable.unknown_icon;
+        return R.drawable.xls_icon;
     }
 }

@@ -75,10 +75,10 @@ public abstract class FileDTO {
     public void setShareFile(ShowShareIcon showShareIcon){
         switch (shareType){
             case ShareFileTargetType.ALL:
-                showShareIcon.showShareIcon(R.drawable.share_with_everyone,R.string.everyone);
+                showShareIcon.showShareIcon(R.drawable.share_options_icon,R.string.everyone);
                 break;
             case ShareFileTargetType.LIST:
-                showShareIcon.showShareIcon(R.drawable.share_with_everyone,String.valueOf(numberOfShares));
+                showShareIcon.showShareIcon(R.drawable.share_options_icon,String.valueOf(numberOfShares));
                 break;
             case ShareFileTargetType.NONE:
                 showShareIcon.hide();

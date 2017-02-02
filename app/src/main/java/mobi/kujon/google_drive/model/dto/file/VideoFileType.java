@@ -8,14 +8,13 @@ import mobi.kujon.google_drive.model.KujonFile;
 /**
  *
  */
-
-public class NormalFileType extends FileDTO {
-    public NormalFileType(KujonFile kujonFile) {
+public class VideoFileType extends FileDTO {
+    public VideoFileType(KujonFile kujonFile) {
         super(kujonFile);
     }
 
     @Override
     public @DrawableRes int getImageIcon() {
-        return R.drawable.unknown_icon;
+        return R.drawable.vid_icon;
     }
 }
