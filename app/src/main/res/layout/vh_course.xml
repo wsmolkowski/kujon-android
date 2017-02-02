@@ -3,14 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
-    android:padding="10dp"
+    android:background="@android:color/white"
     android:orientation="vertical">
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/course_text_view"
-        style="@style/Regular.Entry"
-        android:drawableRight="@drawable/navigate_next"
+        android:background="?selectableItemBackground"
+        style="@style/vh_entry"
         tools:text="2015-L47-291"
         />
+    <View
+        style="@style/vh_divider"/>
 </LinearLayout>
