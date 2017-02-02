@@ -1,24 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@android:color/white">
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/student_choice_checkbox"
-        android:paddingTop="@dimen/medium_margin"
-        android:paddingBottom="@dimen/medium_margin"
-        android:layout_marginLeft="@dimen/small_margin"
-        android:layout_marginStart="@dimen/small_margin"
+        android:layout_marginTop="@dimen/medium_margin"
+        android:layout_marginBottom="@dimen/medium_margin"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
         />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/black"
+        android:textColor="@color/dark"
+        android:layout_toRightOf="@id/student_choice_checkbox"
+        android:layout_toEndOf="@id/student_choice_checkbox"
+        android:layout_centerInParent="true"
         android:textSize="16sp"
         android:id="@+id/student_name"
-        android:layout_marginLeft="@dimen/small_margin"
-        android:layout_marginStart="@dimen/small_margin"
-        android:padding="@dimen/small_margin"/>
+        android:layout_marginLeft="26dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="17dp"
+        android:layout_marginBottom="17dp"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/white"
+        android:layout_below="@id/student_choice_checkbox"/>
 
-</LinearLayout>
+</RelativeLayout>
