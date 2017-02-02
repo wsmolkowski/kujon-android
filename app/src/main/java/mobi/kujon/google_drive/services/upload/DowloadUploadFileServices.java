@@ -106,6 +106,7 @@ public class DowloadUploadFileServices extends Service implements UploadFileMVP.
                 .subscribe(it -> {
                     presenter.uploadFile(it, fileUploadDto);
                 }, error -> {
+                    error.printStackTrace();
                     //TODO restart Service with same parameters
                 });
     }
@@ -127,6 +128,7 @@ public class DowloadUploadFileServices extends Service implements UploadFileMVP.
 
     @Override
     public void handleException(Throwable throwable) {
+        throwable.printStackTrace();
 //TODO restart Service with same parameters
     }
 }

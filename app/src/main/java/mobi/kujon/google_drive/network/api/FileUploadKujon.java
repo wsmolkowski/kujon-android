@@ -19,6 +19,6 @@ public interface FileUploadKujon {
             @Part("course_id") RequestBody courseId,
             @Part("term_id") RequestBody termId,
             @Part("file_shared_with") RequestBody shareWith,
-            @Part("file_shared_with_list") RequestBody sharedWithList,
+            @Part("file_shared_with_ids") RequestBody sharedWithList,
             @Part MultipartBody.Part files);
 }

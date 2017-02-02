@@ -49,8 +49,8 @@ public class GoogleDriveDowloadModel implements GoogleDriveDowloadMVP.Model {
                     return new InsideHelper(driveFile, getDownloadProgressListener(title),mdRslt);
                 })
                 .map(insideHelper ->{
-                    DriveApi.DriveContentsResult driveContents = insideHelper.driveFile.open(googleApiClient, DriveFile.MODE_READ_ONLY, insideHelper.downloadProgressListener).await();
-                    return new InsideHelper2(insideHelper.metadataResult,driveContents);
+                    DriveApi.DriveContentsResult driveContentsResult = insideHelper.driveFile.open(googleApiClient, DriveFile.MODE_READ_ONLY, insideHelper.downloadProgressListener).await();
+                    return new InsideHelper2(insideHelper.metadataResult,driveContentsResult);
                 })
                 .map(insideHelper2 -> {
                     try {
@@ -66,7 +66,7 @@ public class GoogleDriveDowloadModel implements GoogleDriveDowloadMVP.Model {
     @NonNull
     private DriveFile.DownloadProgressListener getDownloadProgressListener(String title) {
         return (bytesDownloaded, bytesExpected) -> {
-            int progress = (int) (bytesDownloaded * 100 / bytesExpected);
+            int progress = (int) (bytesDownloaded * 100 / bytesExpected)/2;
             if(bytesExpected==0){
                 progress = 50;
             }
