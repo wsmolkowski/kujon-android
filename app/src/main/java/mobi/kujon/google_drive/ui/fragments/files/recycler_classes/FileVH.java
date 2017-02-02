@@ -65,7 +65,7 @@ public class FileVH extends RecyclerView.ViewHolder implements ShowShareIcon {
 
     private void setVisiabilityAndDrawable(@DrawableRes int res) {
         shareFile.setVisibility(View.VISIBLE);
-        shareFile.setCompoundDrawables(getDrawable(res),null,null,null);
+        shareFile.setCompoundDrawablesWithIntrinsicBounds(res,0,0,0);
     }
 
     private Drawable getDrawable(@DrawableRes int res) {
