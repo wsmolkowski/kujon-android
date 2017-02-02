@@ -20,7 +20,7 @@ public class Participant {
     public String id;
 
     public String getName(){
-        return this.lastName + this.firstName;
+        return this.lastName + " " +this.firstName;
     }
 
 }
