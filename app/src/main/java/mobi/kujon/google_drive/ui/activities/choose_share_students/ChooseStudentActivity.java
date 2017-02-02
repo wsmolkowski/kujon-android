@@ -9,6 +9,9 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -22,6 +25,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
+import mobi.kujon.activities.LecturerDetailsActivity;
+import mobi.kujon.activities.LecturerPlanActivity;
 import mobi.kujon.google_drive.model.dto.StudentShareDto;
 import mobi.kujon.google_drive.model.dto.file_share.AskForStudentDto;
 import mobi.kujon.google_drive.mvp.HandleException;
@@ -45,8 +50,6 @@ public class ChooseStudentActivity extends AppCompatActivity implements HandleEx
     ImageView cancel;
     @Bind(R.id.toolbar_title)
     TextView toolbarTitle;
-    @Bind(R.id.share)
-    TextView share;
     @Bind(R.id.toolbar)
     Toolbar toolbar;
 
@@ -82,12 +85,24 @@ public class ChooseStudentActivity extends AppCompatActivity implements HandleEx
             setResult(CANCEL);
             finish();
         });
-        share.setOnClickListener(v -> {
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.share_file_menu, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.share_file){
             Intent intent = new Intent();
             intent.putExtra(CHOOSE_STUDENTS_RESPONSE, getStudentIds());
             setResult(CHOSEN, intent);
             finish();
-        });
+            return true;
+        }
+        return false;
     }
 
 
