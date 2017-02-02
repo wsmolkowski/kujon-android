@@ -126,12 +126,16 @@
 
     </style>
 
-    <style name="textDialog">
+    <style name="textDialogWithDrawable">
         <item name="android:textColor">@color/dark</item>
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textSize">@dimen/medium_text</item>
         <item name="android:gravity">left</item>
         <item name="android:layout_gravity">left</item>
         <item name="android:paddingLeft">32dp</item>
+        <item name="android:drawablePadding">22dp</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:paddingTop">@dimen/dialog_lines_padding</item>
+        <item name="android:paddingBottom">@dimen/dialog_lines_padding</item>
     </style>
 </resources>

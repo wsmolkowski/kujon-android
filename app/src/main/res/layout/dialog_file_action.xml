@@ -7,41 +7,31 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/textDialog"
+        style="@style/textDialogWithDrawable"
         android:drawableStart="@drawable/file_details"
         android:drawableLeft="@drawable/file_details"
-        android:drawablePadding="22dp"
         android:text="@string/file_details"
         android:paddingTop="@dimen/big_margin"
-        android:paddingBottom="@dimen/medium_margin"
-        android:background="?attr/selectableItemBackground"
         android:id="@+id/file_details"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/textDialog"
+        style="@style/textDialogWithDrawable"
         android:drawableStart="@drawable/ic_add_to_google_drive"
         android:drawableLeft="@drawable/ic_add_to_google_drive"
-        android:drawablePadding="22dp"
         android:text="@string/add_to_google_drive"
-        android:paddingTop="@dimen/medium_margin"
-        android:paddingBottom="@dimen/medium_margin"
-        android:background="?attr/selectableItemBackground"
         android:id="@+id/add_to_google_drive"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/textDialog"
+        style="@style/textDialogWithDrawable"
         android:textColor="@color/delete_red"
         android:drawableStart="@drawable/delete"
         android:drawableLeft="@drawable/delete"
-        android:drawablePadding="22dp"
         android:text="@string/delete"
-        android:paddingTop="@dimen/medium_margin"
         android:paddingBottom="@dimen/big_margin"
-        android:background="?attr/selectableItemBackground"
         android:id="@+id/delete_file"/>
 
 </LinearLayout>

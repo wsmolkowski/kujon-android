@@ -5,6 +5,7 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="big_margin">26dp</dimen>
     <dimen name="medium_margin">16dp</dimen>
+    <dimen name="dialog_lines_padding">18dp</dimen>
     <dimen name="small_margin">8dp</dimen>
 
     <dimen name="medium_text">17sp</dimen>
