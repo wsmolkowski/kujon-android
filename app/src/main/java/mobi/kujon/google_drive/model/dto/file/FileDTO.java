@@ -1,9 +1,17 @@
 package mobi.kujon.google_drive.model.dto.file;
 
+import android.content.res.Resources;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.StringRes;
 
+import java.text.SimpleDateFormat;
+
+import mobi.kujon.R;
 import mobi.kujon.google_drive.model.KujonFile;
 import mobi.kujon.google_drive.model.ShareFileTargetType;
+import mobi.kujon.google_drive.ui.fragments.files.recycler_classes.ShowShareIcon;
+
+import static java.util.Locale.getDefault;
 
 /**
  *
@@ -17,7 +25,7 @@ public abstract class FileDTO {
     private String fileSize;
     private String userName;
     private String fileId;
-
+    private String dateCreated;
 
 
     public FileDTO(KujonFile kujonFile) {
@@ -27,6 +35,8 @@ public abstract class FileDTO {
         this.fileName = kujonFile.fileName;
         this.fileSize = kujonFile.fileSize;
         this.userName = new StringBuilder(kujonFile.fileName).append(" ").append(kujonFile.lastName).toString();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy", getDefault());
+        dateCreated =simpleDateFormat.format(kujonFile.createdTime);
     }
 
 
@@ -54,7 +64,33 @@ public abstract class FileDTO {
         return fileId;
     }
 
+    public String getDateCreated(Resources resources) {
+        if(shareType.equals(ShareFileTargetType.NONE)){
+          return new StringBuilder().append(resources.getString(R.string.created_time)).append(" ").append(dateCreated).append(resources.getString(R.string.by)).append(" ").append(userName).toString();
+        }else {
+            return new StringBuilder().append(resources.getString(R.string.created_time)).append(" ").append(dateCreated).toString();
+        }
+    }
+
+    public void setShareFile(ShowShareIcon showShareIcon){
+        switch (shareType){
+            case ShareFileTargetType.ALL:
+                showShareIcon.showShareIcon(R.drawable.share_with_everyone,R.string.everyone);
+                break;
+            case ShareFileTargetType.LIST:
+                showShareIcon.showShareIcon(R.drawable.share_with_everyone,String.valueOf(numberOfShares));
+                break;
+            case ShareFileTargetType.NONE:
+                showShareIcon.hide();
+                break;
+        }
+    }
+
     public abstract @DrawableRes int getImageIcon();
+
+    public  @StringRes int getDateType(){
+      return R.string.created_time;
+    }
 
 
     @Override

@@ -5,6 +5,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Arrays;
+import java.util.Date;
 
 public class KujonFile {
 
@@ -38,8 +39,9 @@ public class KujonFile {
     @SerializedName("file_id") @Expose
     public String fileId;
 
+
     @SerializedName("created_time") @Expose
-    public String createdTime;
+    public Date createdTime;
 
     @SerializedName("file_size") @Expose
     public String fileSize;

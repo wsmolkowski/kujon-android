@@ -96,4 +96,7 @@
     <string name="add_to_google_drive">Dodaj do Google Drive</string>
     <string name="delete">Usuń</string>
     <string name="share">UDOSTĘPNIJ</string>
+    <string name="created_time">Stworzony</string>
+    <string name="by">przez</string>
+    <string name="everyone">Wszyscy</string>
 </resources>
