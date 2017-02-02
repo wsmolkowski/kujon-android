@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import butterknife.Bind;
@@ -20,6 +21,9 @@ public class ChooseStudentViewHolder extends RecyclerView.ViewHolder {
     @Bind(R.id.student_name)
     TextView studentName;
 
+    @Bind(R.id.choose_student_container)
+    RelativeLayout chooseStudentContainer;
+
     public ChooseStudentViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
@@ -28,12 +32,8 @@ public class ChooseStudentViewHolder extends RecyclerView.ViewHolder {
     public void bind(StudentShareDto studentShareDto) {
         studentName.setText(studentShareDto.getStudentName());
         studentChoiceCheckbox.setChecked(studentShareDto.isChosen());
-        studentChoiceCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                studentShareDto.setChosen(isChecked);
-            }
-        });
+        studentChoiceCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> studentShareDto.setChosen(isChecked));
+        chooseStudentContainer.setOnClickListener(v -> studentChoiceCheckbox.setChecked(!studentChoiceCheckbox.isChecked()));
     }
 
 }
