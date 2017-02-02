@@ -6,11 +6,20 @@
     android:background="?selectableItemBackground"
     android:layout_height="wrap_content">
     <TextView
+        android:background="@android:color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/semester_name"
-        style="@style/Regular.Entry"
-        android:drawableRight="@drawable/navigate_next"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:textColor="@color/dark"
+        android:paddingTop="17dp"
+        android:paddingBottom="17dp"
+        android:textSize="16sp"
         tools:text="2015-L47-291"
         />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/white"/>
 </LinearLayout>
