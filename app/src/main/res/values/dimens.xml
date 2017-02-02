@@ -3,11 +3,11 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
-    <dimen name="big_margin">32dp</dimen>
+    <dimen name="big_margin">26dp</dimen>
     <dimen name="medium_margin">16dp</dimen>
     <dimen name="small_margin">8dp</dimen>
 
-    <dimen name="medium_text">19sp</dimen>
+    <dimen name="medium_text">17sp</dimen>
     <dimen name="font_size_vh_header">14sp</dimen>
     <dimen name="font_size_vh_details">11sp</dimen>
     <dimen name="vh_file_padding_large">24dp</dimen>
