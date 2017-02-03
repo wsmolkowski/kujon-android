@@ -101,4 +101,9 @@ public class FilesListFragment extends BaseFileFragment<FilesListFragment> imple
     }
 
 
+    public void reload(){
+        this.setProgress(true);
+        presenter.loadListOfFiles(true,fileOwnerType);
+    }
+
 }

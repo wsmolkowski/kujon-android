@@ -28,7 +28,6 @@ public class MultipartUtils {
         } else {
             String joined;
             joined = StringUtils.join(collection, ",");
-            joined = "[" + joined + "]";
             return RequestBody.create(MultipartBody.FORM, joined);
         }
     }

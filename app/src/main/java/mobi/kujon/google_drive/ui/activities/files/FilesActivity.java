@@ -8,7 +8,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -92,7 +91,7 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         String[] titles = {getString(R.string.all_files), getString(R.string.my_files)};
-        Fragment[] fragments = {FilesListFragment.newInstance(FilesOwnerType.ALL), FilesListFragment.newInstance(FilesOwnerType.MY)};
+        FilesListFragment[] fragments = {FilesListFragment.newInstance(FilesOwnerType.ALL), FilesListFragment.newInstance(FilesOwnerType.MY)};
         adapter = new FilesFragmentPagerAdapter(getSupportFragmentManager(), titles, fragments);
         viewPager.setAdapter(adapter);
         apiClient = new GoogleApiClient.Builder(this)
@@ -108,7 +107,7 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
                 }
         );
         uploadLayout.setUpdateFileListener(() -> {
-            this.adapter.refresh();
+            this.adapter.refresh(viewPager.getCurrentItem());
         });
         apiClient.connect();
         presenter.subscribeToStream(this);

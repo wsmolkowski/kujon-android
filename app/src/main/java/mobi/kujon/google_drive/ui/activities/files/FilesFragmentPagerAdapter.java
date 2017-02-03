@@ -4,15 +4,17 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import mobi.kujon.google_drive.ui.fragments.files.FilesListFragment;
+
 /**
  *
  */
 
 public class FilesFragmentPagerAdapter extends FragmentPagerAdapter {
     private String[] strings;
-    private Fragment[] fragments;
+    private FilesListFragment[] fragments;
 
-    public FilesFragmentPagerAdapter(FragmentManager fm, String[] strings, Fragment[] fragments) {
+    public FilesFragmentPagerAdapter(FragmentManager fm, String[] strings, FilesListFragment[] fragments) {
         super(fm);
         this.strings = strings;
         this.fragments = fragments;
@@ -33,8 +35,7 @@ public class FilesFragmentPagerAdapter extends FragmentPagerAdapter {
         return strings[position];
     }
 
-    public void refresh() {
-
-
+    public void refresh(int i) {
+        fragments[i].reload();
     }
 }

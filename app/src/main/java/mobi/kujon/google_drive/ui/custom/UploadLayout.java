@@ -74,12 +74,12 @@ public class UploadLayout extends LinearLayout {
         DowloadProgresView childAt = (DowloadProgresView) this.getChildAt(filesList.indexOf(fileName));
         childAt.updateProggress(fileUpdateDto);
         if (fileUpdateDto.isEnded() || fileUpdateDto.getProgress() == 100) {
-            this.filesList.remove(fileName);
-            doOnProgressEnd(childAt);
+            UploadLayout.this.updateFileListener.onFileUploaded();
+            childAt.setClick(() -> doOnProgressEnd(childAt,fileName));
         }
     }
 
-    private void doOnProgressEnd(final DowloadProgresView childAt) {
+    private void doOnProgressEnd(final DowloadProgresView childAt,String filename) {
         childAt.animate()
                 .scaleY(0.0f)
                 .alpha(0.0f)
@@ -89,7 +89,8 @@ public class UploadLayout extends LinearLayout {
                     @Override
                     public void onAnimationEnd(Animator animator) {
                         UploadLayout.this.removeView(childAt);
-                        UploadLayout.this.updateFileListener.onFileUploaded();
+                        UploadLayout.this.filesList.remove(filename);
+
                     }
                 }).start();
     }

@@ -53,6 +53,7 @@ public class ProgressRequestBody extends RequestBody {
                 uploaded += read;
                 sink.write(buffer, 0, read);
             }
+            if(lastValue<100)
             mListener.onProgressUpdate(100);
         } finally {
             in.close();

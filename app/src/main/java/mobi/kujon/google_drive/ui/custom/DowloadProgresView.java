@@ -44,6 +44,7 @@ public class DowloadProgresView extends LinearLayout {
     private void init() {
         inflate(getContext(), R.layout.update_layout, this);
         this.setOrientation(VERTICAL);
+        this.setPivotY(0.0f);
         this.progressBar = (ProgressBar) findViewById(R.id.progress_bar);
         this.textView = (TextView) findViewById(R.id.tilte_text_view);
         int padding = getResources().getDimensionPixelSize(R.dimen.progress_margins);
@@ -53,5 +54,13 @@ public class DowloadProgresView extends LinearLayout {
     public void updateProggress(FileUpdateDto fileUpdateDto) {
         this.textView.setText(fileUpdateDto.getFileName());
         this.progressBar.setProgress(fileUpdateDto.getProgress());
+    }
+
+    public void setClick(ClickMeListener click){
+        this.setOnClickListener(view -> click.iWasClicked());
+    }
+
+    interface ClickMeListener{
+        void iWasClicked();
     }
 }
