@@ -5,6 +5,8 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.List;
 
 import mobi.kujon.R;
 import mobi.kujon.google_drive.model.KujonFile;
@@ -26,14 +28,14 @@ public abstract class FileDTO {
     private String userName;
     private String fileId;
     private String dateCreated;
-    private String[] shares;
+    private List<String> shares;
 
 
     public FileDTO(KujonFile kujonFile) {
         this.fileId = kujonFile.fileId;
         this.shareType = kujonFile.shareType;
         this.numberOfShares = kujonFile.fileSharedWith.length;
-        this.shares = kujonFile.fileSharedWith;
+        this.shares = Arrays.asList(kujonFile.fileSharedWith);
         this.fileName = kujonFile.fileName;
         this.fileSize = kujonFile.fileSize;
         this.userName = new StringBuilder(kujonFile.fileName).append(" ").append(kujonFile.lastName).toString();
@@ -50,7 +52,7 @@ public abstract class FileDTO {
         return numberOfShares;
     }
 
-    public String[] getShares() {
+    public List<String> getShares() {
         return shares;
     }
 

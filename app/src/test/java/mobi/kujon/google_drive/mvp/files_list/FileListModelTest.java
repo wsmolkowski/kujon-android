@@ -12,6 +12,7 @@ import mobi.kujon.google_drive.model.KujonFile;
 import mobi.kujon.google_drive.model.dto.file.FileDtoFactory;
 import mobi.kujon.google_drive.network.unwrapped_api.GetFiles;
 import mobi.kujon.google_drive.utils.FilesFilter;
+import mobi.kujon.utils.user_data.UserDataFacade;
 import rx.Observable;
 
 import static org.junit.Assert.assertEquals;
@@ -27,6 +28,9 @@ public class FileListModelTest extends UnitTest {
     @Mock
     FilesFilter filesFilter;
 
+    @Mock
+    UserDataFacade userDataFacade;
+
     private FileListMVP.Model model;
     private String courseId;
     private String termId;
@@ -37,7 +41,7 @@ public class FileListModelTest extends UnitTest {
     protected void onSetup() {
         courseId = "course";
         termId = "term";
-        model = new FileListModel(courseId, termId, getFiles, filesFilter);
+        model = new FileListModel(courseId, termId, getFiles, filesFilter, userDataFacade);
     }
 
     @Test
