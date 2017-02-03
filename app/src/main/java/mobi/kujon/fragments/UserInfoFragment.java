@@ -42,6 +42,7 @@ import mobi.kujon.ui.CircleTransform;
 import mobi.kujon.utils.CommonUtils;
 import mobi.kujon.utils.ErrorHandlerUtil;
 import mobi.kujon.utils.KujonUtils;
+import mobi.kujon.utils.user_data.UserDataFacade;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -53,6 +54,7 @@ public class UserInfoFragment extends BaseFragment {
     @Inject KujonUtils utils;
     @Inject KujonBackendApi kujonBackendApi;
     @Inject Picasso picasso;
+    @Inject UserDataFacade userDataFacade;
 
     private BaseActivity activity;
     private AlertDialog alertDialog;
@@ -99,6 +101,7 @@ public class UserInfoFragment extends BaseFragment {
                 binding.swipeContainer.setRefreshing(false);
                 if (ErrorHandlerUtil.handleResponse(response)) {
                     user = response.body().data;
+                    userDataFacade.saveUserId(user.id);
                     binding.setUser(user);
                     String name = user.first_name + " " + user.last_name;
                     binding.firstLastName.setText(name);

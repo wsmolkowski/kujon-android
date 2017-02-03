@@ -6,6 +6,7 @@ import mobi.kujon.google_drive.model.dto.file.FileDTO;
 import mobi.kujon.google_drive.model.dto.file.FileDtoFactory;
 import mobi.kujon.google_drive.network.unwrapped_api.GetFiles;
 import mobi.kujon.google_drive.utils.FilesFilter;
+import mobi.kujon.utils.user_data.UserDataFacade;
 import rx.Observable;
 
 /**
@@ -16,12 +17,14 @@ public class FileListModel implements FileListMVP.Model {
     private String courseId,termId;
     private GetFiles getFiles;
     private FilesFilter myFilesFilter;
+    private UserDataFacade userDataFacade;
 
-    public FileListModel(String courseId, String termId, GetFiles getFiles, FilesFilter myFilesFilter) {
+    public FileListModel(String courseId, String termId, GetFiles getFiles, FilesFilter myFilesFilter, UserDataFacade userDataFacade) {
         this.courseId = courseId;
         this.termId = termId;
         this.getFiles = getFiles;
         this.myFilesFilter = myFilesFilter;
+        this.userDataFacade = userDataFacade;
     }
 
 

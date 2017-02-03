@@ -13,6 +13,7 @@ import mobi.kujon.google_drive.network.unwrapped_api.ShareFile;
 import mobi.kujon.google_drive.network.unwrapped_api.CourseDetailsApi;
 import mobi.kujon.google_drive.services.ServiceOpener;
 import mobi.kujon.google_drive.utils.SchedulersHolder;
+import mobi.kujon.utils.user_data.UserDataFacade;
 
 /**
  *
@@ -30,4 +31,5 @@ public interface FilesComponent {
     FileStreamUpdateMVP.Model provideModel();
     Gson provideGson();
     ServiceOpener provideServiceOpener();
+    UserDataFacade provideUserDataFacade();
 }

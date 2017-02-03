@@ -40,6 +40,7 @@ import mobi.kujon.fragments.TermsFragment;
 import mobi.kujon.fragments.UserInfoFragment;
 import mobi.kujon.utils.KujonUtils;
 import mobi.kujon.utils.PlanEventsDownloader;
+import mobi.kujon.utils.user_data.UserDataFacade;
 import retrofit2.Retrofit;
 
 @Singleton
@@ -117,5 +118,7 @@ public interface KujonComponent {
 
     Gson provideGson();
     Application provideApplication();
+
+    UserDataFacade provideUserDataFacade();
 
 }

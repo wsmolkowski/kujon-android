@@ -9,6 +9,8 @@ import dagger.Module;
 import dagger.Provides;
 import mobi.kujon.utils.shared_preferences.SharedPreferencesFacade;
 import mobi.kujon.utils.shared_preferences.SharedPreferencesFacadeImpl;
+import mobi.kujon.utils.user_data.UserDataFacade;
+import mobi.kujon.utils.user_data.UserDataFacedImpl;
 
 @Module
 public class AppModule {
@@ -35,6 +37,11 @@ public class AppModule {
     @Provides @Singleton
     SharedPreferencesFacade proviceSharedPreferencesFacade(KujonApplication kujonApplication){
         return new SharedPreferencesFacadeImpl(application.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE));
+    }
+
+    @Provides @Singleton
+    UserDataFacade provideUserDataFacade(SharedPreferencesFacade sharedPreferencesFacade) {
+        return new UserDataFacedImpl(sharedPreferencesFacade);
     }
 
 }
