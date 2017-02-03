@@ -4,26 +4,35 @@ package mobi.kujon.google_drive.mvp.file_details;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
+import mobi.kujon.google_drive.model.ShareFileTarget;
+import mobi.kujon.google_drive.model.SharedFile;
 import mobi.kujon.google_drive.model.dto.StudentShareDto;
 import mobi.kujon.google_drive.model.dto.file.FileDTO;
 import mobi.kujon.google_drive.model.dto.file_details.DisableableStudentShareDTO;
+import mobi.kujon.google_drive.model.dto.file_share.FileShareDto;
 import mobi.kujon.google_drive.mvp.choose_students.ChooseStudentsMVP;
 import mobi.kujon.google_drive.mvp.files_list.FileListMVP;
 import mobi.kujon.google_drive.mvp.files_list.FilesOwnerType;
+import mobi.kujon.google_drive.network.unwrapped_api.ShareFile;
 import rx.Observable;
 
 public class FileDetailsFacadeImpl implements FileDetailsFacade {
 
     private ChooseStudentsMVP.Model chooseStudentModel;
     private FileListMVP.Model fileListModel;
+    private ShareFile shareFile;
     private String courseId;
     private String termId;
 
-    public FileDetailsFacadeImpl(ChooseStudentsMVP.Model chooseStudentModel, FileListMVP.Model fileListModel, String courseId, String termId) {
+    @Inject
+    public FileDetailsFacadeImpl(ChooseStudentsMVP.Model chooseStudentModel, FileListMVP.Model fileListModel, ShareFile shareFile, String courseId, String termId) {
         this.chooseStudentModel = chooseStudentModel;
         this.fileListModel = fileListModel;
         this.courseId = courseId;
         this.termId = termId;
+        this.shareFile = shareFile;
     }
 
     @Override
@@ -68,5 +77,22 @@ public class FileDetailsFacadeImpl implements FileDetailsFacade {
     public Observable<FileDTO> loadFileProperties(String fileId, boolean refresh) {
         return fileListModel.getFilesDto(refresh, FilesOwnerType.ALL)
                 .map(fileDTOs -> getFileDTO(fileDTOs, fileId));
+    }
+
+    @Override
+    public Observable<SharedFile> shareFile(FileShareDto fileShareDto) {
+        ShareFileTarget target = prepareShareFileTarget(fileShareDto);
+        return shareFile.shareFile(target);
+    }
+
+    private ShareFileTarget prepareShareFileTarget(FileShareDto fileShareDto) {
+        ShareFileTarget target = new ShareFileTarget();
+        target.shareWithTargetType = fileShareDto.getShareType();
+        target.fileId = fileShareDto.getFileId();
+        target.shareWithTarget = new ArrayList<>(fileShareDto.getStudentsListToShare().size());
+        for(String studentId : fileShareDto.getStudentsListToShare()) {
+            target.shareWithTarget.add(Integer.valueOf(studentId));
+        }
+        return target;
     }
 }

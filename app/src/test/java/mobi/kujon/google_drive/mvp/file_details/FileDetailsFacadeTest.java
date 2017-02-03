@@ -6,18 +6,23 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 import mobi.kujon.UnitTest;
 import mobi.kujon.google_drive.model.KujonFile;
+import mobi.kujon.google_drive.model.ShareFileTargetType;
+import mobi.kujon.google_drive.model.SharedFile;
 import mobi.kujon.google_drive.model.dto.StudentShareDto;
 import mobi.kujon.google_drive.model.dto.file.FileDTO;
 import mobi.kujon.google_drive.model.dto.file.NormalFileType;
 import mobi.kujon.google_drive.model.dto.file_details.DisableableStudentShareDTO;
+import mobi.kujon.google_drive.model.dto.file_share.FileShareDto;
 import mobi.kujon.google_drive.mvp.choose_students.ChooseStudentsMVP;
 import mobi.kujon.google_drive.mvp.files_list.FileListMVP;
 import mobi.kujon.google_drive.mvp.files_list.FilesOwnerType;
+import mobi.kujon.google_drive.network.unwrapped_api.ShareFile;
 import rx.Observable;
 
 public class FileDetailsFacadeTest extends UnitTest {
@@ -28,6 +33,9 @@ public class FileDetailsFacadeTest extends UnitTest {
     @Mock
     FileListMVP.Model fileListModel;
 
+    @Mock
+    ShareFile shareFile;
+
     private final static String courseId = "cid";
     private final static String termId = "tid";
     private final static String fileId = "id" + 3;
@@ -36,7 +44,7 @@ public class FileDetailsFacadeTest extends UnitTest {
 
     @Override
     protected void onSetup() {
-        fileDetailsFacade = new FileDetailsFacadeImpl(studentChoiceModel, fileListModel, courseId, termId);
+        fileDetailsFacade = new FileDetailsFacadeImpl(studentChoiceModel, fileListModel, shareFile, courseId, termId);
     }
 
     @Test
@@ -106,5 +114,25 @@ public class FileDetailsFacadeTest extends UnitTest {
                 });
     }
 
+    private static final String fileSharedId = "1";
+    private static final String StudentId = "13";
+
+    @Test
+    public void testShareFile() throws Exception {
+        FileShareDto fileShareDto = new FileShareDto(fileSharedId, ShareFileTargetType.ALL, Collections.singletonList(StudentId));
+        Mockito.when(shareFile.shareFile(Mockito.any())).thenReturn(Observable.just(provideSharedFile()));
+        fileDetailsFacade.shareFile(fileShareDto).subscribe(sharedFile -> {
+            Assert.assertEquals(sharedFile.fileId, fileSharedId);
+            Assert.assertEquals(sharedFile.fileSharedWith.size(), 1);
+            Assert.assertEquals(sharedFile.fileSharedWith.get(0), StudentId);
+        });
+    }
+
+    private SharedFile provideSharedFile() {
+        SharedFile file = new SharedFile();
+        file.fileId = fileSharedId;
+        file.fileSharedWith = Collections.singletonList(StudentId);
+        return file;
+    }
 
 }

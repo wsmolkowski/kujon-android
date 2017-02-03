@@ -27,7 +27,7 @@ public class FileShareDto {
         this.fileId = fileId;
     }
 
-    public String getShareType() {
+    public @ShareFileTargetType String getShareType() {
         return shareType;
     }
 
