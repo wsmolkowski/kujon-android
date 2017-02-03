@@ -26,12 +26,14 @@ public abstract class FileDTO {
     private String userName;
     private String fileId;
     private String dateCreated;
+    private String[] shares;
 
 
     public FileDTO(KujonFile kujonFile) {
         this.fileId = kujonFile.fileId;
         this.shareType = kujonFile.shareType;
         this.numberOfShares = kujonFile.fileSharedWith.length;
+        this.shares = kujonFile.fileSharedWith;
         this.fileName = kujonFile.fileName;
         this.fileSize = kujonFile.fileSize;
         this.userName = new StringBuilder(kujonFile.fileName).append(" ").append(kujonFile.lastName).toString();
@@ -46,6 +48,10 @@ public abstract class FileDTO {
 
     public int getNumberOfShares() {
         return numberOfShares;
+    }
+
+    public String[] getShares() {
+        return shares;
     }
 
     public String getFileName() {
