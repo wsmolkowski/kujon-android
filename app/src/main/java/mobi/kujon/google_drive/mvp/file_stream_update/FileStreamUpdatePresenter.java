@@ -24,7 +24,7 @@ public class FileStreamUpdatePresenter extends AbstractClearSubsriptions impleme
     public void subscribeToStream(FileStreamUpdateMVP.View view) {
         addToSubsriptionList(this.model.subscribeToStream()
                 .subscribeOn(holder.subscribe())
-                .debounce(20, TimeUnit.MILLISECONDS)
+                .debounce(50, TimeUnit.MILLISECONDS)
                 .observeOn(holder.observ())
                 .subscribe(view::onUpdate, Throwable::printStackTrace));
     }

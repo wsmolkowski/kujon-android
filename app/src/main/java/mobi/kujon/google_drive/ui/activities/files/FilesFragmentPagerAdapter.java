@@ -32,4 +32,9 @@ public class FilesFragmentPagerAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         return strings[position];
     }
+
+    public void refresh() {
+
+
+    }
 }

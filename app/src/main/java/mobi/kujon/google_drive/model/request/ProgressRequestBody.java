@@ -45,7 +45,7 @@ public class ProgressRequestBody extends RequestBody {
         try {
             int read;
             while ((read = in.read(buffer)) != -1) {
-                int newValue = 50 + (int) (50 * uploaded / fileLength);
+                int newValue = 67 + (int) (33 * uploaded / fileLength);
                 if(newValue>lastValue){
                     mListener.onProgressUpdate(newValue);
                     lastValue =newValue;
@@ -53,8 +53,10 @@ public class ProgressRequestBody extends RequestBody {
                 uploaded += read;
                 sink.write(buffer, 0, read);
             }
+            mListener.onProgressUpdate(100);
         } finally {
             in.close();
+
         }
     }
 }

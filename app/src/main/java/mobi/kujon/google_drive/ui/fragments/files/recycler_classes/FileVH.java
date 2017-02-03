@@ -42,7 +42,7 @@ public class FileVH extends RecyclerView.ViewHolder implements ShowShareIcon {
         imageView.setImageDrawable(drawable);
         fileHeader.setText(fileDTO.getFileName());
         fileDate.setText(fileDTO.getDateCreated(itemView.getResources()));
-        fileSize.setText(fileDTO.getFileSize());
+        fileSize.setText(new StringBuilder().append(fileDTO.getFileSize()).append(" MB").toString());
         fileDTO.setShareFile(this);
     }
 

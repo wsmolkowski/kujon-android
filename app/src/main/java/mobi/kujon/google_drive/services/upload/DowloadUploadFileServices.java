@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -104,7 +105,8 @@ public class DowloadUploadFileServices extends Service implements UploadFileMVP.
                 .subscribeOn(schedulersHolder.subscribe())
                 .observeOn(schedulersHolder.observ())
                 .subscribe(it -> {
-                    presenter.uploadFile(it, fileUploadDto);
+                    presenter.uploadFile(it,fileUploadDto);
+
                 }, error -> {
                     error.printStackTrace();
                     //TODO restart Service with same parameters
@@ -123,6 +125,7 @@ public class DowloadUploadFileServices extends Service implements UploadFileMVP.
 
     @Override
     public void onFileUploaded() {
+        Log.d("DOWLOAD","COMPLETE");
         this.stopSelf();
     }
 

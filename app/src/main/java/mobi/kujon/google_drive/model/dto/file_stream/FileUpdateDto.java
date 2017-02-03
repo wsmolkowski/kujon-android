@@ -10,7 +10,7 @@ public class FileUpdateDto {
     private int progress;
     private String id;
 
-
+    private boolean ended;
     public FileUpdateDto(String fileName, int progress) {
         this.fileName = fileName;
         this.progress = progress;
@@ -42,6 +42,14 @@ public class FileUpdateDto {
         this.id = id;
     }
 
+
+    public boolean isEnded() {
+        return ended;
+    }
+
+    public void setEnded(boolean ended) {
+        this.ended = ended;
+    }
 
     @Override
     public boolean equals(Object o) {

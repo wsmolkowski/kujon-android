@@ -7,8 +7,6 @@ import mobi.kujon.google_drive.mvp.file_stream_update.FileStreamUpdateMVP;
 import mobi.kujon.google_drive.mvp.file_stream_update.FileStreamUpdatePresenter;
 import mobi.kujon.google_drive.mvp.files_list.FileListMVP;
 import mobi.kujon.google_drive.mvp.files_list.FileListModel;
-import mobi.kujon.google_drive.mvp.google_drive_api.GoogleDriveDowloadMVP;
-import mobi.kujon.google_drive.mvp.google_drive_api.GoogleDriveDowloadModel;
 import mobi.kujon.google_drive.network.unwrapped_api.GetFiles;
 import mobi.kujon.google_drive.utils.FilesFilter;
 import mobi.kujon.google_drive.utils.SchedulersHolder;
@@ -32,12 +30,6 @@ public class FilesActivityModule {
         return new  FileListModel(courseId,termId,getFiles,new FilesFilter());
     }
 
-
-    @ActivityScope
-    @Provides
-    GoogleDriveDowloadMVP.Model provideGoogleDriveModel(FileStreamUpdateMVP.Model model){
-        return new GoogleDriveDowloadModel(null,model);
-    }
 
     @ActivityScope
     @Provides

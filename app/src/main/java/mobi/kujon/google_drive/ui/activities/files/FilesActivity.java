@@ -38,6 +38,7 @@ import mobi.kujon.google_drive.mvp.file_stream_update.FileStreamUpdateMVP;
 import mobi.kujon.google_drive.mvp.files_list.FilesOwnerType;
 import mobi.kujon.google_drive.services.ServiceOpener;
 import mobi.kujon.google_drive.ui.activities.BaseFileActivity;
+import mobi.kujon.google_drive.ui.custom.UploadLayout;
 import mobi.kujon.google_drive.ui.dialogs.share_target.ChooseShareStudentsListener;
 import mobi.kujon.google_drive.ui.dialogs.share_target.ShareTargetDialog;
 import mobi.kujon.google_drive.ui.fragments.ProvideInjector;
@@ -51,6 +52,7 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
     public static final String COURSE_ID_KEY = "COURSE_ID_KEY";
     public static final String TERM_ID_KEY = "TERM_ID_KEY";
     private FileActivityInjector fileActivityInjector;
+    private FilesFragmentPagerAdapter adapter;
 
     public static void openActivity(Activity context, String courseId, String termId) {
         Intent intent = new Intent(context, FilesActivity.class);
@@ -71,6 +73,8 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
     @Bind(R.id.sliding_tabs)
     TabLayout tabLayout;
 
+    @Bind(R.id.update_layout)
+    UploadLayout uploadLayout;
 
     @Inject
     FileStreamUpdateMVP.Presenter presenter;
@@ -89,7 +93,8 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
         setSupportActionBar(toolbar);
         String[] titles = {getString(R.string.all_files), getString(R.string.my_files)};
         Fragment[] fragments = {FilesListFragment.newInstance(FilesOwnerType.ALL), FilesListFragment.newInstance(FilesOwnerType.MY)};
-        viewPager.setAdapter(new FilesFragmentPagerAdapter(getSupportFragmentManager(), titles, fragments));
+        adapter = new FilesFragmentPagerAdapter(getSupportFragmentManager(), titles, fragments);
+        viewPager.setAdapter(adapter);
         apiClient = new GoogleApiClient.Builder(this)
                 .addApi(Drive.API)
                 .addScope(Drive.SCOPE_FILE)
@@ -102,6 +107,9 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
                     startFileSearching();
                 }
         );
+        uploadLayout.setUpdateFileListener(() -> {
+            this.adapter.refresh();
+        });
         apiClient.connect();
         presenter.subscribeToStream(this);
     }
@@ -185,10 +193,7 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
         dialog.show(getFragmentManager(), ShareTargetDialog.NAME);
     }
 
-    @Override
-    protected void setLoading(boolean t) {
 
-    }
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
@@ -216,11 +221,17 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
     @Override
     public void onUpdate(FileUpdateDto fileUpdateDto) {
         Log.d(fileUpdateDto.getFileName(), String.format("Loading progress: %d percent", fileUpdateDto.getProgress()));
+        this.uploadLayout.update(fileUpdateDto);
     }
 
     @Override
     public void shareWith(@ShareFileTargetType String targetType, List<String> chosenStudentIds) {
         FileUploadDto fileUploadDto = new FileUploadDto(coursId,termId,targetType,chosenStudentIds);
         serviceOpener.openUploadService(fileUploadDto,mSelectedFileDriveId);
+    }
+
+    @Override
+    protected void setLoading(boolean t) {
+
     }
 }
