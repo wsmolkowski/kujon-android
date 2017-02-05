@@ -5,6 +5,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import mobi.kujon.UnitTest;
@@ -73,6 +74,8 @@ public class FileListModelTest extends UnitTest {
             kujonFile.fileName = "name" + i;
             kujonFile.fileId = "id" + i;
             kujonFile.firstName = "firstName" + i;
+            kujonFile.createdTime = new Date();
+            kujonFile.fileSharedWith = new String[0];
             kujonFiles.add(kujonFile);
         }
         return kujonFiles;
