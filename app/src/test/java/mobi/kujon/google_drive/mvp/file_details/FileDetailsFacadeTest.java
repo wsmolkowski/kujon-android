@@ -52,7 +52,7 @@ public class FileDetailsFacadeTest extends UnitTest {
         Mockito.when(studentChoiceModel.provideListOfStudents(Mockito.anyString(), Mockito.anyString(), Mockito.anyBoolean())).thenReturn(Observable.just(provideStudentShares()));
         Mockito.when(fileListModel.getFilesDto(true, FilesOwnerType.ALL)).thenReturn(Observable.just(provideFileDTOs()));
 
-        fileDetailsFacade.loadStudentShares(true, fileId, true)
+        fileDetailsFacade.loadStudentShares(fileId, true)
                 .subscribe(this::assertStudents);
     }
 

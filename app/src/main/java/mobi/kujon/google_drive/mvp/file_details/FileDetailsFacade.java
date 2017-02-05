@@ -11,7 +11,7 @@ import rx.Observable;
 
 public interface FileDetailsFacade {
 
-    Observable<List<DisableableStudentShareDTO>> loadStudentShares(boolean enabled, String fileId, boolean refresh);
+    Observable<List<DisableableStudentShareDTO>> loadStudentShares(String fileId, boolean refresh);
 
     Observable<FileDTO> loadFileProperties(String fileId, boolean refresh);
 

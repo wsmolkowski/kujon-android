@@ -36,10 +36,10 @@ public class FileDetailsFacadeImpl implements FileDetailsFacade {
     }
 
     @Override
-    public Observable<List<DisableableStudentShareDTO>> loadStudentShares(boolean enabled, String fileId, boolean refresh) {
+    public Observable<List<DisableableStudentShareDTO>> loadStudentShares(String fileId, boolean refresh) {
         return Observable.combineLatest(getSharedWith(fileId, refresh),
                 chooseStudentModel.provideListOfStudents(courseId, termId, refresh),
-                (sharedWith, studentShareDtos) -> setDtosState(studentShareDtos, sharedWith, enabled));
+                (sharedWith, studentShareDtos) -> setDtosState(studentShareDtos, sharedWith));
     }
 
     private Observable<List<String>> getSharedWith(String fileId, boolean refresh) {
@@ -55,11 +55,12 @@ public class FileDetailsFacadeImpl implements FileDetailsFacade {
         throw new RuntimeException("File Id passed in does not match any of downloaded files");
     }
 
-    private List<DisableableStudentShareDTO> setDtosState(List<StudentShareDto> studentShares, List<String> sharedWith, boolean enabled) {
+    private List<DisableableStudentShareDTO> setDtosState(List<StudentShareDto> studentShares, List<String> sharedWith) {
         List<DisableableStudentShareDTO> resultDtos = new ArrayList<>(studentShares.size());
+        boolean isEnabled = studentShares.size() != sharedWith.size();
         for (StudentShareDto studentShare : studentShares) {
             studentShare.setChosen(checkIfChosen(studentShare.getStudentId(), sharedWith));
-            resultDtos.add(new DisableableStudentShareDTO(studentShare, enabled));
+            resultDtos.add(new DisableableStudentShareDTO(studentShare, isEnabled));
         }
         return resultDtos;
     }
