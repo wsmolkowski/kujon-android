@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mobi.kujon.google_drive.model.ShareFileTargetType;
+import mobi.kujon.google_drive.model.dto.StudentShareDto;
 import mobi.kujon.google_drive.model.dto.file_details.DisableableStudentShareDTO;
 import mobi.kujon.google_drive.model.dto.file_share.FileShareDto;
 import mobi.kujon.google_drive.mvp.AbstractClearSubsriptions;
@@ -35,20 +36,11 @@ public class FileDetailsPresenter extends AbstractClearSubsriptions implements F
     }
 
     private FileShareDto createFileShareDTO(String fileId, List<DisableableStudentShareDTO> shares) {
-        String target = ShareFileTargetType.NONE;
-        List<String> ids = new ArrayList<>();
-        for (DisableableStudentShareDTO dto : shares) {
-            if (dto.getStudentShareDto().isChosen()) {
-                ids.add(dto.getStudentShareDto().getStudentId());
-            }
+        List<StudentShareDto> dtos = new ArrayList<>(shares.size());
+        for(DisableableStudentShareDTO share : shares) {
+            dtos.add(share.getStudentShareDto());
         }
-        if (ids.size() > 0) {
-            target = ShareFileTargetType.LIST;
-        }
-        if (ids.size() == shares.size()) {
-            target = ShareFileTargetType.ALL;
-        }
-        return new FileShareDto(fileId, target, ids);
+        return new FileShareDto(fileId, dtos);
     }
 
     @Override
