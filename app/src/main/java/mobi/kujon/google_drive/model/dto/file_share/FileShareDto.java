@@ -3,8 +3,8 @@ package mobi.kujon.google_drive.model.dto.file_share;
 import java.util.ArrayList;
 import java.util.List;
 
+import mobi.kujon.google_drive.model.dto.file_details.DisableableStudentShareDTO;
 import mobi.kujon.google_drive.model.json.ShareFileTargetType;
-import mobi.kujon.google_drive.model.dto.StudentShareDto;
 
 /**
  *
@@ -21,22 +21,18 @@ public class FileShareDto {
         this.studentsListToShare = studentsListToShare;
     }
 
-    public FileShareDto(String fileId, List<StudentShareDto> studentShareDtos) {
+    public FileShareDto(String fileId, List<DisableableStudentShareDTO> studentShareDtos, String shareType) {
         this.fileId = fileId;
-        this.shareType = ShareFileTargetType.NONE;
+        this.shareType = shareType;
         this.studentsListToShare = new ArrayList<>();
-        for (StudentShareDto dto : studentShareDtos) {
+        for (DisableableStudentShareDTO dto : studentShareDtos) {
             if (dto.isChosen()) {
                 studentsListToShare.add(dto.getStudentId());
             }
         }
-        if (studentsListToShare.size() > 0) {
-            shareType = ShareFileTargetType.LIST;
-        }
-        if (studentsListToShare.size() == studentShareDtos.size()) {
-            shareType = ShareFileTargetType.ALL;
-        }
     }
+
+//    public getShareFile
 
     public String getFileId() {
         return fileId;
