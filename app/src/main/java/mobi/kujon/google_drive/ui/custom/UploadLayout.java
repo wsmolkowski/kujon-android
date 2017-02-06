@@ -67,6 +67,7 @@ public class UploadLayout extends LinearLayout {
             dowloadProgresView.animate().scaleY(1.0f).alpha(1.0f).setDuration(300)
                     .setInterpolator(new AccelerateDecelerateInterpolator())
                     .start();
+            dowloadProgresView.setClick(() -> doOnProgressEnd(dowloadProgresView,fileName));
         }
     }
 
@@ -75,7 +76,6 @@ public class UploadLayout extends LinearLayout {
         childAt.updateProggress(fileUpdateDto);
         if (fileUpdateDto.isEnded() || fileUpdateDto.getProgress() == 100) {
             UploadLayout.this.updateFileListener.onFileUploaded();
-            childAt.setClick(() -> doOnProgressEnd(childAt,fileName));
         }
     }
 

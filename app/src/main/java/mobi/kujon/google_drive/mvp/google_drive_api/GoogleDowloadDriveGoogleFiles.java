@@ -1,5 +1,7 @@
 package mobi.kujon.google_drive.mvp.google_drive_api;
 
+import android.support.annotation.NonNull;
+
 import com.google.android.gms.drive.DriveId;
 import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
 import com.google.api.services.drive.Drive;
@@ -44,7 +46,7 @@ public class GoogleDowloadDriveGoogleFiles implements ModelGoogleFiles {
                         mService.files()
                                 .export(it, mimeTypeMapper.convertMimeType(mimeType))
                                 .executeMediaAndDownloadTo(outputStream);
-                        model.updateStream(new FileUpdateDto(title, 67));
+                        model.updateStream(new FileUpdateDto(fileName(mimeType, title), 67));
                         return outputStream;
                     } catch (UserRecoverableAuthIOException e) {
                         throw Exceptions.propagate(e);
@@ -53,7 +55,12 @@ public class GoogleDowloadDriveGoogleFiles implements ModelGoogleFiles {
                         return null;
                     }
 
-                }).map(it -> new DataForFileUpload(it.toByteArray(), mimeTypeMapper.convertMimeType(mimeType), title + mimeTypeMapper.getExtension(mimeType)));
+                }).map(it -> new DataForFileUpload(it.toByteArray(), mimeTypeMapper.convertMimeType(mimeType), fileName(mimeType, title)));
 
+    }
+
+    @NonNull
+    private String fileName(String mimeType, String title) {
+        return title + mimeTypeMapper.getExtension(mimeType);
     }
 }

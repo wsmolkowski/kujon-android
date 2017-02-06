@@ -19,31 +19,31 @@ public class FileDtoFactory {
     private static final String PPT_FILE_CONTENT = "presentation";
     private static final String XLS_FILE_CONTENT = "sheet";
 
-    public static FileDTO createFileDto(KujonFile kujonFile){
+    public static FileDTO createFileDto(KujonFile kujonFile) {
         String contentType = kujonFile.contentType;
 
-        if(contentType.startsWith(IMAGE_CONTENT_FILE)){
+        if (contentType.startsWith(IMAGE_CONTENT_FILE)) {
             return new ImageFileType(kujonFile);
-        }else if(contentType.startsWith(VIDEO_CONTENT_FILE)){
+        } else if (contentType.startsWith(VIDEO_CONTENT_FILE)) {
             return new VideoFileType(kujonFile);
-        }else if(contentType.startsWith(AUDIO_CONTENT_FILE)) {
+        } else if (contentType.startsWith(AUDIO_CONTENT_FILE)) {
             return new AudioFileType(kujonFile);
-        }else if(contentType.contains(PDF_FILE_CONENT)) {
+        } else if (contentType.contains(PDF_FILE_CONENT)) {
             return new PdfFileType(kujonFile);
-        }else if(contentType.contains(DOC_FILE_CONTENT)) {
-            return new DocFileType(kujonFile);
-        }else if(contentType.contains(PPT_FILE_CONTENT)) {
+        } else if (contentType.contains(PPT_FILE_CONTENT)) {
             return new PptFileType(kujonFile);
-        }if(contentType.contains(XLS_FILE_CONTENT)) {
+        } else if (contentType.contains(XLS_FILE_CONTENT)) {
             return new XlsFileType(kujonFile);
-        }else {
+        } else if (contentType.contains(DOC_FILE_CONTENT)) {
+            return new DocFileType(kujonFile);
+        } else {
             return new NormalFileType(kujonFile);
         }
     }
 
-    public static List<FileDTO> createListOfDTOFiles(List<KujonFile> kujonFiles){
+    public static List<FileDTO> createListOfDTOFiles(List<KujonFile> kujonFiles) {
         List<FileDTO> fileDTOs = new ArrayList<>();
-        for(KujonFile kujonFile:kujonFiles){
+        for (KujonFile kujonFile : kujonFiles) {
             fileDTOs.add(createFileDto(kujonFile));
         }
         return fileDTOs;
