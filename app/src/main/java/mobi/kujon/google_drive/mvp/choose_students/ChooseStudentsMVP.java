@@ -19,11 +19,6 @@ public interface ChooseStudentsMVP {
         void loadListOfStudents(AskForStudentDto askForStudentDto, boolean refresh);
     }
 
-
-    interface SharePresenter extends ClearSubscriptions{
-        void shareFile(FileShareDto fileShareDto);
-    }
-
     interface Model{
         Observable<List<StudentShareDto>> provideListOfStudents(String courseId,String termId, boolean refresh);
     }

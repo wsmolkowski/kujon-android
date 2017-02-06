@@ -5,6 +5,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import mobi.kujon.UnitTest;
@@ -12,6 +13,7 @@ import mobi.kujon.google_drive.model.KujonFile;
 import mobi.kujon.google_drive.model.dto.file.FileDtoFactory;
 import mobi.kujon.google_drive.network.unwrapped_api.GetFiles;
 import mobi.kujon.google_drive.utils.FilesFilter;
+import mobi.kujon.utils.user_data.UserDataFacade;
 import rx.Observable;
 
 import static org.junit.Assert.assertEquals;
@@ -27,6 +29,9 @@ public class FileListModelTest extends UnitTest {
     @Mock
     FilesFilter filesFilter;
 
+    @Mock
+    UserDataFacade userDataFacade;
+
     private FileListMVP.Model model;
     private String courseId;
     private String termId;
@@ -37,7 +42,7 @@ public class FileListModelTest extends UnitTest {
     protected void onSetup() {
         courseId = "course";
         termId = "term";
-        model = new FileListModel(courseId, termId, getFiles, filesFilter);
+        model = new FileListModel(courseId, termId, getFiles, filesFilter, userDataFacade);
     }
 
     @Test
@@ -69,6 +74,8 @@ public class FileListModelTest extends UnitTest {
             kujonFile.fileName = "name" + i;
             kujonFile.fileId = "id" + i;
             kujonFile.firstName = "firstName" + i;
+            kujonFile.createdTime = new Date();
+            kujonFile.fileSharedWith = new String[0];
             kujonFiles.add(kujonFile);
         }
         return kujonFiles;

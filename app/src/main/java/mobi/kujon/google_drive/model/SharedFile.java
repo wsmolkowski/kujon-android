@@ -9,9 +9,9 @@ import java.util.List;
 public class SharedFile {
 
     @SerializedName("file_id") @Expose
-    private String fileId;
+    public String fileId;
 
     @SerializedName("file_shared_with") @Expose
-    private List<String> fileSharedWith;
+    public List<String> fileSharedWith;
 
 }
