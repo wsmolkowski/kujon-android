@@ -33,7 +33,7 @@ import mobi.kujon.R;
 import mobi.kujon.google_drive.dagger.injectors.FileActivityInjector;
 import mobi.kujon.google_drive.dagger.injectors.FilesListFragmentInjector;
 import mobi.kujon.google_drive.dagger.injectors.Injector;
-import mobi.kujon.google_drive.model.ShareFileTargetType;
+import mobi.kujon.google_drive.model.json.ShareFileTargetType;
 import mobi.kujon.google_drive.model.dto.file_stream.FileUpdateDto;
 import mobi.kujon.google_drive.model.dto.file_upload.FileUploadDto;
 import mobi.kujon.google_drive.mvp.file_stream_update.FileStreamUpdateMVP;

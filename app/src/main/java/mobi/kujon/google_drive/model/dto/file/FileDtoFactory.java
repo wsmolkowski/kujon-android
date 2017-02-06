@@ -3,7 +3,7 @@ package mobi.kujon.google_drive.model.dto.file;
 import java.util.ArrayList;
 import java.util.List;
 
-import mobi.kujon.google_drive.model.KujonFile;
+import mobi.kujon.google_drive.model.json.KujonFile;
 
 /**
  *

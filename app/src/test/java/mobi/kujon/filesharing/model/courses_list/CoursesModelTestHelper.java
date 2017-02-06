@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import mobi.kujon.google_drive.model.CourseWithTerms;
+import mobi.kujon.google_drive.model.json.CourseWithTerms;
 import mobi.kujon.network.json.Course;
 
 public class CoursesModelTestHelper {

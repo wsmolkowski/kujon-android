@@ -16,8 +16,12 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.drive.Drive;
 import com.google.android.gms.drive.DriveId;
 import com.google.android.gms.drive.DriveResource;
+import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
+import com.google.api.client.http.HttpTransport;
+import com.google.api.client.json.JsonFactory;
+import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.ExponentialBackOff;
 import com.google.api.services.drive.DriveScopes;
 import com.google.gson.Gson;
@@ -28,6 +32,7 @@ import javax.inject.Inject;
 
 import bolts.Task;
 import mobi.kujon.KujonApplication;
+import mobi.kujon.R;
 import mobi.kujon.google_drive.dagger.injectors.Injector;
 import mobi.kujon.google_drive.model.dto.file_upload.FileUploadDto;
 import mobi.kujon.google_drive.mvp.google_drive_api.GoogleDowloadProvider;
@@ -140,6 +145,7 @@ public class DowloadUploadFileServices extends Service implements UploadFileMVP.
     private com.google.api.services.drive.Drive mService = null;
 
     private void handleApiCalls() {
+        createDriveService();
         Observable.just(driveId.asDriveFile())
                 .map(driveFile -> {
                     DriveResource.MetadataResult mdRslt = driveFile.getMetadata(apiClient).await();
@@ -162,6 +168,15 @@ public class DowloadUploadFileServices extends Service implements UploadFileMVP.
                         error.printStackTrace();
                     }
                 });
+    }
+
+    private void createDriveService() {
+        HttpTransport transport = AndroidHttp.newCompatibleTransport();
+        JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
+        mService = new com.google.api.services.drive.Drive.Builder(
+                transport, jsonFactory, mCredential)
+                .setApplicationName(getResources().getString(R.string.app_name))
+                .build();
     }
 
     @Override

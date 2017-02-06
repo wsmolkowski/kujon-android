@@ -6,8 +6,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import mobi.kujon.google_drive.model.ShareFileTarget;
-import mobi.kujon.google_drive.model.SharedFile;
+import mobi.kujon.google_drive.model.json.ShareFileTarget;
+import mobi.kujon.google_drive.model.json.SharedFile;
 import mobi.kujon.google_drive.model.dto.StudentShareDto;
 import mobi.kujon.google_drive.model.dto.file.FileDTO;
 import mobi.kujon.google_drive.model.dto.file_details.DisableableStudentShareDTO;

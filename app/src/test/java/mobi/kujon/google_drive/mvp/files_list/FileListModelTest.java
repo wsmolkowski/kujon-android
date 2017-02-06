@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 import mobi.kujon.UnitTest;
-import mobi.kujon.google_drive.model.KujonFile;
+import mobi.kujon.google_drive.model.json.KujonFile;
 import mobi.kujon.google_drive.model.dto.file.FileDtoFactory;
 import mobi.kujon.google_drive.network.unwrapped_api.GetFiles;
 import mobi.kujon.google_drive.utils.FilesFilter;

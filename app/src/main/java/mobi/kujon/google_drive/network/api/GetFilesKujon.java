@@ -2,7 +2,7 @@ package mobi.kujon.google_drive.network.api;
 
 import java.util.List;
 
-import mobi.kujon.google_drive.model.KujonFile;
+import mobi.kujon.google_drive.model.json.KujonFile;
 import mobi.kujon.network.json.KujonResponse;
 import retrofit2.http.GET;
 import retrofit2.http.Header;

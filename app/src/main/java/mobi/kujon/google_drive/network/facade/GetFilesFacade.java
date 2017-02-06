@@ -2,7 +2,7 @@ package mobi.kujon.google_drive.network.facade;
 
 import java.util.List;
 
-import mobi.kujon.google_drive.model.KujonFile;
+import mobi.kujon.google_drive.model.json.KujonFile;
 import mobi.kujon.google_drive.network.BackendWrapper;
 import mobi.kujon.google_drive.network.api.ApiConst;
 import mobi.kujon.google_drive.network.api.GetFilesKujon;

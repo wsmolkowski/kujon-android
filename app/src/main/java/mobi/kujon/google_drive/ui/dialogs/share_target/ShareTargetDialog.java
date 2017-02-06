@@ -11,16 +11,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mobi.kujon.R;
-import mobi.kujon.google_drive.model.ShareFileTargetType;
+import mobi.kujon.google_drive.model.json.ShareFileTargetType;
 import mobi.kujon.google_drive.ui.activities.choose_share_students.ChooseStudentActivity;
-import mobi.kujon.network.json.Participant;
 
 import static mobi.kujon.google_drive.ui.activities.choose_share_students.ChooseStudentActivity.CHOOSE_STUDENTS_REQUEST;
 import static mobi.kujon.google_drive.ui.activities.choose_share_students.ChooseStudentActivity.CHOOSE_STUDENTS_RESPONSE;

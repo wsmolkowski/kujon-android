@@ -1,4 +1,4 @@
-package mobi.kujon.google_drive.model;
+package mobi.kujon.google_drive.model.json;
 
 
 import com.google.gson.annotations.Expose;
@@ -46,7 +46,7 @@ public class KujonFile {
     @SerializedName("file_size") @Expose
     public String fileSize;
 
-    @SerializedName("my_file") @Expose
+    @SerializedName("file_shared_by_me") @Expose
     public boolean myFile;
 
 

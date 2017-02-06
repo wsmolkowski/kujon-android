@@ -3,7 +3,7 @@ package mobi.kujon.google_drive.network.api;
 
 import java.util.List;
 
-import mobi.kujon.google_drive.model.UploadedFile;
+import mobi.kujon.google_drive.model.json.UploadedFile;
 import mobi.kujon.network.json.KujonResponse;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;

@@ -9,7 +9,7 @@ import org.mockito.Mockito;
 import java.util.List;
 
 import mobi.kujon.UnitTest;
-import mobi.kujon.google_drive.model.CourseWithTerms;
+import mobi.kujon.google_drive.model.json.CourseWithTerms;
 import mobi.kujon.google_drive.model.dto.CourseDTO;
 import mobi.kujon.google_drive.mvp.courses_list.CoursesModel;
 import mobi.kujon.google_drive.network.facade.CoursesApiFacade;

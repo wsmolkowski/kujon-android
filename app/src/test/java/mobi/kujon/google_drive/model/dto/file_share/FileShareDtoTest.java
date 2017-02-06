@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import mobi.kujon.UnitTest;
-import mobi.kujon.google_drive.model.ShareFileTargetType;
+import mobi.kujon.google_drive.model.json.ShareFileTargetType;
 import mobi.kujon.google_drive.model.dto.StudentShareDto;
 
 import static org.junit.Assert.*;

@@ -8,8 +8,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import mobi.kujon.UnitTest;
-import mobi.kujon.google_drive.model.ShareFileTargetType;
-import mobi.kujon.google_drive.model.UploadedFile;
+import mobi.kujon.google_drive.model.json.ShareFileTargetType;
+import mobi.kujon.google_drive.model.json.UploadedFile;
 import mobi.kujon.google_drive.model.dto.file_upload.DataForFileUpload;
 import mobi.kujon.google_drive.model.dto.file_upload.FileUploadDto;
 import mobi.kujon.google_drive.network.unwrapped_api.FileUpload;

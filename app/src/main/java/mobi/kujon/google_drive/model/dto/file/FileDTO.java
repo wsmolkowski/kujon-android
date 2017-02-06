@@ -9,8 +9,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import mobi.kujon.R;
-import mobi.kujon.google_drive.model.KujonFile;
-import mobi.kujon.google_drive.model.ShareFileTargetType;
+import mobi.kujon.google_drive.model.json.KujonFile;
+import mobi.kujon.google_drive.model.json.ShareFileTargetType;
 import mobi.kujon.google_drive.ui.fragments.files.recycler_classes.ShowShareIcon;
 
 import static java.util.Locale.getDefault;

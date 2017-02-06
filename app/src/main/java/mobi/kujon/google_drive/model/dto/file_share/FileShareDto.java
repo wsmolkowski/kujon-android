@@ -3,9 +3,8 @@ package mobi.kujon.google_drive.model.dto.file_share;
 import java.util.ArrayList;
 import java.util.List;
 
-import mobi.kujon.google_drive.model.ShareFileTargetType;
+import mobi.kujon.google_drive.model.json.ShareFileTargetType;
 import mobi.kujon.google_drive.model.dto.StudentShareDto;
-import mobi.kujon.google_drive.model.dto.file_details.DisableableStudentShareDTO;
 
 /**
  *

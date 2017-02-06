@@ -54,6 +54,7 @@
 -dontwarn okio.**
 
 -keep class mobi.kujon.network.json.** { *; }
+-keep class mobi.kujon.google_drive.model.json.**{*;}
 
 -keep class ch.qos.** { *; }
 -dontwarn okhttp3.internal.Internal

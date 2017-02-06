@@ -13,9 +13,9 @@ import java.util.List;
 
 import mobi.kujon.CommonExceptionCreator;
 import mobi.kujon.UnitTest;
-import mobi.kujon.google_drive.model.KujonFile;
-import mobi.kujon.google_drive.model.ShareFileTargetType;
-import mobi.kujon.google_drive.model.SharedFile;
+import mobi.kujon.google_drive.model.json.KujonFile;
+import mobi.kujon.google_drive.model.json.ShareFileTargetType;
+import mobi.kujon.google_drive.model.json.SharedFile;
 import mobi.kujon.google_drive.model.dto.StudentShareDto;
 import mobi.kujon.google_drive.model.dto.file.FileDTO;
 import mobi.kujon.google_drive.model.dto.file.NormalFileType;

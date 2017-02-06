@@ -2,7 +2,7 @@ package mobi.kujon.google_drive.network.unwrapped_api;
 
 import java.util.List;
 
-import mobi.kujon.google_drive.model.KujonFile;
+import mobi.kujon.google_drive.model.json.KujonFile;
 import rx.Observable;
 
 /**

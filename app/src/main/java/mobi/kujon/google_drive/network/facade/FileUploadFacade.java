@@ -3,8 +3,8 @@ package mobi.kujon.google_drive.network.facade;
 
 import java.util.List;
 
-import mobi.kujon.google_drive.model.ShareFileTargetType;
-import mobi.kujon.google_drive.model.UploadedFile;
+import mobi.kujon.google_drive.model.json.ShareFileTargetType;
+import mobi.kujon.google_drive.model.json.UploadedFile;
 import mobi.kujon.google_drive.model.dto.file_stream.FileUpdateDto;
 import mobi.kujon.google_drive.model.dto.file_upload.DataForFileUpload;
 import mobi.kujon.google_drive.model.dto.file_upload.FileUploadDto;

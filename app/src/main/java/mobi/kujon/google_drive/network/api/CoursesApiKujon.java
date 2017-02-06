@@ -3,7 +3,7 @@ package mobi.kujon.google_drive.network.api;
 
 import java.util.List;
 
-import mobi.kujon.google_drive.model.CourseWithTerms;
+import mobi.kujon.google_drive.model.json.CourseWithTerms;
 import mobi.kujon.network.json.KujonResponse;
 import retrofit2.http.GET;
 import retrofit2.http.Header;

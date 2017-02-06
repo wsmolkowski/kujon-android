@@ -22,6 +22,7 @@ public class GoogleDowloadDriveGoogleFiles implements ModelGoogleFiles {
     private FileStreamUpdateMVP.Model model;
     private Drive mService;
     private MimeTypeMapper mimeTypeMapper;
+
     public GoogleDowloadDriveGoogleFiles(FileStreamUpdateMVP.Model model) {
         this.model = model;
         this.mimeTypeMapper = new MimeTypeMapperImpl();
@@ -34,7 +35,7 @@ public class GoogleDowloadDriveGoogleFiles implements ModelGoogleFiles {
     }
 
     @Override
-    public Observable<DataForFileUpload> dowloadFile(DriveId fileId, String mimeType,String title) {
+    public Observable<DataForFileUpload> dowloadFile(DriveId fileId, String mimeType, String title) {
 
         return Observable.just(fileId.getResourceId())
                 .map(it -> {
@@ -43,7 +44,7 @@ public class GoogleDowloadDriveGoogleFiles implements ModelGoogleFiles {
                         mService.files()
                                 .export(it, mimeTypeMapper.convertMimeType(mimeType))
                                 .executeMediaAndDownloadTo(outputStream);
-                        model.updateStream(new FileUpdateDto(title,67));
+                        model.updateStream(new FileUpdateDto(title, 67));
                         return outputStream;
                     } catch (UserRecoverableAuthIOException e) {
                         throw Exceptions.propagate(e);
@@ -52,7 +53,7 @@ public class GoogleDowloadDriveGoogleFiles implements ModelGoogleFiles {
                         return null;
                     }
 
-                }).map(it -> new DataForFileUpload(it.toByteArray(), mimeType, title));
+                }).map(it -> new DataForFileUpload(it.toByteArray(), mimeTypeMapper.convertMimeType(mimeType), title + mimeTypeMapper.getExtension(mimeType)));
 
     }
 }

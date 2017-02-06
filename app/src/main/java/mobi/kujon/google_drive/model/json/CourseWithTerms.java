@@ -1,4 +1,4 @@
-package mobi.kujon.google_drive.model;
+package mobi.kujon.google_drive.model.json;
 
 import java.util.List;
 import java.util.TreeMap;

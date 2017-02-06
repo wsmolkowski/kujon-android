@@ -4,7 +4,7 @@ import com.github.underscore.$;
 
 import java.util.List;
 
-import mobi.kujon.google_drive.model.KujonFile;
+import mobi.kujon.google_drive.model.json.KujonFile;
 import mobi.kujon.google_drive.mvp.files_list.FilesOwnerType;
 
 /**
