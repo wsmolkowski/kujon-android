@@ -43,6 +43,7 @@ public class DowloadUploadFileServices extends Service implements UploadFileMVP.
     public static final String FILE_UPLOAD_DTO = "fileUploadDto";
     public static final String DRIVE_ID_KEY = "driveIdKey";
     private String mimeType;
+    private String title;
 
     public static void startService(Context context, String fileUploadDto, DriveId driveId) {
         Intent intent = new Intent(context, DowloadUploadFileServices.class);
@@ -143,10 +144,11 @@ public class DowloadUploadFileServices extends Service implements UploadFileMVP.
                 .map(driveFile -> {
                     DriveResource.MetadataResult mdRslt = driveFile.getMetadata(apiClient).await();
                     mimeType = mdRslt.getMetadata().getMimeType();
+                    title = mdRslt.getMetadata().getTitle();
                     GoogleDriveDowloadMVP.Model model = googleDowloadProvider.getModel(mimeType);
                     model.setGoogleClient(this);
                     return model;
-                }).flatMap(model -> model.dowloadFile(driveId, mimeType))
+                }).flatMap(model -> model.dowloadFile(driveId, mimeType, title))
                 .subscribeOn(schedulersHolder.subscribe())
                 .observeOn(schedulersHolder.observ())
                 .subscribe(it -> {
@@ -155,7 +157,7 @@ public class DowloadUploadFileServices extends Service implements UploadFileMVP.
                 }, error -> {
                     if (error.getCause() instanceof UserRecoverableAuthIOException) {
                         startActivity(((UserRecoverableAuthIOException) error).getIntent());
-                    }else {
+                    } else {
                         this.stopSelf();
                         error.printStackTrace();
                     }

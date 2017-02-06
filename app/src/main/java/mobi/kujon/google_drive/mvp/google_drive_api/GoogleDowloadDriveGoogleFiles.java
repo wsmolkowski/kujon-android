@@ -7,6 +7,7 @@ import com.google.api.services.drive.Drive;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+import mobi.kujon.google_drive.model.dto.file_stream.FileUpdateDto;
 import mobi.kujon.google_drive.model.dto.file_upload.DataForFileUpload;
 import mobi.kujon.google_drive.mvp.file_stream_update.FileStreamUpdateMVP;
 import mobi.kujon.google_drive.mvp.google_drive_api.GoogleDriveDowloadMVP.ModelGoogleFiles;
@@ -33,8 +34,7 @@ public class GoogleDowloadDriveGoogleFiles implements ModelGoogleFiles {
     }
 
     @Override
-    public Observable<DataForFileUpload> dowloadFile(DriveId fileId, String mimeType) {
-
+    public Observable<DataForFileUpload> dowloadFile(DriveId fileId, String mimeType,String title) {
 
         return Observable.just(fileId.getResourceId())
                 .map(it -> {
@@ -43,6 +43,7 @@ public class GoogleDowloadDriveGoogleFiles implements ModelGoogleFiles {
                         mService.files()
                                 .export(it, mimeTypeMapper.convertMimeType(mimeType))
                                 .executeMediaAndDownloadTo(outputStream);
+                        model.updateStream(new FileUpdateDto(title,67));
                         return outputStream;
                     } catch (UserRecoverableAuthIOException e) {
                         throw Exceptions.propagate(e);
@@ -51,7 +52,7 @@ public class GoogleDowloadDriveGoogleFiles implements ModelGoogleFiles {
                         return null;
                     }
 
-                }).map(it -> new DataForFileUpload(null, null, null));
+                }).map(it -> new DataForFileUpload(it.toByteArray(), mimeType, title));
 
     }
 }

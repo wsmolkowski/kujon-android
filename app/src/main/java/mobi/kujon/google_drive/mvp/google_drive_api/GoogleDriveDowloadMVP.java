@@ -24,7 +24,7 @@ public interface GoogleDriveDowloadMVP {
     interface Model {
         void setGoogleClient(GoogleClientProvider googleClient);
 
-        Observable<DataForFileUpload> dowloadFile(DriveId fileId,String mimeType);
+        Observable<DataForFileUpload> dowloadFile(DriveId fileId,String mimeType,String tilte);
     }
 
 
