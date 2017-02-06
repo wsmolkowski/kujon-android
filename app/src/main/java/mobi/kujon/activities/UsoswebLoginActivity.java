@@ -21,13 +21,10 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 
 import org.apache.commons.lang.StringEscapeUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.regex.Matcher;
@@ -55,7 +52,7 @@ public class UsoswebLoginActivity extends BaseActivity {
     private static final String TAG = "UsoswebLoginActivity";
 
     public static final String USOS_POJO = "USOS_POJO";
-    public static final Logger log = LoggerFactory.getLogger(UsoswebLoginActivity.class);
+
 
     @Bind(R.id.webView) WebView webView;
     @Bind(R.id.progressBar) ProgressBar progressBar;
@@ -67,7 +64,7 @@ public class UsoswebLoginActivity extends BaseActivity {
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        log.info("UsoswebLoginActivity");
+
         KujonApplication.getComponent().inject(this);
         CookieManager.getInstance().setAcceptCookie(true);
         setContentView(R.layout.activity_usos_login);
@@ -108,13 +105,13 @@ public class UsoswebLoginActivity extends BaseActivity {
 
 
             @Override public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                log.info("onPageStarted: " + url);
+
                 progressBar.setVisibility(View.VISIBLE);
                 super.onPageStarted(view, url, favicon);
             }
 
             @Override public void onPageFinished(WebView view, String url) {
-                log.debug("onPageFinished: " + url);
+
                 progressBar.setVisibility(View.GONE);
                 webView.loadUrl("javascript:window.HtmlViewer.showHTML" +
                         "('<html>'+document.getElementsByTagName('html')[0].innerHTML+'</html>');");
@@ -122,9 +119,9 @@ public class UsoswebLoginActivity extends BaseActivity {
             }
 
             @Override public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                log.info("shouldOverrideUrlLoading: " + url);
+
                 if (url.contains(API_URL + "authentication/verify")) {
-                    log.info("Got URL to kujon. Making request: " + url);
+
 
                     String cookie = CookieManager.getInstance().getCookie(API_URL);
 
@@ -136,14 +133,14 @@ public class UsoswebLoginActivity extends BaseActivity {
                         @Override public void onFailure(Call call, IOException e) {
                             runOnUiThread(() -> {
                                 Toast.makeText(UsoswebLoginActivity.this, "Network error", Toast.LENGTH_SHORT).show();
-                                log.error("Network error:" + e.getMessage());
+
                                 finish();
                             });
                         }
 
                         @Override public void onResponse(Call call, Response response) throws IOException {
                             String responseString = response.body().string();
-                            log.debug("Got response from server: " + responseString);
+
                             KujonResponse kujonResponse = gson.fromJson(responseString, KujonResponse.class);
                             runOnUiThread(() -> {
                                 if (kujonResponse.isSuccessful()) {
@@ -152,9 +149,8 @@ public class UsoswebLoginActivity extends BaseActivity {
                                     data.putExtra(USOS_POJO, usosPojo);
                                     setResult(RESULT_OK, data);
                                     finish();
-
                                 } else {
-                                    log.error("Login error");
+
                                     Toast.makeText(UsoswebLoginActivity.this, "Login error", Toast.LENGTH_SHORT).show();
                                     finish();
                                 }
@@ -173,7 +169,6 @@ public class UsoswebLoginActivity extends BaseActivity {
             String deviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
             String url = String.format(API_URL + "authentication/register?email=%s&token=%s&usos_id=%s&type=GOOGLE&device_type=ANDROID&device_id=%s",
                     account.getEmail(), account.getIdToken(), usos.usosId, deviceId);
-            log.info("Loading urs: " + url);
             webView.loadUrl(url);
             return null;
         }, Task.UI_THREAD_EXECUTOR).continueWith(ErrorHandlerUtil.ERROR_HANDLER);

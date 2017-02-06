@@ -147,13 +147,22 @@ dependencies {
     //rest
     compile "com.github.javadev:underscore:$underscore_version"
     compile "net.danlew:android.joda:$jodatime_version"
-    compile "org.slf4j:slf4j-api:$slf4j_version"
+
     compile "com.github.tony19:logback-android-core:$logback_version"
     compile "commons-lang:commons-lang:$commons_lang_version"
     compile "com.rockerhieu:rv-adapter-endless:$rv_endless_adapter_version"
     compile "uk.co.chrisjenx:calligraphy:$calligraphy_version"
     compile "com.annimon:stream:$stream_version"
     compile "com.facebook.android:facebook-android-sdk:$facebook_version"
+
+
+
+    compile('com.google.api-client:google-api-client-android:1.22.0') {
+        exclude group: 'org.apache.httpcomponents'
+    }
+    compile('com.google.apis:google-api-services-drive:v3-rev57-1.22.0') {
+        exclude group: 'org.apache.httpcomponents'
+    }
 
 
     //TEST

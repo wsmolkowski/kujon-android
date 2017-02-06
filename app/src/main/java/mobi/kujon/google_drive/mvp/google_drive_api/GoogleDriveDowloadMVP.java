@@ -12,8 +12,17 @@ import rx.Observable;
 
 public interface GoogleDriveDowloadMVP {
 
-    interface Model{
+    interface ModelOtherFiles extends Model{
         void setGoogleClient(GoogleApiClient googleClient);
+    }
+
+    interface ModelGoogleFiles extends Model{
+        void setGoogleClient(com.google.api.services.drive.Drive googleClient);
+
+    }
+
+    interface Model{
         Observable<DataForFileUpload> dowloadFile(DriveId fileId);
     }
+
 }

@@ -21,9 +21,7 @@ import com.onesignal.OneSignal;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.slf4j.MDC;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +46,7 @@ public class KujonApplication extends MultiDexApplication implements OneSignal.N
     public static final String FROM_NOTIFICATION = "FROM_NOTIFICATION";
     @Inject KujonUtils utils;
     public InjectorProvider injectorProvider;
-    private static final Logger log = LoggerFactory.getLogger(KujonApplication.class);
+
     public static String DEVICE_ID;
 
     private List<Activity> stack = new ArrayList<>();
@@ -67,11 +65,7 @@ public class KujonApplication extends MultiDexApplication implements OneSignal.N
         instance = this;
 
         DEVICE_ID = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
-        MDC.put("deviceId", DEVICE_ID);
-        MDC.put("applicationId", BuildConfig.APPLICATION_ID);
-        MDC.put("versionCode", "" + BuildConfig.VERSION_CODE);
-        MDC.put("versionName", BuildConfig.VERSION_NAME);
-        log.info("Application started");
+
         Fabric.with(this, new Crashlytics(), new Answers());
 //         Fabric.with(this, new Crashlytics.Builder().core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build()).build());
 

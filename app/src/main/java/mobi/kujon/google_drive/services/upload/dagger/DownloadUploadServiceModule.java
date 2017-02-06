@@ -30,7 +30,7 @@ public class DownloadUploadServiceModule {
 
     @ActivityScope
     @Provides
-    GoogleDriveDowloadMVP.Model provideGoogleDriveModel(FileStreamUpdateMVP.Model model){
+    GoogleDriveDowloadMVP.ModelOtherFiles provideGoogleDriveModel(FileStreamUpdateMVP.Model model){
         return new GoogleDriveDowloadModel(null,model);
     }
 }

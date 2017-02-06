@@ -21,7 +21,7 @@ import rx.Observable;
  *
  */
 
-public class GoogleDriveDowloadModel implements GoogleDriveDowloadMVP.Model {
+public class GoogleDriveDowloadModel implements GoogleDriveDowloadMVP.ModelOtherFiles {
 
 
     private static final String TAG = "GOOGLE_DOWLOAD";
@@ -42,6 +42,11 @@ public class GoogleDriveDowloadModel implements GoogleDriveDowloadMVP.Model {
 
     @Override
     public Observable<DataForFileUpload> dowloadFile(DriveId fileId) {
+        return getByGoogleAndroidApi(fileId);
+    }
+
+    @NonNull
+    private Observable<DataForFileUpload> getByGoogleAndroidApi(DriveId fileId) {
         return Observable.just(fileId.asDriveFile())
                 .map(driveFile -> {
                     DriveResource.MetadataResult mdRslt = driveFile.getMetadata(googleApiClient).await();
@@ -65,6 +70,7 @@ public class GoogleDriveDowloadModel implements GoogleDriveDowloadMVP.Model {
                     }
                 });
     }
+
     private int lastProgress = 0;
     private long maxBytes ;
     @NonNull

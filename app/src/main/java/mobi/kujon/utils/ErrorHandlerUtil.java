@@ -3,15 +3,11 @@ package mobi.kujon.utils;
 import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -29,7 +25,6 @@ public class ErrorHandlerUtil {
 
     private static final String TAG = "ErrorHandlerUtil";
 
-    private static final Logger log = LoggerFactory.getLogger(ErrorHandlerUtil.class);
 
     private static Date lastToast = new Date(0);
 
@@ -46,7 +41,6 @@ public class ErrorHandlerUtil {
                 finalMessage = errorTranslations.get(key);
             }
         }
-        log.error(finalMessage);
         if (checkErrorFrequency() && finalMessage != null && finalMessage.length() > 0) {
             Toast.makeText(KujonApplication.getApplication(), finalMessage, Toast.LENGTH_SHORT).show();
         }
@@ -69,7 +63,6 @@ public class ErrorHandlerUtil {
 
     public static void handleError(Throwable throwable, boolean showToast) {
         throwable.printStackTrace();
-        log.error(throwable.getMessage());
         if (showToast) translateAndToastErrorMessage(throwable.getMessage());
     }
 
@@ -94,13 +87,11 @@ public class ErrorHandlerUtil {
 
     public static <T> boolean handleResponse(Response<KujonResponse<T>> response, boolean acceptNull) {
         if (!response.isSuccessful()) {
-            log.error(response.raw().toString());
             handleResponseError(response, "Network error " + response.message());
             return false;
         }
 
         if (response.body() == null) {
-            log.error(response.raw().toString());
             handleResponseError(response, "Network error");
             return false;
         }
@@ -121,13 +112,11 @@ public class ErrorHandlerUtil {
         }
 
         if (!response.body().isSuccessful()) {
-            log.error(response.raw().toString());
             handleResponseError(response, response.body().message);
             return false;
         }
 
         if (!acceptNull && response.body().data == null) {
-            log.error(response.raw().toString());
             handleResponseError(response, "Brak danych");
             return false;
         }
@@ -137,7 +126,6 @@ public class ErrorHandlerUtil {
 
     public static void showErrorInRed(String message) {
         if (checkErrorFrequency()) {
-            Log.d(TAG, "showErrorInRed() called with: " + "message = [" + message + "]");
             LayoutInflater inflater = (LayoutInflater) KujonApplication.getApplication().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View layout = inflater.inflate(R.layout.red_toast, null);
 
