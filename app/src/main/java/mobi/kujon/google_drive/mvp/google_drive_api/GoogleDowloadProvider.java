@@ -8,5 +8,4 @@ public interface GoogleDowloadProvider {
 
     GoogleDriveDowloadMVP.Model getModel(String mimeType);
 
-
 }
