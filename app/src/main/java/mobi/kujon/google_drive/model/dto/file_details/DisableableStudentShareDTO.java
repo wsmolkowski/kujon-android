@@ -2,22 +2,19 @@ package mobi.kujon.google_drive.model.dto.file_details;
 
 
 import mobi.kujon.google_drive.model.dto.StudentShareDto;
+import mobi.kujon.network.json.Participant;
 
-public class DisableableStudentShareDTO {
-    private StudentShareDto studentShareDto;
+public class DisableableStudentShareDTO extends StudentShareDto{
     private boolean enabled;
 
-    public DisableableStudentShareDTO(StudentShareDto studentShareDto) {
-        this.studentShareDto = studentShareDto;
-    }
-
-    public DisableableStudentShareDTO(StudentShareDto studentShareDto, boolean enabled) {
-        this.studentShareDto = studentShareDto;
+    public DisableableStudentShareDTO(String name, String id, boolean isChosen, boolean enabled) {
+        super(name, id, isChosen);
         this.enabled = enabled;
     }
 
-    public StudentShareDto getStudentShareDto() {
-        return studentShareDto;
+    public DisableableStudentShareDTO(Participant participant,boolean isChosen, boolean enabled) {
+        super(participant, isChosen);
+        this.enabled = enabled;
     }
 
     public boolean isEnabled() {
@@ -32,17 +29,17 @@ public class DisableableStudentShareDTO {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
 
         DisableableStudentShareDTO that = (DisableableStudentShareDTO) o;
 
-        if (enabled != that.enabled) return false;
-        return studentShareDto != null ? studentShareDto.equals(that.studentShareDto) : that.studentShareDto == null;
+        return enabled == that.enabled;
 
     }
 
     @Override
     public int hashCode() {
-        int result = studentShareDto != null ? studentShareDto.hashCode() : 0;
+        int result = super.hashCode();
         result = 31 * result + (enabled ? 1 : 0);
         return result;
     }

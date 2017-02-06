@@ -25,7 +25,7 @@ import mobi.kujon.google_drive.network.unwrapped_api.FileDownload;
 import mobi.kujon.google_drive.network.unwrapped_api.FileUpload;
 import mobi.kujon.google_drive.network.unwrapped_api.GetFiles;
 import mobi.kujon.google_drive.network.unwrapped_api.SemesterApi;
-import mobi.kujon.google_drive.network.unwrapped_api.ShareFile;
+import mobi.kujon.google_drive.network.unwrapped_api.ShareFileApi;
 import mobi.kujon.google_drive.network.unwrapped_api.CourseDetailsApi;
 import mobi.kujon.google_drive.utils.MultipartUtils;
 import retrofit2.Retrofit;
@@ -54,7 +54,7 @@ public class FilesApiFacadesModule {
     }
 
     @Provides
-    ShareFile provideShareFile(Retrofit retrofit) {
+    ShareFileApi provideShareFile(Retrofit retrofit) {
         return new ShareFileFacade(retrofit.create(ShareFileKujon.class));
     }
 

@@ -5,7 +5,7 @@ import mobi.kujon.google_drive.model.json.ShareFileTarget;
 import mobi.kujon.google_drive.model.json.SharedFile;
 import rx.Observable;
 
-public interface ShareFile {
+public interface ShareFileApi {
 
     Observable<SharedFile> shareFile(ShareFileTarget shareFileTarget);
 }
