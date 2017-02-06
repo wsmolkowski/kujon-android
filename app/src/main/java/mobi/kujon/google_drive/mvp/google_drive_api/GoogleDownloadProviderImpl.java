@@ -1,14 +1,12 @@
 package mobi.kujon.google_drive.mvp.google_drive_api;
 
 
-import javax.inject.Inject;
-
 public class GoogleDownloadProviderImpl implements GoogleDowloadProvider {
 
+    private static final String VND_GOOGLE_APPS = "vnd.google-apps";
     private GoogleDriveDowloadMVP.ModelGoogleFiles modelGoogleFiles;
     private GoogleDriveDowloadMVP.ModelOtherFiles modelOtherFiles;
 
-    @Inject
     public GoogleDownloadProviderImpl(GoogleDriveDowloadMVP.ModelGoogleFiles modelGoogleFiles,
                                       GoogleDriveDowloadMVP.ModelOtherFiles modelOtherFiles) {
         this.modelGoogleFiles = modelGoogleFiles;
@@ -17,6 +15,6 @@ public class GoogleDownloadProviderImpl implements GoogleDowloadProvider {
 
     @Override
     public GoogleDriveDowloadMVP.Model getModel(String mimeType) {
-        return mimeType.contains("vnd.google-apps") ? this.modelGoogleFiles : this.modelOtherFiles;
+        return mimeType.contains(VND_GOOGLE_APPS) ? this.modelGoogleFiles : this.modelOtherFiles;
     }
 }

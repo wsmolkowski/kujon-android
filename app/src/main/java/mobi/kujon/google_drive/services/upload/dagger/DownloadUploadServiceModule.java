@@ -4,6 +4,9 @@ import dagger.Module;
 import dagger.Provides;
 import mobi.kujon.google_drive.dagger.scopes.ActivityScope;
 import mobi.kujon.google_drive.mvp.file_stream_update.FileStreamUpdateMVP;
+import mobi.kujon.google_drive.mvp.google_drive_api.GoogleDowloadDriveGoogleFiles;
+import mobi.kujon.google_drive.mvp.google_drive_api.GoogleDowloadProvider;
+import mobi.kujon.google_drive.mvp.google_drive_api.GoogleDownloadProviderImpl;
 import mobi.kujon.google_drive.mvp.google_drive_api.GoogleDriveDowloadMVP;
 import mobi.kujon.google_drive.mvp.google_drive_api.GoogleDriveDowloadModel;
 import mobi.kujon.google_drive.mvp.upload_file.UploadFileMVP;
@@ -32,5 +35,16 @@ public class DownloadUploadServiceModule {
     @Provides
     GoogleDriveDowloadMVP.ModelOtherFiles provideGoogleDriveModel(FileStreamUpdateMVP.Model model){
         return new GoogleDriveDowloadModel(null,model);
+    }
+    @ActivityScope
+    @Provides
+    GoogleDriveDowloadMVP.ModelGoogleFiles provideGoogleDriveModel2(FileStreamUpdateMVP.Model model){
+        return new GoogleDowloadDriveGoogleFiles(model);
+    }
+
+    @ActivityScope
+    @Provides
+    GoogleDowloadProvider provideProvider(GoogleDriveDowloadMVP.ModelOtherFiles modelOtherFiles,GoogleDriveDowloadMVP.ModelGoogleFiles modelGoogleFiles){
+        return new GoogleDownloadProviderImpl(modelGoogleFiles,modelOtherFiles);
     }
 }

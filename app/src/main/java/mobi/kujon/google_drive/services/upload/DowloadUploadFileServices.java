@@ -36,6 +36,7 @@ import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
 import mobi.kujon.google_drive.dagger.injectors.Injector;
 import mobi.kujon.google_drive.model.dto.file_upload.FileUploadDto;
+import mobi.kujon.google_drive.mvp.google_drive_api.GoogleDowloadProvider;
 import mobi.kujon.google_drive.mvp.google_drive_api.GoogleDriveDowloadMVP;
 import mobi.kujon.google_drive.mvp.upload_file.UploadFileMVP;
 import mobi.kujon.google_drive.utils.SchedulersHolder;
@@ -62,6 +63,11 @@ public class DowloadUploadFileServices extends Service implements UploadFileMVP.
 
     @Inject
     GoogleDriveDowloadMVP.ModelOtherFiles googleDowloadModel;
+    @Inject
+    GoogleDriveDowloadMVP.ModelGoogleFiles modelGoogleFiles;
+
+    @Inject
+    GoogleDowloadProvider googleDowloadProvider;
 
     @Inject
     SchedulersHolder schedulersHolder;
@@ -137,7 +143,8 @@ public class DowloadUploadFileServices extends Service implements UploadFileMVP.
     private com.google.api.services.drive.Drive mService = null;
 
     private void handleApiCalls() {
-
+        googleDowloadModel.setGoogleClient(apiClient);
+        modelGoogleFiles.setGoogleClient(mService);
 
 //        if(mime type google sheet -> tego gowna )
         HttpTransport transport = AndroidHttp.newCompatibleTransport();
