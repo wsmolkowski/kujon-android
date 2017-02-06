@@ -7,7 +7,8 @@ import java.util.List;
 import javax.inject.Inject;
 
 import mobi.kujon.google_drive.dagger.scopes.ActivityScope;
-import mobi.kujon.google_drive.model.ShareFileTargetType;
+import mobi.kujon.google_drive.model.json.ShareFileTargetType;
+import mobi.kujon.google_drive.model.json.SharedFile;
 import mobi.kujon.google_drive.model.dto.StudentShareDto;
 import mobi.kujon.google_drive.model.json.SharedFile;
 import mobi.kujon.google_drive.model.dto.file.FileDTO;
