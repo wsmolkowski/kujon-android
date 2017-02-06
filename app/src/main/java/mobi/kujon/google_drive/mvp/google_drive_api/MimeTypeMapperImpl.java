@@ -14,7 +14,7 @@ public class MimeTypeMapperImpl implements MimeTypeMapper {
             case "application/vnd.google-apps.spreadsheet":
                 return "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
             default:
-                return mimeType;
+                return "application/octet-stream";
         }
     }
 }
