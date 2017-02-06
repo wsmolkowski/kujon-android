@@ -12,6 +12,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -23,6 +25,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import bolts.Task;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mobi.kujon.KujonApplication;
@@ -100,6 +103,7 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .build();
+
         tabLayout.setupWithViewPager(viewPager);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
@@ -111,6 +115,17 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
         });
         apiClient.connect();
         presenter.subscribeToStream(this);
+    }
+
+
+    private String retrieveEmail() {
+        Task<GoogleSignInResult> loginStatus = KujonApplication.getApplication().getLoginStatus();
+        if (loginStatus.isCompleted() && loginStatus.getResult() != null && loginStatus.getResult().getSignInAccount() != null) {
+            GoogleSignInAccount account = loginStatus.getResult().getSignInAccount();
+            return account.getEmail();
+        } else {
+            return null;
+        }
     }
 
     private void startFileSearching() {

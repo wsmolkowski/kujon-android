@@ -15,25 +15,19 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.drive.Drive;
 import com.google.android.gms.drive.DriveId;
-import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.android.gms.drive.DriveResource;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
-import com.google.api.client.http.HttpTransport;
-import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.ExponentialBackOff;
 import com.google.api.services.drive.DriveScopes;
 import com.google.gson.Gson;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.Arrays;
 
 import javax.inject.Inject;
 
 import bolts.Task;
 import mobi.kujon.KujonApplication;
-import mobi.kujon.R;
 import mobi.kujon.google_drive.dagger.injectors.Injector;
 import mobi.kujon.google_drive.model.dto.file_upload.FileUploadDto;
 import mobi.kujon.google_drive.mvp.google_drive_api.GoogleDowloadProvider;
@@ -43,10 +37,12 @@ import mobi.kujon.google_drive.utils.SchedulersHolder;
 import rx.Observable;
 
 
-public class DowloadUploadFileServices extends Service implements UploadFileMVP.View, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class DowloadUploadFileServices extends Service implements UploadFileMVP.View,
+        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, GoogleDriveDowloadMVP.GoogleClientProvider {
 
     public static final String FILE_UPLOAD_DTO = "fileUploadDto";
     public static final String DRIVE_ID_KEY = "driveIdKey";
+    private String mimeType;
 
     public static void startService(Context context, String fileUploadDto, DriveId driveId) {
         Intent intent = new Intent(context, DowloadUploadFileServices.class);
@@ -143,55 +139,26 @@ public class DowloadUploadFileServices extends Service implements UploadFileMVP.
     private com.google.api.services.drive.Drive mService = null;
 
     private void handleApiCalls() {
-        googleDowloadModel.setGoogleClient(apiClient);
-        modelGoogleFiles.setGoogleClient(mService);
-
-//        if(mime type google sheet -> tego gowna )
-        HttpTransport transport = AndroidHttp.newCompatibleTransport();
-        JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
-        mService = new com.google.api.services.drive.Drive.Builder(
-                transport, jsonFactory, mCredential)
-                .setApplicationName(getResources().getString(R.string.app_name))
-                .build();
-
-
-        Observable.just(driveId.getResourceId())
-                .subscribeOn(schedulersHolder.subscribe())
-                .map(it -> {
-                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-                    try {
-                        mService.files()
-                                .export(it, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-                                .executeMediaAndDownloadTo(outputStream);
-                        return outputStream;
-                    } catch (UserRecoverableAuthIOException e) {
-                        startActivity(e.getIntent());
-                        return null;
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        return null;
-                    }
-
-                }).observeOn(schedulersHolder.observ())
-                .subscribe(it -> {
-                    byte[] bytes = it.toByteArray();
-
-//                        presenter.uploadFile(it,fileUploadDto);
-                });
-
-//else uzyj tego
-
-        googleDowloadModel.setGoogleClient(apiClient);
-        googleDowloadModel.dowloadFile(driveId)
+        Observable.just(driveId.asDriveFile())
+                .map(driveFile -> {
+                    DriveResource.MetadataResult mdRslt = driveFile.getMetadata(apiClient).await();
+                    mimeType = mdRslt.getMetadata().getMimeType();
+                    GoogleDriveDowloadMVP.Model model = googleDowloadProvider.getModel(mimeType);
+                    model.setGoogleClient(this);
+                    return model;
+                }).flatMap(model -> model.dowloadFile(driveId, mimeType))
                 .subscribeOn(schedulersHolder.subscribe())
                 .observeOn(schedulersHolder.observ())
                 .subscribe(it -> {
                     presenter.uploadFile(it, fileUploadDto);
 
                 }, error -> {
-                    this.stopSelf();
-                    error.printStackTrace();
-                    //TODO restart Service with same parameters
+                    if (error.getCause() instanceof UserRecoverableAuthIOException) {
+                        startActivity(((UserRecoverableAuthIOException) error).getIntent());
+                    }else {
+                        this.stopSelf();
+                        error.printStackTrace();
+                    }
                 });
     }
 
@@ -216,5 +183,15 @@ public class DowloadUploadFileServices extends Service implements UploadFileMVP.
         throwable.printStackTrace();
         this.stopSelf();
 //TODO restart Service with same parameters
+    }
+
+    @Override
+    public GoogleApiClient getGoogleClient() {
+        return apiClient;
+    }
+
+    @Override
+    public com.google.api.services.drive.Drive getGoogleDrive() {
+        return mService;
     }
 }

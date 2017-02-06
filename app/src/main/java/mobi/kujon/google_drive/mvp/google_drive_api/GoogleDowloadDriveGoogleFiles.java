@@ -20,18 +20,20 @@ import rx.exceptions.Exceptions;
 public class GoogleDowloadDriveGoogleFiles implements ModelGoogleFiles {
     private FileStreamUpdateMVP.Model model;
     private Drive mService;
-
+    private MimeTypeMapper mimeTypeMapper;
     public GoogleDowloadDriveGoogleFiles(FileStreamUpdateMVP.Model model) {
         this.model = model;
+        this.mimeTypeMapper = new MimeTypeMapperImpl();
+    }
+
+
+    @Override
+    public void setGoogleClient(GoogleDriveDowloadMVP.GoogleClientProvider googleClient) {
+        this.mService = googleClient.getGoogleDrive();
     }
 
     @Override
-    public void setGoogleClient(com.google.api.services.drive.Drive googleClient) {
-        mService = googleClient;
-    }
-
-    @Override
-    public Observable<DataForFileUpload> dowloadFile(DriveId fileId) {
+    public Observable<DataForFileUpload> dowloadFile(DriveId fileId, String mimeType) {
 
 
         return Observable.just(fileId.getResourceId())
@@ -39,7 +41,7 @@ public class GoogleDowloadDriveGoogleFiles implements ModelGoogleFiles {
                     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
                     try {
                         mService.files()
-                                .export(it, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                                .export(it, mimeTypeMapper.convertMimeType(mimeType))
                                 .executeMediaAndDownloadTo(outputStream);
                         return outputStream;
                     } catch (UserRecoverableAuthIOException e) {
