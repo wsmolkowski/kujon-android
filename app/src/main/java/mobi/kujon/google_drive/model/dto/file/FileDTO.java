@@ -29,6 +29,7 @@ public abstract class FileDTO {
     private String fileId;
     private String dateCreated;
     private List<String> shares;
+    private boolean isMy;
 
 
     public FileDTO(KujonFile kujonFile) {
@@ -39,6 +40,7 @@ public abstract class FileDTO {
         this.fileName = kujonFile.fileName;
         this.fileSize = kujonFile.fileSize;
         this.userName = new StringBuilder(kujonFile.fileName).append(" ").append(kujonFile.lastName).toString();
+        this.isMy = kujonFile.myFile;
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy", getDefault());
         dateCreated =simpleDateFormat.format(kujonFile.createdTime);
     }
@@ -82,6 +84,10 @@ public abstract class FileDTO {
 
     public String getDateCreated() {
         return dateCreated;
+    }
+
+    public boolean isMy() {
+        return isMy;
     }
 
     public void setShareFile(ShowShareIcon showShareIcon){
