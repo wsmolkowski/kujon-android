@@ -65,24 +65,22 @@ public class FileActionDialog extends DialogFragment {
     }
 
     private void setUpViews(boolean isFileOwned) {
-        fileDetails.setOnClickListener(v -> dismiss());
-        if (isFileOwned) {
-            addToGoogleDrive.setOnClickListener(v -> dismiss());
+        if (!isFileOwned) {
             deleteFile.setOnClickListener(v -> dismiss());
         } else {
             deleteFile.setVisibility(View.GONE);
-            fileDetails.setPadding(fileDetails.getPaddingLeft(), fileDetails.getPaddingTop(),
-                    fileDetails.getPaddingRight(), fileDetails.getPaddingTop());
         }
 
         fileDetails.setOnClickListener(v -> {
             if (fileActionListener != null) {
                 fileActionListener.onFileDetails(file.getId());
+                this.dismiss();
             }
         });
         addToGoogleDrive.setOnClickListener(v -> {
             if(fileActionListener !=null){
                 fileActionListener.onFileAddToGoogleDrive(file);
+                this.dismiss();
             }
         });
     }

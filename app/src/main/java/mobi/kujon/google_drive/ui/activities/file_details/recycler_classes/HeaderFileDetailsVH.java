@@ -12,7 +12,8 @@ import mobi.kujon.google_drive.model.dto.file.FileDTO;
 import mobi.kujon.google_drive.model.json.ShareFileTargetType;
 
 public class HeaderFileDetailsVH extends BaseFileDetailsVH<FileDTO> {
-
+    @Bind(R.id.file_name)
+    TextView fileName;
     @Bind(R.id.file_type)
     TextView fileType;
     @Bind(R.id.file_size)
@@ -33,6 +34,7 @@ public class HeaderFileDetailsVH extends BaseFileDetailsVH<FileDTO> {
     @Override
     public void bind(FileDTO fileDTO) {
         if(fileDTO != null){
+            fileName.setText(fileDTO.getFileName());
             fileType.setText(fileDTO.getContentType());
             fileSize.setText(new StringBuilder().append(fileDTO.getFileSize()).append(" MB"));
             fileCreationDate.setText(fileDTO.getDateCreated());
