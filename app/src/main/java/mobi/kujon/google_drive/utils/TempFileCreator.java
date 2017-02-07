@@ -34,7 +34,6 @@ public class TempFileCreator {
         try {
             File outputFile = File.createTempFile(randomIdentifier(), ".png", outputDir);
 
-            OutputStream outStream = null;
             byte[] fileReader = new byte[4096];
 
             long fileSize = body.contentLength();

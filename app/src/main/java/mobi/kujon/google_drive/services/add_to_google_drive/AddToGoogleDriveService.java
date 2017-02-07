@@ -9,8 +9,14 @@ import android.support.annotation.Nullable;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.drive.DriveId;
+import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
+import com.google.api.client.http.HttpTransport;
+import com.google.api.client.json.JsonFactory;
+import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.ExponentialBackOff;
+import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.DriveScopes;
 
 import java.util.Arrays;
@@ -19,11 +25,11 @@ import javax.inject.Inject;
 
 import bolts.Task;
 import mobi.kujon.KujonApplication;
+import mobi.kujon.R;
 import mobi.kujon.google_drive.dagger.injectors.Injector;
 import mobi.kujon.google_drive.model.dto.file_upload_info.FileUploadInfoDto;
 import mobi.kujon.google_drive.mvp.file_stream_update.FileStreamUpdateMVP;
 import mobi.kujon.google_drive.mvp.upload_to_drive.UploadToDrive;
-import mobi.kujon.google_drive.services.upload.DowloadUploadFileServices;
 import mobi.kujon.google_drive.utils.SchedulersHolder;
 import rx.Observable;
 import rx.Subscription;
@@ -46,10 +52,11 @@ public class AddToGoogleDriveService extends Service implements UploadToDrive.Vi
     private DriveId driveId;
     private FileUploadInfoDto fileUploadInfoDto;
     private Subscription subscription;
+    private Drive mService;
 
 
     public static void startService(Context context, FileUploadInfoDto file, DriveId driveId) {
-        Intent intent = new Intent(context, DowloadUploadFileServices.class);
+        Intent intent = new Intent(context, AddToGoogleDriveService.class);
         intent.putExtra(FILE_TO_DOWLOAD_ID, file.getId());
         intent.putExtra(FILE_TO_DOWLOAD_NAME, file.getName());
         intent.putExtra(FILE_TO_DOWLOAD_MIME_TYPE, file.getContentType());
@@ -103,7 +110,7 @@ public class AddToGoogleDriveService extends Service implements UploadToDrive.Vi
         }
 
         fileUploadInfoDto = new FileUploadInfoDto(intent.getStringExtra(FILE_TO_DOWLOAD_MIME_TYPE),intent.getStringExtra(FILE_TO_DOWLOAD_NAME),intent.getStringExtra(FILE_TO_DOWLOAD_ID));
-        driveId = intent.getParcelableExtra(DRIVE_ID_KEY);
+        driveId = intent.getParcelableExtra(DRIVE_FOLDER_ID);
 
 
         createCall();
@@ -111,12 +118,21 @@ public class AddToGoogleDriveService extends Service implements UploadToDrive.Vi
 
         return START_REDELIVER_INTENT;
     }
-
+    private void createDriveService() {
+        HttpTransport transport = AndroidHttp.newCompatibleTransport();
+        JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
+        mService = new com.google.api.services.drive.Drive.Builder(
+                transport, jsonFactory, mCredential)
+                .setApplicationName(getResources().getString(R.string.app_name))
+                .build();
+    }
     private void createCall() {
+        createDriveService();
         cancelPresenter.subscribeToStream(this);
+        presenter.setDrive(mService);
         subscription = Observable.just(driveId)
                 .subscribeOn(schedulersHolder.subscribe())
-                .map(it->it.asDriveFile().getDriveId().getResourceId())
+                .map(DriveId::getResourceId)
                 .observeOn(schedulersHolder.observ())
                 .subscribe(it->{
                     presenter.uploadToDrive(fileUploadInfoDto,it);
@@ -134,6 +150,12 @@ public class AddToGoogleDriveService extends Service implements UploadToDrive.Vi
     public void fileUploaded() {
         this.stopSelf();
 
+    }
+
+    @Override
+    public void authenticate(UserRecoverableAuthIOException  e) {
+        startActivity(e.getIntent());
+        this.stopSelf();
     }
 
     @Override

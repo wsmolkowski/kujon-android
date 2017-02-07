@@ -140,6 +140,7 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
     private void startFileSearching() {
         IntentSender intentSender = Drive.DriveApi
                 .newOpenFileActivityBuilder()
+                .setActivityTitle(getString(R.string.choose_file_to_send_to_kujon))
                 .build(apiClient);
         try {
             startIntentSenderForResult(intentSender, REQUEST_CODE_OPENER, null, 0, 0, 0);
@@ -293,6 +294,7 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
     private void askForFolder() {
         IntentSender intentSender = Drive.DriveApi
                 .newOpenFileActivityBuilder()
+                .setActivityTitle(getString(R.string.choose_folder))
                 .setMimeType(new String[]{DriveFolder.MIME_TYPE})
                 .build(apiClient);
         try {

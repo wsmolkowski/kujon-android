@@ -34,8 +34,9 @@
         android:layout_below="@id/student_choice_checkbox"/>
     <View
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/enable_layout"
-        android:visibility="gone"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
         android:background="@color/white_50"/>
 </RelativeLayout>

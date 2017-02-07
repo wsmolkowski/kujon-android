@@ -47,16 +47,19 @@ import static mobi.kujon.KujonApplication.FROM_NOTIFICATION;
 
 public class MainActivity extends BaseActivity {
 
-    @Inject ApiProvider apiProvider;
+    @Inject
+    ApiProvider apiProvider;
 
     public static final int CALENDAR_POSITION = 1;
-    @Bind(R.id.toolbar) Toolbar toolbar;
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
 
-    public String[] TITLES = new String[]{"Użytkownik", "Plan zajęć", "Przedmioty", "Oceny", "Wykładowcy", "Wiadomości","Szukaj","Pliki"};
-    public int[] ICONS = new int[]{R.drawable.user, R.drawable.plan, R.drawable.courses, R.drawable.grades, R.drawable.teachers, R.drawable.ic_messages, R.drawable.search,R.drawable.udostepnione_icon};
+    public String[] TITLES = new String[]{"Użytkownik", "Plan zajęć", "Przedmioty", "Oceny", "Wykładowcy", "Wiadomości", "Pliki", "Szukaj"};
+    public int[] ICONS = new int[]{R.drawable.user, R.drawable.plan, R.drawable.courses, R.drawable.grades, R.drawable.teachers, R.drawable.ic_messages, R.drawable.udostepnione_icon, R.drawable.search};
     public Fragment[] FRAGMENTS = new Fragment[]{
             new UserInfoFragment(), new PlanFragment(), new CoursesFragment(), new GradesFragment(), new LecturersFragment(), new MessagesFragment(), new SearchFragment()};
-    @Bind(R.id.toolbar_title) TextView toolbarTitle;
+    @Bind(R.id.toolbar_title)
+    TextView toolbarTitle;
     private Drawer drawer;
     private AccountHeader headerResult;
     private int headerBackground;
@@ -88,9 +91,6 @@ public class MainActivity extends BaseActivity {
         headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
                 .withHeaderBackground(getHeaderBackground())
-//                .withHeaderBackground(new ImageHolder(Uri.parse("https://kujon.mobi/static/img/logo/logo-demo-64x64.jpg")))
-//                .withHeaderBackgroundScaleType(ImageView.ScaleType.CENTER)
-//                .addProfiles(profileDrawerItem)
                 .build();
 
         drawer = new DrawerBuilder()
@@ -102,17 +102,19 @@ public class MainActivity extends BaseActivity {
 
         Typeface latoSemiBold = Typeface.createFromAsset(getAssets(), "fonts/Lato-Semibold.ttf");
 
-        for (int i = 0; i < FRAGMENTS.length+1; i++) {
+        for (int i = 0; i < FRAGMENTS.length + 1; i++) {
             final int finalI = i;
             drawer.addItem(new PrimaryDrawerItem()
                     .withName(TITLES[i])
                     .withIcon(ICONS[i])
                     .withTypeface(latoSemiBold)
                     .withOnDrawerItemClickListener((view, position, drawerItem) -> {
-                        if(position==8){
+                        if (position == 7) {
                             SemestersActivity.openSemesterActivity(this);
-                        }else {
+                        } else if (position < 7) {
                             showFragment(FRAGMENTS[finalI], true);
+                        } else {
+                            showFragment(FRAGMENTS[finalI - 1], true);
                         }
                         return true;
                     }));
@@ -166,7 +168,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private Fragment selectFragmentToShow() {
-        return getIntent().getBooleanExtra(FROM_NOTIFICATION, false) ? FRAGMENTS[5] : FRAGMENTS [0];
+        return getIntent().getBooleanExtra(FROM_NOTIFICATION, false) ? FRAGMENTS[5] : FRAGMENTS[0];
     }
 
     @Override
@@ -188,7 +190,8 @@ public class MainActivity extends BaseActivity {
         this.drawer.closeDrawer();
     }
 
-    @Override public boolean onOptionsItemSelected(MenuItem item) {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.switch_to_calendar:
                 FRAGMENTS[CALENDAR_POSITION] = new PlanFragment();

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="@dimen/progress_margins">
 
@@ -37,4 +37,4 @@
         android:max="100"
         android:progressDrawable="@drawable/progress_bar_drawable"
         tools:progress="50" />
-</RelativeLayout>
+</merge>

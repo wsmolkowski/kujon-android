@@ -67,11 +67,13 @@ public class UploadToDrivePresenter extends AbstractClearSubsriptions implements
                         file.delete();
                         return execute;
                     } catch (UserRecoverableAuthIOException e) {
-                        //TODO start activity with privilage
+                        view.authenticate(e);
                         return null;
                     } catch (IOException e) {
                         e.printStackTrace();
                         return null;
+                    }finally {
+                        file.delete();
                     }
                 })
                 .subscribe(it -> {
