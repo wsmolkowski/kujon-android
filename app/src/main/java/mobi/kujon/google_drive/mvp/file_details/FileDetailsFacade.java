@@ -4,15 +4,10 @@ package mobi.kujon.google_drive.mvp.file_details;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
-import mobi.kujon.google_drive.dagger.scopes.ActivityScope;
-import mobi.kujon.google_drive.model.json.ShareFileTargetType;
-import mobi.kujon.google_drive.model.json.SharedFile;
 import mobi.kujon.google_drive.model.dto.StudentShareDto;
-import mobi.kujon.google_drive.model.json.SharedFile;
 import mobi.kujon.google_drive.model.dto.file.FileDTO;
 import mobi.kujon.google_drive.model.dto.file_details.DisableableStudentShareDTO;
+import mobi.kujon.google_drive.model.json.ShareFileTargetType;
 import mobi.kujon.google_drive.mvp.choose_students.ChooseStudentsMVP;
 import mobi.kujon.google_drive.mvp.files_list.FileListMVP;
 import mobi.kujon.google_drive.mvp.files_list.FilesOwnerType;
@@ -45,6 +40,7 @@ public class FileDetailsFacade implements FileDetailsMVP.FileDetailsFacade {
     private List<DisableableStudentShareDTO> setDtosState(List<StudentShareDto> studentShares, FileDTO fileDTO) {
         List<DisableableStudentShareDTO> resultDtos = new ArrayList<>(studentShares.size());
         boolean isEnabled = !fileDTO.getShareType().equals(ShareFileTargetType.ALL);
+        if (!fileDTO.isMy()) isEnabled = false;
         for (StudentShareDto studentShare : studentShares) {
             studentShare.setChosen(checkIfChosen(studentShare.getStudentId(), fileDTO.getShares()));
             resultDtos.add(new DisableableStudentShareDTO(studentShare.getStudentName(),

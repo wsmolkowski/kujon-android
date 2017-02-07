@@ -35,6 +35,7 @@ public class HeaderFileDetailsVH extends BaseFileDetailsVH<FileDTO> {
         fileType.setText(fileDTO.getContentType());
         fileSize.setText(new StringBuilder().append(fileDTO.getFileSize()).append(" MB"));
         fileCreationDate.setText(fileDTO.getDateCreated());
+        shareWithEveryone.setEnabled(fileDTO.isMy());
         shareWithEveryone.setChecked(ShareFileTargetType.ALL.equals(fileDTO.getShareType()));
         shareWithEveryone.setOnCheckedChangeListener((buttonView, isChecked) -> onEveryoneSwitchClicked.onEveryoneClicked(isChecked));
     }

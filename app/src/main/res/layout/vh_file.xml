@@ -10,7 +10,8 @@
     android:paddingRight="@dimen/vh_file_padding_small"
     android:paddingStart="@dimen/vh_file_padding_large"
     android:paddingTop="@dimen/vh_file_padding_large"
-    android:id="@+id/file_layout">
+    android:id="@+id/file_layout"
+    android:background="?selectableItemBackground">
 
     <ImageView
         android:id="@+id/vh_file_icon"

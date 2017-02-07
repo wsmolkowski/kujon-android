@@ -17,6 +17,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.drive.Drive;
+import com.google.android.gms.drive.DriveFolder;
 import com.google.android.gms.drive.DriveId;
 import com.google.android.gms.drive.OpenFileActivityBuilder;
 
@@ -33,26 +34,36 @@ import mobi.kujon.google_drive.dagger.injectors.FilesListFragmentInjector;
 import mobi.kujon.google_drive.dagger.injectors.Injector;
 import mobi.kujon.google_drive.model.dto.file_stream.FileUpdateDto;
 import mobi.kujon.google_drive.model.dto.file_upload.FileUploadDto;
+import mobi.kujon.google_drive.model.dto.file_upload_info.FileUploadInfoDto;
 import mobi.kujon.google_drive.model.json.ShareFileTargetType;
 import mobi.kujon.google_drive.mvp.file_stream_update.FileStreamUpdateMVP;
 import mobi.kujon.google_drive.mvp.files_list.FilesOwnerType;
 import mobi.kujon.google_drive.services.ServiceOpener;
 import mobi.kujon.google_drive.ui.activities.BaseFileActivity;
 import mobi.kujon.google_drive.ui.custom.UploadLayout;
+import mobi.kujon.google_drive.ui.dialogs.file_info_dialog.FileActionListener;
 import mobi.kujon.google_drive.ui.dialogs.share_target.ChooseShareStudentsListener;
 import mobi.kujon.google_drive.ui.dialogs.share_target.ShareTargetDialog;
 import mobi.kujon.google_drive.ui.fragments.ProvideInjector;
 import mobi.kujon.google_drive.ui.fragments.files.FilesListFragment;
+import mobi.kujon.google_drive.utils.PermissionAsk;
 
 
-public class FilesActivity extends BaseFileActivity implements ProvideInjector<FilesListFragment>, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, FileStreamUpdateMVP.View, ChooseShareStudentsListener {
+public class FilesActivity extends BaseFileActivity implements ProvideInjector<FilesListFragment>,
+        GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener,
+        FileStreamUpdateMVP.View,
+        ChooseShareStudentsListener, FileActionListener {
 
     private static final int RESOLVE_CONNECTION_REQUEST_CODE = 539;
     private static final int REQUEST_CODE_OPENER = 1;
     public static final String COURSE_ID_KEY = "COURSE_ID_KEY";
     public static final String TERM_ID_KEY = "TERM_ID_KEY";
+    public static final int STORAGE_PERSMISSION = 324;
     private FileActivityInjector fileActivityInjector;
     private FilesFragmentPagerAdapter adapter;
+    private FileUploadInfoDto fileToUploadId;
+    private static final int REQUEST_CODE_FOR_FOLDER= 1234;
 
     public static void openActivity(Activity context, String courseId, String termId) {
         Intent intent = new Intent(context, FilesActivity.class);
@@ -183,7 +194,20 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
                     super.onActivityResult(requestCode, resultCode, data);
                 }
                 break;
+            case REQUEST_CODE_FOR_FOLDER:{
+                if (resultCode == RESULT_OK) {
+                    openToUploadFileToDrive(data);
+                } else {
+                    super.onActivityResult(requestCode, resultCode, data);
+                }
+            }
+            break;
         }
+    }
+
+    private void openToUploadFileToDrive(Intent data) {
+        serviceOpener.openAddToDriveService(fileToUploadId,data.getParcelableExtra(
+                OpenFileActivityBuilder.EXTRA_RESPONSE_DRIVE_ID));
     }
 
     private void handleGoodResponseFile(Intent data) {
@@ -243,6 +267,50 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
 
     @Override
     protected void setLoading(boolean t) {
+
+    }
+
+    @Override
+    public void onFileDelete(String fileId) {
+
+    }
+
+    @Override
+    public void onFileAddToGoogleDrive(FileUploadInfoDto fileId) {
+        this.fileToUploadId=fileId;
+        doOnAllPermisions();
+
+    }
+
+    private void doOnAllPermisions() {
+        if(PermissionAsk.askForPermission(this,getString(R.string.storage_permission), STORAGE_PERSMISSION) &&
+                PermissionAsk.askForPermission(this,getString(R.string.storage__read_permission), STORAGE_PERSMISSION)){
+            askForFolder();
+        }
+    }
+
+    private void askForFolder() {
+        IntentSender intentSender = Drive.DriveApi
+                .newOpenFileActivityBuilder()
+                .setMimeType(new String[]{DriveFolder.MIME_TYPE})
+                .build(apiClient);
+        try {
+            startIntentSenderForResult(intentSender, REQUEST_CODE_FOR_FOLDER, null, 0, 0, 0);
+        } catch (IntentSender.SendIntentException e) {
+            Log.w("GOOGLE_DRIVE", "Unable to send intent", e);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode==STORAGE_PERSMISSION){
+            doOnAllPermisions();
+        }
+    }
+
+    @Override
+    public void onFileDetails(String fileId) {
 
     }
 }

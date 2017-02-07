@@ -83,18 +83,15 @@ public class FileDetailsActivity extends BaseFileActivity implements FileDetails
         coursId = getIntent().getStringExtra(COURSE_ID_KEY);
         termId = getIntent().getStringExtra(TERM_ID_KEY);
         fileId = getIntent().getStringExtra(FILE_ID_KEY);
-        handleInejction();
+        handleInjection();
         setContentView(R.layout.activity_file_details);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         toolbarTitle.setText(getIntent().getStringExtra(ShareTargetDialog.TITLE));
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        adapter = new FileDetailsAdapter(new ArrayList<>(), this, null);
-        recyclerView.setAdapter(adapter);
-        fileDetailsPresenter.loadFileDetails(fileId, true);
-        studentsPresenter.loadStudents(fileId, true);
+        handleRecyclerView();
+        fileDetailsPresenter.loadFileDetails(fileId, false);
+        studentsPresenter.loadStudents(fileId, false);
         swipeRefreshLayout.setOnRefreshListener(() -> {
             fileDetailsPresenter.loadFileDetails(fileId, true);
             studentsPresenter.loadStudents(fileId, true);
@@ -102,6 +99,13 @@ public class FileDetailsActivity extends BaseFileActivity implements FileDetails
         cancel.setOnClickListener(v -> {
             finish();
         });
+    }
+
+    private void handleRecyclerView() {
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        adapter = new FileDetailsAdapter(new ArrayList<>(), this, null);
+        recyclerView.setAdapter(adapter);
     }
 
     @Override
@@ -164,7 +168,7 @@ public class FileDetailsActivity extends BaseFileActivity implements FileDetails
     public void showStudentList(List<StudentShareDto> studentShareDtos) {
     }
 
-    public void handleInejction() {
+    public void handleInjection() {
         FileDetailsInjector injector = (FileDetailsInjector) ((KujonApplication) getApplication())
                 .getInjectorProvider().provideFileDetailsActivityInjector();
         injector.inject(this);

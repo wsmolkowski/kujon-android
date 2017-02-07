@@ -22,7 +22,7 @@ import mobi.kujon.google_drive.dagger.injectors.Injector;
 import mobi.kujon.google_drive.model.dto.file.FileDTO;
 import mobi.kujon.google_drive.mvp.files_list.FileListMVP;
 import mobi.kujon.google_drive.mvp.files_list.FilesOwnerType;
-import mobi.kujon.google_drive.ui.dialogs.FileActionDialog;
+import mobi.kujon.google_drive.ui.dialogs.file_info_dialog.FileActionDialog;
 import mobi.kujon.google_drive.ui.fragments.BaseFileFragment;
 import mobi.kujon.google_drive.ui.fragments.files.recycler_classes.FilesRecyclerAdapter;
 
@@ -122,7 +122,7 @@ public class FilesListFragment extends BaseFileFragment<FilesListFragment> imple
 
     @Override
     public void onFileClick(FileDTO fileDTO) {
-        FileActionDialog dialog = FileActionDialog.newInstance(fileDTO.isMy());
+        FileActionDialog dialog = FileActionDialog.newInstance(fileDTO.getFileId(),fileDTO.isMy());
         dialog.show(getActivity().getFragmentManager(), FileActionDialog.NAME);
     }
 }

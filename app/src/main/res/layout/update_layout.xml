@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:background="?selectableItemBackground"
             android:id="@+id/cancel_button"
-            android:src="@drawable/cancel"/>
+            android:src="@drawable/progress_cancel"/>
 
     <ProgressBar
         android:layout_below="@+id/tilte_text_view"

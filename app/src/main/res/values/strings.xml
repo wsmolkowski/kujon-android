@@ -112,4 +112,6 @@
     <string name="xls_file">Plik arkusza kalkulacyjnego</string>
     <string name="litlle_empty">Trochę tu pusto</string>
     <string name="add_from_google">Aby dodać plik z Google Drive \n wybierz przycisk +</string>
+    <string name="storage_permission" translatable="false">android.permission.WRITE_EXTERNAL_STORAGE</string>
+    <string name="storage__read_permission" translatable="false">android.permission.READ_EXTERNAL_STORAGE</string>
 </resources>
