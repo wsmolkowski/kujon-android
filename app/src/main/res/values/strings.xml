@@ -116,4 +116,5 @@
     <string name="storage__read_permission" translatable="false">android.permission.READ_EXTERNAL_STORAGE</string>
     <string name="choose_folder">Wybierz folder docelowy</string>
     <string name="choose_file_to_send_to_kujon">Wybierz plik do przesłania do Kujona</string>
+    <string name="author">Autor</string>
 </resources>

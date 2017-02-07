@@ -20,6 +20,8 @@ public class HeaderFileDetailsVH extends BaseFileDetailsVH<FileDTO> {
     TextView fileSize;
     @Bind(R.id.file_creation_date)
     TextView fileCreationDate;
+    @Bind(R.id.autor_text_view)
+    TextView autorTextView;
     @Bind(R.id.share_with_everyone)
     SwitchCompat shareWithEveryone;
 
@@ -39,6 +41,7 @@ public class HeaderFileDetailsVH extends BaseFileDetailsVH<FileDTO> {
             fileSize.setText(new StringBuilder().append(fileDTO.getFileSize()).append(" MB"));
             fileCreationDate.setText(fileDTO.getDateCreated());
             shareWithEveryone.setEnabled(fileDTO.isMy());
+            autorTextView.setText(fileDTO.getUserName());
             shareWithEveryone.setChecked(ShareFileTargetType.ALL.equals(fileDTO.getShareType()));
             shareWithEveryone.setOnCheckedChangeListener((buttonView, isChecked) -> onEveryoneSwitchClicked.onEveryoneClicked(isChecked));
         }

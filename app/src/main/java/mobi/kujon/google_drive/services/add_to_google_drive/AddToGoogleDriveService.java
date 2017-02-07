@@ -149,7 +149,6 @@ public class AddToGoogleDriveService extends Service implements UploadToDrive.Vi
     @Override
     public void fileUploaded() {
         this.stopSelf();
-
     }
 
     @Override
