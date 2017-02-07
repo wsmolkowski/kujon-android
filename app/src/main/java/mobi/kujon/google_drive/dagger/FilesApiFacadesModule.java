@@ -23,7 +23,7 @@ import mobi.kujon.google_drive.network.unwrapped_api.CoursesApi;
 import mobi.kujon.google_drive.network.unwrapped_api.DeleteFile;
 import mobi.kujon.google_drive.network.unwrapped_api.FileDownloadApi;
 import mobi.kujon.google_drive.network.unwrapped_api.FileUpload;
-import mobi.kujon.google_drive.network.unwrapped_api.GetFiles;
+import mobi.kujon.google_drive.network.unwrapped_api.GetFilesApi;
 import mobi.kujon.google_drive.network.unwrapped_api.SemesterApi;
 import mobi.kujon.google_drive.network.unwrapped_api.ShareFileApi;
 import mobi.kujon.google_drive.network.unwrapped_api.CourseDetailsApi;
@@ -49,7 +49,7 @@ public class FilesApiFacadesModule {
     }
 
     @Provides
-    GetFiles provideGetFiles(Retrofit retrofit) {
+    GetFilesApi provideGetFiles(Retrofit retrofit) {
         return new GetFilesFacade(retrofit.create(GetFilesKujon.class));
     }
 

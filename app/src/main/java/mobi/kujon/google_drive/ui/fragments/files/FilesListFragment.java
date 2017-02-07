@@ -122,7 +122,7 @@ public class FilesListFragment extends BaseFileFragment<FilesListFragment> imple
 
     @Override
     public void onFileClick(FileDTO fileDTO) {
-        FileActionDialog dialog = FileActionDialog.newInstance(fileDTO.getFileId(),fileDTO.isMy());
+        FileActionDialog dialog = FileActionDialog.newInstance(fileDTO);
         dialog.show(getActivity().getFragmentManager(), FileActionDialog.NAME);
     }
 }

@@ -40,6 +40,7 @@ import mobi.kujon.google_drive.mvp.file_stream_update.FileStreamUpdateMVP;
 import mobi.kujon.google_drive.mvp.files_list.FilesOwnerType;
 import mobi.kujon.google_drive.services.ServiceOpener;
 import mobi.kujon.google_drive.ui.activities.BaseFileActivity;
+import mobi.kujon.google_drive.ui.activities.file_details.FileDetailsActivity;
 import mobi.kujon.google_drive.ui.custom.UploadLayout;
 import mobi.kujon.google_drive.ui.dialogs.file_info_dialog.FileActionListener;
 import mobi.kujon.google_drive.ui.dialogs.share_target.ChooseShareStudentsListener;
@@ -311,6 +312,6 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
 
     @Override
     public void onFileDetails(String fileId) {
-
+        FileDetailsActivity.openActivity(this,coursId,termId,fileId);
     }
 }

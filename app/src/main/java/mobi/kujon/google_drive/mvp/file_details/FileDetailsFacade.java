@@ -6,26 +6,27 @@ import java.util.List;
 
 import mobi.kujon.google_drive.model.dto.StudentShareDto;
 import mobi.kujon.google_drive.model.dto.file.FileDTO;
+import mobi.kujon.google_drive.model.dto.file.FileDtoFactory;
 import mobi.kujon.google_drive.model.dto.file_details.DisableableStudentShareDTO;
 import mobi.kujon.google_drive.model.json.ShareFileTargetType;
 import mobi.kujon.google_drive.mvp.choose_students.ChooseStudentsMVP;
-import mobi.kujon.google_drive.mvp.files_list.FileListMVP;
-import mobi.kujon.google_drive.mvp.files_list.FilesOwnerType;
+import mobi.kujon.google_drive.network.unwrapped_api.GetFilesApi;
 import rx.Observable;
 
 
 public class FileDetailsFacade implements FileDetailsMVP.FileDetailsFacade {
 
     private ChooseStudentsMVP.Model chooseStudentModel;
-    private FileListMVP.Model fileListModel;
+    private GetFilesApi getFilesApi;
     private String courseId;
     private String termId;
 
 
-    public FileDetailsFacade(ChooseStudentsMVP.Model chooseStudentModel, FileListMVP.Model fileListModel,
+    public FileDetailsFacade(ChooseStudentsMVP.Model chooseStudentModel,
+                             GetFilesApi getFilesApi,
                              String courseId, String termId) {
         this.chooseStudentModel = chooseStudentModel;
-        this.fileListModel = fileListModel;
+        this.getFilesApi = getFilesApi;
         this.courseId = courseId;
         this.termId = termId;
     }
@@ -62,17 +63,11 @@ public class FileDetailsFacade implements FileDetailsMVP.FileDetailsFacade {
 
     @Override
     public Observable<FileDTO> loadFileDetails(String fileId, boolean refresh) {
-        return fileListModel.getFilesDto(refresh, FilesOwnerType.ALL)
-                .map(fileDTOs -> getFileDTOById(fileDTOs, fileId));
+        return getFilesApi.getFiles(refresh,courseId,termId)
+                .flatMap(Observable::from)
+                .filter(kujonFile -> kujonFile.fileId.equals(fileId))
+                .take(1)
+                .map(FileDtoFactory::createFileDto);
     }
 
-
-    private FileDTO getFileDTOById(List<FileDTO> fileDTOs, String fileId) {
-        for (FileDTO dto : fileDTOs) {
-            if (dto.getFileId().equals(fileId)) {
-                return dto;
-            }
-        }
-        return null;
-    }
 }

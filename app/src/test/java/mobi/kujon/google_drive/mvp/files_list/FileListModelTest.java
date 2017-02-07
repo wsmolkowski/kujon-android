@@ -9,11 +9,10 @@ import java.util.Date;
 import java.util.List;
 
 import mobi.kujon.UnitTest;
-import mobi.kujon.google_drive.model.json.KujonFile;
 import mobi.kujon.google_drive.model.dto.file.FileDtoFactory;
-import mobi.kujon.google_drive.network.unwrapped_api.GetFiles;
+import mobi.kujon.google_drive.model.json.KujonFile;
+import mobi.kujon.google_drive.network.unwrapped_api.GetFilesApi;
 import mobi.kujon.google_drive.utils.FilesFilter;
-import mobi.kujon.utils.user_data.UserDataFacade;
 import rx.Observable;
 
 import static org.junit.Assert.assertEquals;
@@ -24,13 +23,11 @@ import static org.junit.Assert.assertEquals;
 public class FileListModelTest extends UnitTest {
 
     @Mock
-    GetFiles getFiles;
+    GetFilesApi getFilesApi;
 
     @Mock
     FilesFilter filesFilter;
 
-    @Mock
-    UserDataFacade userDataFacade;
 
     private FileListMVP.Model model;
     private String courseId;
@@ -42,14 +39,14 @@ public class FileListModelTest extends UnitTest {
     protected void onSetup() {
         courseId = "course";
         termId = "term";
-        model = new FileListModel(courseId, termId, getFiles, filesFilter, userDataFacade);
+        model = new FileListModel(courseId, termId, getFilesApi, filesFilter);
     }
 
     @Test
     public void returnProperValues() throws Exception {
         reload = true;
         List<KujonFile> filesFromBackend = provideKujonFiles(0, 10);
-        Mockito.when(getFiles.getFiles(reload, courseId, termId)).thenReturn(Observable.just(filesFromBackend));
+        Mockito.when(getFilesApi.getFiles(reload, courseId, termId)).thenReturn(Observable.just(filesFromBackend));
         List<KujonFile> filteredFilesAll = provideKujonFiles(11, 10);
         List<KujonFile> filteredFilesMy = provideKujonFiles(23, 10);
         Mockito.when(filesFilter.filterFiles(filesFromBackend,FilesOwnerType.ALL)).thenReturn(filteredFilesAll);

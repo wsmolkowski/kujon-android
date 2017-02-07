@@ -7,10 +7,9 @@ import mobi.kujon.google_drive.mvp.file_stream_update.FileStreamUpdateMVP;
 import mobi.kujon.google_drive.mvp.file_stream_update.FileStreamUpdatePresenter;
 import mobi.kujon.google_drive.mvp.files_list.FileListMVP;
 import mobi.kujon.google_drive.mvp.files_list.FileListModel;
-import mobi.kujon.google_drive.network.unwrapped_api.GetFiles;
+import mobi.kujon.google_drive.network.unwrapped_api.GetFilesApi;
 import mobi.kujon.google_drive.utils.FilesFilter;
 import mobi.kujon.google_drive.utils.SchedulersHolder;
-import mobi.kujon.utils.user_data.UserDataFacade;
 
 /**
  *
@@ -27,8 +26,8 @@ public class FilesActivityModule {
 
     @ActivityScope
     @Provides
-    FileListMVP.Model provideFileListModel(GetFiles getFiles, UserDataFacade userDataFacade){
-        return new  FileListModel(courseId,termId,getFiles,new FilesFilter(), userDataFacade);
+    FileListMVP.Model provideFileListModel(GetFilesApi getFilesApi){
+        return new  FileListModel(courseId,termId, getFilesApi,new FilesFilter());
     }
 
 

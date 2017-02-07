@@ -9,7 +9,7 @@ import rx.Observable;
  *
  */
 
-public interface GetFiles {
+public interface GetFilesApi {
 
     Observable<List<KujonFile>> getAllFiles(boolean refresh);
 

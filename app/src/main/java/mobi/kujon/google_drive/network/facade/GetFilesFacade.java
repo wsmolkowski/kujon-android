@@ -6,14 +6,14 @@ import mobi.kujon.google_drive.model.json.KujonFile;
 import mobi.kujon.google_drive.network.BackendWrapper;
 import mobi.kujon.google_drive.network.api.ApiConst;
 import mobi.kujon.google_drive.network.api.GetFilesKujon;
-import mobi.kujon.google_drive.network.unwrapped_api.GetFiles;
+import mobi.kujon.google_drive.network.unwrapped_api.GetFilesApi;
 import rx.Observable;
 
 /**
  *
  */
 
-public class GetFilesFacade implements GetFiles {
+public class GetFilesFacade implements GetFilesApi {
 
     private GetFilesKujon getFilesKujon;
     private BackendWrapper<List<KujonFile>> listBackendWrapper;

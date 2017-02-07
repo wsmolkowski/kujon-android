@@ -4,9 +4,8 @@ import java.util.List;
 
 import mobi.kujon.google_drive.model.dto.file.FileDTO;
 import mobi.kujon.google_drive.model.dto.file.FileDtoFactory;
-import mobi.kujon.google_drive.network.unwrapped_api.GetFiles;
+import mobi.kujon.google_drive.network.unwrapped_api.GetFilesApi;
 import mobi.kujon.google_drive.utils.FilesFilter;
-import mobi.kujon.utils.user_data.UserDataFacade;
 import rx.Observable;
 import rx.exceptions.Exceptions;
 
@@ -16,22 +15,20 @@ import rx.exceptions.Exceptions;
 
 public class FileListModel implements FileListMVP.Model {
     private String courseId, termId;
-    private GetFiles getFiles;
+    private GetFilesApi getFilesApi;
     private FilesFilter myFilesFilter;
-    private UserDataFacade userDataFacade;
 
-    public FileListModel(String courseId, String termId, GetFiles getFiles, FilesFilter myFilesFilter, UserDataFacade userDataFacade) {
+    public FileListModel(String courseId, String termId, GetFilesApi getFilesApi, FilesFilter myFilesFilter) {
         this.courseId = courseId;
         this.termId = termId;
-        this.getFiles = getFiles;
+        this.getFilesApi = getFilesApi;
         this.myFilesFilter = myFilesFilter;
-        this.userDataFacade = userDataFacade;
     }
 
 
     @Override
     public Observable<List<FileDTO>> getFilesDto(boolean reload, @FilesOwnerType int fileType) {
-        return getFiles.getFiles(reload, courseId, termId)
+        return getFilesApi.getFiles(reload, courseId, termId)
                 .map(it -> {
                     if (it.size() != 0) {
                         return FileDtoFactory.createListOfDTOFiles(myFilesFilter.filterFiles(it, fileType));

@@ -13,6 +13,6 @@ public class FileDetailsInjector extends AbstractInjector<FileDetailsActivity> {
                 .filesActivityModule(new FilesActivityModule(injectTo.getCoursId(), injectTo.getTermId()))
                 .fileDetailsModule(new FileDetailsModule(injectTo, injectTo.getCoursId(), injectTo.getTermId()))
                 .filesComponent(getFilesComponent(injectTo))
-                .build();
+                .build().inject(injectTo);
     }
 }

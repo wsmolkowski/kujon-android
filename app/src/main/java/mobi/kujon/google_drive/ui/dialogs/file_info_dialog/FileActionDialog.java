@@ -13,11 +13,15 @@ import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mobi.kujon.R;
+import mobi.kujon.google_drive.model.dto.file.FileDTO;
+import mobi.kujon.google_drive.model.dto.file_upload_info.FileUploadInfoDto;
 import mobi.kujon.google_drive.ui.dialogs.share_target.ChooseShareStudentsListener;
 
 public class FileActionDialog extends DialogFragment {
 
     public static final String FILE_ID_KEY = "fileIdTralala";
+    private static final String FILE_TYPE_KEY = "fileTYpe_key";
+    private static final String FILE_NAME_KEY = "fileNmaeKey";
     @Bind(R.id.file_details)
     TextView fileDetails;
 
@@ -31,17 +35,20 @@ public class FileActionDialog extends DialogFragment {
     public static final String NAME = "FILE_ACTION_DIALOG";
     private FileActionListener fileActionListener;
 
-    public static FileActionDialog newInstance(String fileId,boolean isOwned) {
+    public static FileActionDialog newInstance(FileDTO dto) {
         FileActionDialog fragment = new FileActionDialog();
         Bundle args = new Bundle();
-        args.putBoolean(IS_OWNED, isOwned);
-        args.putString(FILE_ID_KEY, fileId);
+        args.putBoolean(IS_OWNED, dto.isMy());
+        args.putString(FILE_ID_KEY, dto.getFileId());
+        args.putString(FILE_TYPE_KEY, dto.getMimeType());
+        args.putString(FILE_NAME_KEY, dto.getFileName());
         fragment.setArguments(args);
         return fragment;
     }
 
 
-    private String fileId;
+    private FileUploadInfoDto file;
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AppTheme_DialogStyle);
@@ -49,6 +56,10 @@ public class FileActionDialog extends DialogFragment {
         builder.setView(view);
         ButterKnife.bind(this, view);
         boolean fileOwned = getArguments() != null && getArguments().getBoolean(IS_OWNED);
+        String fileId = getArguments().getString(FILE_ID_KEY);
+        String fileType = getArguments().getString(FILE_TYPE_KEY);
+        String fileName = getArguments().getString(FILE_NAME_KEY);
+        file = new FileUploadInfoDto(fileType,fileName,fileId);
         setUpViews(fileOwned);
         return builder.create();
     }
@@ -63,6 +74,17 @@ public class FileActionDialog extends DialogFragment {
             fileDetails.setPadding(fileDetails.getPaddingLeft(), fileDetails.getPaddingTop(),
                     fileDetails.getPaddingRight(), fileDetails.getPaddingTop());
         }
+
+        fileDetails.setOnClickListener(v -> {
+            if (fileActionListener != null) {
+                fileActionListener.onFileDetails(file.getId());
+            }
+        });
+        addToGoogleDrive.setOnClickListener(v -> {
+            if(fileActionListener !=null){
+                fileActionListener.onFileAddToGoogleDrive(file);
+            }
+        });
     }
 
     @Override

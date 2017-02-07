@@ -37,7 +37,7 @@ public class FileDetailsFacadeTest extends UnitTest {
 
     @Override
     protected void onSetup() {
-        model = new FileDetailsFacade(chooseStudentModel, fileListModel, courseId, termId);
+        model = new FileDetailsFacade(chooseStudentModel, courseId, termId);
     }
 
     @Test

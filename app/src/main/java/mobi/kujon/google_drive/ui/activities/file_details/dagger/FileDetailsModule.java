@@ -12,7 +12,6 @@ import mobi.kujon.google_drive.mvp.file_details.FileDetailsView;
 import mobi.kujon.google_drive.mvp.file_details.ShareFileModel;
 import mobi.kujon.google_drive.mvp.file_details.ShareFilePresenter;
 import mobi.kujon.google_drive.mvp.file_details.StudentsPresenter;
-import mobi.kujon.google_drive.mvp.files_list.FileListMVP;
 import mobi.kujon.google_drive.network.unwrapped_api.ShareFileApi;
 import mobi.kujon.google_drive.utils.SchedulersHolder;
 
@@ -31,8 +30,8 @@ public class FileDetailsModule {
 
     @Provides
     @ActivityScope
-    FileDetailsMVP.FileDetailsFacade provideFileDetailsFacade(ChooseStudentsModel chooseStudentModel, FileListMVP.Model filesModel) {
-        return new FileDetailsFacade(chooseStudentModel, filesModel, courseId, termId);
+    FileDetailsMVP.FileDetailsFacade provideFileDetailsFacade(ChooseStudentsModel chooseStudentModel) {
+        return new FileDetailsFacade(chooseStudentModel,courseId, termId);
     }
 
     @Provides

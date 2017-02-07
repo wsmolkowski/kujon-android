@@ -33,7 +33,6 @@ import mobi.kujon.google_drive.mvp.file_details.FileDetailsMVP;
 import mobi.kujon.google_drive.mvp.file_details.FileDetailsView;
 import mobi.kujon.google_drive.ui.activities.BaseFileActivity;
 import mobi.kujon.google_drive.ui.activities.file_details.recycler_classes.FileDetailsAdapter;
-import mobi.kujon.google_drive.ui.activities.files.FilesActivity;
 import mobi.kujon.google_drive.ui.dialogs.share_target.ShareTargetDialog;
 
 public class FileDetailsActivity extends BaseFileActivity implements FileDetailsView, ChooseStudentsMVP.View, FileDetailsAdapter.OnEveryoneSwitchClicked{
@@ -70,7 +69,7 @@ public class FileDetailsActivity extends BaseFileActivity implements FileDetails
     private FileDetailsAdapter adapter;
 
     public static void openActivity(Activity context, String courseId, String termId, String fileId) {
-        Intent intent = new Intent(context, FilesActivity.class);
+        Intent intent = new Intent(context, FileDetailsActivity.class);
         intent.putExtra(COURSE_ID_KEY, courseId);
         intent.putExtra(TERM_ID_KEY, termId);
         intent.putExtra(FILE_ID_KEY, fileId);
@@ -178,5 +177,13 @@ public class FileDetailsActivity extends BaseFileActivity implements FileDetails
     public void onEveryoneClicked(boolean isEveryone) {
         everyoneChosenToShare = isEveryone;
         studentsPresenter.chooseEveryoneToShare(isEveryone, adapter.getStudentShareDTOs());
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        studentsPresenter.clearSubscriptions();
+        shareFilePresenter.clearSubscriptions();
+        fileDetailsPresenter.clearSubscriptions();
     }
 }
