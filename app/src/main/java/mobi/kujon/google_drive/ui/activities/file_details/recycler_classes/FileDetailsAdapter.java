@@ -78,6 +78,10 @@ public class FileDetailsAdapter extends RecyclerView.Adapter<BaseFileDetailsVH>{
         notifyDataSetChanged();
     }
 
+    public List<DisableableStudentShareDTO> getStudentShareDTOs() {
+        return studentShareDTOs;
+    }
+
     public interface OnEveryoneSwitchClicked {
         void onEveryoneClicked(boolean isEveryone);
     }

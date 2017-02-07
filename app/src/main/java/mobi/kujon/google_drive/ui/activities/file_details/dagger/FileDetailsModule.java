@@ -4,11 +4,16 @@ package mobi.kujon.google_drive.ui.activities.file_details.dagger;
 import dagger.Module;
 import dagger.Provides;
 import mobi.kujon.google_drive.dagger.scopes.ActivityScope;
+import mobi.kujon.google_drive.mvp.choose_students.ChooseStudentsMVP;
+import mobi.kujon.google_drive.mvp.file_details.FileDetailsFacade;
 import mobi.kujon.google_drive.mvp.file_details.FileDetailsMVP;
 import mobi.kujon.google_drive.mvp.file_details.FileDetailsPresenter;
 import mobi.kujon.google_drive.mvp.file_details.FileDetailsView;
+import mobi.kujon.google_drive.mvp.file_details.ShareFileModel;
 import mobi.kujon.google_drive.mvp.file_details.ShareFilePresenter;
 import mobi.kujon.google_drive.mvp.file_details.StudentsPresenter;
+import mobi.kujon.google_drive.mvp.files_list.FileListMVP;
+import mobi.kujon.google_drive.network.unwrapped_api.ShareFileApi;
 import mobi.kujon.google_drive.utils.SchedulersHolder;
 
 @Module
@@ -22,6 +27,18 @@ public class FileDetailsModule {
         this.fileDetailsView = view;
         this.courseId = courseId;
         this.termId = termId;
+    }
+
+    @Provides
+    @ActivityScope
+    FileDetailsMVP.FileDetailsFacade provideFileDetailsFacade(ChooseStudentsMVP.Model chooseStudentModel, FileListMVP.Model filesModel) {
+        return new FileDetailsFacade(chooseStudentModel, filesModel, courseId, termId);
+    }
+
+    @Provides
+    @ActivityScope
+    FileDetailsMVP.ShareFileModel provideShareFileModel(ShareFileApi shareFileApi){
+        return new ShareFileModel(shareFileApi);
     }
 
     @Provides

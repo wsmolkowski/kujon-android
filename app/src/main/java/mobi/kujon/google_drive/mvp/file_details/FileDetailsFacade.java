@@ -18,7 +18,7 @@ import mobi.kujon.google_drive.mvp.files_list.FileListMVP;
 import mobi.kujon.google_drive.mvp.files_list.FilesOwnerType;
 import rx.Observable;
 
-@ActivityScope
+
 public class FileDetailsFacade implements FileDetailsMVP.FileDetailsFacade {
 
     private ChooseStudentsMVP.Model chooseStudentModel;
@@ -26,7 +26,7 @@ public class FileDetailsFacade implements FileDetailsMVP.FileDetailsFacade {
     private String courseId;
     private String termId;
 
-    @Inject
+
     public FileDetailsFacade(ChooseStudentsMVP.Model chooseStudentModel, FileListMVP.Model fileListModel,
                              String courseId, String termId) {
         this.chooseStudentModel = chooseStudentModel;
