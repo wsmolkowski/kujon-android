@@ -6,7 +6,6 @@ import mobi.kujon.google_drive.dagger.scopes.ActivityScope;
 import mobi.kujon.google_drive.mvp.choose_students.ChooseStudentsMVP;
 import mobi.kujon.google_drive.mvp.choose_students.ChooseStudentsModel;
 import mobi.kujon.google_drive.mvp.choose_students.ChooseStudentsPresenter;
-import mobi.kujon.google_drive.network.unwrapped_api.CourseDetailsApi;
 import mobi.kujon.google_drive.utils.SchedulersHolder;
 
 @Module
@@ -16,12 +15,6 @@ public class ChooseStudentModule {
 
     public ChooseStudentModule(ChooseStudentsMVP.View view) {
         this.view = view;
-    }
-
-    @Provides
-    @ActivityScope
-    ChooseStudentsMVP.Model provideChooseStudentsModel(CourseDetailsApi api) {
-        return new ChooseStudentsModel(api);
     }
 
     @Provides

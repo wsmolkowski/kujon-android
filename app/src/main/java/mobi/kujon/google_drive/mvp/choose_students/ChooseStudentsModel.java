@@ -6,11 +6,14 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import mobi.kujon.google_drive.dagger.scopes.ActivityScope;
 import mobi.kujon.google_drive.model.dto.StudentShareDto;
 import mobi.kujon.google_drive.network.unwrapped_api.CourseDetailsApi;
 import mobi.kujon.network.json.Participant;
 import rx.Observable;
 
+
+@ActivityScope
 public class ChooseStudentsModel implements ChooseStudentsMVP.Model {
 
     private CourseDetailsApi courseDetailsApi;
