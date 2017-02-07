@@ -9,9 +9,9 @@ import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mobi.kujon.R;
-import mobi.kujon.google_drive.model.dto.file_details.DisableableStudentShareDTO;
+import mobi.kujon.google_drive.model.dto.StudentShareDto;
 
-public class StudentVH extends BaseFileDetailsVH<DisableableStudentShareDTO> {
+public class StudentVH extends BaseFileDetailsVH<StudentShareDto> {
 
 
     @Bind(R.id.student_choice_checkbox)
@@ -19,6 +19,9 @@ public class StudentVH extends BaseFileDetailsVH<DisableableStudentShareDTO> {
 
     @Bind(R.id.student_name)
     TextView studentName;
+
+    @Bind(R.id.enable_layout)
+    View enableLayout;
 
     @Bind(R.id.choose_student_container)
     RelativeLayout chooseStudentContainer;
@@ -29,14 +32,23 @@ public class StudentVH extends BaseFileDetailsVH<DisableableStudentShareDTO> {
     }
 
     @Override
-    public void bind(DisableableStudentShareDTO studentShareDTO) {
+    public void bind(StudentShareDto studentShareDto) {
+
+    }
+
+
+    public void bind(StudentShareDto studentShareDTO,boolean enable) {
         studentName.setText(studentShareDTO.getStudentName());
         studentChoiceCheckbox.setChecked(studentShareDTO.isChosen());
-        if(studentShareDTO.isEnabled()) {
+        if(enable) {
+            studentChoiceCheckbox.setChecked(studentShareDTO.isChosen());
+            enableLayout.setVisibility(View.GONE);
             studentChoiceCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> studentShareDTO.setChosen(isChecked));
             chooseStudentContainer.setOnClickListener(v -> studentChoiceCheckbox.setChecked(!studentChoiceCheckbox.isChecked()));
         } else {
-            chooseStudentContainer.setAlpha((float) 0.6);
+            studentChoiceCheckbox.setChecked(true);
+            enableLayout.setVisibility(View.VISIBLE);
+
         }
     }
 }

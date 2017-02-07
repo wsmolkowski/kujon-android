@@ -3,7 +3,7 @@ package mobi.kujon.google_drive.mvp.file_details;
 
 import java.util.List;
 
-import mobi.kujon.google_drive.model.dto.file_details.DisableableStudentShareDTO;
+import mobi.kujon.google_drive.model.dto.StudentShareDto;
 import mobi.kujon.google_drive.model.dto.file_share.FileShareDto;
 import mobi.kujon.google_drive.model.json.ShareFileTargetType;
 import mobi.kujon.google_drive.mvp.AbstractClearSubsriptions;
@@ -22,12 +22,12 @@ public class ShareFilePresenter extends AbstractClearSubsriptions implements Fil
     }
 
     @Override
-    public void shareFileWith(String fileId, @ShareFileTargetType String targetType, List<DisableableStudentShareDTO> shares) {
+    public void shareFileWith(String fileId, @ShareFileTargetType String targetType, List<StudentShareDto> shares) {
         addToSubsriptionList(model.shareFile(new FileShareDto(fileId, shares, targetType))
                 .subscribeOn(schedulersHolder.subscribe())
                 .observeOn(schedulersHolder.observ())
                 .subscribe(sharedFile ->
-                                view.fileShared(),
+                                view.fileShared(sharedFile.shareType,sharedFile.fileSharedWith),
                         throwable ->
                                 view.handleException(throwable)));
     }

@@ -29,7 +29,6 @@ import rx.Observable;
 import rx.Subscription;
 
 import static mobi.kujon.google_drive.services.upload.DowloadUploadFileServices.DRIVE_ID_KEY;
-import static mobi.kujon.google_drive.services.upload.DowloadUploadFileServices.FILE_UPLOAD_DTO;
 
 /**
  *
@@ -99,7 +98,7 @@ public class AddToGoogleDriveService extends Service implements UploadToDrive.Vi
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if (intent != null && intent.getExtras() == null && intent.getStringExtra(FILE_UPLOAD_DTO) == null) {
+        if (intent != null && intent.getExtras() == null && intent.getStringExtra(DRIVE_ID_KEY) == null) {
             stopSelf();
         }
 

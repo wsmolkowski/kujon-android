@@ -6,23 +6,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import mobi.kujon.R;
-import mobi.kujon.google_drive.model.dto.file.FileDTO;
-import mobi.kujon.google_drive.model.dto.file_details.DisableableStudentShareDTO;
+import mobi.kujon.google_drive.model.dto.StudentShareDto;
+import mobi.kujon.google_drive.model.dto.file_details.FileDetailsDto;
+import mobi.kujon.google_drive.model.json.ShareFileTargetType;
 
 public class FileDetailsAdapter extends RecyclerView.Adapter<BaseFileDetailsVH>{
     private final static int TYPE_HEADER = 345;
     private final static int TYPE_STUDENT = 999;
-    private List<DisableableStudentShareDTO> studentShareDTOs;
+    private FileDetailsDto fileDetailsDto;
     private OnEveryoneSwitchClicked onEveryoneSwitchClicked;
-    private FileDTO fileDTO;
+    private boolean shouldBeEnabled;
 
-    public FileDetailsAdapter(List<DisableableStudentShareDTO> studentShareDTOs, OnEveryoneSwitchClicked onEveryoneSwitchClicked, FileDTO fileDTO) {
-        this.studentShareDTOs = studentShareDTOs;
+    public FileDetailsAdapter(OnEveryoneSwitchClicked onEveryoneSwitchClicked) {
         this.onEveryoneSwitchClicked = onEveryoneSwitchClicked;
-        this.fileDTO = fileDTO;
     }
 
     @Override
@@ -44,19 +44,24 @@ public class FileDetailsAdapter extends RecyclerView.Adapter<BaseFileDetailsVH>{
     public void onBindViewHolder(BaseFileDetailsVH holder, int position) {
         switch (holder.getItemViewType()) {
             case TYPE_HEADER:
-                if (fileDTO != null) {
-                    ((HeaderFileDetailsVH) holder).bind(fileDTO);
-                }
+                if(fileDetailsDto !=null)
+                    ((HeaderFileDetailsVH) holder).bind(fileDetailsDto.getFileDTO());
                 break;
             case TYPE_STUDENT:
-                ((StudentVH) holder).bind(studentShareDTOs.get(position - 1));
+
+                ((StudentVH) holder).bind(fileDetailsDto.getStudentShareDto().get(position - 1), shouldBeEnabled);
                 break;
         }
     }
 
     @Override
     public int getItemCount() {
-        return studentShareDTOs.size() + 1;
+        try {
+
+            return fileDetailsDto.getStudentShareDto().size() + 1;
+        }catch (NullPointerException npe){
+            return 1;
+        }
     }
 
     @Override
@@ -68,18 +73,31 @@ public class FileDetailsAdapter extends RecyclerView.Adapter<BaseFileDetailsVH>{
         }
     }
 
-    public void addFileDTO(FileDTO fileDTO) {
-        this.fileDTO = fileDTO;
-        notifyDataSetChanged();
+
+    public void setFileDetailsDto(FileDetailsDto fileDetailsDto) {
+        this.fileDetailsDto = fileDetailsDto;
+        shouldBeEnabled = !fileDetailsDto.getFileDTO().getShareType().equals(ShareFileTargetType.ALL);
+        this.notifyDataSetChanged();
     }
 
-    public void addStudents(List<DisableableStudentShareDTO> students) {
-        this.studentShareDTOs = students;
-        notifyDataSetChanged();
+    public List<StudentShareDto> getStudentShareDTOs() {
+        return this.fileDetailsDto.getStudentShareDto();
     }
 
-    public List<DisableableStudentShareDTO> getStudentShareDTOs() {
-        return studentShareDTOs;
+    public void setShareType(@ShareFileTargetType String shareType, List<String> fileSharedWith) {
+        this.fileDetailsDto.getFileDTO().setShareType(shareType);
+        for(StudentShareDto studentShareDto:this.fileDetailsDto.getStudentShareDto()){
+            List<String> strings = new ArrayList<>(fileSharedWith);
+            studentShareDto.setChosen(false);
+            for(String studentId:strings){
+                if(studentShareDto.getStudentId().equals(studentId)){
+                    studentShareDto.setChosen(true);
+                    fileSharedWith.remove(studentId);
+                    break;
+                }
+            }
+        }
+        this.notifyDataSetChanged();
     }
 
     public interface OnEveryoneSwitchClicked {

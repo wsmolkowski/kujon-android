@@ -8,10 +8,18 @@ import java.util.List;
 
 public class SharedFile {
 
-    @SerializedName("file_id") @Expose
+    @SerializedName("file_id")
+    @Expose
     public String fileId;
 
-    @SerializedName("file_shared_with") @Expose
+    @SerializedName("file_shared_with")
+    @Expose
+    public
+    @ShareFileTargetType
+    String shareType;
+
+    @SerializedName("file_shared_with_ids")
+    @Expose
     public List<String> fileSharedWith;
 
     @Override

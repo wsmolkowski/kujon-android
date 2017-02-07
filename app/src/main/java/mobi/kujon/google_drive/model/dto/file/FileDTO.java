@@ -119,6 +119,10 @@ public abstract class FileDTO {
     public abstract @StringRes int getContentType();
 
 
+    public void setShareType(String shareType) {
+        this.shareType = shareType;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

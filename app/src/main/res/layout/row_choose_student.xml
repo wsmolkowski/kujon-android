@@ -32,5 +32,10 @@
         android:layout_height="1dp"
         android:background="@color/white"
         android:layout_below="@id/student_choice_checkbox"/>
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/enable_layout"
+        android:visibility="gone"
+        android:background="@color/white_50"/>
 </RelativeLayout>

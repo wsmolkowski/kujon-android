@@ -32,11 +32,13 @@ public class HeaderFileDetailsVH extends BaseFileDetailsVH<FileDTO> {
 
     @Override
     public void bind(FileDTO fileDTO) {
-        fileType.setText(fileDTO.getContentType());
-        fileSize.setText(new StringBuilder().append(fileDTO.getFileSize()).append(" MB"));
-        fileCreationDate.setText(fileDTO.getDateCreated());
-        shareWithEveryone.setEnabled(fileDTO.isMy());
-        shareWithEveryone.setChecked(ShareFileTargetType.ALL.equals(fileDTO.getShareType()));
-        shareWithEveryone.setOnCheckedChangeListener((buttonView, isChecked) -> onEveryoneSwitchClicked.onEveryoneClicked(isChecked));
+        if(fileDTO != null){
+            fileType.setText(fileDTO.getContentType());
+            fileSize.setText(new StringBuilder().append(fileDTO.getFileSize()).append(" MB"));
+            fileCreationDate.setText(fileDTO.getDateCreated());
+            shareWithEveryone.setEnabled(fileDTO.isMy());
+            shareWithEveryone.setChecked(ShareFileTargetType.ALL.equals(fileDTO.getShareType()));
+            shareWithEveryone.setOnCheckedChangeListener((buttonView, isChecked) -> onEveryoneSwitchClicked.onEveryoneClicked(isChecked));
+        }
     }
 }

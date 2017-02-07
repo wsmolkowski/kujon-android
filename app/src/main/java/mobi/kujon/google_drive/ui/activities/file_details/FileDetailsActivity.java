@@ -14,7 +14,6 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -25,17 +24,15 @@ import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
 import mobi.kujon.google_drive.dagger.injectors.FileDetailsInjector;
 import mobi.kujon.google_drive.model.dto.StudentShareDto;
-import mobi.kujon.google_drive.model.dto.file.FileDTO;
-import mobi.kujon.google_drive.model.dto.file_details.DisableableStudentShareDTO;
+import mobi.kujon.google_drive.model.dto.file_details.FileDetailsDto;
 import mobi.kujon.google_drive.model.json.ShareFileTargetType;
-import mobi.kujon.google_drive.mvp.choose_students.ChooseStudentsMVP;
 import mobi.kujon.google_drive.mvp.file_details.FileDetailsMVP;
 import mobi.kujon.google_drive.mvp.file_details.FileDetailsView;
 import mobi.kujon.google_drive.ui.activities.BaseFileActivity;
 import mobi.kujon.google_drive.ui.activities.file_details.recycler_classes.FileDetailsAdapter;
 import mobi.kujon.google_drive.ui.dialogs.share_target.ShareTargetDialog;
 
-public class FileDetailsActivity extends BaseFileActivity implements FileDetailsView, ChooseStudentsMVP.View, FileDetailsAdapter.OnEveryoneSwitchClicked{
+public class FileDetailsActivity extends BaseFileActivity implements FileDetailsView,  FileDetailsAdapter.OnEveryoneSwitchClicked{
 
     private String coursId;
     private String termId;
@@ -63,8 +60,7 @@ public class FileDetailsActivity extends BaseFileActivity implements FileDetails
     @Inject
     FileDetailsMVP.ShareFilePresenter shareFilePresenter;
 
-    @Inject
-    FileDetailsMVP.StudentsPresenter studentsPresenter;
+
 
     private FileDetailsAdapter adapter;
 
@@ -90,10 +86,9 @@ public class FileDetailsActivity extends BaseFileActivity implements FileDetails
         toolbarTitle.setText(getIntent().getStringExtra(ShareTargetDialog.TITLE));
         handleRecyclerView();
         fileDetailsPresenter.loadFileDetails(fileId, false);
-        studentsPresenter.loadStudents(fileId, false);
+        this.setLoading(true);
         swipeRefreshLayout.setOnRefreshListener(() -> {
             fileDetailsPresenter.loadFileDetails(fileId, true);
-            studentsPresenter.loadStudents(fileId, true);
         });
         cancel.setOnClickListener(v -> {
             finish();
@@ -103,7 +98,7 @@ public class FileDetailsActivity extends BaseFileActivity implements FileDetails
     private void handleRecyclerView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        adapter = new FileDetailsAdapter(new ArrayList<>(), this, null);
+        adapter = new FileDetailsAdapter(this);
         recyclerView.setAdapter(adapter);
     }
 
@@ -126,7 +121,7 @@ public class FileDetailsActivity extends BaseFileActivity implements FileDetails
         if(everyoneChosenToShare) {
             return ShareFileTargetType.ALL;
         } else {
-            for(DisableableStudentShareDTO studentShareDTO : adapter.getStudentShareDTOs()) {
+            for(StudentShareDto studentShareDTO : adapter.getStudentShareDTOs()) {
                 if(studentShareDTO.isChosen()) {
                     return ShareFileTargetType.LIST;
                 }
@@ -142,30 +137,27 @@ public class FileDetailsActivity extends BaseFileActivity implements FileDetails
         return termId;
     }
 
+
+
     @Override
-    public void displayFileProperties(FileDTO fileDTO) {
-        adapter.addFileDTO(fileDTO);
+    public void displayFileDetails(FileDetailsDto fileDetailsDto) {
+        adapter.setFileDetailsDto(fileDetailsDto);
+        this.setLoading(false);
     }
 
     @Override
-    public void fileShared() {
-        finish();
+    public void fileShared(@ShareFileTargetType String shareType, List<String> fileSharedWith) {
+        adapter.setShareType(shareType,fileSharedWith);
+        this.setLoading(false);
     }
 
-    @Override
-    public void displayFileShares(List<DisableableStudentShareDTO> shares) {
-        adapter.addStudents(shares);
-    }
+
 
     @Override
     protected void setLoading(boolean t) {
         this.swipeRefreshLayout.setRefreshing(t);
     }
 
-
-    @Override
-    public void showStudentList(List<StudentShareDto> studentShareDtos) {
-    }
 
     public void handleInjection() {
         FileDetailsInjector injector = (FileDetailsInjector) ((KujonApplication) getApplication())
@@ -176,13 +168,13 @@ public class FileDetailsActivity extends BaseFileActivity implements FileDetails
     @Override
     public void onEveryoneClicked(boolean isEveryone) {
         everyoneChosenToShare = isEveryone;
-        studentsPresenter.chooseEveryoneToShare(isEveryone, adapter.getStudentShareDTOs());
+        this.setLoading(true);
+        shareFilePresenter.shareFileWith(fileId,isEveryone?ShareFileTargetType.ALL:ShareFileTargetType.LIST,adapter.getStudentShareDTOs());
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        studentsPresenter.clearSubscriptions();
         shareFilePresenter.clearSubscriptions();
         fileDetailsPresenter.clearSubscriptions();
     }
