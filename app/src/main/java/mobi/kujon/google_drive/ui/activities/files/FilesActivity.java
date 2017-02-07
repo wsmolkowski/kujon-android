@@ -11,6 +11,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -72,6 +73,9 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
     @Bind(R.id.sliding_tabs)
     TabLayout tabLayout;
 
+    @Bind(R.id.toolbar_title)
+    TextView toolbarTitle;
+
     @Bind(R.id.update_layout)
     UploadLayout uploadLayout;
 
@@ -90,6 +94,8 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
         setContentView(R.layout.activity_files);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
+        toolbarTitle.setText(R.string.files_title);
         String[] titles = {getString(R.string.all_files), getString(R.string.my_files)};
         FilesListFragment[] fragments = {FilesListFragment.newInstance(FilesOwnerType.ALL), FilesListFragment.newInstance(FilesOwnerType.MY)};
         adapter = new FilesFragmentPagerAdapter(getSupportFragmentManager(), titles, fragments);

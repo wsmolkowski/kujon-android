@@ -35,20 +35,26 @@ import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
 import mobi.kujon.google_drive.dagger.injectors.Injector;
 import mobi.kujon.google_drive.model.dto.file_upload.FileUploadDto;
+import mobi.kujon.google_drive.mvp.file_stream_update.FileStreamUpdateMVP;
 import mobi.kujon.google_drive.mvp.google_drive_api.GoogleDowloadProvider;
 import mobi.kujon.google_drive.mvp.google_drive_api.GoogleDriveDowloadMVP;
+import mobi.kujon.google_drive.mvp.google_drive_api.MimeTypeMapper;
+import mobi.kujon.google_drive.mvp.google_drive_api.MimeTypeMapperImpl;
 import mobi.kujon.google_drive.mvp.upload_file.UploadFileMVP;
 import mobi.kujon.google_drive.utils.SchedulersHolder;
 import rx.Observable;
+import rx.Subscription;
 
 
 public class DowloadUploadFileServices extends Service implements UploadFileMVP.View,
-        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, GoogleDriveDowloadMVP.GoogleClientProvider {
+        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, GoogleDriveDowloadMVP.GoogleClientProvider, FileStreamUpdateMVP.CancelView {
 
     public static final String FILE_UPLOAD_DTO = "fileUploadDto";
     public static final String DRIVE_ID_KEY = "driveIdKey";
     private String mimeType;
     private String title;
+    private Subscription subscription;
+    private MimeTypeMapper mimeTypeMapper;
 
     public static void startService(Context context, String fileUploadDto, DriveId driveId) {
         Intent intent = new Intent(context, DowloadUploadFileServices.class);
@@ -73,6 +79,9 @@ public class DowloadUploadFileServices extends Service implements UploadFileMVP.
     UploadFileMVP.Presenter presenter;
 
     @Inject
+    FileStreamUpdateMVP.CancelPresenter cancelPresenter;
+
+    @Inject
     Gson gson;
 
     public DowloadUploadFileServices() {
@@ -93,7 +102,7 @@ public class DowloadUploadFileServices extends Service implements UploadFileMVP.
         super.onCreate();
         Injector<DowloadUploadFileServices> injector = ((KujonApplication) this.getApplication()).getInjectorProvider().provideInjectorForService();
         injector.inject(this);
-
+        mimeTypeMapper = new MimeTypeMapperImpl();
         mCredential = GoogleAccountCredential.usingOAuth2(
                 getApplicationContext(), Arrays.asList(SCOPES))
                 .setSelectedAccountName(retrieveEmail())
@@ -128,7 +137,7 @@ public class DowloadUploadFileServices extends Service implements UploadFileMVP.
         } else {
             apiClient.connect();
         }
-
+        cancelPresenter.subscribeToStream(this);
         return START_REDELIVER_INTENT;
     }
 
@@ -141,7 +150,7 @@ public class DowloadUploadFileServices extends Service implements UploadFileMVP.
 
     private void handleApiCalls() {
         createDriveService();
-        Observable.just(driveId.asDriveFile())
+        subscription = Observable.just(driveId.asDriveFile())
                 .map(driveFile -> {
                     DriveResource.MetadataResult mdRslt = driveFile.getMetadata(apiClient).await();
                     mimeType = mdRslt.getMetadata().getMimeType();
@@ -205,5 +214,20 @@ public class DowloadUploadFileServices extends Service implements UploadFileMVP.
     @Override
     public com.google.api.services.drive.Drive getGoogleDrive() {
         return mService;
+    }
+
+    @Override
+    public void onCancel(String fileName) {
+        if (fileName.equals(title) || fileName.equals(fileName(title, mimeType))) {
+            this.presenter.clearSubscriptions();
+            if (subscription != null)
+                this.subscription.unsubscribe();
+            this.stopSelf();
+        }
+    }
+
+    private String fileName(String mimeType, String title) {
+
+        return title + mimeTypeMapper.getExtension(mimeType);
     }
 }

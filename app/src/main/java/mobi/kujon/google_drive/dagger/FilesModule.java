@@ -14,6 +14,7 @@ import mobi.kujon.google_drive.dagger.injectors.RuntimeInjectorProvider;
 import mobi.kujon.google_drive.dagger.scopes.GoogleDriveScope;
 import mobi.kujon.google_drive.mvp.file_stream_update.FileStreamUpdateMVP;
 import mobi.kujon.google_drive.mvp.file_stream_update.FileStreamUpdateModel;
+import mobi.kujon.google_drive.mvp.file_stream_update.FileUpdateCancelStreamModel;
 import mobi.kujon.google_drive.services.ServiceOpener;
 import mobi.kujon.google_drive.services.ServiceOpenerImpl;
 import mobi.kujon.google_drive.utils.MultipartUtils;
@@ -56,6 +57,12 @@ public class FilesModule {
     @GoogleDriveScope
     FileStreamUpdateMVP.Model provideFileStreamModel(){
         return new FileStreamUpdateModel();
+    }
+
+    @Provides
+    @GoogleDriveScope
+    FileStreamUpdateMVP.CancelModel provideFileStreamCancelModel(){
+        return new FileUpdateCancelStreamModel();
     }
 
     @Provides

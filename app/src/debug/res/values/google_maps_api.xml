@@ -16,6 +16,6 @@
     string in this file.
     -->
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyCO_egAy-zf2BthG6FXfMStpNhqvn1Pbqw</string>
-    <string name="google_drive_api_key">896765768628-44hslcfj8sfcam37ecjmm3e3hn9cfble.apps.googleusercontent.com</string>
+    <string name="google_drive_api_key" translatable="false">896765768628-44hslcfj8sfcam37ecjmm3e3hn9cfble.apps.googleusercontent.com</string>
 
 </resources>

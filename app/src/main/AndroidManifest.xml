@@ -8,6 +8,9 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
     <application
         android:name=".KujonApplication"
         android:allowBackup="true"
@@ -126,11 +129,9 @@
             android:theme="@style/ToolbarAppTheme" />
         <activity
             android:name=".google_drive.ui.activities.semesters.SemestersActivity"
-            android:label="@string/title_activity_semesters"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".google_drive.ui.activities.courses.CoursesInSemseterActivity"
-            android:label="@string/title_activity_courses_in_semseter"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
@@ -147,8 +148,7 @@
 
         <activity
             android:name=".google_drive.ui.activities.file_details.FileDetailsActivity"
-            android:label="@string/title_activity_file_details"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

@@ -16,10 +16,22 @@ public interface FileStreamUpdateMVP {
         void updateStream(FileUpdateDto fileUpdateDto);
     }
 
+    interface CancelModel{
+        Observable<String> subscribeToCancelStream();
+        void updateStream(String fileName);
+    }
+
     interface Presenter extends ClearSubscriptions{
         void subscribeToStream(View view);
     }
 
+    interface CancelPresenter extends ClearSubscriptions{
+        void subscribeToStream(CancelView view);
+    }
+
+    interface CancelView{
+        void onCancel(String fileName);
+    }
     interface View{
         void onUpdate(FileUpdateDto fileUpdateDto);
     }
