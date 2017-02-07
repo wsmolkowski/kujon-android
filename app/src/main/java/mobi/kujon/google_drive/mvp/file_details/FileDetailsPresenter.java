@@ -6,11 +6,11 @@ import mobi.kujon.google_drive.utils.SchedulersHolder;
 
 public class FileDetailsPresenter extends AbstractClearSubsriptions implements FileDetailsMVP.FileDetailsPresenter {
 
-    private FileDetailsFacade fileDetailsFacade;
+    private FileDetailsMVP.FileDetailsFacade fileDetailsFacade;
     private FileDetailsMVP.FileDetailsView view;
     private SchedulersHolder schedulersHolder;
 
-    public FileDetailsPresenter(FileDetailsFacade fileDetailsFacade, FileDetailsMVP.FileDetailsView view, SchedulersHolder holder) {
+    public FileDetailsPresenter(FileDetailsMVP.FileDetailsFacade fileDetailsFacade, FileDetailsMVP.FileDetailsView view, SchedulersHolder holder) {
         this.fileDetailsFacade = fileDetailsFacade;
         this.view = view;
         this.schedulersHolder = holder;

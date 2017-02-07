@@ -137,16 +137,21 @@
             android:label="@string/title_activity_google_drive"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="mobi.kujon.google_drive.ui.activities.files.FilesActivity"
+            android:name=".google_drive.ui.activities.files.FilesActivity"
             android:label="@string/title_activity_files"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="mobi.kujon.google_drive.ui.activities.choose_share_students.ChooseStudentActivity"
+            android:name=".google_drive.ui.activities.choose_share_students.ChooseStudentActivity"
             android:label="@string/title_activity_files"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
 
-        <service android:name=".google_drive.services.upload.DowloadUploadFileServices"/>
+        <service android:name=".google_drive.services.upload.DowloadUploadFileServices" />
+
+        <activity
+            android:name=".google_drive.ui.activities.file_details.FileDetailsActivity"
+            android:label="@string/title_activity_file_details"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

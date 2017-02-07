@@ -81,4 +81,5 @@
     <string name="add_to_google_drive">Add to Google Drive</string>
     <string name="delete">Delete</string>
     <string name="share">SHARE</string>
+    <string name="file_name">File Name</string>
 </resources>

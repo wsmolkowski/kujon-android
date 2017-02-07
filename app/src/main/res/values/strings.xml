@@ -70,7 +70,7 @@
     <string name="programme_name">Opis</string>
     <string name="programme">Kierunek</string>
     <string name="ects_sum">Suma Punktów ECTS</string>
-    <string name="change_api_prod" >Tryb produkcyjny włączony</string>
+    <string name="change_api_prod">Tryb produkcyjny włączony</string>
     <string name="change_api_demo">Tryb demo włączony</string>
     <string name="not_empty">Nie puste</string>
     <string name="action_settings">Settings</string>
@@ -99,4 +99,7 @@
     <string name="created_time">Stworzony</string>
     <string name="by">przez</string>
     <string name="everyone">Wszyscy</string>
+    <string name="title_activity_file_details">FileDetailsActivity</string>
+    <string name="file_name">Nazwa pliku</string>
+    <string name="file_type">Typ</string>
 </resources>
