@@ -14,14 +14,16 @@ public class FileDetailsInjector extends AbstractInjector<FileDetailsActivity> {
 
     @Override
     public void inject(FileDetailsActivity injectTo) {
-         DaggerRuntimeFileDetailsActivityComponent.builder()
-                .filesActivityModule(new FilesActivityModule(injectTo.getCoursId(),injectTo.getTermId()))
+        fileDetailsActivityComponent = DaggerRuntimeFileDetailsActivityComponent.builder()
+                .filesActivityModule(new FilesActivityModule(injectTo.getCoursId(), injectTo.getTermId()))
                 .chooseStudentModule(new ChooseStudentModule(injectTo))
-                .fileDetailsModule(new FileDetailsModule(injectTo, injectTo, injectTo, injectTo.getCoursId(),injectTo.getTermId()))
+                .fileDetailsModule(new FileDetailsModule(injectTo, injectTo.getCoursId(), injectTo.getTermId()))
                 .filesComponent(getFilesComponent(injectTo))
-                .build().inject(injectTo);
+                .build();
 
     }
 
-
+    public FileDetailsActivityComponent getFileDetailsActivityComponent() {
+        return fileDetailsActivityComponent;
+    }
 }
