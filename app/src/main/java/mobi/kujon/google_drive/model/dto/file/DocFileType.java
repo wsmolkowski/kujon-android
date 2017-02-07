@@ -18,4 +18,9 @@ public class DocFileType extends FileDTO {
     public @DrawableRes int getImageIcon() {
         return R.drawable.doc_icon;
     }
+
+    @Override
+    public int getContentType() {
+        return R.string.text_file;
+    }
 }

@@ -10,12 +10,10 @@ import mobi.kujon.google_drive.model.json.SharedFile;
 import mobi.kujon.google_drive.network.unwrapped_api.ShareFileApi;
 import rx.Observable;
 
-@ActivityScope
 public class ShareFileModel implements FileDetailsMVP.ShareFileModel {
 
     private ShareFileApi shareFileApi;
 
-    @Inject
     public ShareFileModel(ShareFileApi shareFileApi) {
         this.shareFileApi = shareFileApi;
     }

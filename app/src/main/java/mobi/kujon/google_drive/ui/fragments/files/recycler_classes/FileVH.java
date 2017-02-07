@@ -7,6 +7,7 @@ import android.support.annotation.StringRes;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import butterknife.Bind;
@@ -19,6 +20,9 @@ import mobi.kujon.google_drive.model.dto.file.FileDTO;
  */
 
 public class FileVH extends RecyclerView.ViewHolder implements ShowShareIcon {
+
+    @Bind(R.id.file_layout)
+    RelativeLayout fileLayout;
 
     @Bind(R.id.vh_file_icon)
     ImageView imageView;
@@ -37,13 +41,14 @@ public class FileVH extends RecyclerView.ViewHolder implements ShowShareIcon {
         ButterKnife.bind(this,itemView);
     }
 
-    public void bind(FileDTO fileDTO){
+    public void bind(FileDTO fileDTO, FilesRecyclerAdapter.OnFileClick onFileClick){
         Drawable drawable = getDrawable(fileDTO.getImageIcon());
         imageView.setImageDrawable(drawable);
         fileHeader.setText(fileDTO.getFileName());
         fileDate.setText(fileDTO.getDateCreated(itemView.getResources()));
         fileSize.setText(new StringBuilder().append(fileDTO.getFileSize()).append(" MB").toString());
         fileDTO.setShareFile(this);
+        fileLayout.setOnClickListener(v -> onFileClick.onFileClick(fileDTO));
     }
 
     @Override

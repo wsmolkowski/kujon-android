@@ -90,4 +90,13 @@
     <string name="file_type">Type</string>
     <string name="files_title">Shared files</string>
     <string name="my_files">My files</string>
+    <string name="created_date">Date Created</string>
+    <string name="who_has_access">Who has access</string>
+    <string name="audio_file">Plik audio</string>
+    <string name="text_file">Plik tekstowy</string>
+    <string name="unknown_file">Nienznany typ pliku</string>
+    <string name="pdf_file">Plik PDF</string>
+    <string name="presentation_file">Plik prezentacji</string>
+    <string name="video_file">Plik wideo</string>
+    <string name="xls_file">Plik arkusza kalkulacyjnego</string>
 </resources>

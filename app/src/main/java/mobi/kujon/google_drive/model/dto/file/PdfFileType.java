@@ -18,4 +18,9 @@ public class PdfFileType extends FileDTO {
     public @DrawableRes int getImageIcon() {
         return R.drawable.pdf_icon;
     }
+
+    @Override
+    public int getContentType() {
+        return R.string.pdf_file;
+    }
 }

@@ -1,6 +1,7 @@
 package mobi.kujon.google_drive.ui.fragments.files;
 
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -22,11 +23,12 @@ import mobi.kujon.google_drive.dagger.injectors.Injector;
 import mobi.kujon.google_drive.model.dto.file.FileDTO;
 import mobi.kujon.google_drive.mvp.files_list.FileListMVP;
 import mobi.kujon.google_drive.mvp.files_list.FilesOwnerType;
+import mobi.kujon.google_drive.ui.dialogs.FileActionDialog;
 import mobi.kujon.google_drive.ui.fragments.BaseFileFragment;
 import mobi.kujon.google_drive.ui.fragments.files.recycler_classes.FilesRecyclerAdapter;
 
 
-public class FilesListFragment extends BaseFileFragment<FilesListFragment> implements FileListMVP.FilesView {
+public class FilesListFragment extends BaseFileFragment<FilesListFragment> implements FileListMVP.FilesView, FilesRecyclerAdapter.OnFileClick {
 
     private static final String OWNER_ID = "param1";
 
@@ -72,7 +74,7 @@ public class FilesListFragment extends BaseFileFragment<FilesListFragment> imple
     protected View createView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_files_list, container, false);
         ButterKnife.bind(this, rootView);
-        adapter = new FilesRecyclerAdapter(new ArrayList<>());
+        adapter = new FilesRecyclerAdapter(new ArrayList<>(), this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         presenter.loadListOfFiles(false,fileOwnerType);
@@ -106,4 +108,9 @@ public class FilesListFragment extends BaseFileFragment<FilesListFragment> imple
         presenter.loadListOfFiles(true,fileOwnerType);
     }
 
+    @Override
+    public void onFileClick(FileDTO fileDTO) {
+        FileActionDialog dialog = FileActionDialog.newInstance(fileDTO.isMy());
+        dialog.show(getActivity().getFragmentManager(), FileActionDialog.NAME);
+    }
 }

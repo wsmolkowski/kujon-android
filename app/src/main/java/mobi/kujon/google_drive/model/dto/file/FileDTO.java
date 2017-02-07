@@ -30,6 +30,7 @@ public abstract class FileDTO {
     private String dateCreated;
     private List<String> shares;
     private String mimeType;
+    private boolean isMy;
 
 
     public FileDTO(KujonFile kujonFile) {
@@ -40,6 +41,7 @@ public abstract class FileDTO {
         this.fileName = kujonFile.fileName;
         this.fileSize = kujonFile.fileSize;
         this.userName = new StringBuilder(kujonFile.fileName).append(" ").append(kujonFile.lastName).toString();
+        this.isMy = kujonFile.myFile;
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy", getDefault());
         dateCreated =simpleDateFormat.format(kujonFile.createdTime);
         this.mimeType= kujonFile.contentType;
@@ -82,6 +84,14 @@ public abstract class FileDTO {
         }
     }
 
+    public String getDateCreated() {
+        return dateCreated;
+    }
+
+    public boolean isMy() {
+        return isMy;
+    }
+
     public void setShareFile(ShowShareIcon showShareIcon){
         switch (shareType){
             case ShareFileTargetType.ALL:
@@ -105,6 +115,8 @@ public abstract class FileDTO {
     public  @StringRes int getDateType(){
       return R.string.created_time;
     }
+
+    public abstract @StringRes int getContentType();
 
 
     @Override

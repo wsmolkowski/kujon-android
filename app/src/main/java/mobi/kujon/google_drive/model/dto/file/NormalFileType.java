@@ -18,4 +18,9 @@ public class NormalFileType extends FileDTO {
     public @DrawableRes int getImageIcon() {
         return R.drawable.unknown_icon;
     }
+
+    @Override
+    public int getContentType() {
+        return R.string.unknown_file;
+    }
 }
