@@ -25,11 +25,25 @@ import mobi.kujon.google_drive.utils.TempFileCreator;
 
 public class UploadToDrivePresenter extends AbstractClearSubsriptions implements UploadToDrive.Presenter {
 
+
+    private UploadToDrive.View view;
     private FileDownloadApi fileDownloadApi;
     private SchedulersHolder schedulersHolder;
     private TempFileCreator tempFileCreator;
     private FileStreamUpdateMVP.Model model;
     private Drive drive;
+
+    public UploadToDrivePresenter(UploadToDrive.View view, FileDownloadApi fileDownloadApi, SchedulersHolder schedulersHolder, TempFileCreator tempFileCreator, FileStreamUpdateMVP.Model model) {
+        this.view = view;
+        this.fileDownloadApi = fileDownloadApi;
+        this.schedulersHolder = schedulersHolder;
+        this.tempFileCreator = tempFileCreator;
+        this.model = model;
+    }
+
+    public void setDrive(Drive drive) {
+        this.drive = drive;
+    }
 
     @Override
     public void uploadToDrive(FileUploadInfoDto fileUploadInfoDto, String driveFolderId) {
@@ -61,7 +75,9 @@ public class UploadToDrivePresenter extends AbstractClearSubsriptions implements
                     }
                 })
                 .subscribe(it -> {
+                    view.fileUploaded();
                 }, error -> {
+                    view.handleException(error);
                 });
 
 

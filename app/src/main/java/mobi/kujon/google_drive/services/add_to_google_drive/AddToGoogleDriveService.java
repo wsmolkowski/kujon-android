@@ -4,7 +4,6 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
-import android.os.Parcelable;
 import android.support.annotation.Nullable;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -16,10 +15,18 @@ import com.google.api.services.drive.DriveScopes;
 
 import java.util.Arrays;
 
+import javax.inject.Inject;
+
 import bolts.Task;
 import mobi.kujon.KujonApplication;
+import mobi.kujon.google_drive.dagger.injectors.Injector;
 import mobi.kujon.google_drive.model.dto.file_upload_info.FileUploadInfoDto;
+import mobi.kujon.google_drive.mvp.file_stream_update.FileStreamUpdateMVP;
+import mobi.kujon.google_drive.mvp.upload_to_drive.UploadToDrive;
 import mobi.kujon.google_drive.services.upload.DowloadUploadFileServices;
+import mobi.kujon.google_drive.utils.SchedulersHolder;
+import rx.Observable;
+import rx.Subscription;
 
 import static mobi.kujon.google_drive.services.upload.DowloadUploadFileServices.DRIVE_ID_KEY;
 import static mobi.kujon.google_drive.services.upload.DowloadUploadFileServices.FILE_UPLOAD_DTO;
@@ -28,7 +35,7 @@ import static mobi.kujon.google_drive.services.upload.DowloadUploadFileServices.
  *
  */
 
-public class AddToGoogleDriveService extends Service {
+public class AddToGoogleDriveService extends Service implements UploadToDrive.View, FileStreamUpdateMVP.CancelView {
     public static final String FILE_TO_DOWLOAD_ID = "file_to_dowload_id";
     public static final String DRIVE_FOLDER_ID = "drive_folder_id";
     public static final String FILE_TO_DOWLOAD_NAME="name_of_file";
@@ -37,9 +44,9 @@ public class AddToGoogleDriveService extends Service {
 
     private GoogleAccountCredential mCredential;
     private static final String[] SCOPES = {DriveScopes.DRIVE_METADATA};
-    private String fileId;
-    private Parcelable driveId;
+    private DriveId driveId;
     private FileUploadInfoDto fileUploadInfoDto;
+    private Subscription subscription;
 
 
     public static void startService(Context context, FileUploadInfoDto file, DriveId driveId) {
@@ -59,12 +66,19 @@ public class AddToGoogleDriveService extends Service {
     }
 
 
+    @Inject
+    FileStreamUpdateMVP.CancelPresenter cancelPresenter;
+    @Inject
+    UploadToDrive.Presenter presenter;
+
+    @Inject
+    SchedulersHolder schedulersHolder;
 
     @Override
     public void onCreate() {
         super.onCreate();
-//        Injector<DowloadUploadFileServices> injector = ((KujonApplication) this.getApplication()).getInjectorProvider().provideInjectorForService();
-//        injector.inject(this);
+        Injector<AddToGoogleDriveService> injector = ((KujonApplication) this.getApplication()).getInjectorProvider().provideAddToGooogleInjector();
+        injector.inject(this);
 
         mCredential = GoogleAccountCredential.usingOAuth2(
                 getApplicationContext(), Arrays.asList(SCOPES))
@@ -88,10 +102,55 @@ public class AddToGoogleDriveService extends Service {
         if (intent != null && intent.getExtras() == null && intent.getStringExtra(FILE_UPLOAD_DTO) == null) {
             stopSelf();
         }
-        fileId = intent.getStringExtra(FILE_TO_DOWLOAD_ID);
+
         fileUploadInfoDto = new FileUploadInfoDto(intent.getStringExtra(FILE_TO_DOWLOAD_MIME_TYPE),intent.getStringExtra(FILE_TO_DOWLOAD_NAME),intent.getStringExtra(FILE_TO_DOWLOAD_ID));
         driveId = intent.getParcelableExtra(DRIVE_ID_KEY);
 
+
+        createCall();
+
+
         return START_REDELIVER_INTENT;
+    }
+
+    private void createCall() {
+        cancelPresenter.subscribeToStream(this);
+        subscription = Observable.just(driveId)
+                .subscribeOn(schedulersHolder.subscribe())
+                .map(it->it.asDriveFile().getDriveId().getResourceId())
+                .observeOn(schedulersHolder.observ())
+                .subscribe(it->{
+                    presenter.uploadToDrive(fileUploadInfoDto,it);
+                },error->{
+                    printErrorAndStop(error);
+                });
+    }
+
+    private void printErrorAndStop(Throwable error) {
+        error.getCause().printStackTrace();
+        this.stopSelf();
+    }
+
+    @Override
+    public void fileUploaded() {
+        this.stopSelf();
+
+    }
+
+    @Override
+    public void handleException(Throwable throwable) {
+        printErrorAndStop(throwable);
+    }
+
+
+    @Override
+    public void onCancel(String fileName) {
+        if(fileName.equals(fileUploadInfoDto.getName())){
+            presenter.clearSubscriptions();
+            if(subscription !=null){
+                subscription.unsubscribe();
+            }
+            this.stopSelf();
+        }
     }
 }
