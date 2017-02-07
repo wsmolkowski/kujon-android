@@ -3,10 +3,7 @@ package mobi.kujon.google_drive.ui.activities.file_details;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,7 +11,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -31,18 +27,16 @@ import mobi.kujon.google_drive.dagger.injectors.FileDetailsInjector;
 import mobi.kujon.google_drive.model.dto.StudentShareDto;
 import mobi.kujon.google_drive.model.dto.file.FileDTO;
 import mobi.kujon.google_drive.model.dto.file_details.DisableableStudentShareDTO;
-import mobi.kujon.google_drive.model.dto.file_share.AskForStudentDto;
 import mobi.kujon.google_drive.model.json.ShareFileTargetType;
 import mobi.kujon.google_drive.mvp.choose_students.ChooseStudentsMVP;
 import mobi.kujon.google_drive.mvp.file_details.FileDetailsMVP;
 import mobi.kujon.google_drive.mvp.file_details.FileDetailsView;
-import mobi.kujon.google_drive.network.KujonException;
+import mobi.kujon.google_drive.ui.activities.BaseFileActivity;
 import mobi.kujon.google_drive.ui.activities.file_details.recycler_classes.FileDetailsAdapter;
 import mobi.kujon.google_drive.ui.activities.files.FilesActivity;
 import mobi.kujon.google_drive.ui.dialogs.share_target.ShareTargetDialog;
-import mobi.kujon.utils.ErrorHandlerUtil;
 
-public class FileDetailsActivity extends AppCompatActivity implements FileDetailsView, ChooseStudentsMVP.View, FileDetailsAdapter.OnEveryoneSwitchClicked{
+public class FileDetailsActivity extends BaseFileActivity implements FileDetailsView, ChooseStudentsMVP.View, FileDetailsAdapter.OnEveryoneSwitchClicked{
 
     private String coursId;
     private String termId;
@@ -161,16 +155,10 @@ public class FileDetailsActivity extends AppCompatActivity implements FileDetail
     }
 
     @Override
-    public void handleException(Throwable throwable) {
-        swipeRefreshLayout.setRefreshing(false);
-        try {
-            throw  throwable;
-        }catch (KujonException e){
-            ErrorHandlerUtil.handleKujonError(e);
-        }catch (Throwable t){
-            ErrorHandlerUtil.handleError(t);
-        }
+    protected void setLoading(boolean t) {
+        this.swipeRefreshLayout.setRefreshing(t);
     }
+
 
     @Override
     public void showStudentList(List<StudentShareDto> studentShareDtos) {
