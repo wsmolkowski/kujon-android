@@ -21,10 +21,10 @@ import mobi.kujon.google_drive.model.dto.file.FileDTO;
 import mobi.kujon.google_drive.model.dto.file_details.DisableableStudentShareDTO;
 import mobi.kujon.google_drive.mvp.choose_students.ChooseStudentsMVP;
 import mobi.kujon.google_drive.mvp.file_details.FileDetailsMVP;
+import mobi.kujon.google_drive.mvp.file_details.FileDetailsView;
 import mobi.kujon.google_drive.ui.activities.files.FilesActivity;
 
-public class FileDetailsActivity extends AppCompatActivity implements FileDetailsMVP.FileDetailsView, FileDetailsMVP.ShareView, FileDetailsMVP.StudentsView,
-        ChooseStudentsMVP.View{
+public class FileDetailsActivity extends AppCompatActivity implements FileDetailsView, ChooseStudentsMVP.View{
 
     private String coursId;
     private String termId;
@@ -40,7 +40,7 @@ public class FileDetailsActivity extends AppCompatActivity implements FileDetail
         Intent intent = new Intent(context, FilesActivity.class);
         intent.putExtra(COURSE_ID_KEY, courseId);
         intent.putExtra(TERM_ID_KEY, termId);
-        intent.putExtra(FILE_ID_KEY, fileId)
+        intent.putExtra(FILE_ID_KEY, fileId);
         context.startActivity(intent);
     }
 
