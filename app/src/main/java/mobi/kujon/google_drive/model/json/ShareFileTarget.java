@@ -19,19 +19,19 @@ public class ShareFileTarget {
         List<String> studentIds = shareDto.getStudentsListToShare();
         this.shareWithTarget = new ArrayList<>(studentIds.size());
         for(String studentId : studentIds) {
-            shareWithTarget.add(Integer.valueOf(studentId));
+            shareWithTarget.add(studentId);
         }
     }
 
     @SerializedName("file_id") @Expose
     public String fileId;
 
-    @SerializedName("share_with") @Expose
+    @SerializedName("file_shared_with") @Expose
     @ShareFileTargetType
     public String shareWithTargetType;
 
-    @SerializedName("list_share") @Expose
-    public List<Integer> shareWithTarget;
+    @SerializedName("file_shared_with_ids") @Expose
+    public List<String> shareWithTarget;
 
     @Override
     public boolean equals(Object o) {

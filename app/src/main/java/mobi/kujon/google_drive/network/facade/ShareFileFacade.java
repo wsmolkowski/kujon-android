@@ -1,6 +1,8 @@
 package mobi.kujon.google_drive.network.facade;
 
 
+import java.util.Arrays;
+
 import mobi.kujon.google_drive.model.json.ShareFileTarget;
 import mobi.kujon.google_drive.model.json.SharedFile;
 import mobi.kujon.google_drive.network.BackendWrapper;
@@ -20,6 +22,6 @@ public class ShareFileFacade implements ShareFileApi {
 
     @Override
     public Observable<SharedFile> shareFile(ShareFileTarget shareFileTarget) {
-        return backendWrapper.doSomething(shareFileKujon.shareFile(shareFileTarget));
+        return backendWrapper.doSomething(shareFileKujon.shareFile(Arrays.asList(shareFileTarget)));
     }
 }

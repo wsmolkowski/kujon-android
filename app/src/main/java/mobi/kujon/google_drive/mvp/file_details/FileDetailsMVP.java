@@ -39,5 +39,6 @@ public interface FileDetailsMVP {
 
     interface ShareView extends HandleException {
         void fileShared(String shareType, List<String> fileSharedWith);
+        void shareFailed();
     }
 }

@@ -85,6 +85,7 @@ public class FileDetailsAdapter extends RecyclerView.Adapter<BaseFileDetailsVH>{
 
     public void setShareType(@ShareFileTargetType String shareType, List<String> fileSharedWith) {
         this.fileDetailsDto.getFileDTO().setShareType(shareType);
+        shouldBeEnabled = !fileDetailsDto.getFileDTO().getShareType().equals(ShareFileTargetType.ALL);
         this.fileDetailsDto.setUpChoosen(fileSharedWith);
         this.notifyDataSetChanged();
     }

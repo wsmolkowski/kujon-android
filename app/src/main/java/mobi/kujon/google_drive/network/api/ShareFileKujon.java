@@ -1,6 +1,8 @@
 package mobi.kujon.google_drive.network.api;
 
 
+import java.util.List;
+
 import mobi.kujon.google_drive.model.json.ShareFileTarget;
 import mobi.kujon.google_drive.model.json.SharedFile;
 import mobi.kujon.network.json.KujonResponse;
@@ -10,5 +12,5 @@ import rx.Observable;
 
 public interface ShareFileKujon {
     @POST("filesshare")
-    Observable<KujonResponse<SharedFile>> shareFile(@Body ShareFileTarget shareFileTarget);
+    Observable<KujonResponse<SharedFile>> shareFile(@Body List<ShareFileTarget> shareFileTargets);
 }

@@ -27,8 +27,11 @@ public class ShareFilePresenter extends AbstractClearSubsriptions implements Fil
                 .subscribeOn(schedulersHolder.subscribe())
                 .observeOn(schedulersHolder.observ())
                 .subscribe(sharedFile ->
-                                view.fileShared(sharedFile.shareType,sharedFile.fileSharedWith),
-                        throwable ->
-                                view.handleException(throwable)));
+                                view.fileShared(sharedFile.shareType, sharedFile.fileSharedWith),
+                        throwable -> {
+                            view.shareFailed();
+                            view.handleException(throwable);
+                        }
+                ));
     }
 }

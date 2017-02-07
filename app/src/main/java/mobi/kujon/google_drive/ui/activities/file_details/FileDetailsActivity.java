@@ -178,4 +178,9 @@ public class FileDetailsActivity extends BaseFileActivity implements FileDetails
         shareFilePresenter.clearSubscriptions();
         fileDetailsPresenter.clearSubscriptions();
     }
+
+    @Override
+    public void shareFailed() {
+        adapter.notifyDataSetChanged();
+    }
 }
