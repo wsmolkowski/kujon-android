@@ -55,6 +55,18 @@ public class FilesListPresenterTest extends UnitTest{
     }
 
     @Test
+    public void testNoFileException() throws Exception {
+
+
+        Mockito.when(model.getFilesDto(Mockito.anyBoolean(),Mockito.anyInt())).thenReturn(
+                Observable.error(new NoFileException())
+        );
+
+        presenter.loadListOfFiles(true,FilesOwnerType.ALL);
+        Mockito.verify(filesView).noFilesAdded();
+    }
+
+    @Test
     public void testClearCalls() throws Exception {
         PublishSubject<List<FileDTO>> subject = PublishSubject.create();
         Mockito.when(model.getFilesDto(Mockito.anyBoolean(),Mockito.anyInt())).thenReturn(

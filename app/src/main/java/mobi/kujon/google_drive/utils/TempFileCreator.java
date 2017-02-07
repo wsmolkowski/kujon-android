@@ -1,5 +1,7 @@
 package mobi.kujon.google_drive.utils;
 
+import android.app.Application;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -7,7 +9,6 @@ import java.io.OutputStream;
 
 import javax.inject.Inject;
 
-import mobi.kujon.KujonApplication;
 import mobi.kujon.google_drive.dagger.scopes.GoogleDriveScope;
 import okhttp3.ResponseBody;
 
@@ -17,10 +18,10 @@ import okhttp3.ResponseBody;
 @GoogleDriveScope
 public class TempFileCreator {
 
-    private KujonApplication kujonApplication;
+    private Application kujonApplication;
 
     @Inject
-    public TempFileCreator(KujonApplication kujonApplication) {
+    public TempFileCreator(Application kujonApplication) {
         this.kujonApplication = kujonApplication;
     }
 

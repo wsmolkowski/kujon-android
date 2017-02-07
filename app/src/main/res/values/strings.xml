@@ -83,8 +83,8 @@
     <string name="courses_in">Zajęcia w</string>
 
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_files">FilesActivity</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="title_activity_files" translatable="false">FilesActivity</string>
     <string name="all_files">Wszystkie</string>
     <string name="my_files">Moje</string>
     <string name="share_with_everyone">Udostępnij wszystkim</string>
@@ -110,4 +110,6 @@
     <string name="presentation_file">Plik prezentacji</string>
     <string name="video_file">Plik wideo</string>
     <string name="xls_file">Plik arkusza kalkulacyjnego</string>
+    <string name="litlle_empty">Trochę tu pusto</string>
+    <string name="add_from_google">Aby dodać plik z Google Drive \n wybierz przycisk +</string>
 </resources>

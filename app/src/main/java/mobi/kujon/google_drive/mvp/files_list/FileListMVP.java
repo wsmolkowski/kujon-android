@@ -25,5 +25,6 @@ public interface FileListMVP {
 
     interface FilesView extends HandleException {
         void listOfFilesLoaded(List<FileDTO> fileDTOs);
+        void noFilesAdded();
     }
 }

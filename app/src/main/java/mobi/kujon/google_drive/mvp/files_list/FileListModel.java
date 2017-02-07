@@ -8,13 +8,14 @@ import mobi.kujon.google_drive.network.unwrapped_api.GetFiles;
 import mobi.kujon.google_drive.utils.FilesFilter;
 import mobi.kujon.utils.user_data.UserDataFacade;
 import rx.Observable;
+import rx.exceptions.Exceptions;
 
 /**
  *
  */
 
 public class FileListModel implements FileListMVP.Model {
-    private String courseId,termId;
+    private String courseId, termId;
     private GetFiles getFiles;
     private FilesFilter myFilesFilter;
     private UserDataFacade userDataFacade;
@@ -28,11 +29,17 @@ public class FileListModel implements FileListMVP.Model {
     }
 
 
-
     @Override
     public Observable<List<FileDTO>> getFilesDto(boolean reload, @FilesOwnerType int fileType) {
-        return getFiles.getFiles(reload,courseId,termId)
-                .map(it-> FileDtoFactory.createListOfDTOFiles(myFilesFilter.filterFiles(it,fileType))
-        );
+        return getFiles.getFiles(reload, courseId, termId)
+                .map(it -> {
+                    if (it.size() != 0) {
+                        return FileDtoFactory.createListOfDTOFiles(myFilesFilter.filterFiles(it, fileType));
+                    } else {
+                        throw Exceptions.propagate(new NoFileException());
+                    }
+                });
     }
+
+
 }

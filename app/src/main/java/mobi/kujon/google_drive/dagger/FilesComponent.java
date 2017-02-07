@@ -13,6 +13,7 @@ import mobi.kujon.google_drive.network.unwrapped_api.ShareFileApi;
 import mobi.kujon.google_drive.network.unwrapped_api.CourseDetailsApi;
 import mobi.kujon.google_drive.services.ServiceOpener;
 import mobi.kujon.google_drive.utils.SchedulersHolder;
+import mobi.kujon.google_drive.utils.TempFileCreator;
 import mobi.kujon.utils.user_data.UserDataFacade;
 
 /**
@@ -33,4 +34,5 @@ public interface FilesComponent {
     Gson provideGson();
     ServiceOpener provideServiceOpener();
     UserDataFacade provideUserDataFacade();
+    TempFileCreator provideTmpFileCreator();
 }

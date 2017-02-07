@@ -24,6 +24,12 @@ public class FilesListPresenter extends AbstractClearSubsriptions implements Fil
         addToSubsriptionList(model.getFilesDto(reload, fileType)
                 .subscribeOn(schedulersHolder.subscribe())
                 .observeOn(schedulersHolder.observ())
-                .subscribe(it -> filesView.listOfFilesLoaded(it), error -> filesView.handleException(error)));
+                .subscribe(it -> filesView.listOfFilesLoaded(it), error -> {
+                    if (error instanceof NoFileException || error.getCause() instanceof NoFileException) {
+                        filesView.noFilesAdded();
+                    } else {
+                        filesView.handleException(error);
+                    }
+                }));
     }
 }

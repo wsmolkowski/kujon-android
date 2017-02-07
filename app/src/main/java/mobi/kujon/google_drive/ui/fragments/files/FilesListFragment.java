@@ -1,7 +1,6 @@
 package mobi.kujon.google_drive.ui.fragments.files;
 
 
-import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -33,13 +32,14 @@ public class FilesListFragment extends BaseFileFragment<FilesListFragment> imple
     private static final String OWNER_ID = "param1";
 
 
-    private @FilesOwnerType int fileOwnerType;
+    private
+    @FilesOwnerType
+    int fileOwnerType;
     private FilesRecyclerAdapter adapter;
 
     public FilesListFragment() {
 
     }
-
 
 
     @Bind(R.id.file_recycler_view)
@@ -48,11 +48,14 @@ public class FilesListFragment extends BaseFileFragment<FilesListFragment> imple
     @Bind(R.id.refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
 
+    @Bind(R.id.empty_folder_id)
+    View emptyView;
+
     @Inject
     FileListMVP.LoadPresenter presenter;
 
 
-    public static FilesListFragment newInstance(@FilesOwnerType  int param1) {
+    public static FilesListFragment newInstance(@FilesOwnerType int param1) {
         FilesListFragment fragment = new FilesListFragment();
         Bundle args = new Bundle();
         args.putInt(OWNER_ID, param1);
@@ -65,7 +68,7 @@ public class FilesListFragment extends BaseFileFragment<FilesListFragment> imple
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             //noinspection ResourceType
-            fileOwnerType =  getArguments().getInt(OWNER_ID);
+            fileOwnerType = getArguments().getInt(OWNER_ID);
         }
     }
 
@@ -77,10 +80,10 @@ public class FilesListFragment extends BaseFileFragment<FilesListFragment> imple
         adapter = new FilesRecyclerAdapter(new ArrayList<>(), this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        presenter.loadListOfFiles(false,fileOwnerType);
+        presenter.loadListOfFiles(false, fileOwnerType);
         this.setProgress(true);
         swipeRefreshLayout.setOnRefreshListener(() -> {
-            presenter.loadListOfFiles(true,fileOwnerType);
+            presenter.loadListOfFiles(true, fileOwnerType);
         });
         return rootView;
     }
@@ -98,14 +101,23 @@ public class FilesListFragment extends BaseFileFragment<FilesListFragment> imple
 
     @Override
     public void listOfFilesLoaded(List<FileDTO> fileDTOs) {
+        emptyView.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.VISIBLE);
         adapter.setFileDTOs(fileDTOs);
         this.setProgress(false);
     }
 
+    @Override
+    public void noFilesAdded() {
+        this.setProgress(false);
+        emptyView.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.GONE);
+    }
 
-    public void reload(){
+
+    public void reload() {
         this.setProgress(true);
-        presenter.loadListOfFiles(true,fileOwnerType);
+        presenter.loadListOfFiles(true, fileOwnerType);
     }
 
     @Override

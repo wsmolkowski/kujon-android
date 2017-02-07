@@ -19,6 +19,7 @@ import mobi.kujon.google_drive.services.ServiceOpener;
 import mobi.kujon.google_drive.services.ServiceOpenerImpl;
 import mobi.kujon.google_drive.utils.MultipartUtils;
 import mobi.kujon.google_drive.utils.SchedulersHolder;
+import mobi.kujon.google_drive.utils.TempFileCreator;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -72,5 +73,10 @@ public class FilesModule {
     }
 
 
+    @Provides
+    @GoogleDriveScope
+    TempFileCreator provideTempFileCreator(Application application){
+        return new TempFileCreator(application);
+    }
 
 }

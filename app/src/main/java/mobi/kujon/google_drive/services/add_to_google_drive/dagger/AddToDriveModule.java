@@ -2,7 +2,6 @@ package mobi.kujon.google_drive.services.add_to_google_drive.dagger;
 
 import dagger.Module;
 import dagger.Provides;
-import mobi.kujon.KujonApplication;
 import mobi.kujon.google_drive.dagger.scopes.ActivityScope;
 import mobi.kujon.google_drive.mvp.file_stream_update.FileCancelPresenter;
 import mobi.kujon.google_drive.mvp.file_stream_update.FileStreamUpdateMVP;
@@ -27,8 +26,8 @@ public class AddToDriveModule  {
 
     @ActivityScope
     @Provides
-    UploadToDrive.Presenter providePresenter(FileDownloadApi fileDownloadApi, SchedulersHolder schedulersHolder, KujonApplication kujonApplication, FileStreamUpdateMVP.Model cancelModel){
-        return new UploadToDrivePresenter(view,fileDownloadApi,schedulersHolder,new TempFileCreator(kujonApplication),cancelModel);
+    UploadToDrive.Presenter providePresenter(FileDownloadApi fileDownloadApi, SchedulersHolder schedulersHolder, TempFileCreator tmpFC, FileStreamUpdateMVP.Model cancelModel){
+        return new UploadToDrivePresenter(view,fileDownloadApi,schedulersHolder,tmpFC,cancelModel);
     }
 
     @ActivityScope

@@ -99,4 +99,10 @@
     <string name="presentation_file">Plik prezentacji</string>
     <string name="video_file">Plik wideo</string>
     <string name="xls_file">Plik arkusza kalkulacyjnego</string>
+    <string name="add_from_google">To add files from Google Drive \\n please click button with +</string>
+    <string name="file_name">Filename</string>
+    <string name="file_size">Filesize</string>
+    <string name="image_file">Image</string>
+    <string name="litlle_empty">A little empty here</string>
+    <string name="title_activity_files"></string>
 </resources>
