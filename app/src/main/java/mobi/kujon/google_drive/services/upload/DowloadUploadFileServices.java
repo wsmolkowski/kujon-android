@@ -64,11 +64,6 @@ public class DowloadUploadFileServices extends Service implements UploadFileMVP.
 
 
     @Inject
-    GoogleDriveDowloadMVP.ModelOtherFiles googleDowloadModel;
-    @Inject
-    GoogleDriveDowloadMVP.ModelGoogleFiles modelGoogleFiles;
-
-    @Inject
     GoogleDowloadProvider googleDowloadProvider;
 
     @Inject

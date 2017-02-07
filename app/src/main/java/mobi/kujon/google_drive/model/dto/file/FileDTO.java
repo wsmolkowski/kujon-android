@@ -29,6 +29,7 @@ public abstract class FileDTO {
     private String fileId;
     private String dateCreated;
     private List<String> shares;
+    private String mimeType;
 
 
     public FileDTO(KujonFile kujonFile) {
@@ -41,6 +42,7 @@ public abstract class FileDTO {
         this.userName = new StringBuilder(kujonFile.fileName).append(" ").append(kujonFile.lastName).toString();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy", getDefault());
         dateCreated =simpleDateFormat.format(kujonFile.createdTime);
+        this.mimeType= kujonFile.contentType;
     }
 
 
@@ -92,6 +94,10 @@ public abstract class FileDTO {
                 showShareIcon.hide();
                 break;
         }
+    }
+
+    public String getMimeType() {
+        return mimeType;
     }
 
     public abstract @DrawableRes int getImageIcon();

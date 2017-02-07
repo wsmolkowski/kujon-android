@@ -12,8 +12,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -25,7 +23,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import bolts.Task;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import mobi.kujon.KujonApplication;
@@ -33,9 +30,9 @@ import mobi.kujon.R;
 import mobi.kujon.google_drive.dagger.injectors.FileActivityInjector;
 import mobi.kujon.google_drive.dagger.injectors.FilesListFragmentInjector;
 import mobi.kujon.google_drive.dagger.injectors.Injector;
-import mobi.kujon.google_drive.model.json.ShareFileTargetType;
 import mobi.kujon.google_drive.model.dto.file_stream.FileUpdateDto;
 import mobi.kujon.google_drive.model.dto.file_upload.FileUploadDto;
+import mobi.kujon.google_drive.model.json.ShareFileTargetType;
 import mobi.kujon.google_drive.mvp.file_stream_update.FileStreamUpdateMVP;
 import mobi.kujon.google_drive.mvp.files_list.FilesOwnerType;
 import mobi.kujon.google_drive.services.ServiceOpener;
@@ -117,16 +114,6 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
         presenter.subscribeToStream(this);
     }
 
-
-    private String retrieveEmail() {
-        Task<GoogleSignInResult> loginStatus = KujonApplication.getApplication().getLoginStatus();
-        if (loginStatus.isCompleted() && loginStatus.getResult() != null && loginStatus.getResult().getSignInAccount() != null) {
-            GoogleSignInAccount account = loginStatus.getResult().getSignInAccount();
-            return account.getEmail();
-        } else {
-            return null;
-        }
-    }
 
     private void startFileSearching() {
         IntentSender intentSender = Drive.DriveApi

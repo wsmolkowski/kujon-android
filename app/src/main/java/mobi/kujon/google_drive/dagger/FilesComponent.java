@@ -5,7 +5,7 @@ import com.google.gson.Gson;
 import mobi.kujon.google_drive.mvp.file_stream_update.FileStreamUpdateMVP;
 import mobi.kujon.google_drive.network.unwrapped_api.CoursesApi;
 import mobi.kujon.google_drive.network.unwrapped_api.DeleteFile;
-import mobi.kujon.google_drive.network.unwrapped_api.FileDownload;
+import mobi.kujon.google_drive.network.unwrapped_api.FileDownloadApi;
 import mobi.kujon.google_drive.network.unwrapped_api.FileUpload;
 import mobi.kujon.google_drive.network.unwrapped_api.GetFiles;
 import mobi.kujon.google_drive.network.unwrapped_api.SemesterApi;
@@ -24,7 +24,7 @@ public interface FilesComponent {
     CoursesApi provideCoursesApi() ;
     GetFiles provideGetFiles();
     ShareFileApi provideShareFile() ;
-    FileDownload provideFileDownload() ;
+    FileDownloadApi provideFileDownload() ;
     DeleteFile provideDeleteFile() ;
     FileUpload provideUploadFile() ;
     CourseDetailsApi provideCourseDetailsApi();

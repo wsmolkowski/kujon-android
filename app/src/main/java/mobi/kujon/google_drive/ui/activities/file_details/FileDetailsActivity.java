@@ -3,14 +3,11 @@ package mobi.kujon.google_drive.ui.activities.file_details;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 
 import java.util.List;
 
@@ -40,7 +37,7 @@ public class FileDetailsActivity extends AppCompatActivity implements FileDetail
         Intent intent = new Intent(context, FilesActivity.class);
         intent.putExtra(COURSE_ID_KEY, courseId);
         intent.putExtra(TERM_ID_KEY, termId);
-        intent.putExtra(FILE_ID_KEY, fileId)
+        intent.putExtra(FILE_ID_KEY, fileId);
         context.startActivity(intent);
     }
 

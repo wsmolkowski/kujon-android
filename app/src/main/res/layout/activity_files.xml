@@ -36,7 +36,9 @@
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabMode="fixed" />
+            app:tabMode="fixed"
+            android:background="@color/colorPrimary"
+            app:tabTextColor="@android:color/white"/>
 
         <android.support.v4.view.ViewPager
 
@@ -54,6 +56,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        app:srcCompat="@drawable/plik_icon_copy_3" />
 
 </android.support.design.widget.CoordinatorLayout>

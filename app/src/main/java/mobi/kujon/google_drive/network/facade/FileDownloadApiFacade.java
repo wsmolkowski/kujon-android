@@ -2,17 +2,17 @@ package mobi.kujon.google_drive.network.facade;
 
 
 import mobi.kujon.google_drive.network.BackendWrapper;
-import mobi.kujon.google_drive.network.unwrapped_api.FileDownload;
+import mobi.kujon.google_drive.network.unwrapped_api.FileDownloadApi;
 import mobi.kujon.google_drive.network.api.FileDownloadKujon;
 import okhttp3.ResponseBody;
 import rx.Observable;
 
-public class FileDownloadFacade implements FileDownload {
+public class FileDownloadApiFacade implements FileDownloadApi {
 
     private FileDownloadKujon fileDownloadKujon;
     private BackendWrapper<ResponseBody> responseBodyBackendWrapper;
 
-    public FileDownloadFacade(FileDownloadKujon fileDownloadKujon) {
+    public FileDownloadApiFacade(FileDownloadKujon fileDownloadKujon) {
         this.fileDownloadKujon = fileDownloadKujon;
         responseBodyBackendWrapper = new BackendWrapper<>();
     }
