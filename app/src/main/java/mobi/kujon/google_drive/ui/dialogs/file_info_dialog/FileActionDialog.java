@@ -65,10 +65,15 @@ public class FileActionDialog extends DialogFragment {
     }
 
     private void setUpViews(boolean isFileOwned) {
-        if (!isFileOwned) {
+        fileDetails.setOnClickListener(v -> dismiss());
+        if (isFileOwned) {
+            addToGoogleDrive.setOnClickListener(v -> dismiss());
             deleteFile.setOnClickListener(v -> dismiss());
+            deleteFile.setVisibility(View.VISIBLE);
         } else {
             deleteFile.setVisibility(View.GONE);
+            fileDetails.setPadding(fileDetails.getPaddingLeft(), fileDetails.getPaddingTop(),
+                    fileDetails.getPaddingRight(), fileDetails.getPaddingTop());
         }
 
         fileDetails.setOnClickListener(v -> {

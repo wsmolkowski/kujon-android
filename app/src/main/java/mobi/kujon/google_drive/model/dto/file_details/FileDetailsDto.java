@@ -1,5 +1,6 @@
 package mobi.kujon.google_drive.model.dto.file_details;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import mobi.kujon.google_drive.model.dto.StudentShareDto;
@@ -13,9 +14,25 @@ public class FileDetailsDto {
     private FileDTO fileDTO;
     private List<StudentShareDto> studentShareDto;
 
-    public FileDetailsDto(FileDTO fileDTO, List<StudentShareDto> studentShareDto) {
+    public FileDetailsDto(FileDTO fileDTO, List<StudentShareDto> studentShareDtoo) {
         this.fileDTO = fileDTO;
-        this.studentShareDto = studentShareDto;
+        this.studentShareDto = studentShareDtoo;
+        List<String> fileSharedWith =new ArrayList<>(fileDTO.getShares());
+        setUpChoosen(fileSharedWith);
+    }
+
+    public void setUpChoosen(List<String> fileSharedWith) {
+        for(StudentShareDto studentShareDto:this.getStudentShareDto()){
+            List<String> strings = new ArrayList<>(fileSharedWith);
+            studentShareDto.setChosen(false);
+            for(String studentId:strings){
+                if(studentShareDto.getStudentId().equals(studentId)){
+                    studentShareDto.setChosen(true);
+                    fileSharedWith.remove(studentId);
+                    break;
+                }
+            }
+        }
     }
 
 

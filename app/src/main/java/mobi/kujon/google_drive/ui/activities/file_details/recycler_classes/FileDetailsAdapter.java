@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import mobi.kujon.R;
@@ -86,17 +85,7 @@ public class FileDetailsAdapter extends RecyclerView.Adapter<BaseFileDetailsVH>{
 
     public void setShareType(@ShareFileTargetType String shareType, List<String> fileSharedWith) {
         this.fileDetailsDto.getFileDTO().setShareType(shareType);
-        for(StudentShareDto studentShareDto:this.fileDetailsDto.getStudentShareDto()){
-            List<String> strings = new ArrayList<>(fileSharedWith);
-            studentShareDto.setChosen(false);
-            for(String studentId:strings){
-                if(studentShareDto.getStudentId().equals(studentId)){
-                    studentShareDto.setChosen(true);
-                    fileSharedWith.remove(studentId);
-                    break;
-                }
-            }
-        }
+        this.fileDetailsDto.setUpChoosen(fileSharedWith);
         this.notifyDataSetChanged();
     }
 
