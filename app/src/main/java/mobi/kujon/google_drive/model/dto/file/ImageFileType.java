@@ -18,4 +18,9 @@ public class ImageFileType extends FileDTO {
     public @DrawableRes int getImageIcon() {
         return R.drawable.img_icon;
     }
+
+    @Override
+    public int getContentType() {
+        return R.string.image_file;
+    }
 }

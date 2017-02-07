@@ -17,4 +17,9 @@ public class VideoFileType extends FileDTO {
     public @DrawableRes int getImageIcon() {
         return R.drawable.vid_icon;
     }
+
+    @Override
+    public int getContentType() {
+        return R.string.video_file;
+    }
 }

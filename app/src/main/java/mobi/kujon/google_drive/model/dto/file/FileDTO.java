@@ -80,6 +80,10 @@ public abstract class FileDTO {
         }
     }
 
+    public String getDateCreated() {
+        return dateCreated;
+    }
+
     public void setShareFile(ShowShareIcon showShareIcon){
         switch (shareType){
             case ShareFileTargetType.ALL:
@@ -99,6 +103,8 @@ public abstract class FileDTO {
     public  @StringRes int getDateType(){
       return R.string.created_time;
     }
+
+    public abstract @StringRes int getContentType();
 
 
     @Override

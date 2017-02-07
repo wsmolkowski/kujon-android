@@ -102,4 +102,15 @@
     <string name="title_activity_file_details">FileDetailsActivity</string>
     <string name="file_name">Nazwa pliku</string>
     <string name="file_type">Typ</string>
+    <string name="file_size">Rozmiar</string>
+    <string name="created_date">Utworzono</string>
+    <string name="who_has_access">Kto ma dostęp</string>
+    <string name="audio_file">Plik audio</string>
+    <string name="text_file">Plik tekstowy</string>
+    <string name="image_file">Obraz</string>
+    <string name="unknown_file">Nienznany typ pliku</string>
+    <string name="pdf_file">Plik PDF</string>
+    <string name="presentation_file">Plik prezentacji</string>
+    <string name="video_file">Plik wideo</string>
+    <string name="xls_file">Plik arkusza kalkulacyjnego</string>
 </resources>

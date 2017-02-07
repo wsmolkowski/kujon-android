@@ -18,4 +18,9 @@ public class PptFileType extends FileDTO {
     public @DrawableRes  int getImageIcon() {
         return R.drawable.ppt_icon;
     }
+
+    @Override
+    public int getContentType() {
+        return R.string.presentation_file;
+    }
 }

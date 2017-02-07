@@ -174,4 +174,15 @@
         <item name="android:layout_height">1dp</item>
         <item name="android:background">@color/white</item>
     </style>
+
+    <style name="file_details_attributes">
+        <item name="android:layout_width">96dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">@dimen/small_margin</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:paddingTop">@dimen/small_margin</item>
+        <item name="android:paddingBottom">@dimen/small_margin</item>
+        <item name="android:textColor">@color/dark_60</item>
+        <item name="fontPath">fonts/Lato-Regular.ttf</item>
+    </style>
 </resources>

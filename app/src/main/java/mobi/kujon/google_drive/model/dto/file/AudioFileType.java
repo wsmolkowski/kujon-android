@@ -18,5 +18,8 @@ public class AudioFileType extends FileDTO {
         return R.drawable.snd_icon;
     }
 
-
+    @Override
+    public int getContentType() {
+        return R.string.audio_file;
+    }
 }

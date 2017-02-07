@@ -18,4 +18,9 @@ public class XlsFileType extends FileDTO {
     public @DrawableRes int getImageIcon() {
         return R.drawable.xls_icon;
     }
+
+    @Override
+    public int getContentType() {
+        return R.string.xls_file;
+    }
 }
