@@ -50,7 +50,8 @@ public class DownloadUploadServiceModule {
     }
 
     @ActivityScope
-    @Provides FileStreamUpdateMVP.CancelPresenter provideCancelPresenter(FileStreamUpdateMVP.CancelModel cancelModel,SchedulersHolder schedulersHolder){
+    @Provides
+    FileStreamUpdateMVP.CancelPresenter provideCancelPresenter(FileStreamUpdateMVP.CancelModel cancelModel,SchedulersHolder schedulersHolder){
         return new FileCancelPresenter(cancelModel,schedulersHolder);
     }
 

@@ -29,6 +29,7 @@ public interface FilesComponent {
     FileUpload provideUploadFile() ;
     CourseDetailsApi provideCourseDetailsApi();
     FileStreamUpdateMVP.Model provideModel();
+    FileStreamUpdateMVP.CancelModel provideCancelModel();
     Gson provideGson();
     ServiceOpener provideServiceOpener();
     UserDataFacade provideUserDataFacade();

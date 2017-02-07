@@ -85,6 +85,9 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
     @Inject
     ServiceOpener serviceOpener;
 
+    @Inject
+    FileStreamUpdateMVP.CancelModel cancelModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,6 +119,7 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
         uploadLayout.setUpdateFileListener(() -> {
             this.adapter.refresh(viewPager.getCurrentItem());
         });
+        this.uploadLayout.setCancelModel(cancelModel);
         apiClient.connect();
         presenter.subscribeToStream(this);
     }

@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mobi.kujon.google_drive.model.dto.file_stream.FileUpdateDto;
+import mobi.kujon.google_drive.mvp.file_stream_update.FileStreamUpdateMVP;
 import mobi.kujon.google_drive.ui.util.AbstractAnimatorListener;
 
 /**
@@ -22,6 +23,11 @@ public class UploadLayout extends LinearLayout {
 
     private List<String> filesList;
     private UpdateFileListener updateFileListener;
+    private FileStreamUpdateMVP.CancelModel cancelModel;
+
+    public void setCancelModel(FileStreamUpdateMVP.CancelModel cancelModel) {
+        this.cancelModel = cancelModel;
+    }
 
     public UploadLayout(Context context) {
         super(context);
@@ -61,6 +67,7 @@ public class UploadLayout extends LinearLayout {
             this.filesList.add(fileUpdateDto.getFileName());
             DowloadProgresView dowloadProgresView = new DowloadProgresView(getContext());
             this.addView(dowloadProgresView);
+            dowloadProgresView.setCancelModel(cancelModel);
             dowloadProgresView.setScaleY(0.0f);
             dowloadProgresView.setAlpha(0.0f);
             dowloadProgresView.updateProggress(fileUpdateDto);
@@ -88,6 +95,7 @@ public class UploadLayout extends LinearLayout {
                 .setListener(new AbstractAnimatorListener() {
                     @Override
                     public void onAnimationEnd(Animator animator) {
+                        childAt.setCancelModel(null);
                         UploadLayout.this.removeView(childAt);
                         UploadLayout.this.filesList.remove(filename);
 
