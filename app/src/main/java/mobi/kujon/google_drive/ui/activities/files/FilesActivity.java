@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.TextView;
@@ -37,6 +38,7 @@ import mobi.kujon.google_drive.model.dto.file_upload.FileUploadDto;
 import mobi.kujon.google_drive.model.dto.file_upload_info.FileUploadInfoDto;
 import mobi.kujon.google_drive.model.json.ShareFileTargetType;
 import mobi.kujon.google_drive.mvp.file_stream_update.FileStreamUpdateMVP;
+import mobi.kujon.google_drive.mvp.files_list.FileListMVP;
 import mobi.kujon.google_drive.mvp.files_list.FilesOwnerType;
 import mobi.kujon.google_drive.services.ServiceOpener;
 import mobi.kujon.google_drive.ui.activities.BaseFileActivity;
@@ -54,7 +56,7 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         FileStreamUpdateMVP.View,
-        ChooseShareStudentsListener, FileActionListener {
+        ChooseShareStudentsListener, FileActionListener, FileListMVP.DeleteView {
 
     private static final int RESOLVE_CONNECTION_REQUEST_CODE = 539;
     private static final int REQUEST_CODE_OPENER = 1;
@@ -64,7 +66,7 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
     private FileActivityInjector fileActivityInjector;
     private FilesFragmentPagerAdapter adapter;
     private FileUploadInfoDto fileToUploadId;
-    private static final int REQUEST_CODE_FOR_FOLDER= 1234;
+    private static final int REQUEST_CODE_FOR_FOLDER = 1234;
 
     public static void openActivity(Activity context, String courseId, String termId) {
         Intent intent = new Intent(context, FilesActivity.class);
@@ -99,6 +101,9 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
 
     @Inject
     FileStreamUpdateMVP.CancelModel cancelModel;
+
+    @Inject
+    FileListMVP.DeletePresenter deletePresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -196,7 +201,7 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
                     super.onActivityResult(requestCode, resultCode, data);
                 }
                 break;
-            case REQUEST_CODE_FOR_FOLDER:{
+            case REQUEST_CODE_FOR_FOLDER: {
                 if (resultCode == RESULT_OK) {
                     openToUploadFileToDrive(data);
                 } else {
@@ -208,7 +213,7 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
     }
 
     private void openToUploadFileToDrive(Intent data) {
-        serviceOpener.openAddToDriveService(fileToUploadId,data.getParcelableExtra(
+        serviceOpener.openAddToDriveService(fileToUploadId, data.getParcelableExtra(
                 OpenFileActivityBuilder.EXTRA_RESPONSE_DRIVE_ID));
     }
 
@@ -229,7 +234,6 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
         ShareTargetDialog dialog = ShareTargetDialog.newInstance(coursId, termId, fileTitle);
         dialog.show(getFragmentManager(), ShareTargetDialog.NAME);
     }
-
 
 
     @Override
@@ -263,8 +267,8 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
 
     @Override
     public void shareWith(@ShareFileTargetType String targetType, List<String> chosenStudentIds) {
-        FileUploadDto fileUploadDto = new FileUploadDto(coursId,termId,targetType,chosenStudentIds);
-        serviceOpener.openUploadService(fileUploadDto,mSelectedFileDriveId);
+        FileUploadDto fileUploadDto = new FileUploadDto(coursId, termId, targetType, chosenStudentIds);
+        serviceOpener.openUploadService(fileUploadDto, mSelectedFileDriveId);
     }
 
     @Override
@@ -274,19 +278,26 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
 
     @Override
     public void onFileDelete(String fileId) {
-
+        new AlertDialog.Builder(this)
+                .setMessage(R.string.you_want_to_delete_this_file)
+                .setTitle(R.string.are_you_sure)
+                .setPositiveButton(R.string.yes, (dialog, which) -> {
+                    dialog.dismiss();
+                    deletePresenter.deleteFile(fileId);
+                    this.setLoading(true);
+                }).setNegativeButton(R.string.cancel, (dialog, which) -> dialog.dismiss()).show();
     }
 
     @Override
     public void onFileAddToGoogleDrive(FileUploadInfoDto fileId) {
-        this.fileToUploadId=fileId;
+        this.fileToUploadId = fileId;
         doOnAllPermisions();
 
     }
 
     private void doOnAllPermisions() {
-        if(PermissionAsk.askForPermission(this,getString(R.string.storage_permission), STORAGE_PERSMISSION) &&
-                PermissionAsk.askForPermission(this,getString(R.string.storage__read_permission), STORAGE_PERSMISSION)){
+        if (PermissionAsk.askForPermission(this, getString(R.string.storage_permission), STORAGE_PERSMISSION) &&
+                PermissionAsk.askForPermission(this, getString(R.string.storage__read_permission), STORAGE_PERSMISSION)) {
             askForFolder();
         }
     }
@@ -307,13 +318,19 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(requestCode==STORAGE_PERSMISSION){
+        if (requestCode == STORAGE_PERSMISSION) {
             doOnAllPermisions();
         }
     }
 
     @Override
     public void onFileDetails(String fileId) {
-        FileDetailsActivity.openActivity(this,coursId,termId,fileId);
+        FileDetailsActivity.openActivity(this, coursId, termId, fileId);
+    }
+
+    @Override
+    public void fileDeleted() {
+        this.setLoading(false);
+        this.adapter.refresh(viewPager.getCurrentItem());
     }
 }

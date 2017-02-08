@@ -59,7 +59,7 @@ public class FileActionDialog extends DialogFragment {
         String fileId = getArguments().getString(FILE_ID_KEY);
         String fileType = getArguments().getString(FILE_TYPE_KEY);
         String fileName = getArguments().getString(FILE_NAME_KEY);
-        file = new FileUploadInfoDto(fileType,fileName,fileId);
+        file = new FileUploadInfoDto(fileType, fileName, fileId);
         setUpViews(fileOwned);
         return builder.create();
     }
@@ -67,8 +67,14 @@ public class FileActionDialog extends DialogFragment {
     private void setUpViews(boolean isFileOwned) {
         fileDetails.setOnClickListener(v -> dismiss());
         if (isFileOwned) {
-            addToGoogleDrive.setOnClickListener(v -> dismiss());
-            deleteFile.setOnClickListener(v -> dismiss());
+
+            deleteFile.setOnClickListener(v -> {
+                        dismiss();
+                        if (fileActionListener != null) {
+                            fileActionListener.onFileDelete(file.getId());
+                        }
+                    }
+            );
             deleteFile.setVisibility(View.VISIBLE);
         } else {
             deleteFile.setVisibility(View.GONE);
@@ -83,7 +89,7 @@ public class FileActionDialog extends DialogFragment {
             }
         });
         addToGoogleDrive.setOnClickListener(v -> {
-            if(fileActionListener !=null){
+            if (fileActionListener != null) {
                 fileActionListener.onFileAddToGoogleDrive(file);
                 this.dismiss();
             }

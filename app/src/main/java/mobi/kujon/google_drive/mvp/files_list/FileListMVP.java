@@ -15,16 +15,29 @@ public interface FileListMVP {
 
 
     interface LoadPresenter extends ClearSubscriptions {
-        void loadListOfFiles(boolean reload,@FilesOwnerType int fileType);
+        void loadListOfFiles(boolean reload, @FilesOwnerType int fileType);
     }
 
 
     interface Model {
-        Observable<List<FileDTO>> getFilesDto(boolean reload,@FilesOwnerType int fileType);
+        Observable<List<FileDTO>> getFilesDto(boolean reload, @FilesOwnerType int fileType);
     }
 
     interface FilesView extends HandleException {
         void listOfFilesLoaded(List<FileDTO> fileDTOs);
+
         void noFilesAdded();
+    }
+
+    interface DeleteView extends HandleException {
+        void fileDeleted();
+    }
+
+    interface DeletePresenter extends ClearSubscriptions {
+        void deleteFile(String fileId);
+    }
+
+    interface DeleteModel {
+        Observable<String> deleteFile(String fileId);
     }
 }

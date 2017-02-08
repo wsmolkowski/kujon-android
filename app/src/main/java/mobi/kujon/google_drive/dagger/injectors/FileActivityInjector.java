@@ -14,7 +14,7 @@ public class FileActivityInjector extends AbstractInjector<FilesActivity> {
     @Override
     public void inject(FilesActivity injectTo) {
         filesActivityComponent =  DaggerRuntimeFilesActivityComponent.builder()
-                .filesActivityModule(new FilesActivityModule(injectTo.getCoursId(),injectTo.getTermId()))
+                .filesActivityModule(new FilesActivityModule(injectTo.getCoursId(),injectTo.getTermId(),injectTo))
                 .filesComponent(getFilesComponent(injectTo))
                 .build();
         filesActivityComponent.inject(injectTo);

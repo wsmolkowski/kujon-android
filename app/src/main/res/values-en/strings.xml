@@ -106,4 +106,7 @@
     <string name="choose_file_to_send_to_kujon">Choose file do send to KUJON</string>
     <string name="choose_folder">Choose destination dir</string>
     <string name="shared_files">Shared files</string>
+    <string name="are_you_sure">Are you sure</string>
+    <string name="yes">Yes</string>
+    <string name="you_want_to_delete_this_file">You want do delete this file ?</string>
 </resources>

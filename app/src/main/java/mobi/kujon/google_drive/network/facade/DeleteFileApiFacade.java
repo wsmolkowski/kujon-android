@@ -3,15 +3,15 @@ package mobi.kujon.google_drive.network.facade;
 
 import mobi.kujon.google_drive.network.BackendWrapper;
 import mobi.kujon.google_drive.network.api.DeleteFileKujon;
-import mobi.kujon.google_drive.network.unwrapped_api.DeleteFile;
+import mobi.kujon.google_drive.network.unwrapped_api.DeleteFileApi;
 import rx.Observable;
 
-public class DeleteFileFacade implements DeleteFile {
+public class DeleteFileApiFacade implements DeleteFileApi {
 
     private DeleteFileKujon deleteFileKujon;
     private BackendWrapper<String> backendWrapper;
 
-    public DeleteFileFacade(DeleteFileKujon deleteFileKujon) {
+    public DeleteFileApiFacade(DeleteFileKujon deleteFileKujon) {
         this.deleteFileKujon = deleteFileKujon;
         backendWrapper = new BackendWrapper<>();
     }
