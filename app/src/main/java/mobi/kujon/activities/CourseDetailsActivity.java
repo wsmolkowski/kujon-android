@@ -24,6 +24,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import mobi.kujon.R;
 import mobi.kujon.fragments.TermsFragment;
+import mobi.kujon.google_drive.ui.activities.files.FilesActivity;
 import mobi.kujon.network.json.Coordinator;
 import mobi.kujon.network.json.CourseDetails;
 import mobi.kujon.network.json.KujonResponse;
@@ -42,39 +43,65 @@ public class CourseDetailsActivity extends BaseActivity {
     public static final String COURSE_ID = "COURSE_ID";
     public static final String TERM_ID = "TERM_ID";
 
-    @Bind(R.id.course_fac) TextView courseFac;
-    @Bind(R.id.description) TextView description;
-    @Bind(R.id.course_name) TextView courseName;
-    @Bind(R.id.bibliography) TextView bibliography;
-    @Bind(R.id.assessment_criteria) TextView assessmentCriteria;
-    @Bind(R.id.course_term_name) TextView courseTermName;
-    @Bind(R.id.course_lecturers) LinearLayout courseLecturers;
-    @Bind(R.id.course_coordinators) LinearLayout courseCoordinators;
-    @Bind(R.id.course_class_type) TextView courseClassType;
-    @Bind(R.id.course_students) LinearLayout courseStudents;
-    @Bind(R.id.scrollView) ScrollView scrollView;
-    @Bind(R.id.swipeContainer) SwipeRefreshLayout swipeContainer;
-    @Bind(R.id.toolbar_title) TextView toolbarTitle;
-    @Bind(R.id.toolbar) Toolbar toolbar;
-    @Bind(R.id.before_layout) View beforeLayout;
+    @Bind(R.id.course_fac)
+    TextView courseFac;
+    @Bind(R.id.description)
+    TextView description;
+    @Bind(R.id.course_name)
+    TextView courseName;
+    @Bind(R.id.bibliography)
+    TextView bibliography;
+    @Bind(R.id.assessment_criteria)
+    TextView assessmentCriteria;
+    @Bind(R.id.course_term_name)
+    TextView courseTermName;
+    @Bind(R.id.course_lecturers)
+    LinearLayout courseLecturers;
+    @Bind(R.id.course_coordinators)
+    LinearLayout courseCoordinators;
+    @Bind(R.id.course_class_type)
+    TextView courseClassType;
+    @Bind(R.id.course_students)
+    LinearLayout courseStudents;
+    @Bind(R.id.scrollView)
+    ScrollView scrollView;
+    @Bind(R.id.swipeContainer)
+    SwipeRefreshLayout swipeContainer;
+    @Bind(R.id.toolbar_title)
+    TextView toolbarTitle;
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
+    @Bind(R.id.before_layout)
+    View beforeLayout;
 
-    @Bind(R.id.description_label) TextView descriptionLabel;
-    @Bind(R.id.bibliography_label) TextView bibliographyLabel;
-    @Bind(R.id.assessment_criteria_label) TextView assessmentCriteriaLabel;
-    @Bind(R.id.course_term_name_label) TextView courseTermNameLabel;
-    @Bind(R.id.course_class_type_label) TextView courseClassTypeLabel;
-    @Bind(R.id.course_lecturers_label) TextView courseLecturersLabel;
-    @Bind(R.id.course_coordinators_label) TextView courseCoordinatorsLabel;
-    @Bind(R.id.course_students_label) TextView courseStudentsLabel;
-    @Bind(R.id.course_additional_info) TextView courseAdditionalInfo;
-
+    @Bind(R.id.description_label)
+    TextView descriptionLabel;
+    @Bind(R.id.bibliography_label)
+    TextView bibliographyLabel;
+    @Bind(R.id.assessment_criteria_label)
+    TextView assessmentCriteriaLabel;
+    @Bind(R.id.course_term_name_label)
+    TextView courseTermNameLabel;
+    @Bind(R.id.course_class_type_label)
+    TextView courseClassTypeLabel;
+    @Bind(R.id.course_lecturers_label)
+    TextView courseLecturersLabel;
+    @Bind(R.id.course_coordinators_label)
+    TextView courseCoordinatorsLabel;
+    @Bind(R.id.course_students_label)
+    TextView courseStudentsLabel;
+    @Bind(R.id.course_additional_info)
+    TextView courseAdditionalInfo;
+    @Bind(R.id.course_files)
+    TextView sharedFiles;
     private LayoutInflater layoutInflater;
     private CourseDetails courseDetails;
 
     private String courseId;
     private String termId;
 
-    @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.course_details);
         ButterKnife.bind(this);
@@ -87,6 +114,7 @@ public class CourseDetailsActivity extends BaseActivity {
         swipeContainer.setOnRefreshListener(() -> loadData(true));
         showProgress(true);
         handler.post(() -> loadData(false));
+        sharedFiles.setOnClickListener(v -> FilesActivity.openActivity(this, courseId, termId));
     }
 
     private void loadData(boolean refresh) {
@@ -99,7 +127,8 @@ public class CourseDetailsActivity extends BaseActivity {
         }
 
         call.enqueue(new Callback<KujonResponse<CourseDetails>>() {
-            @Override public void onResponse(Call<KujonResponse<CourseDetails>> call, Response<KujonResponse<CourseDetails>> response) {
+            @Override
+            public void onResponse(Call<KujonResponse<CourseDetails>> call, Response<KujonResponse<CourseDetails>> response) {
                 if (ErrorHandlerUtil.handleResponse(response)) {
                     courseDetails = response.body().data;
 
@@ -155,7 +184,8 @@ public class CourseDetailsActivity extends BaseActivity {
                 }, 200);
             }
 
-            @Override public void onFailure(Call<KujonResponse<CourseDetails>> call, Throwable t) {
+            @Override
+            public void onFailure(Call<KujonResponse<CourseDetails>> call, Throwable t) {
                 swipeContainer.setRefreshing(false);
                 showProgress(false);
                 ErrorHandlerUtil.handleError(t);
@@ -164,10 +194,10 @@ public class CourseDetailsActivity extends BaseActivity {
     }
 
     private void handle4Layouts() {
-        if(setText(bibliography, bibliographyLabel, Html.fromHtml(courseDetails.bibliography.replace("\n", "<br/><br/>"))) &
-        setText(assessmentCriteria, assessmentCriteriaLabel, Html.fromHtml(courseDetails.assessmentCriteria.replace("\n", "<br/><br/>"))) &
-        setText(description, descriptionLabel, Html.fromHtml(CourseDetailsActivity.this.courseDetails.description.replace("\n", "<br>"))) &
-        setText(courseClassType, courseClassTypeLabel, $.join($.collect(courseDetails.groups, it -> it.classType + ", numer grupy: " + it.groupNumber), "\n"))){
+        if (setText(bibliography, bibliographyLabel, Html.fromHtml(courseDetails.bibliography.replace("\n", "<br/><br/>"))) &
+                setText(assessmentCriteria, assessmentCriteriaLabel, Html.fromHtml(courseDetails.assessmentCriteria.replace("\n", "<br/><br/>"))) &
+                setText(description, descriptionLabel, Html.fromHtml(CourseDetailsActivity.this.courseDetails.description.replace("\n", "<br>"))) &
+                setText(courseClassType, courseClassTypeLabel, $.join($.collect(courseDetails.groups, it -> it.classType + ", numer grupy: " + it.groupNumber), "\n"))) {
             beforeLayout.setVisibility(View.GONE);
         }
     }

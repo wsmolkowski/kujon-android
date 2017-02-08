@@ -48,6 +48,20 @@
                     android:layout_height="1dp"
                     android:background="@color/white"
                     />
+                <TextView
+                    android:id="@+id/course_files"
+                    style="@style/Regular.Entry"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:text="@string/shared_files"
+                    android:drawableRight="@drawable/navigate_next"
+                    />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/white"
+                    />
 
                 <TextView
                     android:id="@+id/course_fac"

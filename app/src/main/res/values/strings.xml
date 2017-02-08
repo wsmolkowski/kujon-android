@@ -117,4 +117,5 @@
     <string name="choose_folder">Wybierz folder docelowy</string>
     <string name="choose_file_to_send_to_kujon">Wybierz plik do przesłania do Kujona</string>
     <string name="author">Autor</string>
+    <string name="shared_files">Pliki udostępnione</string>
 </resources>
