@@ -12,6 +12,8 @@ import android.widget.ImageView;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader;
@@ -21,7 +23,6 @@ import com.onesignal.OneSignal;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,7 +77,8 @@ public class KujonApplication extends MultiDexApplication implements OneSignal.N
 
         OneSignal.enableNotificationsWhenActive(true);
 
-//        AppEventsLogger.activateApp(this);
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        AppEventsLogger.activateApp(this);
 
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
 
