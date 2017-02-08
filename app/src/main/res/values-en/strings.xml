@@ -73,7 +73,6 @@
     <string name="search_title">Search</string>
     <string name="server_communication_error">Error in server communication</string>
     <string name="empty_results">No Results Found</string>
-    <string name="title_activity_lecturer_plan">Lecturer Plan</string>
     <string name="semester_choose">Choose semester</string>
     <string name="share_with_everyone">Share with everyone</string>
     <string name="share_with_chosen">Choose people to share with</string>
