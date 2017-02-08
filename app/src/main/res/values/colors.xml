@@ -24,4 +24,7 @@
     <color name="event_color">#d9f1f7</color>
     <color name="empty_gray">#999999</color>
     <color name="delete_red">#E7484F</color>
+
+    <color name="login_background">#37afcd</color>
+    <color name="white_70">#B3FFFFFF</color>
 </resources>

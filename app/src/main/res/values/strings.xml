@@ -26,7 +26,7 @@
     <string name="regulations_url" translatable="false">https://kujon.mobi/regulamin</string>
     <string name="plan_title">Plan zajęć</string>
     <string name="regulations_activity_title">Regulamin i polityka prywatności</string>
-    <string name="regulations_info" translatable="false">Rejestrując się zgadzasz się na<![CDATA[<br/><u><font color=#3fbad9>następujące warunki</u>]]></string>
+    <string name="regulations_info" translatable="false">Rejestrując się zgadzasz się na<![CDATA[<br/><u><font color=#FFFFFF>następujące warunki</u>]]></string>
     <string name="no_events">Brak zajęć</string>
     <string name="lorem" translatable="false">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vulputate erat in velit luctus, eu rhoncus est venenatis. Praesent id quam ipsum. </string>
     <string name="search_student_hint">Znajdź studenta lub pracownika</string>
@@ -121,4 +121,6 @@
     <string name="you_want_to_delete_this_file">Chcesz usunąć ten plik ?</string>
     <string name="are_you_sure">Czy jesteś pewny ?</string>
     <string name="yes">Tak</string>
+    <string name="google">Google</string>
+    <string name="log_by">Zaloguj się przez</string>
 </resources>

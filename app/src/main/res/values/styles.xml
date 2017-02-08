@@ -10,6 +10,10 @@
         <item name="android:windowBackground">@android:color/white</item>
     </style>
 
+
+    <style name="ToolbarAppTheme.Login">
+         <item name="android:windowBackground">@color/login_background</item>
+    </style>
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -58,6 +62,9 @@
         <item name="android:textSize">15sp</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="fontPath">fonts/Lato-Regular.ttf</item>
+    </style>
+    <style name="Light">
+        <item name="fontPath">fonts/Lato-Light.ttf</item>
     </style>
 
     <style name="new_label">

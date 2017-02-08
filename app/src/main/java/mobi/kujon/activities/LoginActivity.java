@@ -3,7 +3,6 @@ package mobi.kujon.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
@@ -14,7 +13,6 @@ import android.widget.Toast;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
-import com.google.android.gms.common.SignInButton;
 
 import javax.inject.Inject;
 
@@ -48,16 +46,13 @@ public class LoginActivity extends BaseActivity {
 
     public static final int RC_SIGN_IN = 1;
 
-    @Bind(R.id.sign_in_button)
-    SignInButton signIn;
+    @Bind(R.id.google_login_button)
+    View signIn;
     @Bind(R.id.progressBar)
     ProgressBar progressBar;
     @Bind(R.id.regulations)
     TextView regulations;
-    @Bind(R.id.toolbar_title)
-    TextView toolbarTitle;
-    @Bind(R.id.toolbar)
-    Toolbar toolbar;
+
     @Bind(R.id.login_logo)
     ImageView loginLogo;
     private int counter = 0;
@@ -68,10 +63,7 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-        setSupportActionBar(toolbar);
-        toolbarTitle.setText(R.string.main_login_title);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+
         KujonApplication.getComponent().inject(this);
 
         regulations.setText(Html.fromHtml(getString(R.string.regulations_info)));
@@ -116,7 +108,7 @@ public class LoginActivity extends BaseActivity {
         progress(true);
     }
 
-    @OnClick(R.id.sign_in_button)
+    @OnClick(R.id.google_login_button)
     public void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(apiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
@@ -133,10 +125,12 @@ public class LoginActivity extends BaseActivity {
                     GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
                     handle(result);
                 } else {
-
+                    progress(false);
                     Toast.makeText(LoginActivity.this, R.string.login_error, Toast.LENGTH_SHORT).show();
                 }
             }
+        }else {
+            progress(false);
         }
     }
 
