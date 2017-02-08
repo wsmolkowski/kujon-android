@@ -40,7 +40,7 @@ public abstract class FileDTO {
         this.shares = Arrays.asList(kujonFile.fileSharedWith);
         this.fileName = kujonFile.fileName;
         this.fileSize = kujonFile.fileSize;
-        this.userName = new StringBuilder(kujonFile.fileName).append(" ").append(kujonFile.lastName).toString();
+        this.userName = new StringBuilder(kujonFile.firstName).append(" ").append(kujonFile.lastName).toString();
         this.isMy = kujonFile.myFile;
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy", getDefault());
         dateCreated =simpleDateFormat.format(kujonFile.createdTime);

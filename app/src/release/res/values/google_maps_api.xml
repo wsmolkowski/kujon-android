@@ -19,5 +19,5 @@
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
         AIzaSyCElC8n_ZJvCNnUZq-7zEscX_GybFWyICM
     </string>
-    <string name="google_drive_api_key">896765768628-e6ja58ug43hacq7usqnmn5uakgvnorvd.apps.googleusercontent.com</string>
+    <string name="google_drive_api_key" translatable="false">896765768628-e6ja58ug43hacq7usqnmn5uakgvnorvd.apps.googleusercontent.com</string>
 </resources>

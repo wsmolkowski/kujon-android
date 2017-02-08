@@ -58,7 +58,20 @@
             android:textColor="@color/dark"
             android:id="@+id/file_creation_date"/>
     </LinearLayout>
-    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            style="@style/file_details_attributes"
+            android:text="@string/author" />
+        <TextView
+            style="@style/file_details_attributes"
+            android:layout_width="match_parent"
+            tools:text="@string/file_type"
+            android:textColor="@color/dark"
+            android:id="@+id/autor_text_view"/>
+    </LinearLayout>
     <TextView
         android:layout_width="match_parent"
         style="@style/file_details_attributes"
@@ -88,26 +101,7 @@
             android:layout_weight="0"
             android:id="@+id/share_with_everyone"/>
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            style="@style/file_details_attributes"
-            android:text="@string/author"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp"
-            android:textColor="@color/dark"
-            android:layout_weight="1"/>
-        <android.support.v7.widget.SwitchCompat
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingRight="@dimen/small_margin"
-            android:paddingEnd="@dimen/small_margin"
-            android:paddingStart="@dimen/small_margin"
-            android:layout_weight="0"
-            android:id="@+id/autor_text_view"/>
-    </LinearLayout>
+
     <View
         style="@style/vh_divider"/>
 
