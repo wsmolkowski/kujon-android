@@ -8,8 +8,7 @@
     <include layout="@layout/kujon_toolbar_with_back" />
 
 
-    <ScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
@@ -18,92 +17,91 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
+
             <fragment xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:id="@+id/map"
                 android:name="com.google.android.gms.maps.MapFragment"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="150dp"
                 tools:context="mobi.kujon.activities.MapsActivity" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="16dp">
+                android:padding="@dimen/kujon_margin_typ">
 
                 <ImageView
                     android:id="@+id/logo"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    tools:src="@drawable/user_placeholder"/>
+                    tools:src="@drawable/user_placeholder" />
 
                 <TextView
                     android:id="@+id/faculty_name"
                     style="@style/Semibold.Dark"
-                    android:layout_marginLeft="8dp"
-                    tools:text="Katedra Hungarystyki"/>
+                    android:layout_marginLeft="@dimen/double_typ_margin"
+                    tools:text="Katedra Hungarystyki" />
 
             </LinearLayout>
 
             <TextView
                 style="@style/Regular.Label"
-                android:text="Adres"
-                />
+                android:text="Adres" />
 
             <TextView
                 android:id="@+id/postal_address"
                 style="@style/Regular.Entry"
-                tools:text='Dobra 55, 00-312 Warszawa (\u015ar\u00f3dmie\u015bcie)"'/>
+                tools:text='Dobra 55, 00-312 Warszawa (\u015ar\u00f3dmie\u015bcie)"' />
 
             <TextView
                 style="@style/Regular.Label"
-                android:text="Telefon"/>
+                android:text="Telefon" />
 
             <TextView
                 android:id="@+id/phone"
                 style="@style/Regular.Entry"
                 android:autoLink="phone"
                 android:drawableRight="@drawable/telephone"
-                tools:text='123456789'/>
+                tools:text='123456789' />
 
             <TextView
                 style="@style/Regular.Label"
-                android:text="Strona"/>
+                android:text="Strona" />
 
             <TextView
                 android:id="@+id/homepage"
                 style="@style/Regular.Entry"
                 android:autoLink="web"
-                tools:text='http://www.hungarystyka.uw.edu.pl/'/>
+                tools:text='http://www.hungarystyka.uw.edu.pl/' />
 
             <TextView
                 style="@style/Regular.Label"
-                android:text="Statystyki"/>
+                android:text="Statystyki" />
 
             <TextView
                 android:id="@+id/programmeCount"
                 style="@style/Regular.Entry"
                 android:layout_marginTop="8dp"
-                tools:text='Liczba programów: 39'/>
+                tools:text='Liczba programów: 39' />
 
             <TextView
                 android:id="@+id/courseCount"
                 style="@style/Regular.Entry"
                 android:layout_marginTop="8dp"
-                tools:text='Liczba kursów: 445'/>
+                tools:text='Liczba kursów: 445' />
 
             <TextView
                 android:id="@+id/staffCount"
                 style="@style/Regular.Entry"
                 android:layout_marginTop="8dp"
-                tools:text='Liczba pracowników: 445'/>
+                tools:text='Liczba pracowników: 445' />
 
             <TextView
                 style="@style/Regular.Label"
-                android:text="Jednostki nadrzędne"/>
+                android:text="Jednostki nadrzędne" />
 
             <LinearLayout
                 android:id="@+id/parent_faculties"
@@ -114,8 +112,7 @@
                 android:layout_marginTop="8dp"
                 android:orientation="vertical"
                 tools:background="@android:color/holo_green_dark"
-                tools:minHeight="100dp"
-                />
+                tools:minHeight="100dp" />
 
         </LinearLayout>
 

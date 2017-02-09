@@ -129,8 +129,6 @@
                         android:id="@+id/student_programmes"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginRight="16dp"
                         android:orientation="vertical"
                         />
 
@@ -142,8 +140,6 @@
                         android:id="@+id/student_faculties"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginRight="16dp"
                         android:orientation="vertical"
                         />
 
