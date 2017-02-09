@@ -19,7 +19,8 @@ public class FilesFilter {
                 case FilesOwnerType.MY:
                     return arg.myFile;
                 default:
-                    return !arg.myFile;
+                    // jak nie moja zakładka to chcę wszystkie pliki
+                    return true;
             }
         });
     }

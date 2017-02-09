@@ -30,8 +30,8 @@ public class FilesActivityModule {
 
     @ActivityScope
     @Provides
-    FileListMVP.Model provideFileListModel(GetFilesApi getFilesApi) {
-        return new FileListModel(courseId, termId, getFilesApi, new FilesFilter());
+    FileListMVP.Model provideFileListModel(GetFilesApi getFilesApi, SchedulersHolder schedulersHolder) {
+        return new FileListModel(courseId, termId, getFilesApi, new FilesFilter(), schedulersHolder);
     }
 
 
