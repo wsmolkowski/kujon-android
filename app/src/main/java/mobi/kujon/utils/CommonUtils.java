@@ -32,7 +32,7 @@ public class CommonUtils {
             row.setText(rowData);
             final int finalI = i;
             row.setOnClickListener(v -> listener.onClick(finalI));
-            row.setCompoundDrawablesWithIntrinsicBounds(null, null, application.getResources().getDrawable(R.drawable.navigate_next), null);
+//            row.setCompoundDrawablesWithIntrinsicBounds(null, null, application.getResources().getDrawable(R.drawable.navigate_next), null);
             layout.addView(row);
         }
     }

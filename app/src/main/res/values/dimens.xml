@@ -23,4 +23,6 @@
     <dimen name="kujon_margin_typ">8dp</dimen>
     <dimen name="double_typ_margin">16dp</dimen>
     <dimen name="one_and_half_typ_margin">12dp</dimen>
+    <dimen name="cell_size_typ">48dp</dimen>
+
 </resources>

@@ -60,7 +60,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_gravity">center</item>
-        <item name="android:textSize">15sp</item>
+        <item name="android:textSize">@dimen/font_standard</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="fontPath">fonts/Lato-Regular.ttf</item>
     </style>
@@ -87,10 +87,9 @@
     <style name="Regular.Label">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:paddingLeft">16dp</item>
-        <item name="android:paddingRight">16dp</item>
-        <item name="android:paddingTop">8dp</item>
-        <item name="android:paddingBottom">4dp</item>
+        <item name="android:layout_marginLeft">@dimen/kujon_margin_typ</item>
+        <item name="android:layout_marginRight">@dimen/kujon_margin_typ</item>
+        <item name="android:layout_marginTop">@dimen/kujon_margin_typ</item>
         <item name="android:textColor">@color/opacityBlack</item>
     </style>
 
@@ -101,10 +100,9 @@
     <style name="Regular.Entry">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginLeft">16dp</item>
-        <item name="android:layout_marginRight">16dp</item>
-        <item name="android:layout_marginTop">4dp</item>
-        <item name="android:layout_marginBottom">4dp</item>
+        <item name="android:paddingLeft">@dimen/kujon_margin_typ</item>
+        <item name="android:paddingRight">@dimen/kujon_margin_typ</item>
+        <item name="android:layout_marginBottom">@dimen/one_and_half_typ_margin</item>
         <item name="android:textColor">@color/dark</item>
     </style>
 
@@ -113,10 +111,15 @@
     </style>
 
     <style name="Regular.Label.Background">
+        <item name="android:layout_marginLeft">0dp</item>
+        <item name="android:layout_marginRight">0dp</item>
+        <item name="android:paddingLeft">@dimen/kujon_margin_typ</item>
         <item name="android:background">@drawable/label_background</item>
-        <item name="android:layout_marginTop">8dp</item>
-        <item name="android:paddingTop">16dp</item>
-        <item name="android:paddingBottom">16dp</item>
+        <item name="android:layout_marginTop">@dimen/one_and_half_typ_margin</item>
+
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textSize">@dimen/font_standard</item>
+        <item name="android:layout_height">@dimen/cell_size_typ</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
