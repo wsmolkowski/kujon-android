@@ -87,8 +87,8 @@
     <string name="title_activity_files" translatable="false">FilesActivity</string>
     <string name="all_files">Wszystkie</string>
     <string name="my_files">Moje</string>
-    <string name="share_with_everyone">Udostępnij wszystkim</string>
-    <string name="share_with_chosen">Udostępnij wybranym</string>
+    <string name="share_with_everyone">Udostępnij wszystkim osobom z danego przedmiotu</string>
+    <string name="share_with_chosen">Udostępnij wybranym osobom z danego przedmiotu</string>
     <string name="file_details">Szczegóły pliku</string>
     <string name="add_to_google_drive">Dodaj do Google Drive</string>
     <string name="delete">Usuń</string>
