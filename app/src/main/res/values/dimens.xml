@@ -18,4 +18,8 @@
     <dimen name="vh_file_padding_med">16dp</dimen>
     <dimen name="vh_entry_padding">17dp</dimen>
     <dimen name="progress_margins">8dp</dimen>
+    <dimen name="font_size_message">15sp</dimen>
+    <dimen name="kujon_margin_typ">8dp</dimen>
+    <dimen name="double_typ_margin">16dp</dimen>
+    <dimen name="one_and_half_typ_margin">12dp</dimen>
 </resources>
