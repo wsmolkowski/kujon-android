@@ -23,8 +23,10 @@
             android:src="@drawable/owl_image_login" />
         <TextView
             android:layout_below="@+id/login_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            style="@style/Regular"
+            style="@style/Light"
             android:text="Kujon"
             android:id="@+id/kujon_text"
             android:textColor="@android:color/white"
@@ -48,7 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginBottom="14dp"
-            android:layout_marginTop="150dp"
+            android:layout_marginTop="130dp"
             android:gravity="center"
             android:textColor="@android:color/white"
             android:textSize="13sp"
