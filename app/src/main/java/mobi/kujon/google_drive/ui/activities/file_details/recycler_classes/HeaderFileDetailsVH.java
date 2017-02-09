@@ -3,6 +3,7 @@ package mobi.kujon.google_drive.ui.activities.file_details.recycler_classes;
 
 import android.support.v7.widget.SwitchCompat;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import butterknife.Bind;
@@ -24,6 +25,8 @@ public class HeaderFileDetailsVH extends BaseFileDetailsVH<FileDTO> {
     TextView autorTextView;
     @Bind(R.id.share_with_everyone)
     SwitchCompat shareWithEveryone;
+    @Bind(R.id.image_type_icon)
+    ImageView imageView;
 
     private FileDetailsAdapter.OnEveryoneSwitchClicked onEveryoneSwitchClicked;
 
@@ -41,6 +44,7 @@ public class HeaderFileDetailsVH extends BaseFileDetailsVH<FileDTO> {
             fileSize.setText(new StringBuilder().append(fileDTO.getFileSize()).append(" MB"));
             fileCreationDate.setText(fileDTO.getDateCreated());
             shareWithEveryone.setEnabled(fileDTO.isMy());
+            imageView.setImageResource(fileDTO.getImageIcon());
             autorTextView.setText(fileDTO.getUserName());
             shareWithEveryone.setChecked(ShareFileTargetType.ALL.equals(fileDTO.getShareType()));
             shareWithEveryone.setOnCheckedChangeListener((buttonView, isChecked) -> onEveryoneSwitchClicked.onEveryoneClicked(isChecked));

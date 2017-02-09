@@ -24,8 +24,14 @@
         <TextView
             style="@style/file_details_attributes"
             android:text="@string/file_type" />
+        <ImageView
+            style="@style/file_details_attributes.rest"
+            android:id="@+id/image_type_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:src="@drawable/avi_icon"/>
         <TextView
-            style="@style/file_details_attributes"
+            style="@style/file_details_attributes.rest"
             android:layout_width="match_parent"
             tools:text="@string/file_type"
             android:textColor="@color/dark"
@@ -39,7 +45,7 @@
             style="@style/file_details_attributes"
             android:text="@string/file_size" />
         <TextView
-            style="@style/file_details_attributes"
+            style="@style/file_details_attributes.rest"
             android:layout_width="match_parent"
             tools:text="@string/file_type"
             android:textColor="@color/dark"
@@ -53,7 +59,7 @@
             style="@style/file_details_attributes"
             android:text="@string/created_date" />
         <TextView
-            style="@style/file_details_attributes"
+            style="@style/file_details_attributes.rest"
             android:layout_width="match_parent"
             tools:text="@string/file_type"
             android:textColor="@color/dark"
@@ -67,7 +73,7 @@
             style="@style/file_details_attributes"
             android:text="@string/author" />
         <TextView
-            style="@style/file_details_attributes"
+            style="@style/file_details_attributes.rest"
             android:layout_width="match_parent"
             tools:text="@string/file_type"
             android:textColor="@color/dark"
