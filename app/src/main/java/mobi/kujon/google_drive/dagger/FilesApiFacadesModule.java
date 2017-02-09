@@ -2,6 +2,7 @@ package mobi.kujon.google_drive.dagger;
 
 import dagger.Module;
 import dagger.Provides;
+import mobi.kujon.google_drive.dagger.scopes.GoogleDriveScope;
 import mobi.kujon.google_drive.network.api.CourseDetailsApiKujon;
 import mobi.kujon.google_drive.mvp.file_stream_update.FileStreamUpdateMVP;
 import mobi.kujon.google_drive.network.api.CoursesApiKujon;
@@ -49,6 +50,7 @@ public class FilesApiFacadesModule {
     }
 
     @Provides
+    @GoogleDriveScope
     GetFilesApi provideGetFiles(Retrofit retrofit) {
         return new GetFilesFacade(retrofit.create(GetFilesKujon.class));
     }

@@ -121,7 +121,7 @@
     <string name="you_want_to_delete_this_file">Chcesz usunąć ten plik ?</string>
     <string name="are_you_sure">Czy jesteś pewny ?</string>
     <string name="yes">Tak</string>
-    <string name="google">Google</string>
+    <string name="google" translatable="false">Google</string>
     <string name="log_by" translatable="false">Zaloguj się przez</string>
     <string name="choose_student">Wybierz osoby</string>
 </resources>
