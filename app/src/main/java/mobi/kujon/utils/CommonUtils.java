@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -28,12 +29,13 @@ public class CommonUtils {
         layout.removeAllViews();
         for (int i = 0; i < data.size(); i++) {
             String rowData = data.get(i);
-            TextView row = (TextView) layoutInflater.inflate(R.layout.list_row, null);
+            View view = layoutInflater.inflate(R.layout.list_row, null);
+            TextView row = (TextView) view.findViewById(R.id.text1);
             row.setText(rowData);
             final int finalI = i;
-            row.setOnClickListener(v -> listener.onClick(finalI));
+            view.setOnClickListener(v -> listener.onClick(finalI));
 //            row.setCompoundDrawablesWithIntrinsicBounds(null, null, application.getResources().getDrawable(R.drawable.navigate_next), null);
-            layout.addView(row);
+            layout.addView(view);
         }
     }
 

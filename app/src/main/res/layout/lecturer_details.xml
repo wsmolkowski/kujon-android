@@ -54,7 +54,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="32dp"
                     android:layout_marginTop="16dp"
-                    android:background="@drawable/label_background"/>
+                    android:background="@drawable/label_background"
+                    android:id="@+id/traklasa" />
 
 
                 <TextView
@@ -101,15 +102,6 @@
 
                 <TextView
                     style="@style/Regular.Label"
-                    android:text="Zatrudnienie"/>
-
-
-                <LinearLayout
-                    android:id="@+id/lecturer_faculty"
-                    style="@style/Regular.Entry"
-                    android:orientation="vertical"/>
-                <TextView
-                    style="@style/Regular.Label"
                     android:text="Zainteresowania"/>
 
                 <TextView
@@ -117,8 +109,21 @@
                     style="@style/Regular.Entry"
                     tools:text='Lorem ipsum'/>
 
+
                 <TextView
                     style="@style/Regular.Label.Background"
+                    android:text="Zatrudnienie"/>
+
+
+                <LinearLayout
+                    android:id="@+id/lecturer_faculty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"/>
+
+                <TextView
+                    style="@style/Regular.Label.Background"
+                    android:layout_marginTop="0dp"
                     android:text="Prowadzone przedmioty"/>
 
                 <LinearLayout
