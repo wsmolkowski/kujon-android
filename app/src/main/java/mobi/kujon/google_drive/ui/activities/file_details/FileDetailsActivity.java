@@ -30,7 +30,6 @@ import mobi.kujon.google_drive.mvp.file_details.FileDetailsMVP;
 import mobi.kujon.google_drive.mvp.file_details.FileDetailsView;
 import mobi.kujon.google_drive.ui.activities.BaseFileActivity;
 import mobi.kujon.google_drive.ui.activities.file_details.recycler_classes.FileDetailsAdapter;
-import mobi.kujon.google_drive.ui.dialogs.share_target.ShareTargetDialog;
 
 public class FileDetailsActivity extends BaseFileActivity implements FileDetailsView,  FileDetailsAdapter.OnEveryoneSwitchClicked{
 
@@ -83,7 +82,7 @@ public class FileDetailsActivity extends BaseFileActivity implements FileDetails
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        toolbarTitle.setText(getIntent().getStringExtra(ShareTargetDialog.TITLE));
+        toolbarTitle.setText(R.string.file_details);
         handleRecyclerView();
         fileDetailsPresenter.loadFileDetails(fileId, false);
         this.setLoading(true);

@@ -36,6 +36,7 @@ public class FileListModel implements FileListMVP.Model {
     @Override
     public synchronized Observable<List<FileDTO>> getFilesDto(boolean reload, @FilesOwnerType int fileType) {
         if (subject == null || reload) {
+            subject = PublishSubject.create();
             getFilesApi.getFiles(reload, courseId, termId)
                     .subscribeOn(schedulersHolder.subscribe())
                     .observeOn(schedulersHolder.subscribe())
@@ -49,7 +50,7 @@ public class FileListModel implements FileListMVP.Model {
                     }, error -> {
                         subject.onError(Exceptions.propagate(new NoFileException()));
                     });
-            subject = PublishSubject.create();
+
         }
         return subject;
     }

@@ -12,8 +12,9 @@
 
 
     <style name="ToolbarAppTheme.Login">
-         <item name="android:windowBackground">@color/login_background</item>
+        <item name="android:windowBackground">@color/login_background</item>
     </style>
+
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -63,8 +64,13 @@
         <item name="android:textColor">@android:color/white</item>
         <item name="fontPath">fonts/Lato-Regular.ttf</item>
     </style>
+
     <style name="Light">
         <item name="fontPath">fonts/Lato-Light.ttf</item>
+    </style>
+
+    <style name="Semi">
+        <item name="fontPath">fonts/Lato-Semibold.ttf</item>
     </style>
 
     <style name="new_label">
@@ -191,5 +197,8 @@
         <item name="android:paddingBottom">@dimen/small_margin</item>
         <item name="android:textColor">@color/dark_60</item>
         <item name="fontPath">fonts/Lato-Regular.ttf</item>
+    </style>
+    <style name="file_details_attributes.rest">
+        <item name="android:layout_width">wrap_content</item>
     </style>
 </resources>

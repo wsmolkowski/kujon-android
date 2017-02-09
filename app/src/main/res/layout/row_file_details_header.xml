@@ -15,7 +15,8 @@
         android:paddingStart="@dimen/small_margin"
         android:paddingRight="@dimen/small_margin"
         android:paddingTop="15dp"
-        android:paddingBottom="20dp"/>
+        android:paddingBottom="20dp"
+        style="@style/Semi"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
