@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
-    >
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,8 +15,7 @@
             style="@style/Semibold.Dark"
             android:layout_gravity="left"
             android:paddingLeft="4dp"
-            android:text="Studenci i pracownicy"
-            />
+            android:text="Studenci i pracownicy" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -39,8 +36,7 @@
                     android:hint="@string/search_student_hint"
                     android:imeOptions="actionSearch"
                     android:singleLine="true"
-                    android:textSize="14sp"
-                    />
+                    android:textSize="14sp" />
             </android.support.design.widget.TextInputLayout>
 
             <LinearLayout
@@ -54,16 +50,14 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textSize="10sp"
-                    tools:text="20+ wyników"/>
+                    tools:text="20+ wyników" />
 
                 <Button
                     android:id="@+id/student_search"
+                    style="@style/search_button_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:drawableLeft="@drawable/search"
-                    android:src="@drawable/search"
-                    android:text="Szukaj"/>
+                    android:layout_gravity="center" />
 
             </LinearLayout>
         </LinearLayout>
@@ -72,8 +66,7 @@
             style="@style/Semibold.Dark"
             android:layout_gravity="left"
             android:paddingLeft="4dp"
-            android:text="Jednostki"
-            />
+            android:text="Jednostki" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -94,8 +87,7 @@
                     android:hint="Nazwa jednostki organizacyjnej"
                     android:imeOptions="actionSearch"
                     android:singleLine="true"
-                    android:textSize="14sp"
-                    />
+                    android:textSize="14sp" />
             </android.support.design.widget.TextInputLayout>
 
             <LinearLayout
@@ -109,7 +101,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textSize="10sp"
-                    tools:text="20+ wyników"/>
+                    tools:text="20+ wyników" />
 
                 <Button
                     android:id="@+id/faculty_search"
@@ -118,7 +110,7 @@
                     android:layout_gravity="center"
                     android:drawableLeft="@drawable/search"
                     android:src="@drawable/search"
-                    android:text="Szukaj"/>
+                    android:text="Szukaj" />
 
             </LinearLayout>
         </LinearLayout>
@@ -127,8 +119,7 @@
             style="@style/Semibold.Dark"
             android:layout_gravity="left"
             android:paddingLeft="4dp"
-            android:text="Przedmioty"
-            />
+            android:text="Przedmioty" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -149,8 +140,7 @@
                     android:hint="Nazwa przedmiotu"
                     android:imeOptions="actionSearch"
                     android:singleLine="true"
-                    android:textSize="14sp"
-                    />
+                    android:textSize="14sp" />
             </android.support.design.widget.TextInputLayout>
 
             <LinearLayout
@@ -164,16 +154,14 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textSize="10sp"
-                    tools:text="20+ wyników"/>
+                    tools:text="20+ wyników" />
 
                 <Button
                     android:id="@+id/course_search"
+                    style="@style/search_button_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:drawableLeft="@drawable/search"
-                    android:src="@drawable/search"
-                    android:text="Szukaj"/>
+                    android:layout_gravity="center" />
 
             </LinearLayout>
         </LinearLayout>
@@ -182,8 +170,7 @@
             style="@style/Semibold.Dark"
             android:layout_gravity="left"
             android:paddingLeft="4dp"
-            android:text="Kierunki"
-            />
+            android:text="Kierunki" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -204,8 +191,7 @@
                     android:hint="Nazwa kierunku studiów"
                     android:imeOptions="actionSearch"
                     android:singleLine="true"
-                    android:textSize="14sp"
-                    />
+                    android:textSize="14sp" />
             </android.support.design.widget.TextInputLayout>
 
             <LinearLayout
@@ -219,16 +205,14 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textSize="10sp"
-                    tools:text="20+ wyników"/>
+                    tools:text="20+ wyników" />
 
                 <Button
                     android:id="@+id/programme_search"
+                    style="@style/search_button_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:drawableLeft="@drawable/search"
-                    android:src="@drawable/search"
-                    android:text="Szukaj"/>
+                    android:layout_gravity="center" />
 
             </LinearLayout>
         </LinearLayout>
@@ -237,8 +221,7 @@
             style="@style/Semibold.Dark"
             android:layout_gravity="left"
             android:paddingLeft="4dp"
-            android:text="Prace dyplomowe"
-            />
+            android:text="Prace dyplomowe" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -259,8 +242,7 @@
                     android:hint="Praca dyplomowa"
                     android:imeOptions="actionSearch"
                     android:singleLine="true"
-                    android:textSize="14sp"
-                    />
+                    android:textSize="14sp" />
             </android.support.design.widget.TextInputLayout>
 
             <LinearLayout
@@ -274,16 +256,14 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textSize="10sp"
-                    tools:text="20+ wyników"/>
+                    tools:text="20+ wyników" />
 
                 <Button
                     android:id="@+id/thesis_search"
+                    style="@style/search_button_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:drawableLeft="@drawable/search"
-                    android:src="@drawable/search"
-                    android:text="Szukaj"/>
+                    android:layout_gravity="center" />
 
             </LinearLayout>
         </LinearLayout>
