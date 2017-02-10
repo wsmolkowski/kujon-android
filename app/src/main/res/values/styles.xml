@@ -13,6 +13,7 @@
 
     <style name="ToolbarAppTheme.Login">
         <item name="android:windowBackground">@color/login_background</item>
+        <item name="colorPrimaryDark">@color/login_background_dark</item>
     </style>
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">

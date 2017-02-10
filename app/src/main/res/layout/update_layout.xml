@@ -31,6 +31,7 @@
         android:layout_below="@+id/tilte_text_view"
         android:id="@+id/progress_bar"
         style="?android:attr/progressBarStyleHorizontal"
+        android:background="@drawable/progress_background"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/progress_margins"
