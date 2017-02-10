@@ -111,4 +111,8 @@
     <string name="you_want_to_delete_this_file">You want do delete this file ?</string>
     <string name="choose_student">Choose students</string>
     <string name="upload_failed">upload failed</string>
+    <string name="sort_by">Sort</string>
+    <string name="sort_by_author">Sort by owner</string>
+    <string name="sort_by_create_date">Sort by date</string>
+    <string name="sort_by_filename">Sort by filename</string>
 </resources>
