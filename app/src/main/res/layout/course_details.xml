@@ -23,58 +23,40 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/course_name"
-                    style="@style/Semibold.Dark"
-                    android:layout_gravity="left"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="8dp"
+                    style="@style/Semiboldtitle"
                     tools:text="Historia sztuki średniowiecznej"/>
 
                 <TextView
                     android:id="@+id/course_additional_info"
                     style="@style/Regular.Entry"
-                    android:layout_marginBottom="16dp"
                     tools:text="id: 2500-OB-33, język: POL, prowadzonu: TAK"
                     />
 
                 <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/white"
+                   style="@style/divider"
                     />
                 <TextView
                     android:id="@+id/course_files"
-                    style="@style/Regular.Entry"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="16dp"
+
+                    style="@style/Regular.Entry.course_details"
                     android:text="@string/shared_files"
-                    android:drawableRight="@drawable/navigate_next"
                     />
 
                 <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/white"
+                    style="@style/divider"
                     />
 
                 <TextView
                     android:id="@+id/course_fac"
-                    style="@style/Regular.Entry"
-                    android:layout_marginBottom="16dp"
-                    android:layout_marginTop="16dp"
-                    android:drawableRight="@drawable/navigate_next"
+                    style="@style/Regular.Entry.course_details"
                     tools:text='Wydział "Artes Liberales", Nowy Świat 69, 00-046 Warszawa (Śródmieście), tel.: 123266516,123266517'/>
 
                 <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/white"
+                    style="@style/divider"
                     android:id="@+id/before_layout"
                     />
 
