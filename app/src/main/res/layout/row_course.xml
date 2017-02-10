@@ -30,6 +30,8 @@
             android:textAppearance="?android:attr/textAppearanceListItemSmall"
             tools:text="Historia kościołów i wyznań chrześcijańskich w XIX w. " />
 
-        <View style="@style/divider" />
+        <View
+
+            style="@style/divider" />
     </LinearLayout>
 </LinearLayout>
