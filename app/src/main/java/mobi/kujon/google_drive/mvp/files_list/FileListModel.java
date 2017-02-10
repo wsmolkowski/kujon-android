@@ -33,23 +33,28 @@ public class FileListModel implements FileListMVP.Model {
     @Override
     public synchronized Observable<List<FileDTO>> getFilesDto(boolean reload, @FilesOwnerType int fileType) {
         if (subject == null || reload) {
-            subject = PublishSubject.create();
-            getFilesApi.getFiles(reload, courseId, termId)
-                    .subscribeOn(schedulersHolder.subscribe())
-                    .observeOn(schedulersHolder.subscribe())
-                    .subscribe(it -> {
-                        if (it.size() != 0) {
-                            subject.onNext(FileDtoFactory.createListOfDTOFiles(myFilesFilter.filterFiles(it, fileType)));
-                            subject.onCompleted();
-                        } else {
-                            subject.onError(new NoFileException());
-                        }
-                    }, error -> {
-                        subject.onError(error);
-                    });
-
+            createShot(reload, fileType);
+        }else if(subject.hasCompleted()){
+            createShot(reload, fileType);
         }
         return subject;
+    }
+
+    private void createShot(boolean reload, @FilesOwnerType int fileType) {
+        subject = PublishSubject.create();
+        getFilesApi.getFiles(reload, courseId, termId)
+                .subscribeOn(schedulersHolder.subscribe())
+                .observeOn(schedulersHolder.subscribe())
+                .subscribe(it -> {
+                    if (it.size() != 0) {
+                        subject.onNext(FileDtoFactory.createListOfDTOFiles(myFilesFilter.filterFiles(it, fileType)));
+                        subject.onCompleted();
+                    } else {
+                        subject.onError(new NoFileException());
+                    }
+                }, error -> {
+                    subject.onError(error);
+                });
     }
 
 

@@ -6,6 +6,7 @@ import android.support.annotation.StringRes;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import mobi.kujon.R;
@@ -21,13 +22,16 @@ import static java.util.Locale.getDefault;
 
 public abstract class FileDTO {
 
-    private @ShareFileTargetType String shareType;
+    private
+    @ShareFileTargetType
+    String shareType;
     private int numberOfShares;
     private String fileName;
     private String fileSize;
     private String userName;
     private String fileId;
     private String dateCreated;
+    private Date date;
     private List<String> shares;
     private String mimeType;
     private boolean isMy;
@@ -43,8 +47,9 @@ public abstract class FileDTO {
         this.userName = new StringBuilder(kujonFile.firstName).append(" ").append(kujonFile.lastName).toString();
         this.isMy = kujonFile.myFile;
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy", getDefault());
-        dateCreated =simpleDateFormat.format(kujonFile.createdTime);
-        this.mimeType= kujonFile.contentType;
+        dateCreated = simpleDateFormat.format(kujonFile.createdTime);
+        this.mimeType = kujonFile.contentType;
+        this.date = kujonFile.createdTime;
     }
 
 
@@ -76,10 +81,14 @@ public abstract class FileDTO {
         return fileId;
     }
 
+    public Date getDate() {
+        return date;
+    }
+
     public String getDateCreated(Resources resources) {
-        if(shareType.equals(ShareFileTargetType.NONE)){
-          return new StringBuilder().append(resources.getString(R.string.created_time)).append(" ").append(dateCreated).append(resources.getString(R.string.by)).append(" ").append(userName).toString();
-        }else {
+        if (shareType.equals(ShareFileTargetType.NONE)) {
+            return new StringBuilder().append(resources.getString(R.string.created_time)).append(" ").append(dateCreated).append(resources.getString(R.string.by)).append(" ").append(userName).toString();
+        } else {
             return new StringBuilder().append(resources.getString(R.string.created_time)).append(" ").append(dateCreated).toString();
         }
     }
@@ -92,13 +101,13 @@ public abstract class FileDTO {
         return isMy;
     }
 
-    public void setShareFile(ShowShareIcon showShareIcon){
-        switch (shareType){
+    public void setShareFile(ShowShareIcon showShareIcon) {
+        switch (shareType) {
             case ShareFileTargetType.ALL:
-                showShareIcon.showShareIcon(R.drawable.share_options_icon,R.string.everyone);
+                showShareIcon.showShareIcon(R.drawable.share_options_icon, R.string.everyone);
                 break;
             case ShareFileTargetType.LIST:
-                showShareIcon.showShareIcon(R.drawable.share_options_icon,String.valueOf(numberOfShares));
+                showShareIcon.showShareIcon(R.drawable.share_options_icon, String.valueOf(numberOfShares));
                 break;
             case ShareFileTargetType.NONE:
                 showShareIcon.hide();
@@ -110,13 +119,19 @@ public abstract class FileDTO {
         return mimeType;
     }
 
-    public abstract @DrawableRes int getImageIcon();
+    public abstract
+    @DrawableRes
+    int getImageIcon();
 
-    public  @StringRes int getDateType(){
-      return R.string.created_time;
+    public
+    @StringRes
+    int getDateType() {
+        return R.string.created_time;
     }
 
-    public abstract @StringRes int getContentType();
+    public abstract
+    @StringRes
+    int getContentType();
 
 
     public void setShareType(String shareType) {

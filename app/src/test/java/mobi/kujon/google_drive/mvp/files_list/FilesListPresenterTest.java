@@ -9,6 +9,7 @@ import java.util.List;
 import mobi.kujon.UnitTest;
 import mobi.kujon.google_drive.model.dto.file.FileDTO;
 import mobi.kujon.google_drive.model.dto.file.FileDtoFactory;
+import mobi.kujon.google_drive.ui.dialogs.sort_strategy.DateSortStrategy;
 import mobi.kujon.google_drive.utils.SchedulersHolder;
 import rx.Observable;
 import rx.schedulers.Schedulers;
@@ -39,7 +40,7 @@ public class FilesListPresenterTest extends UnitTest{
         List<FileDTO> filesDtoFromModel = FileDtoFactory.createListOfDTOFiles(FileListModelTest.provideKujonFiles(0, 10));
         Mockito.when(model.getFilesDto(Mockito.anyBoolean(),Mockito.anyInt())).thenReturn(Observable.just(filesDtoFromModel));
 
-        presenter.loadListOfFiles(true,FilesOwnerType.ALL);
+        presenter.loadListOfFiles(true,FilesOwnerType.ALL, new DateSortStrategy());
         Mockito.verify(filesView).listOfFilesLoaded(filesDtoFromModel);
     }
     @Test
@@ -50,7 +51,7 @@ public class FilesListPresenterTest extends UnitTest{
                 Observable.error(errorFromModel)
         );
 
-        presenter.loadListOfFiles(true,FilesOwnerType.ALL);
+        presenter.loadListOfFiles(true,FilesOwnerType.ALL, new DateSortStrategy());
         Mockito.verify(filesView).handleException(errorFromModel);
     }
 
@@ -62,7 +63,7 @@ public class FilesListPresenterTest extends UnitTest{
                 Observable.error(new NoFileException())
         );
 
-        presenter.loadListOfFiles(true,FilesOwnerType.ALL);
+        presenter.loadListOfFiles(true,FilesOwnerType.ALL, new DateSortStrategy());
         Mockito.verify(filesView).noFilesAdded();
     }
 
@@ -73,7 +74,7 @@ public class FilesListPresenterTest extends UnitTest{
               subject
         );
         List<FileDTO> filesDtoFromModel = FileDtoFactory.createListOfDTOFiles(FileListModelTest.provideKujonFiles(0, 10));
-        presenter.loadListOfFiles(true,FilesOwnerType.ALL);
+        presenter.loadListOfFiles(true,FilesOwnerType.ALL, new DateSortStrategy());
         subject.onNext(filesDtoFromModel);
         subject.onNext(filesDtoFromModel);
         Mockito.verify(filesView,times(2)).listOfFilesLoaded(filesDtoFromModel);

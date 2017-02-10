@@ -49,6 +49,7 @@ import mobi.kujon.google_drive.ui.dialogs.share_target.ChooseShareStudentsListen
 import mobi.kujon.google_drive.ui.dialogs.share_target.ShareTargetDialog;
 import mobi.kujon.google_drive.ui.fragments.ProvideInjector;
 import mobi.kujon.google_drive.ui.fragments.files.FilesListFragment;
+import mobi.kujon.google_drive.ui.util.AbstractPageSelectedListener;
 import mobi.kujon.google_drive.utils.PermissionAsk;
 
 
@@ -117,9 +118,7 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
         getSupportActionBar().setTitle("");
         toolbarTitle.setText(R.string.files_title);
         String[] titles = {getString(R.string.all_files), getString(R.string.my_files)};
-        FilesListFragment[] fragments = {FilesListFragment.newInstance(FilesOwnerType.ALL), FilesListFragment.newInstance(FilesOwnerType.MY)};
-        adapter = new FilesFragmentPagerAdapter(getSupportFragmentManager(), titles, fragments);
-        viewPager.setAdapter(adapter);
+        setUpViewPager(titles);
         apiClient = new GoogleApiClient.Builder(this)
                 .addApi(Drive.API)
                 .addScope(Drive.SCOPE_FILE)
@@ -141,6 +140,25 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
         presenter.subscribeToStream(this);
     }
 
+    private void setUpViewPager(String[] titles) {
+        FilesListFragment[] fragments = {FilesListFragment.newInstance(FilesOwnerType.ALL), FilesListFragment.newInstance(FilesOwnerType.MY)};
+        adapter = new FilesFragmentPagerAdapter(getSupportFragmentManager(), titles, fragments);
+        viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(new AbstractPageSelectedListener() {
+            @Override
+            public void onPageSelected(int position) {
+                invalidateFragmentMenus(position);
+            }
+        });
+        invalidateFragmentMenus(viewPager.getCurrentItem());
+    }
+
+    private void invalidateFragmentMenus(int position){
+        for(int i = 0; i < adapter.getCount(); i++){
+            adapter.getItem(i).setHasOptionsMenu(i == position);
+        }
+        invalidateOptionsMenu(); //or respectively its support method.
+    }
 
     private void startFileSearching() {
         IntentSender intentSender = Drive.DriveApi

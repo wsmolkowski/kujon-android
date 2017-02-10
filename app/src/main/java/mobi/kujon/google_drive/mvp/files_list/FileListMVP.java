@@ -5,6 +5,7 @@ import java.util.List;
 import mobi.kujon.google_drive.model.dto.file.FileDTO;
 import mobi.kujon.google_drive.mvp.ClearSubscriptions;
 import mobi.kujon.google_drive.mvp.HandleException;
+import mobi.kujon.google_drive.ui.dialogs.sort_strategy.SortStrategy;
 import rx.Observable;
 
 /**
@@ -15,7 +16,7 @@ public interface FileListMVP {
 
 
     interface LoadPresenter extends ClearSubscriptions {
-        void loadListOfFiles(boolean reload, @FilesOwnerType int fileType);
+        void loadListOfFiles(boolean reload, @FilesOwnerType int fileType, SortStrategy sortStrategy);
     }
 
 

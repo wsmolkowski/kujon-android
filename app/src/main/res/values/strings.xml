@@ -125,4 +125,8 @@
     <string name="log_by" translatable="false">Zaloguj się przez</string>
     <string name="choose_student">Wybierz osoby</string>
     <string name="upload_failed">nieudane wysyłanie</string>
+    <string name="sort_by">Sortuj</string>
+    <string name="sort_by_create_date">Sortuj po dacie dodania</string>
+    <string name="sort_by_filename">Sortuj po nazwie pliku</string>
+    <string name="sort_by_author">Sortuj po włascicielu pliku</string>
 </resources>
