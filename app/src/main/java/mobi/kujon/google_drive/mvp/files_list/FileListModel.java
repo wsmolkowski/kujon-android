@@ -8,7 +8,6 @@ import mobi.kujon.google_drive.network.unwrapped_api.GetFilesApi;
 import mobi.kujon.google_drive.utils.FilesFilter;
 import mobi.kujon.google_drive.utils.SchedulersHolder;
 import rx.Observable;
-import rx.exceptions.Exceptions;
 import rx.subjects.PublishSubject;
 
 /**
@@ -31,8 +30,6 @@ public class FileListModel implements FileListMVP.Model {
     }
 
 
-
-
     @Override
     public synchronized Observable<List<FileDTO>> getFilesDto(boolean reload, @FilesOwnerType int fileType) {
         if (subject == null || reload) {
@@ -45,10 +42,10 @@ public class FileListModel implements FileListMVP.Model {
                             subject.onNext(FileDtoFactory.createListOfDTOFiles(myFilesFilter.filterFiles(it, fileType)));
                             subject.onCompleted();
                         } else {
-                            subject.onError(Exceptions.propagate(new NoFileException()));
+                            subject.onError(new NoFileException());
                         }
                     }, error -> {
-                        subject.onError(Exceptions.propagate(new NoFileException()));
+                        subject.onError(error);
                     });
 
         }

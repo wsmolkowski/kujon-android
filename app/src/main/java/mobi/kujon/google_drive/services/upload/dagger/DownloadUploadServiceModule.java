@@ -28,8 +28,8 @@ public class DownloadUploadServiceModule {
 
     @Provides
     @ActivityScope
-    public UploadFileMVP.Presenter provideUploadPresenter(SchedulersHolder schedulersHolder, FileUpload fileUpload){
-        return new UploadFilePresenter(view,fileUpload,schedulersHolder);
+    public UploadFileMVP.Presenter provideUploadPresenter(SchedulersHolder schedulersHolder, FileUpload fileUpload,FileStreamUpdateMVP.Model model){
+        return new UploadFilePresenter(view,fileUpload,schedulersHolder,model);
     }
 
     @ActivityScope

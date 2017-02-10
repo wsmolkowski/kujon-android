@@ -34,7 +34,7 @@ public class ProgressRequestBody extends RequestBody {
     public long contentLength() throws IOException {
       return bytes.length;
     }
-    private int lastValue = 50;
+    private int lastValue = 67;
     @Override
     public void writeTo(BufferedSink sink) throws IOException {
         long fileLength = bytes.length;
@@ -45,7 +45,7 @@ public class ProgressRequestBody extends RequestBody {
         try {
             int read;
             while ((read = in.read(buffer)) != -1) {
-                int newValue = 67 + (int) (33 * uploaded / fileLength);
+                int newValue = 67 + Math.round(33 * uploaded / fileLength);
                 if(newValue>lastValue){
                     mListener.onProgressUpdate(newValue);
                     lastValue =newValue;
@@ -53,8 +53,8 @@ public class ProgressRequestBody extends RequestBody {
                 uploaded += read;
                 sink.write(buffer, 0, read);
             }
-            if(lastValue<100)
-            mListener.onProgressUpdate(100);
+//            if(lastValue<100)
+//            mListener.onProgressUpdate(100);
         } finally {
             in.close();
 

@@ -124,4 +124,5 @@
     <string name="google" translatable="false">Google</string>
     <string name="log_by" translatable="false">Zaloguj się przez</string>
     <string name="choose_student">Wybierz osoby</string>
+    <string name="upload_failed">nieudane wysyłanie</string>
 </resources>

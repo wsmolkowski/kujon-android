@@ -59,9 +59,13 @@ public class DowloadProgresView extends RelativeLayout {
         this.setPadding(padding, padding, padding, padding);
     }
 
-    public void updateProggress(FileUpdateDto fileUpdateDto) {
+    public boolean updateProggress(FileUpdateDto fileUpdateDto) {
+        boolean returnValue =false;
         this.textView.setText(fileUpdateDto.getFileName());
-        this.progressBar.setProgress(fileUpdateDto.getProgress());
+        if(this.progressBar.getProgress()<fileUpdateDto.getProgress()){
+            returnValue= true;
+            this.progressBar.setProgress(fileUpdateDto.getProgress());
+        }
 
         cancelButton.setOnClickListener(v -> {
             if (cancelModel != null) {
@@ -71,10 +75,15 @@ public class DowloadProgresView extends RelativeLayout {
         if (fileUpdateDto.getProgress() > 99) {
             cancelButton.setVisibility(GONE);
         }
+        return returnValue;
     }
 
     public void setClick(ClickMeListener click) {
         this.setOnClickListener(view -> click.iWasClicked());
+    }
+
+    public void setError(FileUpdateDto fileUpdateDto) {
+        this.textView.setText(fileUpdateDto.getFileName() +  " " + getResources().getString(R.string.upload_failed));
     }
 
     interface ClickMeListener {

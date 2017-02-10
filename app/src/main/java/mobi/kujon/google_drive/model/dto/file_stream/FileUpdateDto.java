@@ -6,6 +6,7 @@ package mobi.kujon.google_drive.model.dto.file_stream;
 
 public class FileUpdateDto {
 
+    private  boolean error;
     private String fileName;
     private int progress;
     private String id;
@@ -17,6 +18,20 @@ public class FileUpdateDto {
         this.id = id;
     }
 
+    public FileUpdateDto(String fileName,int progress,boolean ended){
+        this(fileName,progress);
+        this.ended = ended;
+    }
+
+    public FileUpdateDto(String title, int i, boolean b, boolean b1) {
+        this(title,i,b);
+        this.error =true;
+    }
+
+
+    public boolean isError() {
+        return error;
+    }
 
     public String getFileName() {
         return fileName;
