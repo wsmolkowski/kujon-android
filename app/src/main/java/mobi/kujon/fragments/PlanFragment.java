@@ -65,7 +65,11 @@ public class PlanFragment extends BaseFragment implements MonthLoader.MonthChang
 
     @BindColor(R.color.dark)
     @ColorInt int dark;
+    @BindColor(R.color.today_background_color)
+    @ColorInt int todayColor;
 
+    @BindColor(android.R.color.white)
+    @ColorInt int otherDays;
 
     @Inject
     KujonBackendApi backendApi;
@@ -112,11 +116,14 @@ public class PlanFragment extends BaseFragment implements MonthLoader.MonthChang
         weekView.setDefaultEventColor(eventColor);
         weekView.setNowLineColor(darkBlueSky);
         weekView.setTodayHeaderTextColor(darkBlueSky);
+        weekView.setTodayBackgroundColor(todayColor);
+        weekView.setDayBackgroundColor(otherDays);
         weekView.setEventTextColor(dark);
+        weekView.setNumberOfVisibleDays(3);
         weekView.setDateTimeInterpreter(new DateTimeInterpreter() {
             public String interpretDate(Calendar date) {
                 try {
-                    SimpleDateFormat e = new SimpleDateFormat("EEE dd.M", Locale.getDefault());
+                    SimpleDateFormat e = new SimpleDateFormat("EEE dd.MM.", Locale.getDefault());
                     return e.format(date.getTime()).toUpperCase();
                 } catch (Exception var3) {
                     var3.printStackTrace();

@@ -12,7 +12,7 @@
         app:columnGap="8dp"
         app:dayBackgroundColor="#05000000"
         app:eventTextColor="@color/dark"
-        app:headerColumnBackground="#ffffffff"
+        app:headerColumnBackground="#FFFFFFFF"
         app:headerColumnPadding="8dp"
         app:headerColumnTextColor="#8f000000"
         app:headerRowBackgroundColor="#ffefefef"

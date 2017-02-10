@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">@color/dark_blue_sky</color>
-    <color name="colorPrimaryDark">@color/dark_blue_sky</color>
+    <color name="colorPrimaryDark">@color/login_background_dark</color>
     <color name="primary_light">@color/white</color>
     <color name="colorAccent">@color/dark_blue_sky</color>
     <color name="primary_text">@color/dark</color>
@@ -29,4 +29,5 @@
     <color name="login_background">#37afcd</color>
     <color name="login_background_dark">#38a7c2</color>
     <color name="white_70">#B3FFFFFF</color>
+    <color name="today_background_color">#Fafafa</color>
 </resources>
