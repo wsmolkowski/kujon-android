@@ -24,5 +24,6 @@
     <dimen name="double_typ_margin">16dp</dimen>
     <dimen name="one_and_half_typ_margin">12dp</dimen>
     <dimen name="cell_size_typ">48dp</dimen>
+    <dimen name="title_font_size">17sp</dimen>
 
 </resources>
