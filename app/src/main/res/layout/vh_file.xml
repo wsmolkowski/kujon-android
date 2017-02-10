@@ -71,6 +71,7 @@
                 android:layout_marginLeft="@dimen/vh_file_padding_med"
                 android:layout_marginStart="@dimen/vh_file_padding_med"
                 android:text="Wszyscy"
+                android:drawablePadding="4dp"
                 tools:drawableLeft="@drawable/share_with_chosen"
                 tools:drawableStart="@drawable/share_with_chosen" />
         </LinearLayout>
