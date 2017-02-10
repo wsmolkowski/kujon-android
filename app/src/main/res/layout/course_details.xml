@@ -139,7 +139,7 @@
 
                 <LinearLayout
                     android:id="@+id/course_lecturers"
-                    style="@style/Regular.Entry"
+                    style="@style/Regular.Entry.Linear"
                     android:orientation="vertical"
                     tools:text='Lorem ipsum'/>
 
@@ -150,7 +150,7 @@
 
                 <LinearLayout
                     android:id="@+id/course_coordinators"
-                    style="@style/Regular.Entry"
+                    style="@style/Regular.Entry.Linear"
                     android:orientation="vertical"
                     tools:text='Lorem ipsum'/>
 
@@ -161,7 +161,7 @@
 
                 <LinearLayout
                     android:id="@+id/course_students"
-                    style="@style/Regular.Entry"
+                    style="@style/Regular.Entry.Linear"
                     android:orientation="vertical"
                     tools:text='Lorem ipsum'/>
 
