@@ -22,11 +22,10 @@ public class FilesListPresenter extends AbstractClearSubsriptions implements Fil
 
     @Override
     public void loadListOfFiles(boolean reload, @FilesOwnerType int fileType, SortStrategy sortStrategy) {
+        super.clearSubscriptions();
         addToSubsriptionList(model.getFilesDto(reload, fileType)
                 .subscribeOn(schedulersHolder.subscribe())
-                .map((fileDTOs) -> {
-                    return sortStrategy.sort(fileDTOs);
-                })
+                .map((fileDTOs) -> sortStrategy.sort(fileDTOs))
                 .observeOn(schedulersHolder.observ())
                 .subscribe(it -> filesView.listOfFilesLoaded(it), error -> {
                     if (error instanceof NoFileException || error.getCause() instanceof NoFileException) {
@@ -35,5 +34,11 @@ public class FilesListPresenter extends AbstractClearSubsriptions implements Fil
                         filesView.handleException(error);
                     }
                 }));
+    }
+
+    @Override
+    public void clearSubscriptions() {
+        super.clearSubscriptions();
+        model.clear();
     }
 }

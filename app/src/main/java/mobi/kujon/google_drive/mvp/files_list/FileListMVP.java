@@ -22,6 +22,7 @@ public interface FileListMVP {
 
     interface Model {
         Observable<List<FileDTO>> getFilesDto(boolean reload, @FilesOwnerType int fileType);
+        void clear();
     }
 
     interface FilesView extends HandleException {

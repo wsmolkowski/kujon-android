@@ -133,7 +133,7 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
                 }
         );
         uploadLayout.setUpdateFileListener(() -> {
-            this.adapter.refresh(viewPager.getCurrentItem());
+            this.adapter.refresh();
         });
         this.uploadLayout.setCancelModel(cancelModel);
         apiClient.connect();
@@ -349,6 +349,6 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
     @Override
     public void fileDeleted() {
         this.setLoading(false);
-        this.adapter.refresh(viewPager.getCurrentItem());
+        this.adapter.refresh();
     }
 }

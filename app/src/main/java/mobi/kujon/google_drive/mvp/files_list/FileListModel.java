@@ -27,34 +27,39 @@ public class FileListModel implements FileListMVP.Model {
         this.getFilesApi = getFilesApi;
         this.myFilesFilter = myFilesFilter;
         this.schedulersHolder = schedulersHolder;
+        this.subject = PublishSubject.create();
     }
 
 
+    private boolean isApiCalled;
+
     @Override
     public synchronized Observable<List<FileDTO>> getFilesDto(boolean reload, @FilesOwnerType int fileType) {
-        if (subject == null || reload) {
-            createShot(reload, fileType);
-        }else if(subject.hasCompleted()){
-            createShot(reload, fileType);
+        if (!isApiCalled) {
+            isApiCalled = true;
+            getFilesApi.getFiles(reload, courseId, termId)
+                    .subscribeOn(schedulersHolder.subscribe())
+                    .observeOn(schedulersHolder.subscribe())
+                    .subscribe(it -> {
+                        if (it.size() != 0) {
+                            subject.onNext(FileDtoFactory.createListOfDTOFiles(myFilesFilter.filterFiles(it, fileType)));
+                        } else {
+                            subject.onError(new NoFileException());
+                            this.subject = PublishSubject.create();
+                        }
+                        isApiCalled = false;
+                    }, error -> {
+                        isApiCalled = false;
+                        subject.onError(error);
+                        this.subject = PublishSubject.create();
+                    });
         }
         return subject;
     }
 
-    private void createShot(boolean reload, @FilesOwnerType int fileType) {
-        subject = PublishSubject.create();
-        getFilesApi.getFiles(reload, courseId, termId)
-                .subscribeOn(schedulersHolder.subscribe())
-                .observeOn(schedulersHolder.subscribe())
-                .subscribe(it -> {
-                    if (it.size() != 0) {
-                        subject.onNext(FileDtoFactory.createListOfDTOFiles(myFilesFilter.filterFiles(it, fileType)));
-                        subject.onCompleted();
-                    } else {
-                        subject.onError(new NoFileException());
-                    }
-                }, error -> {
-                    subject.onError(error);
-                });
+    @Override
+    public void clear() {
+        subject.onCompleted();
     }
 
 
