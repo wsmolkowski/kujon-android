@@ -25,6 +25,8 @@
         android:id="@+id/toolbar_title"
         style="@style/Semibold"
         tools:text="Toolbar Title"
+        android:gravity="left"
+        android:layout_gravity="left"
         android:maxLines="1"
         android:ellipsize="end"/>
 </android.support.v7.widget.Toolbar>

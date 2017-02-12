@@ -79,7 +79,7 @@
     <string name="file_details">File details</string>
     <string name="add_to_google_drive">Add to Google Drive</string>
     <string name="delete">Delete</string>
-    <string name="share">SHARE</string>
+    <string name="share">SAVE</string>
     <string name="file_name">File Name</string>
     <string name="all_files">All files</string>
     <string name="by">by</string>
@@ -109,7 +109,7 @@
     <string name="are_you_sure">Are you sure</string>
     <string name="yes">Yes</string>
     <string name="you_want_to_delete_this_file">You want do delete this file ?</string>
-    <string name="choose_student">Choose students</string>
+    <string name="choose_student">Share to</string>
     <string name="upload_failed">upload failed</string>
     <string name="sort_by">Sort</string>
     <string name="sort_by_author">Sort by owner</string>

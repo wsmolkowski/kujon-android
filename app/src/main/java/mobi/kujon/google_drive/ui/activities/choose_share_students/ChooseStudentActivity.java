@@ -4,7 +4,6 @@ package mobi.kujon.google_drive.ui.activities.choose_share_students;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -28,12 +27,11 @@ import mobi.kujon.google_drive.model.dto.StudentShareDto;
 import mobi.kujon.google_drive.model.dto.file_share.AskForStudentDto;
 import mobi.kujon.google_drive.mvp.HandleException;
 import mobi.kujon.google_drive.mvp.choose_students.ChooseStudentsMVP;
-import mobi.kujon.google_drive.network.KujonException;
+import mobi.kujon.google_drive.ui.activities.BaseFileActivity;
 import mobi.kujon.google_drive.ui.activities.choose_share_students.recycler_classes.ChooseStudentAdapter;
 import mobi.kujon.google_drive.ui.dialogs.share_target.ShareTargetDialog;
-import mobi.kujon.utils.ErrorHandlerUtil;
 
-public class ChooseStudentActivity extends AppCompatActivity implements HandleException, ChooseStudentsMVP.View {
+public class ChooseStudentActivity extends BaseFileActivity implements HandleException, ChooseStudentsMVP.View {
 
     public static final int CHOOSE_STUDENTS_REQUEST = 1;
     public static final String CHOOSE_STUDENTS_RESPONSE = "RESPONSE";
@@ -75,7 +73,7 @@ public class ChooseStudentActivity extends AppCompatActivity implements HandleEx
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         adapter = new ChooseStudentAdapter(new ArrayList<>());
         recyclerView.setAdapter(adapter);
-        swipeRefreshLayout.setRefreshing(true);
+        this.setLoading(true);
         presenter.loadListOfStudents(new AskForStudentDto(courseId, termId, null), false);
         swipeRefreshLayout.setOnRefreshListener(() -> presenter.loadListOfStudents(new AskForStudentDto(courseId, termId, null), true));
         cancel.setOnClickListener(v -> {
@@ -121,14 +119,7 @@ public class ChooseStudentActivity extends AppCompatActivity implements HandleEx
     }
 
     @Override
-    public void handleException(Throwable throwable) {
-        swipeRefreshLayout.setRefreshing(false);
-        try {
-            throw  throwable;
-        }catch (KujonException e){
-            ErrorHandlerUtil.handleKujonError(e);
-        }catch (Throwable t){
-            ErrorHandlerUtil.handleError(t);
-        }
+    protected void setLoading(boolean t) {
+        swipeRefreshLayout.setRefreshing(t);
     }
 }

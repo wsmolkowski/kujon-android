@@ -92,7 +92,7 @@
     <string name="file_details">Szczegóły pliku</string>
     <string name="add_to_google_drive">Dodaj do Google Drive</string>
     <string name="delete">Usuń</string>
-    <string name="share">ZMIEŃ</string>
+    <string name="share">ZAPISZ</string>
     <string name="created_time">Stworzony</string>
     <string name="by">przez</string>
     <string name="everyone">Wszyscy</string>
@@ -123,7 +123,7 @@
     <string name="yes">Tak</string>
     <string name="google" translatable="false">Google</string>
     <string name="log_by" translatable="false">Zaloguj się przez</string>
-    <string name="choose_student">Wybierz osoby</string>
+    <string name="choose_student">Udostępnij osobom</string>
     <string name="upload_failed">nieudane wysyłanie</string>
     <string name="sort_by">Sortuj</string>
     <string name="sort_by_create_date">Sortuj po dacie dodania</string>
