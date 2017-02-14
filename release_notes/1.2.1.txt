@@ -1,0 +1,19 @@
+#218
+#220
+#223
+#227
+#219
+#221
+#222
+#217
+
+poprawki designów
+Layout screen -> całość
+Search Screen -> zmiana buttonów
+Teacher Details - > zmiany kolejnosci
+
+w całej aplikacji
+zmiana tytułów na androidowe, przesunięte w lewo
+Szare tło z podpisami ( kierunki , jednostki etc) ujednolicone, text przesunięty do lewej strony
+Klikalne komórki -> usunięta strzałka w prawo, wyrównane, dodanie clikalnego tła
+

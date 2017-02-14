@@ -119,4 +119,6 @@
     <string name="google_drive_file">Add file from Google Drive</string>
     <string name="get_file">Get file</string>
     <string name="owner">File Owner</string>
+    <string name="course_file">Course</string>
+    <string name="term">Term</string>
 </resources>
