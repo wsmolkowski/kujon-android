@@ -90,7 +90,7 @@ public abstract class FileDTO {
     }
 
     public String getDateCreated(Resources resources) {
-            return new StringBuilder().append(resources.getString(R.string.created_time)).append(" ").append(dateCreated).toString();
+            return dateCreated;
     }
 
 

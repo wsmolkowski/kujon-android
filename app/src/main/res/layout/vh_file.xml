@@ -6,14 +6,12 @@
     android:layout_height="wrap_content"
     android:background="?selectableItemBackground"
     android:gravity="center_vertical"
-    android:paddingBottom="@dimen/vh_file_padding_large"
-    android:paddingEnd="@dimen/vh_file_padding_small"
-    android:paddingLeft="@dimen/vh_file_padding_large"
-    android:paddingRight="@dimen/vh_file_padding_small"
-    android:paddingStart="@dimen/vh_file_padding_large"
+
     android:paddingTop="@dimen/vh_file_padding_large">
 
     <ImageView
+        android:layout_marginLeft="@dimen/vh_file_padding_large"
+        android:layout_marginStart="@dimen/vh_file_padding_large"
         android:id="@+id/vh_file_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -28,6 +26,8 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/vh_file_padding_small"
+        android:layout_marginEnd="@dimen/vh_file_padding_small"
         tools:text="573 kB" />
 
     <LinearLayout
@@ -35,10 +35,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginEnd="@dimen/vh_file_padding_large"
-        android:layout_marginLeft="@dimen/vh_file_padding_large"
-        android:layout_marginRight="@dimen/vh_file_padding_large"
-        android:layout_marginStart="@dimen/vh_file_padding_large"
+        android:layout_marginEnd="@dimen/vh_file_padding_med"
+        android:layout_marginLeft="@dimen/vh_file_padding_med"
+        android:layout_marginRight="@dimen/vh_file_padding_med"
+        android:layout_marginStart="@dimen/vh_file_padding_med"
         android:layout_toEndOf="@id/vh_file_icon"
         android:layout_toLeftOf="@+id/vh_file_file_size"
         android:layout_toRightOf="@id/vh_file_icon"
@@ -70,20 +70,24 @@
                 style="@style/vh_file_details_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="Dodano 8.20.1201" />
+                tools:text="Dodano 8.20.1201 17:75" />
 
             <TextView
                 android:id="@+id/vh_file_share"
                 style="@style/vh_file_details_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/vh_file_padding_med"
-                android:layout_marginStart="@dimen/vh_file_padding_med"
+                android:layout_marginLeft="@dimen/vh_file_padding_small"
+                android:layout_marginStart="@dimen/vh_file_padding_small"
                 android:drawablePadding="4dp"
                 android:text="Wszyscy"
                 tools:drawableLeft="@drawable/share_with_chosen"
                 tools:drawableStart="@drawable/share_with_chosen" />
         </LinearLayout>
     </LinearLayout>
+    <View
+        android:layout_marginTop="@dimen/vh_file_padding_large"
+        android:layout_below="@+id/info_content"
+        style="@style/divider"/>
 
 </RelativeLayout>
