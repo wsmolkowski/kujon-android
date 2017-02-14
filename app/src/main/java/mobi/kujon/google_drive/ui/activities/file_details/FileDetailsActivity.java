@@ -42,6 +42,7 @@ public class FileDetailsActivity extends BaseFileActivity implements FileDetails
     public static final String FILE_ID_KEY = "FILE_ID";
 
 
+
     @Bind(R.id.toolbar)
     Toolbar toolbar;
     @Bind(R.id.cancel)
