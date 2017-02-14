@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_margin="8dp"
+    android:background="@android:color/white">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/textDialogWithDrawable"
+        android:drawableStart="@drawable/share_with_everyone"
+        android:drawableLeft="@drawable/share_with_everyone"
+        android:text="@string/google_drive_file"
+        android:paddingTop="@dimen/big_margin"
+        android:id="@+id/google_drive_source"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/textDialogWithDrawable"
+        android:drawableStart="@drawable/share_with_chosen"
+        android:drawableLeft="@drawable/share_with_chosen"
+        android:text="@string/device_file"
+        android:paddingBottom="@dimen/big_margin"
+        android:id="@+id/this_device_file"/>
+
+</LinearLayout>

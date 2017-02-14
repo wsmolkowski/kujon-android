@@ -129,4 +129,7 @@
     <string name="sort_by_create_date">Sortuj po dacie dodania</string>
     <string name="sort_by_filename">Sortuj po nazwie pliku</string>
     <string name="sort_by_author">Sortuj po włascicielu pliku</string>
+    <string name="get_file">Wybierz plik</string>
+    <string name="google_drive_file">Dodaj plik z Google Drive</string>
+    <string name="device_file">Dodaj plik z tego urządzenia</string>
 </resources>

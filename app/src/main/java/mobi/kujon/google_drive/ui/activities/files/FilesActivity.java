@@ -3,6 +3,8 @@ package mobi.kujon.google_drive.ui.activities.files;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -22,6 +24,7 @@ import com.google.android.gms.drive.DriveFolder;
 import com.google.android.gms.drive.DriveId;
 import com.google.android.gms.drive.OpenFileActivityBuilder;
 
+import java.io.File;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -44,6 +47,8 @@ import mobi.kujon.google_drive.services.ServiceOpener;
 import mobi.kujon.google_drive.ui.activities.BaseFileActivity;
 import mobi.kujon.google_drive.ui.activities.file_details.FileDetailsActivity;
 import mobi.kujon.google_drive.ui.custom.UploadLayout;
+import mobi.kujon.google_drive.ui.dialogs.choose_file_source.ChooseFileSourceDialog;
+import mobi.kujon.google_drive.ui.dialogs.choose_file_source.ChooseFileSourceListener;
 import mobi.kujon.google_drive.ui.dialogs.file_info_dialog.FileActionListener;
 import mobi.kujon.google_drive.ui.dialogs.share_target.ChooseShareStudentsListener;
 import mobi.kujon.google_drive.ui.dialogs.share_target.ShareTargetDialog;
@@ -53,17 +58,21 @@ import mobi.kujon.google_drive.ui.util.AbstractPageSelectedListener;
 import mobi.kujon.google_drive.utils.PermissionAsk;
 
 
+
+
 public class FilesActivity extends BaseFileActivity implements ProvideInjector<FilesListFragment>,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         FileStreamUpdateMVP.View,
-        ChooseShareStudentsListener, FileActionListener, FileListMVP.DeleteView {
+        ChooseShareStudentsListener, FileActionListener, FileListMVP.DeleteView, ChooseFileSourceListener {
 
     private static final int RESOLVE_CONNECTION_REQUEST_CODE = 539;
     private static final int REQUEST_CODE_OPENER = 1;
     public static final String COURSE_ID_KEY = "COURSE_ID_KEY";
     public static final String TERM_ID_KEY = "TERM_ID_KEY";
     public static final int STORAGE_PERSMISSION = 324;
+    private static final int FILE_RESULT_CODE = 789;
+    public static final String CHOOSE_SOURCE = "Choose_SOURCE";
     private FileActivityInjector fileActivityInjector;
     private FilesFragmentPagerAdapter adapter;
     private FileUploadInfoDto fileToUploadId;
@@ -129,7 +138,9 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
         tabLayout.setupWithViewPager(viewPager);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
-                    startFileSearching();
+                    ChooseFileSourceDialog chooseFileSourceDialog = ChooseFileSourceDialog.newInstance();
+                    chooseFileSourceDialog.setUpListener(this);
+                    chooseFileSourceDialog.show(getSupportFragmentManager(), CHOOSE_SOURCE);
                 }
         );
         uploadLayout.setUpdateFileListener(() -> {
@@ -153,11 +164,11 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
         invalidateFragmentMenus(viewPager.getCurrentItem());
     }
 
-    private void invalidateFragmentMenus(int position){
-        for(int i = 0; i < adapter.getCount(); i++){
+    private void invalidateFragmentMenus(int position) {
+        for (int i = 0; i < adapter.getCount(); i++) {
             adapter.getItem(i).setHasOptionsMenu(i == position);
         }
-        invalidateOptionsMenu(); //or respectively its support method.
+        invalidateOptionsMenu();
     }
 
     private void startFileSearching() {
@@ -227,6 +238,13 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
                 }
             }
             break;
+            case FILE_RESULT_CODE:{
+                if (resultCode == RESULT_OK) {
+                    Uri uriToFile = data.getData();
+                    File file  = new File(uriToFile.toString());
+                }
+            }
+            break;
         }
     }
 
@@ -270,7 +288,7 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
             try {
                 connectionResult.startResolutionForResult(this, RESOLVE_CONNECTION_REQUEST_CODE);
             } catch (IntentSender.SendIntentException e) {
-                // Unable to resolve, message user appropriately
+                e.printStackTrace();
             }
         } else {
             GoogleApiAvailability.getInstance().getErrorDialog(this, connectionResult.getErrorCode(), 0).show();
@@ -279,7 +297,6 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
 
     @Override
     public void onUpdate(FileUpdateDto fileUpdateDto) {
-        Log.d(fileUpdateDto.getFileName(), String.format("Loading progress: %d percent", fileUpdateDto.getProgress()));
         this.uploadLayout.update(fileUpdateDto);
     }
 
@@ -309,14 +326,14 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
     @Override
     public void onFileAddToGoogleDrive(FileUploadInfoDto fileId) {
         this.fileToUploadId = fileId;
-        doOnAllPermisions();
+        doOnAllPermisions(this::askForFolder);
 
     }
 
-    private void doOnAllPermisions() {
+    private void doOnAllPermisions(LamdaFunciton lamdaFunciton) {
         if (PermissionAsk.askForPermission(this, getString(R.string.storage_permission), STORAGE_PERSMISSION) &&
                 PermissionAsk.askForPermission(this, getString(R.string.storage__read_permission), STORAGE_PERSMISSION)) {
-            askForFolder();
+            lamdaFunciton.doIt();
         }
     }
 
@@ -336,8 +353,8 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == STORAGE_PERSMISSION) {
-            doOnAllPermisions();
+        if (requestCode == STORAGE_PERSMISSION && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            askForFolder();
         }
     }
 
@@ -350,5 +367,21 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
     public void fileDeleted() {
         this.setLoading(false);
         this.adapter.refresh();
+    }
+
+    @Override
+    public void onGoogleDriveChoose() {
+        startFileSearching();
+    }
+
+    @Override
+    public void onDeviceFileChoose() {
+        doOnAllPermisions(this::askForFileOnDevice);
+    }
+
+    private void askForFileOnDevice() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("*/*");
+        startActivityForResult(Intent.createChooser(intent, getString(R.string.get_file)), FILE_RESULT_CODE);
     }
 }

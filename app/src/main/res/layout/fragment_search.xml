@@ -108,8 +108,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:drawableLeft="@drawable/search"
-                    android:src="@drawable/search"
+                    style="@style/search_button_style"
                     android:text="Szukaj" />
 
             </LinearLayout>
