@@ -12,7 +12,7 @@ import mobi.kujon.google_drive.mvp.google_drive_api.GoogleDriveDowloadMVP;
 import mobi.kujon.google_drive.mvp.google_drive_api.GoogleDriveDowloadModel;
 import mobi.kujon.google_drive.mvp.upload_file.UploadFileMVP;
 import mobi.kujon.google_drive.mvp.upload_file.UploadFilePresenter;
-import mobi.kujon.google_drive.network.unwrapped_api.FileUpload;
+import mobi.kujon.google_drive.network.unwrapped_api.FileUploadApi;
 import mobi.kujon.google_drive.utils.SchedulersHolder;
 
 /**
@@ -28,8 +28,8 @@ public class DownloadUploadServiceModule {
 
     @Provides
     @ActivityScope
-    public UploadFileMVP.Presenter provideUploadPresenter(SchedulersHolder schedulersHolder, FileUpload fileUpload,FileStreamUpdateMVP.Model model){
-        return new UploadFilePresenter(view,fileUpload,schedulersHolder,model);
+    public UploadFileMVP.Presenter provideUploadPresenter(SchedulersHolder schedulersHolder, FileUploadApi fileUploadApi, FileStreamUpdateMVP.Model model){
+        return new UploadFilePresenter(view, fileUploadApi,schedulersHolder,model);
     }
 
     @ActivityScope

@@ -6,7 +6,7 @@ import mobi.kujon.google_drive.mvp.file_stream_update.FileStreamUpdateMVP;
 import mobi.kujon.google_drive.network.unwrapped_api.CoursesApi;
 import mobi.kujon.google_drive.network.unwrapped_api.DeleteFileApi;
 import mobi.kujon.google_drive.network.unwrapped_api.FileDownloadApi;
-import mobi.kujon.google_drive.network.unwrapped_api.FileUpload;
+import mobi.kujon.google_drive.network.unwrapped_api.FileUploadApi;
 import mobi.kujon.google_drive.network.unwrapped_api.GetFilesApi;
 import mobi.kujon.google_drive.network.unwrapped_api.SemesterApi;
 import mobi.kujon.google_drive.network.unwrapped_api.ShareFileApi;
@@ -27,7 +27,7 @@ public interface FilesComponent {
     ShareFileApi provideShareFile() ;
     FileDownloadApi provideFileDownload() ;
     DeleteFileApi provideDeleteFile() ;
-    FileUpload provideUploadFile() ;
+    FileUploadApi provideUploadFile() ;
     CourseDetailsApi provideCourseDetailsApi();
     FileStreamUpdateMVP.Model provideModel();
     FileStreamUpdateMVP.CancelModel provideCancelModel();

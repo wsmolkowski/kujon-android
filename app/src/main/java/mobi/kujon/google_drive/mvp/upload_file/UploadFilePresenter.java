@@ -5,7 +5,7 @@ import mobi.kujon.google_drive.model.dto.file_upload.DataForFileUpload;
 import mobi.kujon.google_drive.model.dto.file_upload.FileUploadDto;
 import mobi.kujon.google_drive.mvp.AbstractClearSubsriptions;
 import mobi.kujon.google_drive.mvp.file_stream_update.FileStreamUpdateMVP;
-import mobi.kujon.google_drive.network.unwrapped_api.FileUpload;
+import mobi.kujon.google_drive.network.unwrapped_api.FileUploadApi;
 import mobi.kujon.google_drive.utils.SchedulersHolder;
 
 /**
@@ -15,20 +15,20 @@ import mobi.kujon.google_drive.utils.SchedulersHolder;
 public class UploadFilePresenter extends AbstractClearSubsriptions implements UploadFileMVP.Presenter {
 
     private UploadFileMVP.View view;
-    private FileUpload fileUpload;
+    private FileUploadApi fileUploadApi;
     private SchedulersHolder schedulersHolder;
     private FileStreamUpdateMVP.Model model;
 
-    public UploadFilePresenter(UploadFileMVP.View view, FileUpload fileUpload, SchedulersHolder schedulersHolder,FileStreamUpdateMVP.Model model) {
+    public UploadFilePresenter(UploadFileMVP.View view, FileUploadApi fileUploadApi, SchedulersHolder schedulersHolder, FileStreamUpdateMVP.Model model) {
         this.view = view;
-        this.fileUpload = fileUpload;
+        this.fileUploadApi = fileUploadApi;
         this.schedulersHolder = schedulersHolder;
         this.model = model;
     }
 
     @Override
     public void uploadFile(DataForFileUpload dataForFileUpload, FileUploadDto fileUploadDto) {
-        addToSubsriptionList(fileUpload.uploadFile(fileUploadDto, dataForFileUpload)
+        addToSubsriptionList(fileUploadApi.uploadFile(fileUploadDto, dataForFileUpload)
                 .subscribeOn(schedulersHolder.subscribe())
                 .observeOn(schedulersHolder.observ())
                 .subscribe(it -> {

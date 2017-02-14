@@ -15,7 +15,7 @@ import mobi.kujon.google_drive.network.api.ShareFileKujon;
 import mobi.kujon.google_drive.network.facade.CoursesApiFacade;
 import mobi.kujon.google_drive.network.facade.DeleteFileApiFacade;
 import mobi.kujon.google_drive.network.facade.FileDownloadApiFacade;
-import mobi.kujon.google_drive.network.facade.FileUploadFacade;
+import mobi.kujon.google_drive.network.facade.FileUploadApiFacade;
 import mobi.kujon.google_drive.network.facade.GetFilesFacade;
 import mobi.kujon.google_drive.network.facade.SemsterApiFacade;
 import mobi.kujon.google_drive.network.facade.ShareFileFacade;
@@ -23,7 +23,7 @@ import mobi.kujon.google_drive.network.facade.CourseDetailsFacade;
 import mobi.kujon.google_drive.network.unwrapped_api.CoursesApi;
 import mobi.kujon.google_drive.network.unwrapped_api.DeleteFileApi;
 import mobi.kujon.google_drive.network.unwrapped_api.FileDownloadApi;
-import mobi.kujon.google_drive.network.unwrapped_api.FileUpload;
+import mobi.kujon.google_drive.network.unwrapped_api.FileUploadApi;
 import mobi.kujon.google_drive.network.unwrapped_api.GetFilesApi;
 import mobi.kujon.google_drive.network.unwrapped_api.SemesterApi;
 import mobi.kujon.google_drive.network.unwrapped_api.ShareFileApi;
@@ -71,8 +71,8 @@ public class FilesApiFacadesModule {
     }
 
     @Provides
-    FileUpload provideUploadFile(Retrofit retrofit, MultipartUtils multipartUtils, FileStreamUpdateMVP.Model model) {
-        return new FileUploadFacade(retrofit.create(FileUploadKujon.class), multipartUtils, model);
+    FileUploadApi provideUploadFile(Retrofit retrofit, MultipartUtils multipartUtils, FileStreamUpdateMVP.Model model) {
+        return new FileUploadApiFacade(retrofit.create(FileUploadKujon.class), multipartUtils, model);
     }
 
     @Provides

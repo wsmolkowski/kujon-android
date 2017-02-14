@@ -9,7 +9,7 @@ import mobi.kujon.google_drive.model.dto.file_upload.DataForFileUpload;
 import mobi.kujon.google_drive.model.dto.file_upload.FileUploadDto;
 import rx.Observable;
 
-public interface FileUpload {
+public interface FileUploadApi {
 
     Observable<List<UploadedFile>> uploadFile(
             String courseId,

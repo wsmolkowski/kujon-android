@@ -14,7 +14,7 @@ import mobi.kujon.google_drive.model.dto.file_upload.FileUploadDto;
 import mobi.kujon.google_drive.model.json.ShareFileTargetType;
 import mobi.kujon.google_drive.model.json.UploadedFile;
 import mobi.kujon.google_drive.mvp.file_stream_update.FileStreamUpdateMVP;
-import mobi.kujon.google_drive.network.unwrapped_api.FileUpload;
+import mobi.kujon.google_drive.network.unwrapped_api.FileUploadApi;
 import mobi.kujon.google_drive.utils.SchedulersHolder;
 import rx.Observable;
 import rx.schedulers.Schedulers;
@@ -29,7 +29,7 @@ public class UploadFilePresenterTest extends UnitTest{
     UploadFileMVP.View view;
 
     @Mock
-    FileUpload fileUpload;
+    FileUploadApi fileUploadApi;
 
     @Mock
     FileStreamUpdateMVP.Model model;
@@ -39,7 +39,7 @@ public class UploadFilePresenterTest extends UnitTest{
     private UploadFileMVP.Presenter presenter;
     @Override
     protected void onSetup() {
-        presenter = new UploadFilePresenter(view,fileUpload,schedulersHolder,model);
+        presenter = new UploadFilePresenter(view, fileUploadApi,schedulersHolder,model);
     }
 
 
@@ -48,7 +48,7 @@ public class UploadFilePresenterTest extends UnitTest{
         FileUploadDto fileUploadDto = new FileUploadDto("courseId","termId", ShareFileTargetType.ALL,null);
         DataForFileUpload dataForFileUpload =new  DataForFileUpload("tekst".getBytes(),"image","title");
         List<UploadedFile> responseFromServer = Arrays.asList(new UploadedFile("a", "b", null));
-        Mockito.when(fileUpload.uploadFile(fileUploadDto,dataForFileUpload))
+        Mockito.when(fileUploadApi.uploadFile(fileUploadDto,dataForFileUpload))
                 .thenReturn(Observable.just(responseFromServer));
         presenter.uploadFile(dataForFileUpload,fileUploadDto);
         Mockito.verify(view).onFileUploaded();

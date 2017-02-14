@@ -2,6 +2,7 @@ package mobi.kujon.google_drive.model.dto.file_upload;
 
 import com.google.android.gms.drive.DriveResource;
 
+import java.io.File;
 import java.util.Arrays;
 
 import okhttp3.MediaType;
@@ -23,6 +24,10 @@ public class DataForFileUpload {
 
     public DataForFileUpload(byte[] bytes,DriveResource.MetadataResult metadataResult) {
         this(bytes,metadataResult.getMetadata().getMimeType(),metadataResult.getMetadata().getTitle());
+    }
+
+    public DataForFileUpload(File file) {
+
     }
 
     public byte[] getBytes() {

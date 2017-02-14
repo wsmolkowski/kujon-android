@@ -12,11 +12,11 @@ import mobi.kujon.google_drive.model.request.ProgressRequestBody;
 import mobi.kujon.google_drive.mvp.file_stream_update.FileStreamUpdateMVP;
 import mobi.kujon.google_drive.network.BackendWrapper;
 import mobi.kujon.google_drive.network.api.FileUploadKujon;
-import mobi.kujon.google_drive.network.unwrapped_api.FileUpload;
+import mobi.kujon.google_drive.network.unwrapped_api.FileUploadApi;
 import mobi.kujon.google_drive.utils.MultipartUtils;
 import rx.Observable;
 
-public class FileUploadFacade implements FileUpload {
+public class FileUploadApiFacade implements FileUploadApi {
     public static final String FILES_PART_NAME = "files";
 
     private FileUploadKujon fileUploadKujon;
@@ -24,7 +24,7 @@ public class FileUploadFacade implements FileUpload {
     private BackendWrapper<List<UploadedFile>> backendWrapper;
     private FileStreamUpdateMVP.Model updateModel;
 
-    public FileUploadFacade(FileUploadKujon fileUploadKujon, MultipartUtils multipartUtils, FileStreamUpdateMVP.Model model) {
+    public FileUploadApiFacade(FileUploadKujon fileUploadKujon, MultipartUtils multipartUtils, FileStreamUpdateMVP.Model model) {
         this.fileUploadKujon = fileUploadKujon;
         this.multipartUtils = multipartUtils;
         backendWrapper = new BackendWrapper<>();
