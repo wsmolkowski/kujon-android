@@ -28,6 +28,7 @@
         android:layout_centerVertical="true"
         android:layout_marginRight="@dimen/vh_file_padding_small"
         android:layout_marginEnd="@dimen/vh_file_padding_small"
+        android:textSize="@dimen/font_size_vh_header"
         tools:text="573 kB" />
 
     <LinearLayout
@@ -50,7 +51,9 @@
             style="@style/vh_file_header_style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="Tekst Na zajęcia w czwartek" />
+            android:maxLines="1"
+            android:ellipsize="middle"
+            tools:text="Tekst Na zajęcia w czwartek bardzo długi zeby potestowac to" />
         <TextView
             android:id="@+id/vh_file_owner"
             style="@style/vh_file_details_style"
