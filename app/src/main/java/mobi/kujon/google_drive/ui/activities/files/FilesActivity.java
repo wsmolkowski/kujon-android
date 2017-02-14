@@ -53,6 +53,7 @@ import mobi.kujon.google_drive.ui.dialogs.share_target.ShareTargetDialog;
 import mobi.kujon.google_drive.ui.fragments.files.FilesListFragment;
 import mobi.kujon.google_drive.ui.util.AbstractPageSelectedListener;
 import mobi.kujon.google_drive.utils.GetFilePath;
+import mobi.kujon.google_drive.utils.GoogleDriveFileException;
 import mobi.kujon.google_drive.utils.PermissionAsk;
 
 
@@ -258,12 +259,24 @@ public class FilesActivity extends BaseFileActivity implements FileActivityView 
 
     private void handleResponseFromFile(Intent data) {
         Uri uriToFile = data.getData();
-        String path = GetFilePath.getPath(this, uriToFile);
-        if(path != null){
-            file = new File(path);
-            fileChoosen = true;
-            showChooseStudentsDialog(file.getName());
+        String path = null;
+        try {
+            path = GetFilePath.getPath(this, uriToFile);
+            if(path != null){
+                file = new File(path);
+                fileChoosen = true;
+                showChooseStudentsDialog(file.getName());
+            }
+        } catch (GoogleDriveFileException e) {
+            new AlertDialog.Builder(this)
+                    .setMessage("proszę skorzystać z mechanizmu GOOGLE DRIVE")
+                    .setTitle("Plik GOOGLE DRIVE")
+                    .setPositiveButton(R.string.yes, (dialog, which) -> {
+                        startFileSearching();
+                    }).show();
+
         }
+
     }
 
     private void openToUploadFileToDrive(Intent data) {

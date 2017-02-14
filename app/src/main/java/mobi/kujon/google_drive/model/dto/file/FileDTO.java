@@ -48,7 +48,7 @@ public abstract class FileDTO {
         this.fileSize = kujonFile.fileSize;
         this.userName = new StringBuilder(kujonFile.firstName).append(" ").append(kujonFile.lastName).toString();
         this.isMy = kujonFile.myFile;
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy", getDefault());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm", getDefault());
         dateCreated = simpleDateFormat.format(kujonFile.createdTime);
         this.mimeType = kujonFile.contentType;
         this.date = kujonFile.createdTime;

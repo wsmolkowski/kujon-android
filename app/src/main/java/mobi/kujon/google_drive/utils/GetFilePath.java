@@ -9,12 +9,15 @@ import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+
 /**
  *
  */
 
 public class GetFilePath {
-    public static String getPath(Context context, Uri uri) {
+    public static String getPath(Context context, Uri uri) throws GoogleDriveFileException {
         final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
 
         // DocumentProvider
@@ -52,6 +55,9 @@ public class GetFilePath {
                 final String selection = "_id=?";
                 final String[] selectionArgs = new String[] {split[1]};
                 return getDataColumn(context, contentUri, selection, selectionArgs);
+            }
+            if(isGoogleDriveUri(uri)){
+                throw new GoogleDriveFileException();
             }
         }
         // MediaStore (and general)
@@ -111,5 +117,14 @@ public class GetFilePath {
      */
     private static boolean isGooglePhotosUri(Uri uri) {
         return "com.google.android.apps.photos.content".equals(uri.getAuthority());
+    }
+
+
+    /**
+     * @param uri The Uri to check.
+     * @return Whether the Uri authority is Google Drive file.
+     */
+    private static boolean isGoogleDriveUri(Uri uri) {
+        return "com.google.android.apps.docs.storage".equals(uri.getAuthority());
     }
 }
