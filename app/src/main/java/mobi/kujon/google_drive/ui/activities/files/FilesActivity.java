@@ -43,28 +43,20 @@ import mobi.kujon.google_drive.model.json.ShareFileTargetType;
 import mobi.kujon.google_drive.mvp.file_stream_update.FileStreamUpdateMVP;
 import mobi.kujon.google_drive.mvp.files_list.FileListMVP;
 import mobi.kujon.google_drive.mvp.files_list.FilesOwnerType;
+import mobi.kujon.google_drive.mvp.upload_file.UploadFileMVP;
 import mobi.kujon.google_drive.services.ServiceOpener;
 import mobi.kujon.google_drive.ui.activities.BaseFileActivity;
 import mobi.kujon.google_drive.ui.activities.file_details.FileDetailsActivity;
 import mobi.kujon.google_drive.ui.custom.UploadLayout;
 import mobi.kujon.google_drive.ui.dialogs.choose_file_source.ChooseFileSourceDialog;
-import mobi.kujon.google_drive.ui.dialogs.choose_file_source.ChooseFileSourceListener;
-import mobi.kujon.google_drive.ui.dialogs.file_info_dialog.FileActionListener;
-import mobi.kujon.google_drive.ui.dialogs.share_target.ChooseShareStudentsListener;
 import mobi.kujon.google_drive.ui.dialogs.share_target.ShareTargetDialog;
-import mobi.kujon.google_drive.ui.fragments.ProvideInjector;
 import mobi.kujon.google_drive.ui.fragments.files.FilesListFragment;
 import mobi.kujon.google_drive.ui.util.AbstractPageSelectedListener;
+import mobi.kujon.google_drive.utils.GetFilePath;
 import mobi.kujon.google_drive.utils.PermissionAsk;
 
 
-
-
-public class FilesActivity extends BaseFileActivity implements ProvideInjector<FilesListFragment>,
-        GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener,
-        FileStreamUpdateMVP.View,
-        ChooseShareStudentsListener, FileActionListener, FileListMVP.DeleteView, ChooseFileSourceListener {
+public class FilesActivity extends BaseFileActivity implements FileActivityView {
 
     private static final int RESOLVE_CONNECTION_REQUEST_CODE = 539;
     private static final int REQUEST_CODE_OPENER = 1;
@@ -77,6 +69,8 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
     private FilesFragmentPagerAdapter adapter;
     private FileUploadInfoDto fileToUploadId;
     private static final int REQUEST_CODE_FOR_FOLDER = 1234;
+    private File file;
+    private boolean fileChoosen;
 
     public static void openActivity(Activity context, String courseId, String termId) {
         Intent intent = new Intent(context, FilesActivity.class);
@@ -115,6 +109,12 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
     @Inject
     FileListMVP.DeletePresenter deletePresenter;
 
+    @Inject
+    UploadFileMVP.Presenter uploadPresenter;
+
+    @Inject
+    FileStreamUpdateMVP.CancelPresenter cancelPresenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -149,6 +149,12 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
         this.uploadLayout.setCancelModel(cancelModel);
         apiClient.connect();
         presenter.subscribeToStream(this);
+        cancelPresenter.subscribeToStream(fileName -> {
+            if (file != null && fileName.equals(file.getName())) {
+                this.presenter.clearSubscriptions();
+            }
+        });
+
     }
 
     private void setUpViewPager(String[] titles) {
@@ -201,6 +207,9 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
     protected void onDestroy() {
         super.onDestroy();
         fileActivityInjector = null;
+        presenter.clearSubscriptions();
+        cancelPresenter.clearSubscriptions();
+        uploadPresenter.clearSubscriptions();
     }
 
     @Override
@@ -238,13 +247,22 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
                 }
             }
             break;
-            case FILE_RESULT_CODE:{
+            case FILE_RESULT_CODE: {
                 if (resultCode == RESULT_OK) {
-                    Uri uriToFile = data.getData();
-                    File file  = new File(uriToFile.toString());
+                    handleResponseFromFile(data);
                 }
             }
             break;
+        }
+    }
+
+    private void handleResponseFromFile(Intent data) {
+        Uri uriToFile = data.getData();
+        String path = GetFilePath.getPath(this, uriToFile);
+        if(path != null){
+            file = new File(path);
+            fileChoosen = true;
+            showChooseStudentsDialog(file.getName());
         }
     }
 
@@ -256,6 +274,7 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
     private void handleGoodResponseFile(Intent data) {
         mSelectedFileDriveId = data.getParcelableExtra(
                 OpenFileActivityBuilder.EXTRA_RESPONSE_DRIVE_ID);
+        fileChoosen = false;
         showChoiceDialog();
     }
 
@@ -302,8 +321,12 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
 
     @Override
     public void shareWith(@ShareFileTargetType String targetType, List<String> chosenStudentIds) {
-        FileUploadDto fileUploadDto = new FileUploadDto(coursId, termId, targetType, chosenStudentIds);
-        serviceOpener.openUploadService(fileUploadDto, mSelectedFileDriveId);
+        if (fileChoosen) {
+            uploadPresenter.uploadFile(file, new FileUploadDto(coursId, termId, targetType, chosenStudentIds));
+        } else {
+            FileUploadDto fileUploadDto = new FileUploadDto(coursId, termId, targetType, chosenStudentIds);
+            serviceOpener.openUploadService(fileUploadDto, mSelectedFileDriveId);
+        }
     }
 
     @Override
@@ -383,5 +406,10 @@ public class FilesActivity extends BaseFileActivity implements ProvideInjector<F
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("*/*");
         startActivityForResult(Intent.createChooser(intent, getString(R.string.get_file)), FILE_RESULT_CODE);
+    }
+
+    @Override
+    public void onFileUploaded() {
+        this.adapter.refresh();
     }
 }

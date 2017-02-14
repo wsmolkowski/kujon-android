@@ -10,7 +10,6 @@ import java.util.Collection;
 
 import mobi.kujon.google_drive.model.dto.file_upload.DataForFileUpload;
 import mobi.kujon.google_drive.model.request.ProgressRequestBody;
-import mobi.kujon.google_drive.model.request.ProgressRequestBodyFile;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
@@ -41,7 +40,7 @@ public class MultipartUtils {
         return MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
     }
     @NonNull
-    public MultipartBody.Part prepareFilePart(String partName,String filename, ProgressRequestBodyFile file) {
+    public MultipartBody.Part prepareFilePart(String partName,String filename, RequestBody file) {
         return MultipartBody.Part.createFormData(partName, filename, file);
     }
 
