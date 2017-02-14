@@ -31,22 +31,25 @@ public class FileVH extends RecyclerView.ViewHolder implements ShowShareIcon {
     TextView fileHeader;
     @Bind(R.id.vh_file_date)
     TextView fileDate;
-
+    @Bind(R.id.vh_file_owner)
+    TextView fileOwner;
     @Bind(R.id.vh_file_file_size)
     TextView fileSize;
     @Bind(R.id.vh_file_share)
     TextView shareFile;
+
     public FileVH(View itemView) {
         super(itemView);
-        ButterKnife.bind(this,itemView);
+        ButterKnife.bind(this, itemView);
     }
 
-    public void bind(FileDTO fileDTO, FilesRecyclerAdapter.OnFileClick onFileClick){
+    public void bind(FileDTO fileDTO, FilesRecyclerAdapter.OnFileClick onFileClick) {
         Drawable drawable = getDrawable(fileDTO.getImageIcon());
         imageView.setImageDrawable(drawable);
         fileHeader.setText(fileDTO.getFileName());
         fileDate.setText(fileDTO.getDateCreated(itemView.getResources()));
         fileSize.setText(new StringBuilder().append(fileDTO.getFileSize()).append(" MB").toString());
+        fileOwner.setText(fileDTO.getAuthorString(itemView.getResources()));
         fileDTO.setShareFile(this);
         fileLayout.setOnClickListener(v -> onFileClick.onFileClick(fileDTO));
     }
@@ -70,11 +73,11 @@ public class FileVH extends RecyclerView.ViewHolder implements ShowShareIcon {
 
     private void setVisiabilityAndDrawable(@DrawableRes int res) {
         shareFile.setVisibility(View.VISIBLE);
-        shareFile.setCompoundDrawablesWithIntrinsicBounds(res,0,0,0);
+        shareFile.setCompoundDrawablesWithIntrinsicBounds(res, 0, 0, 0);
     }
 
     private Drawable getDrawable(@DrawableRes int res) {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP?
-            itemView.getResources().getDrawable(res,null):itemView.getResources().getDrawable(res);
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ?
+                itemView.getResources().getDrawable(res, null) : itemView.getResources().getDrawable(res);
     }
 }

@@ -132,4 +132,7 @@
     <string name="get_file">Wybierz plik</string>
     <string name="google_drive_file">Dodaj plik z Google Drive</string>
     <string name="device_file">Dodaj plik z tego urządzenia</string>
+    <string name="owner">Dodany przez</string>
+    <string name="course_file">Przedmiot</string>
+    <string name="term">Okres</string>
 </resources>

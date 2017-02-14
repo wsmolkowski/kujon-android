@@ -35,6 +35,8 @@ public abstract class FileDTO {
     private List<String> shares;
     private String mimeType;
     private boolean isMy;
+    private String courseId;
+    private String termId;
 
 
     public FileDTO(KujonFile kujonFile) {
@@ -50,6 +52,8 @@ public abstract class FileDTO {
         dateCreated = simpleDateFormat.format(kujonFile.createdTime);
         this.mimeType = kujonFile.contentType;
         this.date = kujonFile.createdTime;
+        this.courseId = kujonFile.courseId;
+        this.termId = kujonFile.termId;
     }
 
 
@@ -86,11 +90,20 @@ public abstract class FileDTO {
     }
 
     public String getDateCreated(Resources resources) {
-        if (shareType.equals(ShareFileTargetType.NONE)) {
-            return new StringBuilder().append(resources.getString(R.string.created_time)).append(" ").append(dateCreated).append(resources.getString(R.string.by)).append(" ").append(userName).toString();
-        } else {
             return new StringBuilder().append(resources.getString(R.string.created_time)).append(" ").append(dateCreated).toString();
-        }
+    }
+
+
+    public String getCourseId() {
+        return courseId;
+    }
+
+    public String getTermId() {
+        return termId;
+    }
+
+    public String getAuthorString(Resources resources) {
+        return new StringBuilder().append(resources.getString(R.string.owner)).append(" ").append(userName).toString();
     }
 
     public String getDateCreated() {

@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/file_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="?selectableItemBackground"
     android:gravity="center_vertical"
     android:paddingBottom="@dimen/vh_file_padding_large"
     android:paddingEnd="@dimen/vh_file_padding_small"
     android:paddingLeft="@dimen/vh_file_padding_large"
     android:paddingRight="@dimen/vh_file_padding_small"
     android:paddingStart="@dimen/vh_file_padding_large"
-    android:paddingTop="@dimen/vh_file_padding_large"
-    android:id="@+id/file_layout"
-    android:background="?selectableItemBackground">
+    android:paddingTop="@dimen/vh_file_padding_large">
 
     <ImageView
         android:id="@+id/vh_file_icon"
@@ -21,26 +21,27 @@
         tools:src="@drawable/doc_icon" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
         android:id="@+id/vh_file_file_size"
         style="@style/vh_file_details_style"
-        tools:text="573 kB"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        tools:text="573 kB" />
+
     <LinearLayout
         android:id="@+id/info_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="@dimen/vh_file_padding_large"
-        android:layout_marginStart="@dimen/vh_file_padding_large"
-        android:layout_marginRight="@dimen/vh_file_padding_large"
         android:layout_marginEnd="@dimen/vh_file_padding_large"
+        android:layout_marginLeft="@dimen/vh_file_padding_large"
+        android:layout_marginRight="@dimen/vh_file_padding_large"
+        android:layout_marginStart="@dimen/vh_file_padding_large"
         android:layout_toEndOf="@id/vh_file_icon"
-        android:layout_toRightOf="@id/vh_file_icon"
         android:layout_toLeftOf="@+id/vh_file_file_size"
+        android:layout_toRightOf="@id/vh_file_icon"
         android:layout_toStartOf="@+id/vh_file_file_size"
         android:orientation="vertical">
 
@@ -50,7 +51,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="Tekst Na zajęcia w czwartek" />
-
+        <TextView
+            android:id="@+id/vh_file_owner"
+            style="@style/vh_file_details_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            tools:text="Dodany przez Katarzyna Brzęchoszczycka"
+            android:ellipsize="end"
+            />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -70,8 +79,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/vh_file_padding_med"
                 android:layout_marginStart="@dimen/vh_file_padding_med"
-                android:text="Wszyscy"
                 android:drawablePadding="4dp"
+                android:text="Wszyscy"
                 tools:drawableLeft="@drawable/share_with_chosen"
                 tools:drawableStart="@drawable/share_with_chosen" />
         </LinearLayout>

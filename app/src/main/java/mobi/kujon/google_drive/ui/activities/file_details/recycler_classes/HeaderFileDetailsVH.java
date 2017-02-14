@@ -23,6 +23,10 @@ public class HeaderFileDetailsVH extends BaseFileDetailsVH<FileDTO> {
     TextView fileCreationDate;
     @Bind(R.id.autor_text_view)
     TextView autorTextView;
+    @Bind(R.id.course_of_file)
+    TextView courseTextView;
+    @Bind(R.id.term_of_file)
+    TextView termTextView;
     @Bind(R.id.share_with_everyone)
     SwitchCompat shareWithEveryone;
     @Bind(R.id.image_type_icon)
@@ -38,7 +42,7 @@ public class HeaderFileDetailsVH extends BaseFileDetailsVH<FileDTO> {
 
     @Override
     public void bind(FileDTO fileDTO) {
-        if(fileDTO != null){
+        if (fileDTO != null) {
             fileName.setText(fileDTO.getFileName());
             fileType.setText(fileDTO.getContentType());
             fileSize.setText(new StringBuilder().append(fileDTO.getFileSize()).append(" MB"));
@@ -46,6 +50,9 @@ public class HeaderFileDetailsVH extends BaseFileDetailsVH<FileDTO> {
             shareWithEveryone.setEnabled(fileDTO.isMy());
             imageView.setImageResource(fileDTO.getImageIcon());
             autorTextView.setText(fileDTO.getUserName());
+            courseTextView.setText(fileDTO.getCourseId());
+            termTextView.setText(fileDTO.getTermId());
+
             shareWithEveryone.setChecked(ShareFileTargetType.ALL.equals(fileDTO.getShareType()));
             shareWithEveryone.setOnCheckedChangeListener((buttonView, isChecked) -> onEveryoneSwitchClicked.onEveryoneClicked(isChecked));
         }

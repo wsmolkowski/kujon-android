@@ -71,13 +71,41 @@
         android:orientation="horizontal">
         <TextView
             style="@style/file_details_attributes"
-            android:text="@string/author" />
+            android:text="@string/owner" />
         <TextView
             style="@style/file_details_attributes.rest"
             android:layout_width="match_parent"
             tools:text="@string/file_type"
             android:textColor="@color/dark"
             android:id="@+id/autor_text_view"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            style="@style/file_details_attributes"
+            android:text="@string/course_file" />
+        <TextView
+            style="@style/file_details_attributes.rest"
+            android:layout_width="match_parent"
+            tools:text="@string/file_type"
+            android:textColor="@color/dark"
+            android:id="@+id/course_of_file"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            style="@style/file_details_attributes"
+            android:text="@string/term" />
+        <TextView
+            style="@style/file_details_attributes.rest"
+            android:layout_width="match_parent"
+            tools:text="@string/file_type"
+            android:textColor="@color/dark"
+            android:id="@+id/term_of_file"/>
     </LinearLayout>
     <TextView
         android:layout_width="match_parent"

@@ -115,4 +115,8 @@
     <string name="sort_by_author">Sort by owner</string>
     <string name="sort_by_create_date">Sort by date</string>
     <string name="sort_by_filename">Sort by filename</string>
+    <string name="device_file">Add file from this device</string>
+    <string name="google_drive_file">Add file from Google Drive</string>
+    <string name="get_file">Get file</string>
+    <string name="owner">File Owner</string>
 </resources>
