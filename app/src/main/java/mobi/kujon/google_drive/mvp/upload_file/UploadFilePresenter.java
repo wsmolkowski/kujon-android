@@ -1,5 +1,7 @@
 package mobi.kujon.google_drive.mvp.upload_file;
 
+import java.io.File;
+
 import mobi.kujon.google_drive.model.dto.file_stream.FileUpdateDto;
 import mobi.kujon.google_drive.model.dto.file_upload.DataForFileUpload;
 import mobi.kujon.google_drive.model.dto.file_upload.FileUploadDto;
@@ -37,6 +39,19 @@ public class UploadFilePresenter extends AbstractClearSubsriptions implements Up
                 }, error -> {
                     this.model.updateStream(new FileUpdateDto(dataForFileUpload.getTitle(),100,true,true));
                     view.handleException(error);
+                }));
+    }
+
+    @Override
+    public void uploadFile(File file, FileUploadDto fileUploadDto) {
+        addToSubsriptionList(fileUploadApi.uploadFile(fileUploadDto, file)
+                .subscribeOn(schedulersHolder.subscribe())
+                .observeOn(schedulersHolder.observ())
+                .subscribe(it -> {
+                    this.model.updateStream(new FileUpdateDto(file.getName(),100,true));
+                    view.onFileUploaded();
+                }, error -> {
+                    this.model.updateStream(new FileUpdateDto(file.getName(),100,true,true));
                 }));
     }
 

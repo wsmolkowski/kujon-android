@@ -1,6 +1,7 @@
 package mobi.kujon.google_drive.network.unwrapped_api;
 
 
+import java.io.File;
 import java.util.List;
 
 import mobi.kujon.google_drive.model.json.ShareFileTargetType;
@@ -26,4 +27,6 @@ public interface FileUploadApi {
             DataForFileUpload dataForFileUpload);
     Observable<List<UploadedFile>> uploadFile(FileUploadDto fileUploadDto,
             DataForFileUpload dataForFileUpload);
+    Observable<List<UploadedFile>> uploadFile(FileUploadDto fileUploadDto,
+                                              File file);
 }

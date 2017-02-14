@@ -1,6 +1,7 @@
 package mobi.kujon.google_drive.network.facade;
 
 
+import java.io.File;
 import java.util.List;
 
 import mobi.kujon.google_drive.model.json.ShareFileTargetType;
@@ -9,11 +10,13 @@ import mobi.kujon.google_drive.model.dto.file_stream.FileUpdateDto;
 import mobi.kujon.google_drive.model.dto.file_upload.DataForFileUpload;
 import mobi.kujon.google_drive.model.dto.file_upload.FileUploadDto;
 import mobi.kujon.google_drive.model.request.ProgressRequestBody;
+import mobi.kujon.google_drive.model.request.ProgressRequestBodyFile;
 import mobi.kujon.google_drive.mvp.file_stream_update.FileStreamUpdateMVP;
 import mobi.kujon.google_drive.network.BackendWrapper;
 import mobi.kujon.google_drive.network.api.FileUploadKujon;
 import mobi.kujon.google_drive.network.unwrapped_api.FileUploadApi;
 import mobi.kujon.google_drive.utils.MultipartUtils;
+import okhttp3.RequestBody;
 import rx.Observable;
 
 public class FileUploadApiFacade implements FileUploadApi {
@@ -59,5 +62,18 @@ public class FileUploadApiFacade implements FileUploadApi {
     @Override
     public Observable<List<UploadedFile>> uploadFile(FileUploadDto fileUploadDto, DataForFileUpload dataForFileUpload) {
         return this.uploadFile(fileUploadDto.getCourseId(),fileUploadDto.getTermId(),fileUploadDto.getShareFileTargetType(),fileUploadDto.getListOfShares(),dataForFileUpload);
+    }
+
+    @Override
+    public Observable<List<UploadedFile>> uploadFile(FileUploadDto fileUploadDto, File file) {
+        ProgressRequestBody.UploadCallbacks callbacks = percentage -> updateModel.updateStream(new FileUpdateDto(file.getName(),percentage));
+        ProgressRequestBodyFile progressRequestBodyFile = new ProgressRequestBodyFile(RequestBody.create(okhttp3.MultipartBody.FORM, file),callbacks);
+        multipartUtils.prepareFilePart(FILES_PART_NAME, file.getName(), progressRequestBodyFile);
+        return backendWrapper.doSomething(fileUploadKujon.uploadFile(
+                multipartUtils.createPartFromString(fileUploadDto.getCourseId()),
+                multipartUtils.createPartFromString(fileUploadDto.getTermId()),
+                multipartUtils.createPartFromString(fileUploadDto.getShareFileTargetType()),
+                multipartUtils.createPartFromCollection(fileUploadDto.getListOfShares()),
+                multipartUtils.prepareFilePart(FILES_PART_NAME, file.getName(), progressRequestBodyFile)));
     }
 }
