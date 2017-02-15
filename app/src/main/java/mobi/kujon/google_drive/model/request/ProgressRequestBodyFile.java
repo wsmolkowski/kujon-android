@@ -49,7 +49,7 @@ public class ProgressRequestBodyFile extends RequestBody {
             public void write(Buffer source, long byteCount) throws IOException {
                 bytesWritten += byteCount;
                 int newValue = Math.round(100 * bytesWritten / totalBytes);
-                if (newValue > lastValue) {
+                if (newValue > lastValue && newValue < 100) {
                     progressListener.onProgressUpdate(newValue);
                     lastValue = newValue;
                 }

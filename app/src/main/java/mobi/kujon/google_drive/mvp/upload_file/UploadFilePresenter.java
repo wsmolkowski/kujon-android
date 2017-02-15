@@ -7,6 +7,7 @@ import mobi.kujon.google_drive.model.dto.file_upload.DataForFileUpload;
 import mobi.kujon.google_drive.model.dto.file_upload.FileUploadDto;
 import mobi.kujon.google_drive.mvp.AbstractClearSubsriptions;
 import mobi.kujon.google_drive.mvp.file_stream_update.FileStreamUpdateMVP;
+import mobi.kujon.google_drive.network.KujonException;
 import mobi.kujon.google_drive.network.unwrapped_api.FileUploadApi;
 import mobi.kujon.google_drive.utils.SchedulersHolder;
 
@@ -37,7 +38,7 @@ public class UploadFilePresenter extends AbstractClearSubsriptions implements Up
                     this.model.updateStream(new FileUpdateDto(dataForFileUpload.getTitle(),100,true));
                     view.onFileUploaded();
                 }, error -> {
-                    this.model.updateStream(new FileUpdateDto(dataForFileUpload.getTitle(),100,true,true));
+                    handleError(error,dataForFileUpload.getTitle());
                     view.handleException(error);
                 }));
     }
@@ -51,8 +52,18 @@ public class UploadFilePresenter extends AbstractClearSubsriptions implements Up
                     this.model.updateStream(new FileUpdateDto(file.getName(),100,true));
                     view.onFileUploaded();
                 }, error -> {
-                    this.model.updateStream(new FileUpdateDto(file.getName(),100,true,true));
+                    String name = file.getName();
+                    handleError(error, name);
                 }));
+    }
+
+    private void handleError(Throwable error, String name) {
+        if(error.getCause() instanceof KujonException){
+            String cause = error.getCause().getMessage();
+            this.model.updateStream(new FileUpdateDto(name,100,true,cause));
+        }else {
+            this.model.updateStream(new FileUpdateDto(name,100,true,null));
+        }
     }
 
 

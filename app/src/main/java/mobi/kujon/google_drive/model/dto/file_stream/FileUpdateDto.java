@@ -10,6 +10,7 @@ public class FileUpdateDto {
     private String fileName;
     private int progress;
     private String id;
+    private String errorReason;
 
     private boolean ended;
     public FileUpdateDto(String fileName, int progress) {
@@ -23,9 +24,10 @@ public class FileUpdateDto {
         this.ended = ended;
     }
 
-    public FileUpdateDto(String title, int i, boolean b, boolean b1) {
+    public FileUpdateDto(String title, int i, boolean b, String b1) {
         this(title,i,b);
         this.error =true;
+        errorReason= b1;
     }
 
 
@@ -64,6 +66,10 @@ public class FileUpdateDto {
 
     public void setEnded(boolean ended) {
         this.ended = ended;
+    }
+
+    public String getErrorReason() {
+        return errorReason;
     }
 
     @Override

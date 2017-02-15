@@ -64,7 +64,6 @@ public class UploadLayout extends LinearLayout {
         if (filesList.contains(fileName)) {
             doIfAlreadyExist(fileUpdateDto, fileName);
         } else {
-            if (fileUpdateDto.getProgress() != 100) {
                 this.filesList.add(fileUpdateDto.getFileName());
                 DowloadProgresView dowloadProgresView = new DowloadProgresView(getContext());
                 this.addView(dowloadProgresView);
@@ -76,7 +75,6 @@ public class UploadLayout extends LinearLayout {
                         .setInterpolator(new AccelerateDecelerateInterpolator())
                         .start();
                 dowloadProgresView.setClick(() -> doOnProgressEnd(dowloadProgresView, fileName));
-            }
         }
     }
 

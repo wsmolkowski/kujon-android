@@ -60,10 +60,10 @@ public class DowloadProgresView extends RelativeLayout {
     }
 
     public boolean updateProggress(FileUpdateDto fileUpdateDto) {
-        boolean returnValue =false;
+        boolean returnValue = false;
         this.textView.setText(fileUpdateDto.getFileName());
-        if(this.progressBar.getProgress()<fileUpdateDto.getProgress()){
-            returnValue= true;
+        if (this.progressBar.getProgress() < fileUpdateDto.getProgress()) {
+            returnValue = true;
             this.progressBar.setProgress(fileUpdateDto.getProgress());
         }
 
@@ -83,7 +83,20 @@ public class DowloadProgresView extends RelativeLayout {
     }
 
     public void setError(FileUpdateDto fileUpdateDto) {
-        this.textView.setText(fileUpdateDto.getFileName() +  " " + getResources().getString(R.string.upload_failed));
+        String errorReason = fileUpdateDto.getErrorReason();
+        setProgressBarRedForError();
+        if (errorReason != null && !errorReason.equals("")) {
+            this.textView.setText(fileUpdateDto.getFileName() + " " + errorReason);
+        } else
+            this.textView.setText(fileUpdateDto.getFileName() + " " + getResources().getString(R.string.upload_failed));
+    }
+
+    private void setProgressBarRedForError() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            this.progressBar.setProgressDrawable(getResources().getDrawable(R.drawable.progress_error_drawable,null));
+        }else {
+            this.progressBar.setProgressDrawable(getResources().getDrawable(R.drawable.progress_error_drawable));
+        }
     }
 
     interface ClickMeListener {
