@@ -126,6 +126,7 @@ public class FileDetailsActivity extends BaseFileActivity implements FileDetails
                     return ShareFileTargetType.LIST;
                 }
             }
+
             return ShareFileTargetType.NONE;
         }
     }
