@@ -64,12 +64,12 @@ public class FileDetailsActivity extends BaseFileActivity implements FileDetails
 
     private FileDetailsAdapter adapter;
 
-    public static void openActivity(Activity context, String courseId, String termId, String fileId) {
+    public static void openActivity(Activity context, String courseId, String termId, String fileId,int code) {
         Intent intent = new Intent(context, FileDetailsActivity.class);
         intent.putExtra(COURSE_ID_KEY, courseId);
         intent.putExtra(TERM_ID_KEY, termId);
         intent.putExtra(FILE_ID_KEY, fileId);
-        context.startActivity(intent);
+        context.startActivityForResult(intent,code);
     }
 
     @Override
@@ -112,6 +112,7 @@ public class FileDetailsActivity extends BaseFileActivity implements FileDetails
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.share_file){
             shareFilePresenter.shareFileWith(fileId, selectTargetType(), adapter.getStudentShareDTOs());
+            this.setLoading(true);
             return true;
         }
         return false;
@@ -149,6 +150,7 @@ public class FileDetailsActivity extends BaseFileActivity implements FileDetails
     @Override
     public void fileShared(@ShareFileTargetType String shareType, List<String> fileSharedWith) {
         adapter.setShareType(shareType,fileSharedWith);
+        this.setResult(RESULT_OK);
         this.setLoading(false);
     }
 

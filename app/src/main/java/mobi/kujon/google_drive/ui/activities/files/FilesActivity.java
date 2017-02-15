@@ -66,10 +66,11 @@ public class FilesActivity extends BaseFileActivity implements FileActivityView 
     public static final int STORAGE_PERSMISSION = 324;
     private static final int FILE_RESULT_CODE = 789;
     public static final String CHOOSE_SOURCE = "Choose_SOURCE";
+    public static final int FILE_DETAILS_RESULT_CODE = 874;
+    private static final int REQUEST_CODE_FOR_FOLDER = 1234;
     private FileActivityInjector fileActivityInjector;
     private FilesFragmentPagerAdapter adapter;
     private FileUploadInfoDto fileToUploadId;
-    private static final int REQUEST_CODE_FOR_FOLDER = 1234;
     private File file;
     private boolean fileChoosen;
 
@@ -253,7 +254,13 @@ public class FilesActivity extends BaseFileActivity implements FileActivityView 
                     handleResponseFromFile(data);
                 }
             }
+
             break;
+            case FILE_DETAILS_RESULT_CODE:
+                if (resultCode == RESULT_OK) {
+                    adapter.refresh();
+                }
+                break;
         }
     }
 
@@ -262,7 +269,7 @@ public class FilesActivity extends BaseFileActivity implements FileActivityView 
         String path = null;
         try {
             path = GetFilePath.getPath(this, uriToFile);
-            if(path != null){
+            if (path != null) {
                 file = new File(path);
                 fileChoosen = true;
                 showChooseStudentsDialog(file.getName());
@@ -396,7 +403,7 @@ public class FilesActivity extends BaseFileActivity implements FileActivityView 
 
     @Override
     public void onFileDetails(String fileId) {
-        FileDetailsActivity.openActivity(this, coursId, termId, fileId);
+        FileDetailsActivity.openActivity(this, coursId, termId, fileId, FILE_DETAILS_RESULT_CODE);
     }
 
     @Override
