@@ -64,17 +64,17 @@ public class UploadLayout extends LinearLayout {
         if (filesList.contains(fileName)) {
             doIfAlreadyExist(fileUpdateDto, fileName);
         } else {
-                this.filesList.add(fileUpdateDto.getFileName());
-                DowloadProgresView dowloadProgresView = new DowloadProgresView(getContext());
-                this.addView(dowloadProgresView);
-                dowloadProgresView.setCancelModel(cancelModel);
-                dowloadProgresView.setScaleY(0.0f);
-                dowloadProgresView.setAlpha(0.0f);
-                dowloadProgresView.updateProggress(fileUpdateDto);
-                dowloadProgresView.animate().scaleY(1.0f).alpha(1.0f).setDuration(300)
-                        .setInterpolator(new AccelerateDecelerateInterpolator())
-                        .start();
-                dowloadProgresView.setClick(() -> doOnProgressEnd(dowloadProgresView, fileName));
+            this.filesList.add(fileUpdateDto.getFileName());
+            DowloadProgresView dowloadProgresView = new DowloadProgresView(getContext());
+            this.addView(dowloadProgresView);
+            dowloadProgresView.setCancelModel(cancelModel);
+            dowloadProgresView.setScaleY(0.0f);
+            dowloadProgresView.setAlpha(0.0f);
+            dowloadProgresView.updateProggress(fileUpdateDto);
+            dowloadProgresView.animate().scaleY(1.0f).alpha(1.0f).setDuration(300)
+                    .setInterpolator(new AccelerateDecelerateInterpolator())
+                    .start();
+            dowloadProgresView.setClick(() -> doOnProgressEnd(dowloadProgresView, fileName));
         }
     }
 
@@ -82,10 +82,13 @@ public class UploadLayout extends LinearLayout {
         DowloadProgresView childAt = (DowloadProgresView) this.getChildAt(filesList.indexOf(fileName));
         if (childAt.updateProggress(fileUpdateDto)) {
             if (fileUpdateDto.isEnded() || fileUpdateDto.getProgress() == 100) {
-                if(!fileUpdateDto.isError()){
-                    UploadLayout.this.updateFileListener.onFileUploaded();
+                if (!fileUpdateDto.isError()) {
+                    if (!fileUpdateDto.isDoNotUpdate()) {
+                        UploadLayout.this.updateFileListener.onFileUploaded();
+                    }
                     doOnProgressEnd(childAt, fileName);
-                }{
+                }
+                {
                     childAt.setError(fileUpdateDto);
                 }
             }

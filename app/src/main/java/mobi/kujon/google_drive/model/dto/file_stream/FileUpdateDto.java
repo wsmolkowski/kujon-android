@@ -6,28 +6,36 @@ package mobi.kujon.google_drive.model.dto.file_stream;
 
 public class FileUpdateDto {
 
-    private  boolean error;
+    private boolean doNotUpdate;
+    private boolean error;
     private String fileName;
     private int progress;
     private String id;
     private String errorReason;
 
     private boolean ended;
+
     public FileUpdateDto(String fileName, int progress) {
         this.fileName = fileName;
         this.progress = progress;
-        this.id = id;
     }
 
-    public FileUpdateDto(String fileName,int progress,boolean ended){
-        this(fileName,progress);
+    public FileUpdateDto(String fileName, int progress, boolean ended) {
+        this(fileName, progress);
         this.ended = ended;
+        this.doNotUpdate = false;
+    }
+
+    public FileUpdateDto(String fileName, int progress, boolean ended, boolean doNotUpdate) {
+        this(fileName, progress);
+        this.ended = ended;
+        this.doNotUpdate = doNotUpdate;
     }
 
     public FileUpdateDto(String title, int i, boolean b, String b1) {
-        this(title,i,b);
-        this.error =true;
-        errorReason= b1;
+        this(title, i, b, false);
+        this.error = true;
+        errorReason = b1;
     }
 
 
@@ -70,6 +78,10 @@ public class FileUpdateDto {
 
     public String getErrorReason() {
         return errorReason;
+    }
+
+    public boolean isDoNotUpdate() {
+        return doNotUpdate;
     }
 
     @Override

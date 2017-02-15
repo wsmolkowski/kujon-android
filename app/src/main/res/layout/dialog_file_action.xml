@@ -28,6 +28,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/textDialogWithDrawable"
+        android:drawableStart="@drawable/ic_add_to_google_drive"
+        android:drawableLeft="@drawable/ic_add_to_google_drive"
+        android:text="@string/download_file"
+        android:id="@+id/download_to_phone"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/textDialogWithDrawable"
         android:textColor="@color/delete_red"
         android:drawableStart="@drawable/delete"
         android:drawableLeft="@drawable/delete"

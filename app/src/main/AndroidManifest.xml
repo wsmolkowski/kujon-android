@@ -146,6 +146,7 @@
 
         <service android:name=".google_drive.services.upload.DowloadUploadFileServices" />
         <service android:name=".google_drive.services.add_to_google_drive.AddToGoogleDriveService" />
+        <service android:name=".google_drive.services.dowload_file.DowloadFileService" />
 
         <activity
             android:name=".google_drive.ui.activities.file_details.FileDetailsActivity"

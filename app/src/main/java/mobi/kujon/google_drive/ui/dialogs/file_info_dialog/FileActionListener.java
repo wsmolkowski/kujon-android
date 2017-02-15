@@ -10,4 +10,5 @@ public interface FileActionListener {
     void onFileDelete(String fileId);
     void onFileAddToGoogleDrive(FileUploadInfoDto  fileUploadInfoDto);
     void onFileDetails(String fileId);
+    void onDownload(FileUploadInfoDto file);
 }

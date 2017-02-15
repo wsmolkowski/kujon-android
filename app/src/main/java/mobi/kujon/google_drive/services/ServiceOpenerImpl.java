@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import mobi.kujon.google_drive.model.dto.file_upload.FileUploadDto;
 import mobi.kujon.google_drive.model.dto.file_upload_info.FileUploadInfoDto;
 import mobi.kujon.google_drive.services.add_to_google_drive.AddToGoogleDriveService;
+import mobi.kujon.google_drive.services.dowload_file.DowloadFileService;
 import mobi.kujon.google_drive.services.upload.DowloadUploadFileServices;
 
 /**
@@ -32,5 +33,10 @@ public class ServiceOpenerImpl implements ServiceOpener {
     @Override
     public void openAddToDriveService(FileUploadInfoDto file, DriveId driveId) {
         AddToGoogleDriveService.startService(application, file, driveId);
+    }
+
+    @Override
+    public void openDowloadService(FileUploadInfoDto file) {
+        DowloadFileService.startService(application, file.getId(), file.getName());
     }
 }

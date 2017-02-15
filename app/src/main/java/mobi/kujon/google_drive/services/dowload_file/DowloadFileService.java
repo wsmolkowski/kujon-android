@@ -33,6 +33,7 @@ public class DowloadFileService extends Service implements FileStreamUpdateMVP.C
     public static void startService(Context context, String fileId, String fileName) {
         Intent intent = new Intent(context, DowloadFileService.class);
         intent.putExtra(FILE_TO_DOWLOAD_ID, fileId);
+        intent.putExtra(FILE_TO_DOWLOAD_NAME, fileName);
         context.startService(intent);
     }
 
@@ -85,6 +86,7 @@ public class DowloadFileService extends Service implements FileStreamUpdateMVP.C
 
     private void createCall() {
         cancelPresenter.subscribeToStream(this);
+        model.updateStream(new FileUpdateDto(fileName,0));
         subscription = fileDownloadApi.downloadFile(fileId)
                 .subscribeOn(schedulersHolder.subscribe())
                 .map(it -> tempFileCreator.writeToDowload(it, fileName, percent -> {
@@ -92,7 +94,7 @@ public class DowloadFileService extends Service implements FileStreamUpdateMVP.C
                 }))
                 .observeOn(schedulersHolder.observ())
                 .subscribe(it -> {
-                    model.updateStream(new FileUpdateDto(fileName, 100, true));
+                    model.updateStream(new FileUpdateDto(fileName, 100, true,true));
                     this.stopSelf();
                 }, error -> {
                     model.updateStream(new FileUpdateDto(fileName, 100, true, getString(R.string.download_failed)));

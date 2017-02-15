@@ -136,4 +136,5 @@
     <string name="course_file">Przedmiot</string>
     <string name="term">Okres</string>
     <string name="download_failed">Zapis pliku się nie powiódł</string>
+    <string name="download_file">Zapisz plik na tym urządzeniu</string>
 </resources>

@@ -407,6 +407,12 @@ public class FilesActivity extends BaseFileActivity implements FileActivityView 
     }
 
     @Override
+    public void onDownload(FileUploadInfoDto file) {
+        doOnAllPermisions(() -> serviceOpener.openDowloadService(file));
+
+    }
+
+    @Override
     public void fileDeleted() {
         this.setLoading(false);
         this.adapter.refresh();

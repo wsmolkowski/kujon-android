@@ -12,4 +12,6 @@ import mobi.kujon.google_drive.model.dto.file_upload_info.FileUploadInfoDto;
 public interface ServiceOpener {
     void openUploadService(FileUploadDto fileUploadDto,DriveId driveId);
     void openAddToDriveService(FileUploadInfoDto file, DriveId driveId);
+
+    void openDowloadService(FileUploadInfoDto file);
 }

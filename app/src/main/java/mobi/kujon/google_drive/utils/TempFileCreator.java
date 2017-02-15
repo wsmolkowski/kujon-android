@@ -96,7 +96,7 @@ public class TempFileCreator {
 
                 fileSizeDownloaded += read;
                 int percent = (int) (100 * fileSizeDownloaded / fileSize);
-                if (percent > lastProcent) {
+                if (percent > lastProcent && percent<100) {
                     updateListener.onUpdate(percent);
                     lastProcent = percent;
                 }

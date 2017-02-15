@@ -121,4 +121,6 @@
     <string name="owner">File Owner</string>
     <string name="course_file">Course</string>
     <string name="term">Term</string>
+    <string name="download_failed">Fail saving has failed</string>
+    <string name="download_file">Save file on this device</string>
 </resources>

@@ -31,6 +31,9 @@ public class FileActionDialog extends DialogFragment {
     @Bind(R.id.delete_file)
     TextView deleteFile;
 
+    @Bind(R.id.download_to_phone)
+    TextView dowloadFile;
+
     private static final String IS_OWNED = "IS_OWNED";
     public static final String NAME = "FILE_ACTION_DIALOG";
     private FileActionListener fileActionListener;
@@ -67,7 +70,6 @@ public class FileActionDialog extends DialogFragment {
     private void setUpViews(boolean isFileOwned) {
         fileDetails.setOnClickListener(v -> dismiss());
         if (isFileOwned) {
-
             deleteFile.setOnClickListener(v -> {
                         dismiss();
                         if (fileActionListener != null) {
@@ -91,6 +93,12 @@ public class FileActionDialog extends DialogFragment {
         addToGoogleDrive.setOnClickListener(v -> {
             if (fileActionListener != null) {
                 fileActionListener.onFileAddToGoogleDrive(file);
+                this.dismiss();
+            }
+        });
+        dowloadFile.setOnClickListener(v -> {
+            if (fileActionListener != null) {
+                fileActionListener.onDownload(file);
                 this.dismiss();
             }
         });
