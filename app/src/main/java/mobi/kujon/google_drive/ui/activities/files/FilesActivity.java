@@ -266,7 +266,7 @@ public class FilesActivity extends BaseFileActivity implements FileActivityView 
 
     private void handleResponseFromFile(Intent data) {
         Uri uriToFile = data.getData();
-        String path ;
+        String path;
         try {
             path = GetFilePath.getPath(this, uriToFile);
             if (path != null) {

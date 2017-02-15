@@ -135,4 +135,5 @@
     <string name="owner">Dodany przez</string>
     <string name="course_file">Przedmiot</string>
     <string name="term">Okres</string>
+    <string name="download_failed">Zapis pliku się nie powiódł</string>
 </resources>

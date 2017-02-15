@@ -1,6 +1,7 @@
 package mobi.kujon.google_drive.utils;
 
 import android.app.Application;
+import android.os.Environment;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -32,7 +33,49 @@ public class TempFileCreator {
         OutputStream outputStream = null;
         int lastProcent = 0;
         try {
-            File outputFile = File.createTempFile(randomIdentifier(), ".png", outputDir);
+            File outputFile = File.createTempFile(randomIdentifier(), null, outputDir);
+
+            byte[] fileReader = new byte[4096];
+
+            long fileSize = body.contentLength();
+            long fileSizeDownloaded = 0;
+
+            inputStream = body.byteStream();
+            outputStream = new FileOutputStream(outputFile);
+
+            while (true) {
+                int read = inputStream.read(fileReader);
+
+                if (read == -1) {
+                    break;
+                }
+
+                outputStream.write(fileReader, 0, read);
+
+                fileSizeDownloaded += read;
+                int percent = (int) (100 * fileSizeDownloaded / fileSize);
+                if (percent > lastProcent) {
+                    updateListener.onUpdate(percent);
+                    lastProcent = percent;
+                }
+
+            }
+
+            outputStream.flush();
+            return outputFile;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public File writeToDowload(ResponseBody body,String fileName, UpdateListener updateListener) {
+        File outputDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+        InputStream inputStream = null;
+        OutputStream outputStream = null;
+        int lastProcent = 0;
+        try {
+            File outputFile = new  File(outputDir,fileName);
 
             byte[] fileReader = new byte[4096];
 
