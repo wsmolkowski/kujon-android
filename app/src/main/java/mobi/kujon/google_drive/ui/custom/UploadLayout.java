@@ -87,8 +87,7 @@ public class UploadLayout extends LinearLayout {
                         UploadLayout.this.updateFileListener.onFileUploaded();
                     }
                     doOnProgressEnd(childAt, fileName);
-                }
-                {
+                } else {
                     childAt.setError(fileUpdateDto);
                 }
             }

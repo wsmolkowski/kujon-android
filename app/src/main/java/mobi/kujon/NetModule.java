@@ -45,7 +45,7 @@ public class NetModule {
         return new Cache(httpCacheDirectory, cacheSize);
     }
 
-    @Provides @Singleton OkHttpClient provideOkHttpClient(Cache cache) {
+    @Provides @Singleton OkHttpClient provideOkHttpClient(Cache cache,AuthenticationInterceptor authenticationInterceptor) {
         HttpLoggingInterceptor.Logger myLogger = message -> Log.d("CustomLogRetrofit", message);
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(myLogger);
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -53,16 +53,21 @@ public class NetModule {
         OkHttpClient httpClient = new OkHttpClient.Builder()
                 .addNetworkInterceptor(REWRITE_RESPONSE_INTERCEPTOR)
                 .addNetworkInterceptor(loggingInterceptor)
-                .addNetworkInterceptor(new AuthenticationInterceptor())
+                .addNetworkInterceptor(authenticationInterceptor)
                 .addInterceptor(OFFLINE_INTERCEPTOR)
                 .cache(cache)
                 .cookieJar(new JavaNetCookieJar(cookieManager))
                 .readTimeout(60, TimeUnit.SECONDS)
                 .build();
-
         return httpClient;
     }
 
+
+    @Provides
+    @Singleton
+    AuthenticationInterceptor providesAuthenticationInterceptor(){
+        return new AuthenticationInterceptor();
+    }
     @Provides @Singleton Gson provideGson() {
         return new GsonBuilder()
                 .registerTypeAdapter(GradeClassType.class, new GradeClassType.GradeClassTypeDeserializer())
@@ -101,7 +106,7 @@ public class NetModule {
         return apiProvider.provideRetrofit();
     }
 
-    private static class AuthenticationInterceptor implements Interceptor {
+     static class AuthenticationInterceptor implements Interceptor {
 
         @Override public Response intercept(Chain chain) throws IOException {
             Log.i(TAG, "AuthenticationInterceptor");
