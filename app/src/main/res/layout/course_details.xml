@@ -60,9 +60,10 @@
                     <TextView
                         android:layout_toRightOf="@+id/folder_icon"
                         android:layout_toEndOf="@+id/folder_icon"
-                        android:layout_marginLeft="@dimen/one_and_half_typ_margin"
-                        android:layout_marginStart="@dimen/one_and_half_typ_margin"
+                        android:layout_marginLeft="@dimen/double_typ_margin"
+                        android:layout_marginStart="@dimen/double_typ_margin"
                         style="@style/Regular.Entry"
+                        android:padding="0dp"
                         android:text="@string/shared_files"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -154,6 +155,11 @@
                     tools:text="@string/lorem"/>
 
                 <TextView
+                    android:id="@+id/course_term_name_label"
+                    style="@style/Regular.Label.Background"
+                    android:text="Zajęcia w cyklu"/>
+
+                <TextView
                     android:id="@+id/course_class_type_label"
                     style="@style/Regular.Label"
                     android:text="Typ zajęć"/>
@@ -162,11 +168,6 @@
                     android:id="@+id/course_class_type"
                     style="@style/Regular.Entry"
                     tools:text='Lorem ipsum'/>
-
-                <TextView
-                    android:id="@+id/course_term_name_label"
-                    style="@style/Regular.Label.Background"
-                    android:text="Zajęcia w cyklu"/>
 
                 <TextView
                     android:id="@+id/course_term_name"
@@ -178,6 +179,7 @@
                 <TextView
                     android:id="@+id/course_lecturers_label"
                     style="@style/Regular.Label.Background"
+                    android:layout_marginTop="0dp"
                     android:text="Prowadzący grup"/>
 
                 <LinearLayout
@@ -189,6 +191,7 @@
                 <TextView
                     android:id="@+id/course_coordinators_label"
                     style="@style/Regular.Label.Background"
+                    android:layout_marginTop="0dp"
                     android:text="Koordynatorzy"/>
 
                 <LinearLayout
@@ -200,6 +203,7 @@
                 <TextView
                     android:id="@+id/course_students_label"
                     style="@style/Regular.Label.Background"
+                    android:layout_marginTop="0dp"
                     android:text="Studenci"/>
 
                 <LinearLayout
