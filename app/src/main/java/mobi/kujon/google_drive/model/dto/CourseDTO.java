@@ -11,7 +11,7 @@ import mobi.kujon.network.json.Course;
 
 public class CourseDTO {
 
-    private String courseName, courseId,termId;
+    private String courseName, courseId, termId;
     private int fileNumber = 25;
 
     private CourseDTO(String courseName, String courseId, String termId) {
@@ -26,7 +26,8 @@ public class CourseDTO {
     }
 
     public CourseDTO(Course course) {
-        this(course.courseName,course.courseId,course.termId);
+        this(course.courseName, course.courseId, course.termId);
+        this.fileNumber = course.fileCount;
     }
 
     public String getCourseId() {
@@ -74,9 +75,9 @@ public class CourseDTO {
         return result;
     }
 
-    public static List<CourseDTO> convertCourses2CourseDTOs(List<Course> courses){
+    public static List<CourseDTO> convertCourses2CourseDTOs(List<Course> courses) {
         List<CourseDTO> dtos = new ArrayList<>();
-        for(Course course : courses) {
+        for (Course course : courses) {
             dtos.add(new CourseDTO(course));
         }
         return dtos;

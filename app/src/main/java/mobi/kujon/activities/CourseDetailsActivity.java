@@ -93,7 +93,9 @@ public class CourseDetailsActivity extends BaseActivity {
     @Bind(R.id.course_additional_info)
     TextView courseAdditionalInfo;
     @Bind(R.id.course_files)
-    TextView sharedFiles;
+    View sharedFiles;
+    @Bind(R.id.files_count)
+    TextView fileCount;
     private LayoutInflater layoutInflater;
     private CourseDetails courseDetails;
 
@@ -133,7 +135,7 @@ public class CourseDetailsActivity extends BaseActivity {
                     courseDetails = response.body().data;
 
                     courseFac.setText(courseDetails.facId.name);
-
+                    fileCount.setText(String.valueOf(courseDetails.fileCount));
                     courseName.setText(courseDetails.name);
                     courseAdditionalInfo.setText(String.format("id: %s, język: %s, prowadzony: %s", courseDetails.courseId,
                             isEmpty(courseDetails.langId) ? "Brak" : courseDetails.langId, courseDetails.isCurrentlyConducted));

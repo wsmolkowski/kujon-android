@@ -58,4 +58,5 @@ public class CourseDetails {
     @Expose
     public String description;
 
+    public int fileCount = 25;
 }

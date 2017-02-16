@@ -39,13 +39,74 @@
                 <View
                    style="@style/divider"
                     />
-                <TextView
+
+                <RelativeLayout
                     android:id="@+id/course_files"
+                    android:background="?selectableItemBackground"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-                    style="@style/Regular.Entry.course_details"
-                    android:text="@string/shared_files"
-                    />
+                    <ImageView
+                        android:layout_marginLeft="@dimen/kujon_margin_typ"
+                        android:layout_marginStart="@dimen/kujon_margin_typ"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentLeft="true"
+                        android:id="@+id/folder_icon"
+                        android:src="@drawable/ic_folder"/>
 
+                    <TextView
+                        android:layout_toRightOf="@+id/folder_icon"
+                        android:layout_toEndOf="@+id/folder_icon"
+                        android:layout_marginLeft="@dimen/one_and_half_typ_margin"
+                        android:layout_marginStart="@dimen/one_and_half_typ_margin"
+                        style="@style/Regular.Entry"
+                        android:text="@string/shared_files"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="0dp"
+                        android:gravity="center_vertical"
+                        android:layout_toLeftOf="@+id/files_count"
+                        android:layout_toStartOf="@+id/files_count"
+                        android:minHeight="?android:attr/listPreferredItemHeightSmall"
+                        android:textAppearance="?android:attr/textAppearanceListItemSmall"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginEnd="10dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/files_count"
+                        android:gravity="center_vertical"
+                        tools:text="24"
+                        style="@style/Light"
+                        android:textSize="@dimen/font_standard"
+                        android:textColor="@color/dark_60"
+                        android:paddingStart="0dp"
+                        android:paddingLeft="0dp"
+                        android:paddingRight="0dp"
+                        android:paddingEnd="0dp"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/file_icon"
+                        android:layout_toStartOf="@+id/file_icon"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginEnd="5dp"/>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/file_icon"
+                        android:id="@+id/file_icon"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="17dp"
+                        android:layout_marginEnd="17dp"/>
+
+                </RelativeLayout>
                 <View
                     style="@style/divider"
                     />

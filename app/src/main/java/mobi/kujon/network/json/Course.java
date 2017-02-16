@@ -20,5 +20,5 @@ public class Course {
     @SerializedName("groups")
     @Expose
     public List<Group> groups = new ArrayList<>();
-
+    public int fileCount = 25;
 }
