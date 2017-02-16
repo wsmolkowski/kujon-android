@@ -116,7 +116,7 @@ public class CourseDetailsActivity extends BaseActivity {
         swipeContainer.setOnRefreshListener(() -> loadData(true));
         showProgress(true);
         handler.post(() -> loadData(false));
-        sharedFiles.setOnClickListener(v -> FilesActivity.openActivity(this, courseId, termId));
+
     }
 
     private void loadData(boolean refresh) {
@@ -133,7 +133,7 @@ public class CourseDetailsActivity extends BaseActivity {
             public void onResponse(Call<KujonResponse<CourseDetails>> call, Response<KujonResponse<CourseDetails>> response) {
                 if (ErrorHandlerUtil.handleResponse(response)) {
                     courseDetails = response.body().data;
-
+                    sharedFiles.setOnClickListener(v -> FilesActivity.openActivity(CourseDetailsActivity.this, courseId, termId,courseDetails.name));
                     courseFac.setText(courseDetails.facId.name);
                     fileCount.setText(String.valueOf(courseDetails.fileCount));
                     courseName.setText(courseDetails.name);

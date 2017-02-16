@@ -79,7 +79,7 @@ public class FilesActivity extends BaseFileActivity implements FileActivityView 
         Intent intent = new Intent(context, FilesActivity.class);
         intent.putExtra(COURSE_ID_KEY, courseId);
         intent.putExtra(TERM_ID_KEY, termId);
-        intent.putExtra(TERM_ID_KEY, courseName);
+        intent.putExtra(COURSE_NAME_KEY, courseName);
         context.startActivity(intent);
     }
 
@@ -124,7 +124,7 @@ public class FilesActivity extends BaseFileActivity implements FileActivityView 
         super.onCreate(savedInstanceState);
         coursId = getIntent().getStringExtra(COURSE_ID_KEY);
         termId = getIntent().getStringExtra(TERM_ID_KEY);
-        String courseName = getIntent().getStringExtra(TERM_ID_KEY);
+        String courseName = getIntent().getStringExtra(COURSE_NAME_KEY);
         handleInjections();
         setContentView(R.layout.activity_files);
         ButterKnife.bind(this);

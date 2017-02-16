@@ -90,6 +90,6 @@ public class CoursesInSemseterActivity extends BaseFileActivity implements Cours
 
     @Override
     public void onDtoClick(CourseDTO courseDTO) {
-        FilesActivity.openActivity(this,courseDTO.getCourseId(),courseDTO.getTermId());
+        FilesActivity.openActivity(this,courseDTO.getCourseId(),courseDTO.getTermId(),courseDTO.getCourseName());
     }
 }
