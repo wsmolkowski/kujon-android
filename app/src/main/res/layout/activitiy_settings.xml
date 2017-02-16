@@ -190,10 +190,9 @@
             android:textColor="@color/dark" />
     </LinearLayout>
     <View
+        style="@style/divider"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/white" />
-
+        android:layout_height="12dp" />
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
