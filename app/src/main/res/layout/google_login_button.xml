@@ -13,7 +13,7 @@
         android:layout_gravity="center_vertical"
         android:layout_toLeftOf="@+id/google_text"
         android:layout_toStartOf="@+id/google_text"
-        android:src="@drawable/g_icon"/>
+        android:src="@drawable/ic_google"/>
     <TextView
         android:id="@+id/google_text"
         android:paddingTop="11dp"
