@@ -1,5 +1,6 @@
 package mobi.kujon.google_drive.ui.activities;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,7 @@ import mobi.kujon.R;
 import mobi.kujon.google_drive.mvp.HandleException;
 import mobi.kujon.google_drive.network.KujonException;
 import mobi.kujon.utils.ErrorHandlerUtil;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  *
@@ -25,7 +27,10 @@ public abstract class BaseFileActivity extends AppCompatActivity implements Hand
         View backView = findViewById(R.id.back);
         if (backView != null) backView.setOnClickListener(v -> onBackPressed());
     }
-
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
     protected abstract void setLoading(boolean t);
     @Override
     public void handleException(Throwable throwable) {
