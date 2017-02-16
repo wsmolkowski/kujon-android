@@ -42,7 +42,7 @@ public class StudentVH extends BaseFileDetailsVH<StudentShareDto> {
             studentName.setAlpha(1.0f);
             studentChoiceCheckbox.setChecked(studentShareDTO.isChosen());
             studentChoiceCheckbox.setEnabled(true);
-            studentChoiceCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> studentShareDTO.setChosen(isChecked));
+
             chooseStudentContainer.setOnClickListener(v -> studentChoiceCheckbox.setChecked(!studentChoiceCheckbox.isChecked()));
         } else {
             studentChoiceCheckbox.setChecked(true);

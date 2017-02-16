@@ -13,12 +13,13 @@ import mobi.kujon.google_drive.model.dto.StudentShareDto;
 import mobi.kujon.google_drive.model.dto.file_details.FileDetailsDto;
 import mobi.kujon.google_drive.model.json.ShareFileTargetType;
 
-public class FileDetailsAdapter extends RecyclerView.Adapter<BaseFileDetailsVH>{
+public class FileDetailsAdapter extends RecyclerView.Adapter<BaseFileDetailsVH> {
     private final static int TYPE_HEADER = 345;
     private final static int TYPE_STUDENT = 999;
     private FileDetailsDto fileDetailsDto;
     private OnEveryoneSwitchClicked onEveryoneSwitchClicked;
     private boolean shouldBeEnabled;
+    private boolean changed;
 
     public FileDetailsAdapter(OnEveryoneSwitchClicked onEveryoneSwitchClicked) {
         this.onEveryoneSwitchClicked = onEveryoneSwitchClicked;
@@ -26,7 +27,7 @@ public class FileDetailsAdapter extends RecyclerView.Adapter<BaseFileDetailsVH>{
 
     @Override
     public BaseFileDetailsVH onCreateViewHolder(ViewGroup parent, int viewType) {
-        switch(viewType) {
+        switch (viewType) {
             case TYPE_HEADER:
                 View v = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.row_file_details_header, parent, false);
@@ -43,12 +44,18 @@ public class FileDetailsAdapter extends RecyclerView.Adapter<BaseFileDetailsVH>{
     public void onBindViewHolder(BaseFileDetailsVH holder, int position) {
         switch (holder.getItemViewType()) {
             case TYPE_HEADER:
-                if(fileDetailsDto !=null)
+                if (fileDetailsDto != null)
                     ((HeaderFileDetailsVH) holder).bind(fileDetailsDto.getFileDTO());
                 break;
             case TYPE_STUDENT:
 
-                ((StudentVH) holder).bind(fileDetailsDto.getStudentShareDto().get(position - 1), shouldBeEnabled);
+                StudentShareDto studentShareDTO = fileDetailsDto.getStudentShareDto().get(position - 1);
+                StudentVH holder1 = (StudentVH) holder;
+                holder1.bind(studentShareDTO, shouldBeEnabled);
+                holder1.studentChoiceCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                    this.changed = true;
+                    studentShareDTO.setChosen(isChecked);
+                });
                 break;
         }
     }
@@ -58,7 +65,7 @@ public class FileDetailsAdapter extends RecyclerView.Adapter<BaseFileDetailsVH>{
         try {
 
             return fileDetailsDto.getStudentShareDto().size() + 1;
-        }catch (NullPointerException npe){
+        } catch (NullPointerException npe) {
             return 1;
         }
     }
@@ -92,5 +99,9 @@ public class FileDetailsAdapter extends RecyclerView.Adapter<BaseFileDetailsVH>{
 
     public interface OnEveryoneSwitchClicked {
         void onEveryoneClicked(boolean isEveryone);
+    }
+
+    public boolean isChanged() {
+        return changed;
     }
 }

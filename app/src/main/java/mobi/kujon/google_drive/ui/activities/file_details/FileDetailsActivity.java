@@ -110,7 +110,7 @@ public class FileDetailsActivity extends BaseFileActivity implements FileDetails
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.share_file){
+        if(item.getItemId() == R.id.share_file && adapter.isChanged()){
             shareFilePresenter.shareFileWith(fileId, selectTargetType(), adapter.getStudentShareDTOs());
             this.setLoading(true);
             return true;
