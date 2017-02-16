@@ -20,6 +20,7 @@ import butterknife.ButterKnife;
 import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
 import mobi.kujon.google_drive.model.dto.CourseDTO;
+import mobi.kujon.google_drive.model.dto.TermWithCourseDTO;
 import mobi.kujon.google_drive.mvp.courses_list.CoursesMVP;
 import mobi.kujon.google_drive.ui.activities.BaseFileActivity;
 import mobi.kujon.google_drive.ui.activities.courses.recycler_classes.CoursesAdapter;
@@ -28,15 +29,10 @@ import mobi.kujon.google_drive.ui.util.OnDtoClick;
 
 public class CoursesInSemseterActivity extends BaseFileActivity implements CoursesMVP.View, OnDtoClick<CourseDTO> {
 
-
-    public static final String SEMESTER_ID_KEY = "SEMESTER_ID_KEY";
-    public static final String SEMESTER_NAME_KEY = "SEMESTER_NAME_KEY";
     private CoursesAdapter adapter;
 
-    public static void openCourseInSemester(Activity activity, String semesterId, String semseterName){
+    public static void openCourseInSemester(Activity activity){
         Intent intent = new Intent(activity,CoursesInSemseterActivity.class);
-        intent.putExtra(SEMESTER_ID_KEY,semesterId);
-        intent.putExtra(SEMESTER_NAME_KEY,semseterName);
         activity.startActivity(intent);
     }
 
@@ -56,7 +52,6 @@ public class CoursesInSemseterActivity extends BaseFileActivity implements Cours
     SwipeRefreshLayout swipeRefreshLayout;
 
 
-    private String termName,termId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,15 +61,10 @@ public class CoursesInSemseterActivity extends BaseFileActivity implements Cours
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        termName = getIntent().getStringExtra(SEMESTER_ID_KEY);
-        termId = getIntent().getStringExtra(SEMESTER_ID_KEY);
-        String titleString = new StringBuilder().append(getString(R.string.courses_in)).append(" ").append(termName).toString();
-        toolbarTitle.setText(titleString);
+        toolbarTitle.setText(R.string.shared_files_title);
 
-        presenter.loadCoursesForSemester(termId,false);
-        swipeRefreshLayout.setOnRefreshListener(() -> {
-            this.presenter.loadCoursesForSemester(termId,true);
-        });
+        presenter.loadTermsInCourses(false);
+        swipeRefreshLayout.setOnRefreshListener(() -> this.presenter.loadTermsInCourses(true));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new CoursesAdapter(new ArrayList<>(), this);
@@ -87,9 +77,14 @@ public class CoursesInSemseterActivity extends BaseFileActivity implements Cours
         swipeRefreshLayout.setRefreshing(false);
     }
 
+
+
+
+
+
     @Override
-    public void onCoursesLoaded(List<CourseDTO> courseDTOs) {
-        adapter.setCourseDTOs(courseDTOs);
+    public void onCoursesTermsLoaded(List<TermWithCourseDTO> courseDTOs) {
+        adapter.setData(courseDTOs);
         setLoading(false);
     }
 

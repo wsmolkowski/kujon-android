@@ -123,4 +123,5 @@
     <string name="term">Term</string>
     <string name="download_failed">Fail saving has failed</string>
     <string name="download_file">Save file on this device</string>
+    <string name="shared_files_title">Shared files</string>
 </resources>

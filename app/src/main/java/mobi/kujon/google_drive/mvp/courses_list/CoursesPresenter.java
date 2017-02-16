@@ -17,13 +17,15 @@ public class CoursesPresenter implements CoursesMVP.Presenter {
         this.holder = holder;
     }
 
+
+
     @Override
-    public void loadCoursesForSemester(String semesterId, boolean refresh) {
-        subscription = model.loadCourses(semesterId, refresh)
+    public void loadTermsInCourses(boolean refresh) {
+        subscription = model.loadCourses(refresh)
                 .observeOn(holder.observ())
                 .subscribeOn(holder.subscribe())
                 .subscribe(courseDTOs -> {
-                    view.onCoursesLoaded(courseDTOs);
+                    view.onCoursesTermsLoaded(courseDTOs);
                 }, throwable -> {
                     view.handleException(throwable);
                 });

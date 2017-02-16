@@ -22,7 +22,6 @@ import mobi.kujon.R;
 import mobi.kujon.google_drive.model.dto.SemesterDTO;
 import mobi.kujon.google_drive.mvp.semester_list.SemestersMVP;
 import mobi.kujon.google_drive.ui.activities.BaseFileActivity;
-import mobi.kujon.google_drive.ui.activities.courses.CoursesInSemseterActivity;
 import mobi.kujon.google_drive.ui.activities.semesters.recycler_classes.SemesterAdapter;
 import mobi.kujon.google_drive.ui.util.OnDtoClick;
 
@@ -83,6 +82,6 @@ public class SemestersActivity extends BaseFileActivity implements SemestersMVP.
 
     @Override
     public void onDtoClick(SemesterDTO semesterDTO) {
-        CoursesInSemseterActivity.openCourseInSemester(this,semesterDTO.getSemesterId(),semesterDTO.getSemesterCode());
+//        CoursesInSemseterActivity.openCourseInSemester(this,semesterDTO.getSemesterId(),semesterDTO.getSemesterCode());
     }
 }

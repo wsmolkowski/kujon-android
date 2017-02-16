@@ -137,4 +137,5 @@
     <string name="term">Okres</string>
     <string name="download_failed">Zapis pliku się nie powiódł</string>
     <string name="download_file">Zapisz plik na tym urządzeniu</string>
+    <string name="shared_files_title">Pliki udostępnione</string>
 </resources>
