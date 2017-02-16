@@ -11,6 +11,7 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import mobi.kujon.BuildConfig;
 import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
 import mobi.kujon.network.json.KujonResponse;
@@ -35,6 +36,8 @@ public class PreferencesActivity extends BaseActivity {
     @Bind(R.id.googlecalendar_enabler)
     SwitchCompat googleCalendarSwitch;
 
+    @Bind(R.id.app_version_text)
+    TextView versionText;
     private boolean notificationSwitchChangeCalledByUser = true;
     private boolean googleCalendarSwitchChangeCalledByUser = true;
 
@@ -48,6 +51,7 @@ public class PreferencesActivity extends BaseActivity {
         showProgress(true);
         toolbarTitle.setText(R.string.settings);
         initSwitches();
+        versionText.setText(getString(R.string.app_name) + " " + BuildConfig.VERSION_NAME);
     }
 
     private void initSwitches() {

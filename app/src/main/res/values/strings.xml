@@ -138,4 +138,5 @@
     <string name="download_failed">Zapis pliku się nie powiódł</string>
     <string name="download_file">Zapisz plik na tym urządzeniu</string>
     <string name="shared_files_title">Pliki udostępnione</string>
+    <string name="app_version">Wersja</string>
 </resources>

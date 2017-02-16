@@ -74,13 +74,11 @@ public class UserInfoFragment extends BaseFragment {
         super.onActivityCreated(savedInstanceState);
         activity = (BaseActivity) getActivity();
         activity.setToolbarTitle(R.string.app_name);
+        handler.post(() -> loadData(false));
         binding.swipeContainer.setOnRefreshListener(() -> loadData(true));
     }
 
-    @Override public void onStart() {
-        super.onStart();
-        handler.post(() -> loadData(false));
-    }
+
 
     private void loadData(boolean refresh) {
         binding.swipeContainer.setRefreshing(true);
