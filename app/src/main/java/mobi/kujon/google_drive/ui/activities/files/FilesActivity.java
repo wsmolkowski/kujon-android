@@ -62,6 +62,7 @@ public class FilesActivity extends BaseFileActivity implements FileActivityView 
     private static final int RESOLVE_CONNECTION_REQUEST_CODE = 539;
     private static final int REQUEST_CODE_OPENER = 1;
     public static final String COURSE_ID_KEY = "COURSE_ID_KEY";
+    public static final String COURSE_NAME_KEY = "COURSE_NAME_KEY";
     public static final String TERM_ID_KEY = "TERM_ID_KEY";
     public static final int STORAGE_PERSMISSION = 324;
     private static final int FILE_RESULT_CODE = 789;
@@ -74,10 +75,11 @@ public class FilesActivity extends BaseFileActivity implements FileActivityView 
     private File file;
     private boolean fileChoosen;
 
-    public static void openActivity(Activity context, String courseId, String termId) {
+    public static void openActivity(Activity context, String courseId, String termId,String courseName) {
         Intent intent = new Intent(context, FilesActivity.class);
         intent.putExtra(COURSE_ID_KEY, courseId);
         intent.putExtra(TERM_ID_KEY, termId);
+        intent.putExtra(TERM_ID_KEY, courseName);
         context.startActivity(intent);
     }
 
@@ -122,12 +124,13 @@ public class FilesActivity extends BaseFileActivity implements FileActivityView 
         super.onCreate(savedInstanceState);
         coursId = getIntent().getStringExtra(COURSE_ID_KEY);
         termId = getIntent().getStringExtra(TERM_ID_KEY);
+        String courseName = getIntent().getStringExtra(TERM_ID_KEY);
         handleInjections();
         setContentView(R.layout.activity_files);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
-        toolbarTitle.setText(R.string.files_title);
+        toolbarTitle.setText(courseName);
         String[] titles = {getString(R.string.all_files), getString(R.string.my_files)};
         setUpViewPager(titles);
         apiClient = new GoogleApiClient.Builder(this)
