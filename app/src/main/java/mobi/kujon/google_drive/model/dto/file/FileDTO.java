@@ -37,6 +37,7 @@ public abstract class FileDTO {
     private boolean isMy;
     private String courseId;
     private String termId;
+    private String courseName;
 
 
     public FileDTO(KujonFile kujonFile) {
@@ -56,6 +57,14 @@ public abstract class FileDTO {
         this.termId = kujonFile.termId;
     }
 
+
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
+    }
 
     public String getShareType() {
         return shareType;

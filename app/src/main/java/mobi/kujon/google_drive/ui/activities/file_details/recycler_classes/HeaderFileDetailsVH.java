@@ -50,7 +50,7 @@ public class HeaderFileDetailsVH extends BaseFileDetailsVH<FileDTO> {
             shareWithEveryone.setEnabled(fileDTO.isMy());
             imageView.setImageResource(fileDTO.getImageIcon());
             autorTextView.setText(fileDTO.getUserName());
-            courseTextView.setText(fileDTO.getCourseId());
+            courseTextView.setText(fileDTO.getCourseName());
             termTextView.setText(fileDTO.getTermId());
 
             shareWithEveryone.setChecked(ShareFileTargetType.ALL.equals(fileDTO.getShareType()));

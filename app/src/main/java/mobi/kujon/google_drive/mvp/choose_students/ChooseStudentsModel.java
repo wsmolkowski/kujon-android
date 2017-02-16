@@ -8,6 +8,7 @@ import javax.inject.Inject;
 
 import mobi.kujon.google_drive.dagger.scopes.ActivityScope;
 import mobi.kujon.google_drive.model.dto.StudentShareDto;
+import mobi.kujon.google_drive.model.dto.file_details.FileDetailsHelp;
 import mobi.kujon.google_drive.network.unwrapped_api.CourseDetailsApi;
 import mobi.kujon.network.json.Participant;
 import rx.Observable;
@@ -35,5 +36,11 @@ public class ChooseStudentsModel implements ChooseStudentsMVP.Model {
             studentShareDtos.add(new StudentShareDto(participant, false));
         }
         return studentShareDtos;
+    }
+
+    @Override
+    public Observable<FileDetailsHelp> profileFileDetailsInfo(String courseId, String termId, boolean refresh) {
+        return courseDetailsApi.getCourseDetails(refresh, courseId, termId)
+                .map(courseDetails ->new FileDetailsHelp(getStudentShareDtos(courseDetails.participants),courseDetails.name));
     }
 }

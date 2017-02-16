@@ -17,16 +17,21 @@ public class FileDetailsDto {
     public FileDetailsDto(FileDTO fileDTO, List<StudentShareDto> studentShareDtoo) {
         this.fileDTO = fileDTO;
         this.studentShareDto = studentShareDtoo;
-        List<String> fileSharedWith =new ArrayList<>(fileDTO.getShares());
+        List<String> fileSharedWith = new ArrayList<>(fileDTO.getShares());
         setUpChoosen(fileSharedWith);
     }
 
+    public FileDetailsDto(FileDTO fileDTO, FileDetailsHelp fileDetailsHelp) {
+        this(fileDTO, fileDetailsHelp.getList());
+        this.fileDTO.setCourseName(fileDetailsHelp.courseName);
+    }
+
     public void setUpChoosen(List<String> fileSharedWith) {
-        for(StudentShareDto studentShareDto:this.getStudentShareDto()){
+        for (StudentShareDto studentShareDto : this.getStudentShareDto()) {
             List<String> strings = new ArrayList<>(fileSharedWith);
             studentShareDto.setChosen(false);
-            for(String studentId:strings){
-                if(studentShareDto.getStudentId().equals(studentId)){
+            for (String studentId : strings) {
+                if (studentShareDto.getStudentId().equals(studentId)) {
                     studentShareDto.setChosen(true);
                     fileSharedWith.remove(studentId);
                     break;
