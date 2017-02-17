@@ -1,0 +1,3 @@
+poprawki layoutów na cyklach i ocenach.
+
+usprawnione wyświetlanie progress bara

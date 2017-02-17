@@ -1,6 +1,5 @@
 package mobi.kujon.fragments;
 
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -29,7 +28,6 @@ import retrofit2.Response;
 public class TermsFragment extends ListFragment {
 
     private Adapter adapter;
-    private Typeface latoSemiBold;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -37,7 +35,6 @@ public class TermsFragment extends ListFragment {
         adapter = new Adapter();
         recyclerView.setAdapter(adapter);
         showSpinner(true);
-        latoSemiBold = Typeface.createFromAsset(activity.getAssets(), "fonts/Lato-Semibold.ttf");
         loadData(false);
     }
 
