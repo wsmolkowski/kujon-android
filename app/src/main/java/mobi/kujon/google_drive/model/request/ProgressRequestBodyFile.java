@@ -21,7 +21,6 @@ public class ProgressRequestBodyFile extends RequestBody {
     private final ProgressRequestBody.UploadCallbacks progressListener;
 
 
-
     public ProgressRequestBodyFile(RequestBody requestBody, final ProgressRequestBody.UploadCallbacks listener) {
         this.requestBody = requestBody;
         this.progressListener = listener;
