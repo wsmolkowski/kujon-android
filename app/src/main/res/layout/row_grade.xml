@@ -15,21 +15,19 @@
         android:orientation="vertical">
 
         <TextView
+            android:layout_marginTop="0dp"
             android:id="@+id/section"
-            style="@style/Regular.Label"
-            android:background="@drawable/label_background"
-            android:gravity="center"
-            android:padding="16dp"
+            style="@style/Regular.Label.Background"
             tools:text="2015" />
 
         <LinearLayout
             android:id="@+id/dataLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="16dp">
+            android:orientation="horizontal">
 
             <LinearLayout
+                android:layout_marginTop="@dimen/kujon_margin_typ"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -38,32 +36,31 @@
 
                 <TextView
                     android:id="@+id/title"
-                    style="@style/Semibold"
+                    style="@style/Regular.Entry.Semibold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
                     android:ellipsize="end"
                     android:maxLines="2"
-                    android:textColor="@color/dark"
-                    android:textSize="15sp"
+                    android:layout_marginBottom="0dp"
                     tools:text="Recepcja filozofii antycznej w kulturze umysłowej Europy - 2013L. Dodatkowe informacje" />
 
                 <TextView
                     android:id="@+id/desc"
-                    style="@style/Regular"
+                    style="@style/Regular.Entry"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
                     android:textColor="@color/opacityBlack"
                     tools:text="Ocena Końcowa, termin 1" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="76dp"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginLeft="8dp"
+                android:layout_marginEnd="@dimen/kujon_margin_typ"
+                android:layout_marginRight="@dimen/kujon_margin_typ"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -89,5 +86,7 @@
 
             </LinearLayout>
         </LinearLayout>
+        <View
+            style="@style/divider" />
     </LinearLayout>
 </layout>
