@@ -38,6 +38,7 @@ import mobi.kujon.fragments.SearchFragment;
 import mobi.kujon.fragments.StudentInfoFragment;
 import mobi.kujon.fragments.TermsFragment;
 import mobi.kujon.fragments.UserInfoFragment;
+import mobi.kujon.network.ApiProvider;
 import mobi.kujon.utils.KujonUtils;
 import mobi.kujon.utils.PlanEventsDownloader;
 import mobi.kujon.utils.user_data.UserDataFacade;
@@ -120,5 +121,9 @@ public interface KujonComponent {
     Application provideApplication();
 
     UserDataFacade provideUserDataFacade();
+
+    NetModule.AuthenticationInterceptor provideAuthenticationInterceptor();
+
+    ApiProvider provideApi();
 
 }

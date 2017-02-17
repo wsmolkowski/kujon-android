@@ -63,6 +63,11 @@ public class ApiProvider implements ApiChoice,ProvideRetrofit {
         return BuildConfig.URL_PROD;
     }
 
+
+    public Gson getGson() {
+        return gson;
+    }
+
     public KujonBackendApi getKujonBackendApi() {
         return kujonBackendApi;
     }

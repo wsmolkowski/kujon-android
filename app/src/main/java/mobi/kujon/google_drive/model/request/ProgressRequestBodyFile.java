@@ -20,7 +20,7 @@ public class ProgressRequestBodyFile extends RequestBody {
 
     private final ProgressRequestBody.UploadCallbacks progressListener;
 
-    private BufferedSink bufferedSink;
+
 
     public ProgressRequestBodyFile(RequestBody requestBody, final ProgressRequestBody.UploadCallbacks listener) {
         this.requestBody = requestBody;

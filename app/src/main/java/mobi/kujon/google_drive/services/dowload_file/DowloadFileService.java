@@ -6,16 +6,29 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
+import java.util.concurrent.TimeUnit;
+
 import javax.inject.Inject;
 
 import mobi.kujon.KujonApplication;
+import mobi.kujon.NetModule;
 import mobi.kujon.R;
 import mobi.kujon.google_drive.dagger.injectors.Injector;
 import mobi.kujon.google_drive.model.dto.file_stream.FileUpdateDto;
+import mobi.kujon.google_drive.model.request.ProgressRequestBody;
+import mobi.kujon.google_drive.model.request.ProgressResponseBody;
 import mobi.kujon.google_drive.mvp.file_stream_update.FileStreamUpdateMVP;
+import mobi.kujon.google_drive.network.api.FileDownloadKujon;
+import mobi.kujon.google_drive.network.facade.FileDownloadApiFacade;
 import mobi.kujon.google_drive.network.unwrapped_api.FileDownloadApi;
 import mobi.kujon.google_drive.utils.SchedulersHolder;
 import mobi.kujon.google_drive.utils.TempFileCreator;
+import mobi.kujon.network.ApiProvider;
+import okhttp3.OkHttpClient;
+import okhttp3.Response;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Subscription;
 
 /**
@@ -46,8 +59,8 @@ public class DowloadFileService extends Service implements FileStreamUpdateMVP.C
 
     @Inject
     FileStreamUpdateMVP.CancelPresenter cancelPresenter;
-    @Inject
-    FileDownloadApi fileDownloadApi;
+
+    private FileDownloadApi fileDownloadApi;
     @Inject
     SchedulersHolder schedulersHolder;
 
@@ -57,14 +70,41 @@ public class DowloadFileService extends Service implements FileStreamUpdateMVP.C
     @Inject
     FileStreamUpdateMVP.Model model;
 
+    @Inject
+    NetModule.AuthenticationInterceptor authenticationInterceptor;
 
+
+    @Inject
+    ApiProvider apiProvider;
     @Override
     public void onCreate() {
         super.onCreate();
         Injector<DowloadFileService> injector = ((KujonApplication) this.getApplication()).getInjectorProvider()
                 .provideDowloadFileService();
         injector.inject(this);
+        createDowloadApiWithProgress();
+    }
 
+    private void createDowloadApiWithProgress() {
+        ProgressRequestBody.UploadCallbacks listener = percentage ->
+                model.updateStream(new FileUpdateDto(fileName,(int)Math.round(0.75*percentage)));
+        OkHttpClient httpClient = new OkHttpClient.Builder()
+                .addNetworkInterceptor(authenticationInterceptor)
+                .addNetworkInterceptor(chain -> {
+                    Response originalResponse = chain.proceed(chain.request());
+                    return originalResponse.newBuilder()
+                            .body(new ProgressResponseBody(originalResponse.body(), listener))
+                            .build();
+                })
+                .readTimeout(60, TimeUnit.SECONDS)
+                .build();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(apiProvider.getApiURL())
+                .client(httpClient)
+                .addConverterFactory(GsonConverterFactory.create(apiProvider.getGson()))
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .build();
+        fileDownloadApi = new FileDownloadApiFacade(retrofit.create(FileDownloadKujon.class));
     }
 
 
@@ -89,9 +129,8 @@ public class DowloadFileService extends Service implements FileStreamUpdateMVP.C
         model.updateStream(new FileUpdateDto(fileName,0));
         subscription = fileDownloadApi.downloadFile(fileId)
                 .subscribeOn(schedulersHolder.subscribe())
-                .map(it -> tempFileCreator.writeToDowload(it, fileName, percent -> {
-                    model.updateStream(new FileUpdateDto(fileName, percent));
-                }))
+                .map(it -> tempFileCreator.writeToDowload(it, fileName, percent ->
+                        model.updateStream(new FileUpdateDto(fileName, (int)Math.round(0.25*percent)))))
                 .observeOn(schedulersHolder.observ())
                 .subscribe(it -> {
                     model.updateStream(new FileUpdateDto(fileName, 100, true,true));

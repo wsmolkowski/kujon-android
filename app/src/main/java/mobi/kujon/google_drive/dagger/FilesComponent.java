@@ -2,6 +2,7 @@ package mobi.kujon.google_drive.dagger;
 
 import com.google.gson.Gson;
 
+import mobi.kujon.NetModule;
 import mobi.kujon.google_drive.mvp.file_stream_update.FileStreamUpdateMVP;
 import mobi.kujon.google_drive.network.unwrapped_api.CourseDetailsApi;
 import mobi.kujon.google_drive.network.unwrapped_api.CoursesApi;
@@ -14,6 +15,7 @@ import mobi.kujon.google_drive.network.unwrapped_api.ShareFileApi;
 import mobi.kujon.google_drive.services.ServiceOpener;
 import mobi.kujon.google_drive.utils.SchedulersHolder;
 import mobi.kujon.google_drive.utils.TempFileCreator;
+import mobi.kujon.network.ApiProvider;
 import mobi.kujon.utils.user_data.UserDataFacade;
 
 /**
@@ -35,5 +37,8 @@ public interface FilesComponent {
     ServiceOpener provideServiceOpener();
     UserDataFacade provideUserDataFacade();
     TempFileCreator provideTmpFileCreator();
+    NetModule.AuthenticationInterceptor provideAuthenticationInterceptor();
+
+    ApiProvider provideApi();
 
 }

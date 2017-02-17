@@ -106,7 +106,7 @@ public class NetModule {
         return apiProvider.provideRetrofit();
     }
 
-     static class AuthenticationInterceptor implements Interceptor {
+     public static class AuthenticationInterceptor implements Interceptor {
 
         @Override public Response intercept(Chain chain) throws IOException {
             Log.i(TAG, "AuthenticationInterceptor");
