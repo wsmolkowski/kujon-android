@@ -139,4 +139,9 @@
     <string name="download_file">Zapisz plik na tym urządzeniu</string>
     <string name="shared_files_title">Pliki udostępnione</string>
     <string name="app_version">Wersja</string>
+    <string name="start_date">Data początkowa</string>
+    <string name="end_date">Data końcowa</string>
+    <string name="finish_date">Data zakończenia</string>
+    <string name="active">Aktywne</string>
+    <string name="inactive">Nieaktywne</string>
 </resources>

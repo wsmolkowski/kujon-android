@@ -153,21 +153,22 @@
                     <TextView
                         android:id="@+id/terms"
                         style="@style/entry"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginRight="16dp"
-                        android:layout_marginTop="8dp"
-                        android:drawableRight="@drawable/navigate_next"
+                        android:layout_marginLeft="@dimen/kujon_margin_typ"
+                        android:layout_marginRight="@dimen/kujon_margin_typ"
+                        android:layout_marginTop="@dimen/double_typ_margin"
+                        android:layout_marginBottom="@dimen/double_typ_margin"
                         android:gravity="center_vertical"
                         android:text='Cykle'/>
 
+                    <View style="@style/divider"/>
                     <TextView
                         android:id="@+id/theses"
                         style="@style/entry"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginRight="16dp"
-                        android:layout_marginTop="24dp"
-                        android:layout_marginBottom="16dp"
-                        android:drawableRight="@drawable/navigate_next"
+                        android:layout_marginLeft="@dimen/kujon_margin_typ"
+                        android:layout_marginRight="@dimen/kujon_margin_typ"
+                        android:layout_marginTop="@dimen/double_typ_margin"
+                        android:layout_marginBottom="@dimen/double_typ_margin"
+                        android:background="?selectableItemBackground"
                         android:gravity="center_vertical"
                         android:text='Prace dyplomowe'/>
 

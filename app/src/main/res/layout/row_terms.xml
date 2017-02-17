@@ -1,137 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical"
-              android:padding="16dp">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?selectableItemBackground"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/section"
+        style="@style/Regular.Label.Background"
+        android:layout_marginTop="0dp"
+        android:background="@drawable/label_background"
+        tools:text="Aktywne" />
+
+    <RelativeLayout
+        android:id="@+id/term_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="0dp"
+        <TextView
+            android:layout_marginTop="@dimen/double_typ_margin"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:id="@+id/term_name_text"
+            android:layout_toLeftOf="@+id/term_id_text_view"
+            style="@style/Regular.Entry.Semibold"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:orientation="vertical">
-
-            <TextView
-                style="@style/label"
-                android:layout_marginTop="0dp"
-                android:text="Nazwa"
-                />
-
-            <TextView
-                android:id="@+id/name"
-                style="@style/entry"
-                tools:text='Rok akademicki 2015/16' />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
+            android:layout_marginBottom="0dp"
+            android:gravity="center_vertical"
+            tools:text="Rok AKADEMICKI 2016/16 " />
+        <TextView
+            android:id="@+id/term_id_text_view"
+            android:layout_marginTop="@dimen/double_typ_margin"
+            android:layout_marginEnd="@dimen/kujon_margin_typ"
+            android:layout_marginRight="@dimen/kujon_margin_typ"
+            style="@style/Regular.Entry"
+            android:textColor="@color/dark_60"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            tools:text="2015Z"/>
+        <TextView
 
-            <TextView
-                style="@style/label"
-                android:layout_marginTop="0dp"
-                android:text="Numer"
-                />
+            android:layout_below="@+id/term_name_text"
+            style="@style/Regular.Label.Cycles"
+            android:id="@+id/start_date_label"
+            android:textSize="@dimen/font_size_vh_header"
+            android:layout_marginTop="@dimen/double_typ_margin"
+            android:text="@string/start_date"
+            />
 
-            <TextView
-                android:id="@+id/term_id"
-                style="@style/entry"
-                tools:text='2015'/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <TextView
-                style="@style/label"
-                android:layout_marginTop="0dp"
-                android:text="Aktywny"
-                />
-
-            <TextView
-                android:id="@+id/active"
-                style="@style/entry"
-                tools:text='TAK'/>
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:orientation="horizontal">
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <TextView
-                style="@style/label"
-                android:layout_marginTop="0dp"
-                android:text="Data początkowa"
-                />
-
-            <TextView
-                android:id="@+id/start_date"
-                style="@style/entry"
-                tools:text="2015-10-01"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <TextView
-                style="@style/label"
-                android:layout_marginTop="0dp"
-                android:text="Data końcowa"
-                />
-
-            <TextView
-                android:id="@+id/end_date"
-                style="@style/entry"
-                tools:text='2016-06-08'/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <TextView
-                style="@style/label"
-                android:layout_marginTop="0dp"
-                android:text="Data zakończenia"
-                />
-
-            <TextView
-                android:id="@+id/finish_date"
-                style="@style/entry"
-                tools:text='2016-09-30'/>
-        </LinearLayout>
+        <TextView
+            android:layout_below="@+id/start_date_label"
+            android:id="@+id/start_date_text"
+            style="@style/Regular.Label.Cycles"
+            android:layout_marginTop="0dp"
+            android:textColor="@color/dark"
+            tools:text='2015'/>
 
 
-    </LinearLayout>
+        <TextView
+
+            android:layout_below="@+id/start_date_text"
+            style="@style/Regular.Label.Cycles"
+            android:id="@+id/end_date_label"
+            android:textSize="@dimen/font_size_vh_header"
+            android:layout_marginTop="@dimen/double_typ_margin"
+            android:text="@string/end_date"
+            />
+
+        <TextView
+            android:layout_below="@+id/end_date_label"
+            android:id="@+id/end_date_text"
+            style="@style/Regular.Label.Cycles"
+            android:layout_marginTop="0dp"
+            android:textColor="@color/dark"
+            tools:text='2015'/>
 
 
+        <TextView
+
+            android:layout_below="@+id/end_date_text"
+            style="@style/Regular.Label.Cycles"
+            android:id="@+id/finish_date_label"
+            android:textSize="@dimen/font_size_vh_header"
+            android:layout_marginTop="@dimen/double_typ_margin"
+            android:text="@string/finish_date"
+            />
+
+        <TextView
+            android:layout_below="@+id/finish_date_label"
+            android:id="@+id/finish_date_text"
+            style="@style/Regular.Label.Cycles"
+            android:layout_marginTop="0dp"
+            android:textColor="@color/dark"
+            tools:text='2015'/>
+    </RelativeLayout>
+    <View
+        android:layout_marginTop="@dimen/kujon_margin_typ"
+
+        style="@style/divider" />
 </LinearLayout>

@@ -10,6 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.afollestad.sectionedrecyclerview.SectionedRecyclerViewAdapter;
+import com.github.underscore.$;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -28,7 +31,8 @@ public class TermsFragment extends ListFragment {
     private Adapter adapter;
     private Typeface latoSemiBold;
 
-    @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         adapter = new Adapter();
         recyclerView.setAdapter(adapter);
@@ -38,22 +42,29 @@ public class TermsFragment extends ListFragment {
     }
 
 
-    @Override protected String getRequestUrl() {
+    @Override
+    protected String getRequestUrl() {
         return backendApi.terms().request().url().toString();
     }
 
-    @Override protected void loadData(boolean refresh) {
+    @Override
+    protected void loadData(boolean refresh) {
         Call<KujonResponse<List<Term2>>> terms = refresh ? backendApi.termsRefresh() : backendApi.terms();
         terms.enqueue(new Callback<KujonResponse<List<Term2>>>() {
-            @Override public void onResponse(Call<KujonResponse<List<Term2>>> call, Response<KujonResponse<List<Term2>>> response) {
+            @Override
+            public void onResponse(Call<KujonResponse<List<Term2>>> call, Response<KujonResponse<List<Term2>>> response) {
                 showSpinner(false);
                 if (ErrorHandlerUtil.handleResponse(response)) {
                     List<Term2> data = response.body().data;
-                    adapter.setData(data);
+
+                    List<Term2> active = $.filter(data, arg -> arg.active);
+                    List<Term2> inactivie = $.filter(data, arg -> !arg.active);
+                    adapter.setData(active, inactivie);
                 }
             }
 
-            @Override public void onFailure(Call<KujonResponse<List<Term2>>> call, Throwable t) {
+            @Override
+            public void onFailure(Call<KujonResponse<List<Term2>>> call, Throwable t) {
                 showSpinner(false);
                 ErrorHandlerUtil.handleError(t);
             }
@@ -61,61 +72,104 @@ public class TermsFragment extends ListFragment {
 
     }
 
-    @Override public void onStart() {
+    @Override
+    public void onStart() {
         super.onStart();
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Cykle");
     }
 
-    protected class Adapter extends RecyclerView.Adapter<ViewHolder> {
+    protected class Adapter extends SectionedRecyclerViewAdapter<ViewHolder> {
 
-        List<Term2> data = new LinkedList<>();
+        List<Term2> data1 = new LinkedList<>();
+        List<Term2> data2 = new LinkedList<>();
 
-        @Override public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        @Override
+        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_terms, parent, false);
             return new ViewHolder(v);
         }
 
-        @Override public void onBindViewHolder(ViewHolder holder, int position) {
-            Term2 term = data.get(position);
-            holder.name.setText(term.name);
-            holder.termId.setText(term.termId);
-            holder.active.setText(term.active ? "TAK" : "NIE");
 
-            if (term.active) {
-                holder.name.setTypeface(latoSemiBold);
-                holder.termId.setTypeface(latoSemiBold);
-                holder.active.setTypeface(latoSemiBold);
-                holder.startDate.setTypeface(latoSemiBold);
-                holder.endDate.setTypeface(latoSemiBold);
-                holder.finishDate.setTypeface(latoSemiBold);
+        @Override
+        public int getSectionCount() {
+            return 2;
+        }
+
+        @Override
+        public int getItemCount(int section) {
+            if (section == 0) {
+                return data1.size();
+            } else return data2.size();
+        }
+
+
+        @Override
+        public void onBindHeaderViewHolder(ViewHolder holder, int section) {
+
+            holder.section.setText(section == 0 ? getString(R.string.active) : getString(R.string.inactive));
+            holder.section.setVisibility(View.VISIBLE);
+            holder.termsView.setVisibility(View.GONE);
+
+        }
+
+        @Override
+        public void onBindViewHolder(ViewHolder holder, int section, int relativePosition, int absolutePosition) {
+            Term2 term = section == 0 ? data1.get(relativePosition) : data2.get(relativePosition);
+            holder.section.setVisibility(View.GONE);
+            holder.termsView.setVisibility(View.VISIBLE);
+            if (section == 0) {
+                holder.finishDate.setVisibility(View.GONE);
+                holder.finishLabel.setVisibility(View.GONE);
+            } else {
+                holder.finishDate.setVisibility(View.VISIBLE);
+                holder.finishLabel.setVisibility(View.VISIBLE);
+                holder.finishDate.setText(term.finishDate);
             }
+            holder.termName.setText(term.name);
+            holder.termId.setText(term.termId);
             holder.startDate.setText(term.startDate);
             holder.endDate.setText(term.endDate);
-            holder.finishDate.setText(term.finishDate);
         }
 
-        @Override public int getItemCount() {
-            return data.size();
-        }
-
-        public void setData(List<Term2> data) {
-            this.data = data;
+        public void setData(List<Term2> active, List<Term2> inactive) {
+            this.data1 = active;
+            this.data2 = inactive;
             notifyDataSetChanged();
         }
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        public @Bind(R.id.name) TextView name;
-        public @Bind(R.id.term_id) TextView termId;
-        public @Bind(R.id.active) TextView active;
-        public @Bind(R.id.start_date) TextView startDate;
-        public @Bind(R.id.end_date) TextView endDate;
-        public @Bind(R.id.finish_date) TextView finishDate;
+        public
+        @Bind(R.id.section)
+        TextView section;
+        public
+        @Bind(R.id.term_layout)
+        View termsView;
+        public
+        @Bind(R.id.term_name_text)
+        TextView termName;
+        public
+        @Bind(R.id.term_id_text_view)
+        TextView termId;
+        public
+        @Bind(R.id.start_date_text)
+        TextView startDate;
+        public
+        @Bind(R.id.end_date_text)
+        TextView endDate;
+        public
+        @Bind(R.id.finish_date_text)
+        TextView finishDate;
+        public
+        @Bind(R.id.finish_date_label)
+        View finishLabel;
 
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
     }
+
+
 }

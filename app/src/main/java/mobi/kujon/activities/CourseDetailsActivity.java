@@ -262,15 +262,14 @@ public class CourseDetailsActivity extends BaseActivity {
 
         if (courseDetails.term != null && courseDetails.term.size() > 0) {
             Term2 term = courseDetails.term.get(0);
-            holder.name.setText(term.name);
+            holder.termName.setText(term.name);
             holder.termId.setText(term.termId);
-            holder.active.setText(term.active ? "TAK" : "NIE");
+            holder.section.setText(term.active ? getString(R.string.active): getString(R.string.inactive));
             holder.startDate.setText(term.startDate);
             holder.endDate.setText(term.endDate);
             holder.finishDate.setText(term.finishDate);
 
             dlgAlert.setView(termView);
-            dlgAlert.setTitle(term.name);
             dlgAlert.setCancelable(false);
             dlgAlert.setNegativeButton("OK", (dialog, which) -> {
                 dialog.dismiss();
