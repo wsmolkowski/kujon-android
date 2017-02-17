@@ -125,4 +125,9 @@
     <string name="download_file">Save file on this device</string>
     <string name="shared_files_title">Shared files</string>
     <string name="app_version">Version</string>
+    <string name="active">Active</string>
+    <string name="finish_date">Finish date</string>
+    <string name="end_date">End date</string>
+    <string name="inactive">Inactive</string>
+    <string name="start_date">Start date</string>
 </resources>
