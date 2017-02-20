@@ -104,9 +104,9 @@ public class FacultyDetailsActivity extends BaseActivity implements OnMapReadyCa
         phone.setText($.join(faculty.phone_numbers, ", "));
         homepage.setText(faculty.homepage_url);
         picasso.load(faculty.logo_urls._100x100).into(logo);
-        programmeCount.setText(String.format("Liczba programów: %d", faculty.stats.programme_count));
-        courseCount.setText("Liczba kursów: " + faculty.stats.course_count);
-        staffCount.setText("Liczba pracowników: " + faculty.stats.staff_count);
+        programmeCount.setText(String.format("%s: %d", getString(R.string.number_of_programmes), faculty.stats.programme_count));
+        courseCount.setText(String.format("%s: %d", getString(R.string.number_of_courses), faculty.stats.course_count));
+        staffCount.setText(String.format("%s: %d", getString(R.string.number_of_staff), faculty.stats.staff_count));
 
         List<Path> reveertedPath = $.reverse(faculty.path);
         List<String> parents = $.collect(reveertedPath, path -> path.name);
@@ -142,7 +142,7 @@ public class FacultyDetailsActivity extends BaseActivity implements OnMapReadyCa
             intent.putExtra(FACULTY_ID, facultyId);
             activity.startActivity(intent);
         } else {
-            Toast.makeText(KujonApplication.getApplication(), "Brak informacji o jednostce", Toast.LENGTH_SHORT).show();
+            Toast.makeText(KujonApplication.getApplication(), R.string.no_faculty_information, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -161,6 +161,6 @@ public class FacultyDetailsActivity extends BaseActivity implements OnMapReadyCa
 
     @Override
     public void cantSetLocation() {
-        Toast.makeText(FacultyDetailsActivity.this, "Adres nie może zostać przetworzony", Toast.LENGTH_SHORT).show();
+        Toast.makeText(FacultyDetailsActivity.this, R.string.unprocessable_address, Toast.LENGTH_SHORT).show();
     }
 }

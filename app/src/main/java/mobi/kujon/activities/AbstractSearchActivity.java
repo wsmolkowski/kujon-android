@@ -54,7 +54,7 @@ public abstract class AbstractSearchActivity<S, T> extends BaseActivity implemen
         endlessRecyclerViewAdapter = new EndlessRecyclerViewAdapter(this, adapter, this);
         recyclerView.setAdapter(endlessRecyclerViewAdapter);
         recyclerView.addItemDecoration(new SimpleDividerItemDecoration(this));
-        getSupportActionBar().setTitle("Wyniki wyszukiwania");
+        getSupportActionBar().setTitle(R.string.search_results);
     }
 
     @Override public void onLoadMoreRequested() {

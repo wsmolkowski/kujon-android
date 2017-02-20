@@ -125,7 +125,7 @@
                 <TextView
                     android:id="@+id/description_label"
                     style="@style/Regular.Label"
-                    android:text="Opis"/>
+                    android:text="@string/description"/>
 
                 <TextView
                     android:id="@+id/description"
@@ -136,7 +136,7 @@
                 <TextView
                     android:id="@+id/bibliography_label"
                     style="@style/Regular.Label"
-                    android:text="Bibliografia"/>
+                    android:text="@string/bibliography"/>
 
                 <TextView
                     android:id="@+id/bibliography"
@@ -147,7 +147,7 @@
                 <TextView
                     android:id="@+id/assessment_criteria_label"
                     style="@style/Regular.Label"
-                    android:text="Kryteria oceny"/>
+                    android:text="@string/grading_criteria"/>
 
                 <TextView
                     android:id="@+id/assessment_criteria"
@@ -157,12 +157,12 @@
                 <TextView
                     android:id="@+id/course_term_name_label"
                     style="@style/Regular.Label.Background"
-                    android:text="Zajęcia w cyklu"/>
+                    android:text="@string/classes_in_cycle"/>
 
                 <TextView
                     android:id="@+id/course_class_type_label"
                     style="@style/Regular.Label"
-                    android:text="Typ zajęć"/>
+                    android:text="@string/classes_type"/>
 
                 <TextView
                     android:id="@+id/course_class_type"
@@ -180,7 +180,7 @@
                     android:id="@+id/course_lecturers_label"
                     style="@style/Regular.Label.Background"
                     android:layout_marginTop="0dp"
-                    android:text="Prowadzący grup"/>
+                    android:text="@string/group_instructor"/>
 
                 <LinearLayout
                     android:id="@+id/course_lecturers"
@@ -192,7 +192,7 @@
                     android:id="@+id/course_coordinators_label"
                     style="@style/Regular.Label.Background"
                     android:layout_marginTop="0dp"
-                    android:text="Koordynatorzy"/>
+                    android:text="@string/coordinators"/>
 
                 <LinearLayout
                     android:id="@+id/course_coordinators"
@@ -204,7 +204,7 @@
                     android:id="@+id/course_students_label"
                     style="@style/Regular.Label.Background"
                     android:layout_marginTop="0dp"
-                    android:text="Studenci"/>
+                    android:text="@string/students"/>
 
                 <LinearLayout
                     android:id="@+id/course_students"

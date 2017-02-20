@@ -85,10 +85,13 @@ public abstract class ListFragment extends BaseFragment {
                     if (ErrorHandlerUtil.handleResponse(response)) {
                         Term2 term = response.body().data.get(0);
                         AlertDialog.Builder dlgAlert = new AlertDialog.Builder(activity);
-                        dlgAlert.setMessage(String.format("Numer: %s\nData początkowa: %s\nData końcowa: %s\nData zakończenia: %s",
-                                term.termId, term.startDate, term.endDate, term.finishDate));
+                        dlgAlert.setMessage(String.format("%s: %s\n%s: %s\n%s: %s\n%s: %s",
+                                getString(R.string.number), term.termId,
+                                getString(R.string.start_date), term.startDate,
+                                getString(R.string.end_date), term.endDate,
+                                getString(R.string.finish_date), term.finishDate));
                         dlgAlert.setTitle(term.name);
-                        dlgAlert.setPositiveButton("OK", null);
+                        dlgAlert.setPositiveButton(R.string.ok, null);
                         dlgAlert.setCancelable(true);
                         AlertDialog alertDialog = dlgAlert.create();
                         alertDialog.show();

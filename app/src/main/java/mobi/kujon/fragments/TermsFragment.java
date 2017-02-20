@@ -72,7 +72,7 @@ public class TermsFragment extends ListFragment {
     @Override
     public void onStart() {
         super.onStart();
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Cykle");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.study_cycles);
     }
 
     protected class Adapter extends SectionedRecyclerViewAdapter<ViewHolder> {

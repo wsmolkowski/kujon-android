@@ -12,7 +12,7 @@ public class ErrorActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_error);
-        getSupportActionBar().setTitle("Błąd systemu USOS");
+        getSupportActionBar().setTitle(R.string.usos_system_error);
     }
 
     public static void open(Activity from) {

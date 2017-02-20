@@ -63,7 +63,7 @@ public class UsosesActivity extends BaseActivity {
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        toolbarTitle.setText("Wybierz uczelnię");
+        toolbarTitle.setText(R.string.choose_university);
 
         requestUsoses();
 
@@ -113,13 +113,13 @@ public class UsosesActivity extends BaseActivity {
 
     private void help() {
         AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);
-        dlgAlert.setTitle("Wybierz swoją uczelnię");
-        dlgAlert.setMessage("Jeżeli Twojej Uczelni nie ma na liście to znacza że nie korzysta z wspieranego przez Kujona systemu USOS. Jeżeli masz uwagi - napisz do nas :)");
+        dlgAlert.setTitle(R.string.choose_your_university);
+        dlgAlert.setMessage(R.string.no_university_message);
         dlgAlert.setCancelable(false);
-        dlgAlert.setPositiveButton("OK", (dialog, which) -> {
+        dlgAlert.setPositiveButton(R.string.ok, (dialog, which) -> {
             dialog.dismiss();
         });
-        dlgAlert.setNeutralButton("Prześlij opinię", (dialog, which) -> {
+        dlgAlert.setNeutralButton(R.string.send_feedback, (dialog, which) -> {
             contactUs();
         });
         alertDialog = dlgAlert.create();
@@ -152,20 +152,20 @@ public class UsosesActivity extends BaseActivity {
             holder.rootView.setOnClickListener(v -> {
                 if (usos.enabled) {
                     AlertDialog.Builder dlgAlert = new AlertDialog.Builder(UsosesActivity.this);
-                    dlgAlert.setMessage("Zostaniesz teraz przekierowany do strony " + usos.name + ", aby zalogować się na Twoje konto w USOS");
+                    dlgAlert.setMessage(getString(R.string.redirection_notice) + usos.name + getString(R.string.usos_login_notice));
                     dlgAlert.setCancelable(false);
-                    dlgAlert.setPositiveButton("OK", (dialog, which) -> {
+                    dlgAlert.setPositiveButton(R.string.ok, (dialog, which) -> {
                         Intent intent = new Intent(UsosesActivity.this, UsoswebLoginActivity.class);
                         intent.putExtra(UsoswebLoginActivity.USOS_POJO, gson.toJson(usos));
                         startActivityForResult(intent, USOS_LOGIN_REQUEST_CODE);
                     });
-                    dlgAlert.setNegativeButton("Cofnij", (dialog, which) -> {
+                    dlgAlert.setNegativeButton(R.string.back, (dialog, which) -> {
                         dialog.dismiss();
                     });
                     alertDialog = dlgAlert.create();
                     alertDialog.show();
                 } else {
-                    Toast.makeText(UsosesActivity.this, !isEmpty(usos.comment) ? usos.comment : "Ta uczelnia jest aktualnie niedostępna", Toast.LENGTH_LONG).show();
+                    Toast.makeText(UsosesActivity.this, !isEmpty(usos.comment) ? usos.comment : getString(R.string.university_unavailable), Toast.LENGTH_LONG).show();
                 }
             });
         }
@@ -205,7 +205,7 @@ public class UsosesActivity extends BaseActivity {
 
     @Override protected void onStart() {
         super.onStart();
-        Toast.makeText(UsosesActivity.this, "Wybierz swoją uczelnię", Toast.LENGTH_SHORT).show();
+        Toast.makeText(UsosesActivity.this, getString(R.string.choose_your_university), Toast.LENGTH_SHORT).show();
     }
 
     @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
