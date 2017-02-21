@@ -52,6 +52,8 @@ public class LoginActivity extends BaseActivity {
     ProgressBar progressBar;
     @Bind(R.id.regulations)
     TextView regulations;
+    @Bind(R.id.login_text)
+    TextView logInByText;
 
     @Bind(R.id.login_logo)
     ImageView loginLogo;
@@ -196,6 +198,7 @@ public class LoginActivity extends BaseActivity {
 
     private void progress(boolean show) {
         signIn.setVisibility(show ? View.GONE : View.VISIBLE);
+        logInByText.setVisibility(show ? View.GONE : View.VISIBLE);
         progressBar.setVisibility(show ? View.VISIBLE : View.GONE);
     }
 
