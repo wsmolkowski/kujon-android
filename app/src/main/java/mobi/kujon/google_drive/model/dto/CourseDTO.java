@@ -12,7 +12,7 @@ import mobi.kujon.network.json.Course;
 public class CourseDTO {
 
     private String courseName, courseId, termId;
-    private int fileNumber = 25;
+    private int fileNumber;
 
     private CourseDTO(String courseName, String courseId, String termId) {
         this.courseName = courseName;
