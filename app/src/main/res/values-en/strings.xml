@@ -179,7 +179,7 @@
     <string name="number_of_courses">Number of courses</string>
     <string name="number_of_staff">Number of stuff</string>
     <string name="no_faculty_information">No information about the faculty</string>
-    <string name="unprocessable_address">Address can't be processed</string>
+    <string name="unprocessable_address">Address can\'t be processed</string>
     <string name="check_usos">Check in USOS</string>
     <string name="choose_university">University choice</string>
     <string name="choose_your_university">Choose your university</string>
