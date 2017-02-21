@@ -54,8 +54,8 @@ public class MainActivity extends BaseActivity {
     @Bind(R.id.toolbar)
     Toolbar toolbar;
 
-    public int[] TITLES = new int[]{ R.string.user, R.string.plan, R.string.courses, R.string.grades, R.string.teachers, R.string.messages, R.string.shared_files, R.string.search};
-    public int[] ICONS = new int[]{R.drawable.user, R.drawable.plan, R.drawable.courses, R.drawable.grades, R.drawable.teachers, R.drawable.ic_messages, R.drawable.udostepnione_icon, R.drawable.search};
+    public int[] TITLES = new int[]{R.string.user, R.string.plan, R.string.courses, R.string.grades, R.string.teachers, R.string.messages, R.string.search};
+    public int[] ICONS = new int[]{R.drawable.user, R.drawable.plan, R.drawable.courses, R.drawable.grades, R.drawable.teachers, R.drawable.ic_messages, R.drawable.search};
     public Fragment[] FRAGMENTS = new Fragment[]{
             new UserInfoFragment(), new PlanFragment(), new CoursesFragment(), new GradesFragment(), new LecturersFragment(), new MessagesFragment(), new SearchFragment()};
     @Bind(R.id.toolbar_title)
@@ -102,16 +102,14 @@ public class MainActivity extends BaseActivity {
 
         Typeface latoSemiBold = Typeface.createFromAsset(getAssets(), "fonts/Lato-Semibold.ttf");
 
-        for (int i = 0; i < FRAGMENTS.length + 1; i++) {
+        for (int i = 0; i < FRAGMENTS.length; i++) {
             final int finalI = i;
             drawer.addItem(new PrimaryDrawerItem()
                     .withName(TITLES[i])
                     .withIcon(ICONS[i])
                     .withTypeface(latoSemiBold)
                     .withOnDrawerItemClickListener((view, position, drawerItem) -> {
-                        if (position == 7) {
-                            CoursesInSemseterActivity.openCourseInSemester(this);
-                        } else if (position < 7) {
+                        if (position < 7) {
                             showFragment(FRAGMENTS[finalI], true);
                         } else {
                             showFragment(FRAGMENTS[finalI - 1], true);

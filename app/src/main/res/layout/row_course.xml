@@ -13,11 +13,10 @@
         android:background="@drawable/label_background"
         tools:text="2015" />
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/courseLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/course_name"
@@ -26,12 +25,58 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="0dp"
             android:gravity="center_vertical"
+            android:layout_toLeftOf="@+id/files_count"
+            android:layout_toStartOf="@+id/files_count"
             android:minHeight="?android:attr/listPreferredItemHeightSmall"
             android:textAppearance="?android:attr/textAppearanceListItemSmall"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
             tools:text="Historia kościołów i wyznań chrześcijańskich w XIX w. " />
 
-        <View
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/files_count"
+            android:gravity="center_vertical"
+            tools:text="24"
+            style="@style/Light"
+            android:textSize="@dimen/font_standard"
+            android:textColor="@color/dark_40"
+            android:paddingStart="0dp"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp"
+            android:paddingEnd="0dp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/file_icon"
+            android:layout_toStartOf="@id/file_icon"
+            android:layout_marginRight="5dp"
+            android:layout_marginEnd="5dp"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/file_icon"
+            android:id="@+id/file_icon"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/navigate_to_next"
+            android:layout_toStartOf="@+id/navigate_to_next"
+            android:layout_marginRight="2dp"
+            android:layout_marginEnd="2dp"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/navigate_next_gray"
+            android:id="@+id/navigate_to_next"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="17dp"
+            android:layout_marginEnd="17dp"/>
 
+
+        <View
+            android:layout_below="@+id/course_name"
             style="@style/divider" />
-    </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>
