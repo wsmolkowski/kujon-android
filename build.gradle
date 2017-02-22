@@ -31,7 +31,7 @@ buildscript {
 
     ext.jodatime_version = '2.9.3'
 
-    ext.google_play_services = '10.0.1'
+    ext.google_play_services = '10.2.0'
 
     ext.onesignal_version = '2.+@aar'
     ext.facebook_version = '4.17.0'
