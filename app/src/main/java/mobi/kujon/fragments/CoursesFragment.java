@@ -113,7 +113,7 @@ public class CoursesFragment extends AbstractFragmentSearchWidget<SortedMap<Stri
         List<SortedMap<String, List<Course>>> data = new ArrayList<>();
 
         @Override public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_course, parent, false);
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_course_file, parent, false);
             return new ViewHolder(v);
         }
 
