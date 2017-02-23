@@ -173,7 +173,6 @@
                     android:id="@+id/course_term_name"
                     style="@style/Regular.Entry"
                     android:layout_marginTop="16dp"
-                    android:drawableRight="@drawable/navigate_next"
                     tools:text='Semestr zimowy 2014/15'/>
 
                 <TextView
