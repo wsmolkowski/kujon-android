@@ -8,6 +8,7 @@ import java.util.List;
 
 public class UploadedFile {
 
+
     public UploadedFile() {
     }
 
@@ -25,4 +26,7 @@ public class UploadedFile {
 
     @SerializedName("shared_user_usos_ids") @Expose
     public List<String> sharedWith;
+
+    @SerializedName("file_shared_with") @Expose
+    public @ShareFileTargetType String shareType;
 }

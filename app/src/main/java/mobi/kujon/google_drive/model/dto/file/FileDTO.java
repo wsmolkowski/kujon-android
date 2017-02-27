@@ -10,8 +10,11 @@ import java.util.Date;
 import java.util.List;
 
 import mobi.kujon.R;
+import mobi.kujon.google_drive.model.dto.file_upload.DataForFileUpload;
+import mobi.kujon.google_drive.model.dto.file_upload.FileUploadDto;
 import mobi.kujon.google_drive.model.json.KujonFile;
 import mobi.kujon.google_drive.model.json.ShareFileTargetType;
+import mobi.kujon.google_drive.model.json.UploadedFile;
 import mobi.kujon.google_drive.ui.fragments.files.recycler_classes.ShowShareIcon;
 
 import static java.util.Locale.getDefault;
@@ -55,6 +58,22 @@ public abstract class FileDTO {
         this.date = kujonFile.createdTime;
         this.courseId = kujonFile.courseId;
         this.termId = kujonFile.termId;
+    }
+    public FileDTO(UploadedFile uploadedFile, FileUploadDto fileUploadDto, DataForFileUpload dataForFileUpload) {
+        this.fileId = uploadedFile.fileId;
+        this.shareType = uploadedFile.shareType;
+        this.numberOfShares = uploadedFile.sharedWith.size();
+        this.shares = uploadedFile.sharedWith;
+        this.fileName = uploadedFile.fileName;
+        this.fileSize = String.valueOf(dataForFileUpload.getBytes().length/1024);
+//        this.userName = new StringBuilder(kujonFile.firstName).append(" ").append(kujonFile.lastName).toString();
+        this.isMy = true;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm", getDefault());
+        dateCreated = simpleDateFormat.format(new Date());
+        this.mimeType = dataForFileUpload.getMediaType().toString();
+        this.date = new Date();
+        this.termId = fileUploadDto.getTermId();
+        this.courseId = fileUploadDto.getCourseId();
     }
 
 

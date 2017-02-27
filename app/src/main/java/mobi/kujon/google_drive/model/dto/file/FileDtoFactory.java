@@ -41,6 +41,28 @@ public class FileDtoFactory {
         }
     }
 
+//    public static FileDTO createFileDto(UploadedFile uploadedFile, FileUploadDto fileUploadDto, DataForFileUpload dataForFileUpload) {
+//        String contentType = dataForFileUpload.getMediaType().type();
+//
+//        if (contentType.startsWith(IMAGE_CONTENT_FILE)) {
+//            return new ImageFileType(uploadedFile,fileUploadDto,dataForFileUpload);
+//        } else if (contentType.startsWith(VIDEO_CONTENT_FILE)) {
+//            return new VideoFileType(uploadedFile,fileUploadDto,dataForFileUpload);
+//        } else if (contentType.startsWith(AUDIO_CONTENT_FILE)) {
+//            return new AudioFileType(uploadedFile,fileUploadDto,dataForFileUpload);
+//        } else if (contentType.contains(PDF_FILE_CONENT)) {
+//            return new PdfFileType(uploadedFile,fileUploadDto,dataForFileUpload);
+//        } else if (contentType.contains(PPT_FILE_CONTENT)) {
+//            return new PptFileType(uploadedFile,fileUploadDto,dataForFileUpload);
+//        } else if (contentType.contains(XLS_FILE_CONTENT)) {
+//            return new XlsFileType(uploadedFile,fileUploadDto,dataForFileUpload);
+//        } else if (contentType.contains(DOC_FILE_CONTENT)) {
+//            return new DocFileType(uploadedFile,fileUploadDto,dataForFileUpload);
+//        } else {
+//            return new NormalFileType(uploadedFile,fileUploadDto,dataForFileUpload);
+//        }
+//    }
+
     public static List<FileDTO> createListOfDTOFiles(List<KujonFile> kujonFiles) {
         List<FileDTO> fileDTOs = new ArrayList<>();
         for (KujonFile kujonFile : kujonFiles) {

@@ -1,11 +1,14 @@
 package mobi.kujon.google_drive.model.dto.file_stream;
 
+import mobi.kujon.google_drive.model.dto.file.FileDTO;
+
 /**
  *
  */
 
 public class FileUpdateDto {
 
+    private  FileDTO fileDto;
     private boolean doNotUpdate;
     private boolean error;
     private String fileName;
@@ -13,6 +16,7 @@ public class FileUpdateDto {
     private String id;
     private String errorReason;
 
+    private @FileStreamType int streamType;
     private boolean ended;
 
     public FileUpdateDto(String fileName, int progress) {
@@ -32,12 +36,28 @@ public class FileUpdateDto {
         this.doNotUpdate = doNotUpdate;
     }
 
-    public FileUpdateDto(String title, int i, boolean b, String b1) {
-        this(title, i, b, false);
+    public FileUpdateDto(String title, int i, boolean ended, String b1) {
+        this(title, i, ended, false);
         this.error = true;
         errorReason = b1;
     }
 
+    public FileUpdateDto(String fileName, String id, int streamType, boolean ended, FileDTO fileDTO) {
+        this.fileName = fileName;
+        this.id = id;
+        this.streamType = streamType;
+        this.ended = ended;
+        this.fileDto = fileDTO;
+    }
+
+
+    public FileDTO getFileDto() {
+        return fileDto;
+    }
+
+    public int getStreamType() {
+        return streamType;
+    }
 
     public boolean isError() {
         return error;
