@@ -101,7 +101,6 @@ public class NetModule {
     }
 
     @Provides
-    @Singleton
     Retrofit provideRetrofitProvider(ApiProvider apiProvider){
         return apiProvider.provideRetrofit();
     }

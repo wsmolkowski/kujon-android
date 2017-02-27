@@ -67,7 +67,7 @@ public class LoginActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         KujonApplication.getComponent().inject(this);
-
+        ((KujonApplication)this.getApplication()).resetFilesComponent();
         regulations.setText(Html.fromHtml(getString(R.string.regulations_info)));
         setChangeApi();
     }

@@ -199,6 +199,9 @@ public class KujonApplication extends MultiDexApplication implements OneSignal.N
         }
         return filesComponent;
     }
+    public void resetFilesComponent(){
+        filesComponent = null;
+    }
 
     private void buildFilesComponent() {
         filesComponent = DaggerRuntimeFilesComponent.builder()
