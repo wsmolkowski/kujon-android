@@ -56,6 +56,33 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true" />
+    </RelativeLayout>
+
+    <View
+        style="@style/divider"/>
+
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <TextView
+            style="@style/Regular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/language_text"
+            android:paddingRight="32dp"
+            android:text="@string/polish_enable"
+            android:textColor="@color/dark" />
+
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/polish_enable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true" />
 
     </RelativeLayout>
 

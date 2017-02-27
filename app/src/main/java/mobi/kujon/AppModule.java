@@ -7,6 +7,8 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import mobi.kujon.utils.lang_force.ForceLanguage;
+import mobi.kujon.utils.lang_force.ForceLanguageImpl;
 import mobi.kujon.utils.shared_preferences.SharedPreferencesFacade;
 import mobi.kujon.utils.shared_preferences.SharedPreferencesFacadeImpl;
 import mobi.kujon.utils.user_data.UserDataFacade;
@@ -44,4 +46,10 @@ public class AppModule {
         return new UserDataFacedImpl(sharedPreferencesFacade);
     }
 
+
+    @Provides
+    @Singleton
+    ForceLanguage provideForceLanguage(SharedPreferencesFacade sharedPreferencesFacade){
+        return new ForceLanguageImpl(application,sharedPreferencesFacade);
+    }
 }

@@ -29,12 +29,18 @@ public class PreferencesActivity extends BaseActivity {
     @Inject
     SharedPreferencesFacade sharedPreferencesFacade;
 
+
+
     @Bind(R.id.toolbar_title)
     TextView toolbarTitle;
     @Bind(R.id.notifications_enabler)
     SwitchCompat notificationsSwitch;
     @Bind(R.id.googlecalendar_enabler)
     SwitchCompat googleCalendarSwitch;
+    @Bind(R.id.polish_enable)
+    SwitchCompat languageSwitch;
+    @Bind(R.id.language_text)
+    TextView languageText;
 
     @Bind(R.id.app_version_text)
     TextView versionText;
@@ -52,6 +58,16 @@ public class PreferencesActivity extends BaseActivity {
         toolbarTitle.setText(R.string.settings);
         initSwitches();
         versionText.setText(getString(R.string.app_name) + " " + BuildConfig.VERSION_NAME);
+        languageText.setText(forceLanguage.getText());
+        languageSwitch.setChecked(forceLanguage.isLanguageForced());
+        languageSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            forceLanguage.setForced(isChecked);
+            Intent i = getBaseContext().getPackageManager()
+                    .getLaunchIntentForPackage( getBaseContext().getPackageName() );
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(i);
+        });
     }
 
     private void initSwitches() {

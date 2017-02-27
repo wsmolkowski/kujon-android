@@ -49,6 +49,7 @@
         <activity
             android:name=".activities.UsosesActivity"
             android:screenOrientation="portrait"
+            android:configChanges="locale"
             android:theme="@style/ToolbarAppTheme" />
         <activity
             android:name=".activities.UsoswebLoginActivity"
@@ -56,6 +57,7 @@
         <activity
             android:name=".activities.MainActivity"
             android:screenOrientation="portrait"
+            android:configChanges="locale"
             android:theme="@style/ToolbarAppTheme"
             android:windowSoftInputMode="adjustResize" />
         <activity
@@ -83,6 +85,7 @@
         <activity
             android:name=".activities.PreferencesActivity"
             android:screenOrientation="portrait"
+            android:configChanges="locale"
             android:theme="@style/ToolbarAppTheme" />
         <activity
             android:name=".activities.WebViewAcitivty"

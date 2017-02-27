@@ -215,4 +215,6 @@
     <string name="authors">Autorzy</string>
     <string name="reviewers">Recenzenci</string>
     <string name="faculty">Wydział</string>
+    <string name="polish_enable">Wymuś język Polski</string>
+    <string name="ang_enable">Wymuś ANG</string>
 </resources>

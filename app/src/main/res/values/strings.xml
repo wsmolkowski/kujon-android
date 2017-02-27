@@ -36,7 +36,7 @@
     <string name="search_minimum">Min. 4 chars</string>
     <string name="searching">Searching...</string>
     <string name="no_results_found">No results found</string>
-
+    <string name="log_by" >Login by</string>
     <string-array name="months">
         <item>January</item>
         <item>February</item>
@@ -214,4 +214,6 @@
     <string name="authors">Authors</string>
     <string name="reviewers">Reviewers</string>
     <string name="faculty">Faculty</string>
+    <string name="polish_enable">Force POL</string>
+    <string name="ang_enable">Force ENG</string>
 </resources>

@@ -45,6 +45,9 @@ public class KujonApplication extends MultiDexApplication implements OneSignal.N
 
     public static final String USER_EMAIL_TAG = "user_email";
     public static final String FROM_NOTIFICATION = "FROM_NOTIFICATION";
+
+
+
     @Inject KujonUtils utils;
     public InjectorProvider injectorProvider;
 

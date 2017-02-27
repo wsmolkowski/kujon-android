@@ -43,6 +43,7 @@ import mobi.kujon.network.SettingsApi;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.utils.ErrorHandlerUtil;
 import mobi.kujon.utils.KujonUtils;
+import mobi.kujon.utils.lang_force.ForceLanguage;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -60,6 +61,7 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
     @Inject protected KujonApplication kujonApplication;
     @Inject protected Picasso picasso;
     @Inject protected KujonUtils utils;
+    @Inject protected ForceLanguage forceLanguage;
 
     protected GoogleApiClient apiClient;
     private AlertDialog alertDialog;
@@ -94,6 +96,12 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
         progressBar = new ProgressBar(this);
         progressBar.setLayoutParams(layoutParams);
         content = (FrameLayout) findViewById(android.R.id.content);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        forceLanguage.setLocale(this);
     }
 
     @Override protected void onPostResume(){
