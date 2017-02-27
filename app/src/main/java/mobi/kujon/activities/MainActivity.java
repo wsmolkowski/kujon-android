@@ -38,7 +38,6 @@ import mobi.kujon.fragments.PlanFragment;
 import mobi.kujon.fragments.PlanListFragment;
 import mobi.kujon.fragments.SearchFragment;
 import mobi.kujon.fragments.UserInfoFragment;
-import mobi.kujon.google_drive.ui.activities.courses.CoursesInSemseterActivity;
 import mobi.kujon.network.ApiProvider;
 import mobi.kujon.network.ApiType;
 import mobi.kujon.utils.ErrorHandlerUtil;
@@ -109,11 +108,7 @@ public class MainActivity extends BaseActivity {
                     .withIcon(ICONS[i])
                     .withTypeface(latoSemiBold)
                     .withOnDrawerItemClickListener((view, position, drawerItem) -> {
-                        if (position < 7) {
-                            showFragment(FRAGMENTS[finalI], true);
-                        } else {
-                            showFragment(FRAGMENTS[finalI - 1], true);
-                        }
+                        showFragment(FRAGMENTS[finalI], true);
                         return true;
                     }));
         }
