@@ -7,7 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.afollestad.sectionedrecyclerview.SectionedRecyclerViewAdapter;
@@ -141,10 +141,10 @@ public class CoursesFragment extends AbstractFragmentSearchWidget<SortedMap<Stri
             holder.section.setVisibility(View.GONE);
             holder.courseLayout.setVisibility(View.VISIBLE);
             if(course.fileCount==0){
-                holder.icon.setVisibility(View.GONE);
+                holder.icon.setImageBitmap(null);
                 holder.fileCount.setText("");
             }else {
-                holder.icon.setVisibility(View.VISIBLE);
+                holder.icon.setImageResource(R.drawable.file_icon);
                 holder.fileCount.setText(String.valueOf(course.fileCount));
             }
             holder.itemView.setTag(R.string.no_item_decorator, false);
@@ -177,7 +177,7 @@ public class CoursesFragment extends AbstractFragmentSearchWidget<SortedMap<Stri
         TextView fileCount;
 
         @Bind(R.id.file_icon)
-        View icon;
+        ImageView icon;
         String courseId;
         String termId;
 
