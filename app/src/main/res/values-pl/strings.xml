@@ -1,0 +1,218 @@
+<resources>
+
+
+
+    <string name="logout">Wyloguj się</string>
+    <string name="help">Pomoc</string>
+    <string name="delete_account">Usuń konto</string>
+    <string name="contact_us">Prześlij opinię</string>
+    <string name="cancel">Anuluj</string>
+    <string name="email_subject">Uwaga do Kujona</string>
+    <string name="email_body">moja uwaga:</string>
+    <string name="delete_confirm"><![CDATA[Czy na pewno chcesz usunąć konto <b>%s</b>?]]></string>
+    <string name="no_date">Brak danych do wyświetlenia</string>
+    <string name="no_photo">Brak zdjęcia</string>
+    <string name="app_link">Sprawdź nową aplikację: https://play.google.com/store/apps/details?id=mobi.kujon</string>
+    <string name="share_app">Poleć aplikację znajomemu</string>
+    <string name="congratulations">Gratulacje! Udało Ci się zalogować do Twojego konta na %1$s.</string>
+    <string name="now_you_can">Teraz możesz przeglądać swoje przedmioty, oceny, plan zajęć..</string>
+    <string name="login_title">Logowanie do uczelni</string>
+    <string name="main_login_title">Logowanie</string>
+    <string name="login_error">Błąd logowania</string>
+    <string name="lecturer_title">Wykładowca</string>
+    <string name="course_title">Szczegóły przedmiotu</string>
+    <string name="faculty_title">Jednostka</string>
+    <string name="settings">Ustawienia</string>
+    <string name="regulations">Regulamin</string>
+
+    <string name="plan_title">Plan zajęć</string>
+    <string name="regulations_activity_title">Regulamin i polityka prywatności</string>
+    <string name="regulations_info">Rejestrując się zgadzasz się na<![CDATA[<br/><u><font color=#FFFFFF>następujące warunki</u>]]></string>
+    <string name="no_events">Brak zajęć</string>
+
+    <string name="search_student_hint">Znajdź studenta lub pracownika</string>
+    <string name="search_minimum">Min. 4 znaki</string>
+    <string name="searching">Szukam...</string>
+    <string name="no_results_found">Nie znaleziono wyników</string>
+    <string name="search">Szukaj</string>
+    <string name="lectures">Przedmioty</string>
+    <string name="grades">Oceny</string>
+    <string name="teachers">Wykładowcy</string>
+
+    <string name="enable_notifications">Powiadomienia</string>
+    <string name="enable_googlecalendar">Synchronizacja kalendarza Google</string>
+    <string name="messages">Wiadomości</string>
+    <string name="sender">Nadawca</string>
+    <string name="send_date">Data wysłania</string>
+    <string name="from">Od:</string>
+    <string name="date">Data:</string>
+    <string name="details">Szczegóły</string>
+    <string name="empty_message">Pusty email</string>
+
+    <string-array name="months">
+        <item>Styczeń</item>
+        <item>Luty</item>
+        <item>Marzec</item>
+        <item>Kwieceń</item>
+        <item>Maj</item>
+        <item>Czerwiec</item>
+        <item>Lipiec</item>
+        <item>Sierpień</item>
+        <item>Wrzesień</item>
+        <item>Październik</item>
+        <item>Listopad</item>
+        <item>Grudzień</item>
+    </string-array>
+    <string name="study_level">Poziom studiów</string>
+    <string name="programme_duration">Czas trwania</string>
+    <string name="none">Brak</string>
+    <string name="programme_id">Identyfikator</string>
+    <string name="programme_mode">Tryb Studiów</string>
+    <string name="programme_name">Opis</string>
+    <string name="programme">Kierunek</string>
+    <string name="ects_sum">Suma Punktów ECTS</string>
+    <string name="change_api_prod">Tryb produkcyjny włączony</string>
+    <string name="change_api_demo">Tryb demo włączony</string>
+    <string name="not_empty">Nie puste</string>
+    <string name="action_settings">Settings</string>
+    <string name="lecturers_plan">Plan zajęć -</string>
+    <string name="search_title">Szukaj</string>
+    <string name="server_communication_error">Błąd komunikacji z serwerem</string>
+    <string name="no_data_for_month"> - Brak zajęć w USOS</string>
+    <string name="empty_results">Brak Wyników</string>
+    <string name="semester_choose">Wybierz semestr</string>
+    <string name="courses_in">Zajęcia w</string>
+
+
+
+    <string name="all_files">Wszystkie</string>
+    <string name="my_files">Moje</string>
+    <string name="share_with_everyone">Udostępnij wszystkim osobom z danego przedmiotu</string>
+    <string name="share_with_chosen">Udostępnij wybranym osobom z danego przedmiotu</string>
+    <string name="file_details">Szczegóły pliku</string>
+    <string name="add_to_google_drive">Dodaj do Google Drive</string>
+    <string name="delete">Usuń</string>
+    <string name="share">ZAPISZ</string>
+    <string name="created_time">Stworzony</string>
+    <string name="by">przez</string>
+    <string name="everyone">Wszyscy</string>
+    <string name="file_name">Nazwa pliku</string>
+    <string name="file_type">Typ</string>
+    <string name="files_title">Pliki Udostępnione</string>
+    <string name="file_size">Rozmiar</string>
+    <string name="created_date">Utworzono</string>
+    <string name="who_has_access">Kto ma dostęp</string>
+    <string name="audio_file">Plik audio</string>
+    <string name="text_file">Plik tekstowy</string>
+    <string name="image_file">Obraz</string>
+    <string name="unknown_file">Nienznany typ pliku</string>
+    <string name="pdf_file">Plik PDF</string>
+    <string name="presentation_file">Plik prezentacji</string>
+    <string name="video_file">Plik wideo</string>
+    <string name="xls_file">Plik arkusza kalkulacyjnego</string>
+    <string name="litlle_empty">brak plików i notatek</string>
+    <string name="add_from_google">Aby dodać do przedmiotu plik lub \n notatkę, wybierz przycisk +</string>
+
+    <string name="choose_folder">Wybierz folder docelowy</string>
+    <string name="choose_file_to_send_to_kujon">Wybierz plik do przesłania do Kujona</string>
+    <string name="author">Autor</string>
+    <string name="shared_files">Pliki udostępnione</string>
+    <string name="you_want_to_delete_this_file">Chcesz usunąć ten plik ?</string>
+    <string name="are_you_sure">Czy jesteś pewny ?</string>
+    <string name="yes">Tak</string>
+    <string name="log_by" >Zaloguj się przez</string>
+    <string name="choose_student">Udostępnij osobom</string>
+    <string name="upload_failed">nieudane wysyłanie</string>
+    <string name="sort_by">Sortuj</string>
+    <string name="sort_by_create_date">Sortuj po dacie dodania</string>
+    <string name="sort_by_filename">Sortuj po nazwie pliku</string>
+    <string name="sort_by_author">Sortuj po włascicielu pliku</string>
+    <string name="get_file">Wybierz plik</string>
+    <string name="google_drive_file">Dodaj plik z Google Drive</string>
+    <string name="device_file">Dodaj plik z tego urządzenia</string>
+    <string name="owner">Dodany przez</string>
+    <string name="course_file">Przedmiot</string>
+    <string name="term">Okres</string>
+    <string name="download_failed">Zapis pliku się nie powiódł</string>
+    <string name="download_file">Zapisz plik na tym urządzeniu</string>
+    <string name="shared_files_title">Pliki udostępnione</string>
+    <string name="app_version">Wersja</string>
+    <string name="start_date">Data początkowa</string>
+    <string name="end_date">Data końcowa</string>
+    <string name="finish_date">Data zakończenia</string>
+    <string name="active">Aktywne</string>
+    <string name="inactive">Nieaktywne</string>
+    <string name="user">Użytkownik</string>
+    <string name="plan">Plan zajęć</string>
+    <string name="courses">Przedmioty</string>
+    <string name="students_and_staff">Studenci i pracownicy</string>
+    <string name="twenty_more_results">20+ wyników</string>
+    <string name="organization_units">Jednostki</string>
+    <string name="org_unit_name">Nazwa jednostki organizacyjnej</string>
+    <string name="course_name">Nazwa przedmiotu</string>
+    <string name="majors">Kierunki</string>
+    <string name="major_name">Nazwa kierunku studiów</string>
+    <string name="thesiss">Prace dyplomowe</string>
+    <string name="thesis">Praca dyplomowa</string>
+    <string name="account_number">Numer konta</string>
+    <string name="index_number">Numer indeksu</string>
+    <string name="additional_information">Informacje</string>
+    <string name="study_cycles">Cykle</string>
+    <string name="room">Sala</string>
+    <string name="building">Budynek</string>
+    <string name="group">Grupa</string>
+    <string name="type">Typ</string>
+    <string name="ok">OK</string>
+    <string name="view_course">Zobacz przedmiot</string>
+    <string name="description">Opis</string>
+    <string name="bibliography">Bibliografia</string>
+    <string name="grading_criteria">Kryteria oceny</string>
+    <string name="classes_in_cycle">Zajęcia w cyklu</string>
+    <string name="classes_type">Typ zajęć</string>
+    <string name="group_instructor">Prowadzący grup</string>
+    <string name="coordinators">Koordynatorzy</string>
+    <string name="students">Studenci</string>
+    <string name="average_grade">średnia ocen</string>
+    <string name="deadline">termin</string>
+    <string name="final_grade_term_one">Ocena Końcowa, termin 1</string>
+    <string name="tutorship">Konsultacje</string>
+    <string name="home_page">Strona domowa</string>
+    <string name="email">Email</string>
+    <string name="interests">Zainteresowania</string>
+    <string name="employment">Zatrudnienie</string>
+    <string name="courses_taught">Prowadzone przedmioty</string>
+    <string name="search_results">Wyniki wyszukiwania</string>
+    <string name="language">język</string>
+    <string name="missing">Brak</string>
+    <string name="is_currently_conducted">prowadzony</string>
+    <string name="group_number">numer grupy</string>
+    <string name="usos_system_error">Błąd systemu USOS</string>
+    <string name="number_of_programmes">Liczba programów</string>
+    <string name="number_of_courses">Liczba kursów</string>
+    <string name="number_of_staff">Liczba pracowników</string>
+    <string name="no_faculty_information">Brak informacji o jednostce</string>
+    <string name="unprocessable_address">Adres nie może zostać przetworzony</string>
+    <string name="check_usos">Sprawdź w USOS</string>
+    <string name="choose_university">Wybierz uczelnię</string>
+    <string name="choose_your_university">Wybierz swoją uczelnię</string>
+    <string name="no_university_message">Jeżeli Twojej Uczelni nie ma na liście to znacza że nie korzysta z wspieranego przez Kujona systemu USOS. Jeżeli masz uwagi - napisz do nas :)</string>
+    <string name="send_feedback">Prześlij opinię</string>
+    <string name="redirection_notice">"Zostaniesz teraz przekierowany do strony "</string>
+    <string name="usos_login_notice">, aby zalogować się na Twoje konto w USOS</string>
+    <string name="back">Cofnij</string>
+    <string name="university_unavailable">Ta uczelnia jest aktualnie niedostępna</string>
+    <string name="number">Numer</string>
+    <string name="return_to_today">Wróć do "dzisiaj"</string>
+    <string name="results">wyników</string>
+    <string name="no_programme_desc">Brak opisu programu</string>
+    <string name="contniue_str">Kontunuuj</string>
+    <string name="uni_usos_unavailable_msg">Przepraszamy, system USOS na Twojej uczelni jest tymczasowo niedostępny. Prosimy spróbuj później.</string>
+    <string name="address">Adres</string>
+    <string name="phone_number">Telefon</string>
+    <string name="web_page">Strona</string>
+    <string name="statistics">Statystyki</string>
+    <string name="superior_units">Jednostki nadrzędne</string>
+    <string name="authors">Autorzy</string>
+    <string name="reviewers">Recenzenci</string>
+    <string name="faculty">Wydział</string>
+</resources>
