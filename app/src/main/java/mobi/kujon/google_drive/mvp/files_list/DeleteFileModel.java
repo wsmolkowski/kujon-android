@@ -1,25 +1,24 @@
 package mobi.kujon.google_drive.mvp.files_list;
 
-import javax.inject.Inject;
-
-import mobi.kujon.google_drive.dagger.scopes.ActivityScope;
 import mobi.kujon.google_drive.network.unwrapped_api.DeleteFileApi;
 import rx.Observable;
 
 /**
  *
  */
-@ActivityScope
+
 public class DeleteFileModel implements FileListMVP.DeleteModel {
     private DeleteFileApi deleteFileApi;
+    private String courseId,termId;
 
-    @Inject
-    public DeleteFileModel(DeleteFileApi deleteFileApi) {
+    public DeleteFileModel(DeleteFileApi deleteFileApi, String courseId, String termId) {
         this.deleteFileApi = deleteFileApi;
+        this.courseId = courseId;
+        this.termId = termId;
     }
 
     @Override
     public Observable<String> deleteFile(String fileId) {
-        return deleteFileApi.deleteFile(fileId);
+        return deleteFileApi.deleteFile(fileId,courseId,termId);
     }
 }

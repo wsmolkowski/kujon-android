@@ -37,7 +37,12 @@ public class FilesFragmentPagerAdapter extends FragmentPagerAdapter {
 
     public void refresh() {
         for(FilesListFragment filesListFragment:fragments){
-            filesListFragment.reload();
+            filesListFragment.reload(true);
+        }
+    }
+    public void reload() {
+        for(FilesListFragment filesListFragment:fragments){
+            filesListFragment.reload(false);
         }
     }
 }

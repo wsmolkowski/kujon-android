@@ -418,7 +418,7 @@ public class FilesActivity extends BaseFileActivity implements FileActivityView 
     @Override
     public void fileDeleted() {
         this.setLoading(false);
-        this.adapter.refresh();
+        this.adapter.reload();
     }
 
     @Override

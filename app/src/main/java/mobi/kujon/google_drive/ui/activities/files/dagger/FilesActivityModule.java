@@ -12,6 +12,7 @@ import mobi.kujon.google_drive.mvp.files_list.FileListMVP;
 import mobi.kujon.google_drive.mvp.files_list.FileListModel;
 import mobi.kujon.google_drive.mvp.upload_file.UploadFileMVP;
 import mobi.kujon.google_drive.mvp.upload_file.UploadFilePresenter;
+import mobi.kujon.google_drive.network.unwrapped_api.DeleteFileApi;
 import mobi.kujon.google_drive.network.unwrapped_api.FileUploadApi;
 import mobi.kujon.google_drive.network.unwrapped_api.GetFilesApi;
 import mobi.kujon.google_drive.ui.activities.files.FileActivityView;
@@ -39,6 +40,12 @@ public class FilesActivityModule {
         return new FileListModel(courseId, termId, getFilesApi, new FilesFilter(), schedulersHolder);
     }
 
+    @ActivityScope
+    @Provides
+    FileListMVP.DeleteModel provideFileDeleteModel(DeleteFileApi deleteFileApi) {
+        return new DeleteFileModel(deleteFileApi,courseId,termId);
+    }
+
 
     @ActivityScope
     @Provides
@@ -49,7 +56,7 @@ public class FilesActivityModule {
 
     @ActivityScope
     @Provides
-    FileListMVP.DeletePresenter provideDeletePresenter(DeleteFileModel deleteFileModel, SchedulersHolder schedulersHolder) {
+    FileListMVP.DeletePresenter provideDeletePresenter(FileListMVP.DeleteModel deleteFileModel, SchedulersHolder schedulersHolder) {
         return new DeletePresenter(deleteFileModel, deleteView, schedulersHolder);
     }
 

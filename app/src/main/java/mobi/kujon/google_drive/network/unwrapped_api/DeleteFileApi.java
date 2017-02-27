@@ -5,5 +5,5 @@ import rx.Observable;
 
 public interface DeleteFileApi {
 
-    Observable<String> deleteFile(String fileId);
+    Observable<String> deleteFile(String fileId,String courseId, String termId);
 }
