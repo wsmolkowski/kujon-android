@@ -23,5 +23,5 @@ public interface GetFilesKujon {
     Observable<KujonResponse<List<KujonFile>>> getAllFiles(@Header(KUJONREFRESH) boolean b, @Header(CACHE_CONTROL) String value);
 
     @GET("files")
-    Observable<KujonResponse<List<KujonFile>>> getFiles(@Header(KUJONREFRESH) boolean b, @Header(CACHE_CONTROL) String value,@Query("course_id") String courseId, @Query("term_id") String termId);
+    Observable<KujonResponse<List<KujonFile>>> getFiles( @Header(CACHE_CONTROL) String value,@Query("course_id") String courseId, @Query("term_id") String termId);
 }

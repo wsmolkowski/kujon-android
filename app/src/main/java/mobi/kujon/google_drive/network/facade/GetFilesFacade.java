@@ -37,7 +37,7 @@ public class GetFilesFacade implements GetFilesApi {
             return Observable.just(kujonFile.get(courseTermKey));
         }
         return listBackendWrapper
-                .doSomething(getFilesKujon.getFiles(refresh, ApiConst.getCacheValue(refresh),courseId,termId))
+                .doSomething(getFilesKujon.getFiles(ApiConst.getCacheValue(refresh),courseId,termId))
                 .doOnNext(it-> kujonFile.put(courseTermKey,it));
     }
 }
