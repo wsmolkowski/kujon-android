@@ -140,7 +140,7 @@ public class GradesFragment extends AbstractFragmentSearchWidget<TermGrades> {
         @Override
         public void onBindHeaderViewHolder(ViewHolder holder, int section) {
             TermGrades termGrades = data.get(section);
-            holder.binding.section.setText(termGrades.termId + ", średnia ocen: " + termGrades.avrGrades);
+            holder.binding.section.setText(termGrades.termId + ", " + getString(R.string.average_grade) + ": " + termGrades.avrGrades);
             holder.binding.section.setVisibility(View.VISIBLE);
             holder.binding.dataLayout.setVisibility(View.GONE);
             holder.termId = termGrades.termId;
@@ -152,10 +152,10 @@ public class GradesFragment extends AbstractFragmentSearchWidget<TermGrades> {
             Pair<CourseGrades, Grade> grade = gradesInSection(section).get(relativePosition);
             TermGrades termGrades = data.get(section);
             holder.binding.title.setText(grade.first.courseName);
-            holder.binding.desc.setText(Html.fromHtml(String.format("%s, termin: %s", grade.second.classType.name, grade.second.examSessionNumber)));
+            holder.binding.desc.setText(Html.fromHtml(String.format("%s, %s: %s", grade.second.classType.name, getString(R.string.deadline),grade.second.examSessionNumber)));
             String symbol = grade.second.valueSymbol;
             holder.binding.gradeValueSymbol.setText(symbol);
-            if(symbol!=null){
+            if (symbol != null) {
                 int color = "2".equals(symbol) || "nzal".equals(symbol.toLowerCase()) ? red : dark;
                 holder.binding.gradeValueSymbol.setTextColor(color);
                 holder.binding.gradeValueDesc.setTextColor(color);

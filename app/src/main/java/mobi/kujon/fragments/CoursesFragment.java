@@ -113,7 +113,7 @@ public class CoursesFragment extends AbstractFragmentSearchWidget<SortedMap<Stri
         List<SortedMap<String, List<Course>>> data = new ArrayList<>();
 
         @Override public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_course, parent, false);
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_course_file, parent, false);
             return new ViewHolder(v);
         }
 
@@ -140,6 +140,13 @@ public class CoursesFragment extends AbstractFragmentSearchWidget<SortedMap<Stri
             holder.termId = sectionName(section);
             holder.section.setVisibility(View.GONE);
             holder.courseLayout.setVisibility(View.VISIBLE);
+            if(course.fileCount==0){
+                holder.icon.setVisibility(View.GONE);
+                holder.fileCount.setText("");
+            }else {
+                holder.icon.setVisibility(View.VISIBLE);
+                holder.fileCount.setText(String.valueOf(course.fileCount));
+            }
             holder.itemView.setTag(R.string.no_item_decorator, false);
         }
 
@@ -159,9 +166,18 @@ public class CoursesFragment extends AbstractFragmentSearchWidget<SortedMap<Stri
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.course_name) TextView courseName;
-        @Bind(R.id.section) TextView section;
-        @Bind(R.id.courseLayout) LinearLayout courseLayout;
+        @Bind(R.id.course_name)
+        TextView courseName;
+        @Bind(R.id.section)
+        TextView section;
+        @Bind(R.id.courseLayout)
+        View courseLayout;
+
+        @Bind(R.id.files_count)
+        TextView fileCount;
+
+        @Bind(R.id.file_icon)
+        View icon;
         String courseId;
         String termId;
 

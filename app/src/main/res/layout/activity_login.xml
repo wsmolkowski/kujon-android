@@ -43,7 +43,7 @@
 
 
         <TextView
-            android:id="@+id/text_id2"
+            android:id="@+id/login_text"
             android:layout_below="@+id/login_logo"
             android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
@@ -58,7 +58,7 @@
 
         <include layout="@layout/google_login_button"
             android:id="@+id/google_login_button"
-            android:layout_below="@+id/text_id2"
+            android:layout_below="@id/login_text"
             android:layout_centerHorizontal="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

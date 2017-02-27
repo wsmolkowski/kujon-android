@@ -72,7 +72,7 @@ public class ThesesFragment extends ListFragment {
             Thesis_ thesis = gson.fromJson(thesisJson, Thesis_.class);
             List<Thesis_> thesises = new ArrayList<>();
             thesises.add(thesis);
-            ((ThesesActivity) getActivity()).setToolbarTitle("Praca dyplomowe");
+            ((ThesesActivity) getActivity()).setToolbarTitle(R.string.thesiss);
             adapter.setData(thesises);
         } catch (JsonSyntaxException e) {
 
@@ -83,7 +83,7 @@ public class ThesesFragment extends ListFragment {
     }
 
     private void loadDataFromApi(boolean refresh) {
-        ((ThesesActivity) getActivity()).setToolbarTitle("Prace dyplomowe");
+        ((ThesesActivity) getActivity()).setToolbarTitle(R.string.thesiss);
         Call<KujonResponse<List<Thesis_>>> theses = refresh ? backendApi.thesesRefresh() : backendApi.theses();
         theses.enqueue(new Callback<KujonResponse<List<Thesis_>>>() {
             @Override

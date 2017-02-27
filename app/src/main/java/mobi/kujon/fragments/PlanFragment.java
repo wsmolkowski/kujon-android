@@ -155,7 +155,7 @@ public class PlanFragment extends BaseFragment implements MonthLoader.MonthChang
 
         fab.setOnClickListener(v -> gotoNow());
         fab.setOnLongClickListener(v -> {
-            Toast.makeText(getActivity(), "Wróć do \"dzisiaj\"", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.return_to_today, Toast.LENGTH_SHORT).show();
             return true;
         });
 

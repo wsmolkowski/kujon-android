@@ -60,7 +60,7 @@
 
                 <TextView
                     style="@style/Regular.Label"
-                    android:text="Konsultacje"/>
+                    android:text="@string/tutorship"/>
 
                 <TextView
                     android:id="@+id/lecturer_office_hours"
@@ -72,7 +72,7 @@
                 <TextView
                     style="@style/Regular.Label"
                     android:layout_marginTop="8dp"
-                    android:text="Pokój"/>
+                    android:text="@string/room"/>
 
                 <TextView
                     android:id="@+id/lecturer_room"
@@ -83,7 +83,7 @@
 
                 <TextView
                     style="@style/Regular.Label"
-                    android:text="Strona domowa"/>
+                    android:text="@string/home_page"/>
 
                 <TextView
                     android:id="@+id/lecturer_homepage"
@@ -93,7 +93,7 @@
 
                 <TextView
                     style="@style/Regular.Label"
-                    android:text="Email"/>
+                    android:text="@string/email"/>
 
                 <TextView
                     android:id="@+id/lecturer_email"
@@ -102,7 +102,7 @@
 
                 <TextView
                     style="@style/Regular.Label"
-                    android:text="Zainteresowania"/>
+                    android:text="@string/interests"/>
 
                 <TextView
                     android:id="@+id/lecturer_interests"
@@ -112,7 +112,7 @@
 
                 <TextView
                     style="@style/Regular.Label.Background"
-                    android:text="Zatrudnienie"/>
+                    android:text="@string/employment"/>
 
 
                 <LinearLayout
@@ -124,7 +124,7 @@
                 <TextView
                     style="@style/Regular.Label.Background"
                     android:layout_marginTop="0dp"
-                    android:text="Prowadzone przedmioty"/>
+                    android:text="@string/courses_taught"/>
 
                 <LinearLayout
                     android:id="@+id/lecturer_courses"

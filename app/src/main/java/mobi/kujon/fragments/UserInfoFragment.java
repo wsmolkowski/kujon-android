@@ -121,7 +121,7 @@ public class UserInfoFragment extends BaseFragment {
                         List<Programme> data = user.programmes;
                         Optional<Programme> programmeOptional = $.find(data, it -> it.programme.id.equals(programme.id));
                         if (!programmeOptional.isPresent()) {
-                            Toast.makeText(KujonApplication.getApplication(), "Brak opisu programu", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(KujonApplication.getApplication(), R.string.no_programme_desc, Toast.LENGTH_SHORT).show();
                         } else {
                             Programme prog = programmeOptional.get();
                             Programme_ programmeFull = prog.programme;
@@ -139,8 +139,8 @@ public class UserInfoFragment extends BaseFragment {
                         FacultyDetailsActivity.showFacultyDetails(getActivity(), faculties.get(position).fac_id);
                     });
 
-                    binding.terms.setText(String.format("Cykle (%s)", user.terms.size()));
-                    binding.theses.setText(String.format("Prace dyplomowe (%s)", user.theses.size()));
+                    binding.terms.setText(String.format("%s (%s)", getString(R.string.study_cycles), user.terms.size()));
+                    binding.theses.setText(String.format("%s (%s)", getString(R.string.thesiss), user.theses.size()));
                 }
             }
 

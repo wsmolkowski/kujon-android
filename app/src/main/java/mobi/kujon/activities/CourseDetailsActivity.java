@@ -133,12 +133,13 @@ public class CourseDetailsActivity extends BaseActivity {
             public void onResponse(Call<KujonResponse<CourseDetails>> call, Response<KujonResponse<CourseDetails>> response) {
                 if (ErrorHandlerUtil.handleResponse(response)) {
                     courseDetails = response.body().data;
-                    sharedFiles.setOnClickListener(v -> FilesActivity.openActivity(CourseDetailsActivity.this, courseId, termId,courseDetails.name));
+                    sharedFiles.setOnClickListener(v -> FilesActivity.openActivity(CourseDetailsActivity.this, courseId, termId, courseDetails.name));
                     courseFac.setText(courseDetails.facId.name);
                     fileCount.setText(String.valueOf(courseDetails.fileCount));
                     courseName.setText(courseDetails.name);
-                    courseAdditionalInfo.setText(String.format("id: %s, język: %s, prowadzony: %s", courseDetails.courseId,
-                            isEmpty(courseDetails.langId) ? "Brak" : courseDetails.langId, courseDetails.isCurrentlyConducted));
+                    courseAdditionalInfo.setText(String.format("id: %s, %s: %s, %s: %s", courseDetails.courseId, getString(R.string.language),
+                            isEmpty(courseDetails.langId) ? getString(R.string.missing) : courseDetails.langId, getString(R.string.is_currently_conducted),
+                            courseDetails.isCurrentlyConducted));
 
 
                     handle4Layouts();
@@ -199,7 +200,7 @@ public class CourseDetailsActivity extends BaseActivity {
         if (setText(bibliography, bibliographyLabel, Html.fromHtml(courseDetails.bibliography.replace("\n", "<br/><br/>"))) &
                 setText(assessmentCriteria, assessmentCriteriaLabel, Html.fromHtml(courseDetails.assessmentCriteria.replace("\n", "<br/><br/>"))) &
                 setText(description, descriptionLabel, Html.fromHtml(CourseDetailsActivity.this.courseDetails.description.replace("\n", "<br>"))) &
-                setText(courseClassType, courseClassTypeLabel, $.join($.collect(courseDetails.groups, it -> it.classType + ", numer grupy: " + it.groupNumber), "\n"))) {
+                setText(courseClassType, courseClassTypeLabel, $.join($.collect(courseDetails.groups, it -> it.classType + ", " + getString(R.string.group_number) + ": " + it.groupNumber), "\n"))) {
             beforeLayout.setVisibility(View.GONE);
         }
     }
@@ -264,14 +265,14 @@ public class CourseDetailsActivity extends BaseActivity {
             Term2 term = courseDetails.term.get(0);
             holder.termName.setText(term.name);
             holder.termId.setText(term.termId);
-            holder.section.setText(term.active ? getString(R.string.active): getString(R.string.inactive));
+            holder.section.setText(term.active ? getString(R.string.active) : getString(R.string.inactive));
             holder.startDate.setText(term.startDate);
             holder.endDate.setText(term.endDate);
             holder.finishDate.setText(term.finishDate);
 
             dlgAlert.setView(termView);
             dlgAlert.setCancelable(false);
-            dlgAlert.setNegativeButton("OK", (dialog, which) -> {
+            dlgAlert.setNegativeButton(R.string.ok, (dialog, which) -> {
                 dialog.dismiss();
             });
             dlgAlert.create().show();

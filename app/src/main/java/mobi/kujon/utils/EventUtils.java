@@ -9,6 +9,7 @@ import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 
+import mobi.kujon.R;
 import mobi.kujon.activities.CourseDetailsActivity;
 import mobi.kujon.network.json.CalendarEvent;
 
@@ -38,11 +39,15 @@ public class EventUtils {
         DateTime now = DateTime.now();
         String term = "" + (now.getMonthOfYear() > 9 ? now.getYear() : now.getYear() - 1);
         AlertDialog.Builder dlgAlert = new AlertDialog.Builder(activity);
-        dlgAlert.setMessage(String.format("%s\nSala: %s\nBudynek: %s\nGrupa: %s\nTyp: %s",
-                calendarEvent.getHoursFromTo(), calendarEvent.roomNumber, calendarEvent.buildingName, calendarEvent.groupNumber, calendarEvent.type));
+        dlgAlert.setMessage(String.format("%s\n%s: %s\n%s: %s\n%s: %s\n%s: %s",
+                calendarEvent.getHoursFromTo(),
+                activity.getString(R.string.room), calendarEvent.roomNumber,
+                activity.getString(R.string.building),calendarEvent.buildingName,
+                activity.getString(R.string.group),calendarEvent.groupNumber,
+                activity.getString(R.string.type),calendarEvent.type));
         dlgAlert.setTitle(calendarEvent.name);
-        dlgAlert.setPositiveButton("OK", null);
-        dlgAlert.setNeutralButton("Zobacz przedmiot", (dialog, which) -> {
+        dlgAlert.setPositiveButton(R.string.ok, null);
+        dlgAlert.setNeutralButton(R.string.view_course, (dialog, which) -> {
             CourseDetailsActivity.showCourseDetails(activity, calendarEvent.courseId);
         });
         dlgAlert.setCancelable(true);

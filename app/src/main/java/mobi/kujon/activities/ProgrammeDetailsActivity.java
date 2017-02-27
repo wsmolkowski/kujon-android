@@ -77,7 +77,7 @@ public class ProgrammeDetailsActivity extends BaseActivity {
         setContentView(R.layout.activity_programme_details);
         ButterKnife.bind(this);
         KujonApplication.getComponent().inject(this);
-        toolbarTitle.setText(programme);
+        toolbarTitle.setText(R.string.programme);
         if (getIntent().getStringExtra(PRGRAMME_ID_KEY) != null) {
             handleOnlyIdComming(false);
             setUpRefreshLayout();

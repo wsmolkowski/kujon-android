@@ -15,7 +15,7 @@
             style="@style/Semibold.Dark"
             android:layout_gravity="left"
             android:paddingLeft="4dp"
-            android:text="Studenci i pracownicy" />
+            android:text="@string/students_and_staff" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -50,7 +50,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textSize="10sp"
-                    tools:text="20+ wyników" />
+                    tools:text="@string/twenty_more_results" />
 
                 <Button
                     android:id="@+id/student_search"
@@ -66,7 +66,7 @@
             style="@style/Semibold.Dark"
             android:layout_gravity="left"
             android:paddingLeft="4dp"
-            android:text="Jednostki" />
+            android:text="@string/organization_units" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -84,7 +84,7 @@
                     android:id="@+id/faculty_query"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Nazwa jednostki organizacyjnej"
+                    android:hint="@string/org_unit_name"
                     android:imeOptions="actionSearch"
                     android:singleLine="true"
                     android:textSize="14sp" />
@@ -101,15 +101,14 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textSize="10sp"
-                    tools:text="20+ wyników" />
+                    tools:text="@string/twenty_more_results" />
 
                 <Button
                     android:id="@+id/faculty_search"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    style="@style/search_button_style"
-                    android:text="Szukaj" />
+                    style="@style/search_button_style" />
 
             </LinearLayout>
         </LinearLayout>
@@ -118,7 +117,7 @@
             style="@style/Semibold.Dark"
             android:layout_gravity="left"
             android:paddingLeft="4dp"
-            android:text="Przedmioty" />
+            android:text="@string/courses" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -136,7 +135,7 @@
                     android:id="@+id/course_query"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Nazwa przedmiotu"
+                    android:hint="@string/course_name"
                     android:imeOptions="actionSearch"
                     android:singleLine="true"
                     android:textSize="14sp" />
@@ -153,7 +152,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textSize="10sp"
-                    tools:text="20+ wyników" />
+                    tools:text="@string/twenty_more_results" />
 
                 <Button
                     android:id="@+id/course_search"
@@ -169,7 +168,7 @@
             style="@style/Semibold.Dark"
             android:layout_gravity="left"
             android:paddingLeft="4dp"
-            android:text="Kierunki" />
+            android:text="@string/majors" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -187,7 +186,7 @@
                     android:id="@+id/programme_query"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Nazwa kierunku studiów"
+                    android:hint="@string/major_name"
                     android:imeOptions="actionSearch"
                     android:singleLine="true"
                     android:textSize="14sp" />
@@ -204,7 +203,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textSize="10sp"
-                    tools:text="20+ wyników" />
+                    tools:text="@string/twenty_more_results" />
 
                 <Button
                     android:id="@+id/programme_search"
@@ -220,7 +219,7 @@
             style="@style/Semibold.Dark"
             android:layout_gravity="left"
             android:paddingLeft="4dp"
-            android:text="Prace dyplomowe" />
+            android:text="@string/thesiss" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -238,7 +237,7 @@
                     android:id="@+id/thesis_query"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Praca dyplomowa"
+                    android:hint="@string/thesis"
                     android:imeOptions="actionSearch"
                     android:singleLine="true"
                     android:textSize="14sp" />
@@ -255,7 +254,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textSize="10sp"
-                    tools:text="20+ wyników" />
+                    tools:text="@string/twenty_more_results" />
 
                 <Button
                     android:id="@+id/thesis_search"

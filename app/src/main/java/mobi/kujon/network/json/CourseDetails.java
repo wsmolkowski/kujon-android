@@ -57,6 +57,7 @@ public class CourseDetails {
     @SerializedName("description")
     @Expose
     public String description;
-
-    public int fileCount = 25;
+    @SerializedName("files_count")
+    @Expose
+    public int fileCount;
 }

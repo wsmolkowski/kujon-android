@@ -79,7 +79,7 @@
 
                             <TextView
                                 style="@style/Regular"
-                                android:text="Numer konta"
+                                android:text="@string/account_number"
                                 android:textColor="@color/dark"
                                 android:textSize="11sp"/>
 
@@ -95,7 +95,7 @@
                 </LinearLayout>
                 <TextView
                     style="@style/Regular.Label.Background"
-                    android:text="Kierunki"/>
+                    android:text="@string/majors"/>
 
                 <LinearLayout
                     android:id="@+id/student_programmes"

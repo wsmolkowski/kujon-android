@@ -111,9 +111,9 @@ public class LecturerDetailsActivity extends BaseActivity {
                     lecturerName.setText(name);
                     lecturerStatus.setText(lecturer.staffStatus);
                     if (lecturer.room != null) {
-                        lecturerRoom.setText(lecturer.room.buildingName + ", pokój " + lecturer.room.number);
+                        lecturerRoom.setText(lecturer.room.buildingName + ", " + getString(R.string.room).toLowerCase() + " " + lecturer.room.number);
                     }
-                    String email = String.format("<a href=\"%s\">Sprawdź w USOS</a>", lecturer.emailUrl);
+                    String email = String.format("<a href=\"%s\">%s</a>", lecturer.emailUrl, getString(R.string.check_usos));
                     lecturerEmail.setText(Html.fromHtml(email));
                     lecturerEmail.setMovementMethod(LinkMovementMethod.getInstance());
                     setUpConsultationField();
@@ -172,7 +172,7 @@ public class LecturerDetailsActivity extends BaseActivity {
             if (!isEmpty(photoUrl) && photoUrl.startsWith("http")) {
                 ImageActivity.show(LecturerDetailsActivity.this, photoUrl, name);
             } else {
-                Toast.makeText(LecturerDetailsActivity.this, "Brak zdjęcia", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LecturerDetailsActivity.this, R.string.no_photo, Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -91,7 +91,7 @@
                                 <TextView
                                     style="@style/Regular"
                                     android:layout_marginTop="0dp"
-                                    android:text="Numer indeksu"
+                                    android:text="@string/index_number"
                                     android:textSize="11sp"/>
 
                                 <TextView
@@ -109,7 +109,7 @@
 
                                 <TextView
                                     style="@style/Regular"
-                                    android:text="Numer konta"
+                                    android:text="@string/account_number"
                                     android:textSize="11sp"/>
 
                                 <TextView
@@ -124,7 +124,7 @@
                     <TextView
                         android:layout_marginTop="0dp"
                         style="@style/Regular.Label.Background"
-                        android:text="Kierunki"/>
+                        android:text="@string/majors"/>
 
                     <LinearLayout
                         android:id="@+id/student_programmes"
@@ -136,7 +136,7 @@
                     <TextView
                         android:layout_marginTop="0dp"
                         style="@style/Regular.Label.Background"
-                        android:text="Jednostki"/>
+                        android:text="@string/organization_units"/>
 
                     <LinearLayout
                         android:id="@+id/student_faculties"
@@ -148,7 +148,7 @@
                     <TextView
                         android:layout_marginTop="0dp"
                         style="@style/Regular.Label.Background"
-                        android:text="Informacje"/>
+                        android:text="@string/additional_information"/>
 
                     <TextView
                         android:id="@+id/terms"
@@ -158,7 +158,7 @@
                         android:layout_marginTop="@dimen/double_typ_margin"
                         android:layout_marginBottom="@dimen/double_typ_margin"
                         android:gravity="center_vertical"
-                        android:text='Cykle'/>
+                        android:text="@string/study_cycles"/>
 
                     <View style="@style/divider"/>
                     <TextView
@@ -170,7 +170,7 @@
                         android:layout_marginBottom="@dimen/double_typ_margin"
                         android:background="?selectableItemBackground"
                         android:gravity="center_vertical"
-                        android:text='Prace dyplomowe'/>
+                        android:text="@string/thesiss"/>
 
                 </LinearLayout>
             </ScrollView>

@@ -23,7 +23,7 @@
 
     <TextView
         style="@style/Regular.Label"
-        android:text="Autorzy" />
+        android:text="@string/authors" />
 
     <TextView
         android:id="@+id/authors"
@@ -37,7 +37,7 @@
 
     <TextView
         style="@style/Regular.Label"
-        android:text="Recenzenci" />
+        android:text="@string/reviewers" />
 
     <LinearLayout
         android:id="@+id/supervisors"
@@ -52,7 +52,7 @@
 
     <TextView
         style="@style/Regular.Label"
-        android:text="Wydział" />
+        android:text="@string/faculty" />
 
     <LinearLayout
         android:id="@+id/faculty"

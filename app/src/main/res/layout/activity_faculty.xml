@@ -49,7 +49,7 @@
 
             <TextView
                 style="@style/Regular.Label"
-                android:text="Adres" />
+                android:text="@string/address" />
 
             <TextView
                 android:id="@+id/postal_address"
@@ -58,7 +58,7 @@
 
             <TextView
                 style="@style/Regular.Label"
-                android:text="Telefon" />
+                android:text="@string/phone_number" />
 
             <TextView
                 android:id="@+id/phone"
@@ -69,7 +69,7 @@
 
             <TextView
                 style="@style/Regular.Label"
-                android:text="Strona" />
+                android:text="@string/web_page" />
 
             <TextView
                 android:id="@+id/homepage"
@@ -79,7 +79,7 @@
 
             <TextView
                 style="@style/Regular.Label"
-                android:text="Statystyki" />
+                android:text="@string/statistics" />
 
             <TextView
                 android:id="@+id/programmeCount"
@@ -101,7 +101,7 @@
 
             <TextView
                 style="@style/Regular.Label"
-                android:text="Jednostki nadrzędne" />
+                android:text="@string/superior_units" />
 
             <LinearLayout
                 android:id="@+id/parent_faculties"

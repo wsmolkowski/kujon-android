@@ -205,7 +205,7 @@ public class SearchFragment extends BaseFragment {
                                 T data = response.body().data;
                                 if (data != null) {
                                     int size = getItemsSize(data);
-                                    searchMessage.setText(String.format("%s wyników", size < 20 ? size : "20+"));
+                                    searchMessage.setText(String.format("%s %s", size < 20 ? size : "20+", getString(R.string.results)));
                                 } else {
                                     searchMessage.setText(R.string.no_results_found);
                                 }
