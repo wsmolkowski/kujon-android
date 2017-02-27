@@ -54,6 +54,7 @@ public class PreferencesActivity extends BaseActivity {
         KujonApplication.getComponent().inject(this);
         ButterKnife.bind(this);
         utils.invalidateEntry("settings");
+
         showProgress(true);
         toolbarTitle.setText(R.string.settings);
         initSwitches();
