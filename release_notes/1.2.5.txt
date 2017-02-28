@@ -1,0 +1,4 @@
+#245 dodanie toastów
+#244 wyczyszczenie brak danych
+#237 poprawka
+#229 poprawienie progressu
