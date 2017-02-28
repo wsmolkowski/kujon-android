@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.TextView;
 
 import java.util.List;
@@ -79,6 +80,8 @@ public class ProgrammeDetailsActivity extends BaseActivity {
         KujonApplication.getComponent().inject(this);
         toolbarTitle.setText(R.string.programme);
         if (getIntent().getStringExtra(PRGRAMME_ID_KEY) != null) {
+            ectsSum.setVisibility(View.GONE);
+            ectsSumLabel.setVisibility(View.GONE);
             handleOnlyIdComming(false);
             setUpRefreshLayout();
         } else {
@@ -138,6 +141,7 @@ public class ProgrammeDetailsActivity extends BaseActivity {
         programmeDuration.setText(programme.duration);
         programmeMode.setText(programme.modeOfStudies);
         programmeName.setText(programme.name);
+
     }
 
     private void setViews() {
