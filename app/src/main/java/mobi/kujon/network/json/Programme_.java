@@ -20,7 +20,7 @@ public class Programme_ {
     public String modeOfStudies;
     @SerializedName("ects_used_sum")
     @Expose
-    public Number ectsUsedSum;
+    public String ectsUsedSum;
     @SerializedName("id")
     @Expose
     public String id;

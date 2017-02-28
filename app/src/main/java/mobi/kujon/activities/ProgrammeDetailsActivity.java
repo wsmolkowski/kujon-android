@@ -8,6 +8,8 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import butterknife.Bind;
@@ -23,8 +25,6 @@ import mobi.kujon.utils.KujonUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static mobi.kujon.R.string.programme;
 
 public class ProgrammeDetailsActivity extends BaseActivity {
 
@@ -67,7 +67,7 @@ public class ProgrammeDetailsActivity extends BaseActivity {
     public static final String NAME = "NAME";
     public static final String FULL_NAME = "FULL_NAME";
     public static final String ECTS_SUM = "ECTS_SUM";
-    private Call<KujonResponse<ProgrammeSingle>> programmesCall;
+    private Call<KujonResponse<List<ProgrammeSingle>>> programmesCall;
     private String programmeId;
 
     @Override
@@ -101,26 +101,25 @@ public class ProgrammeDetailsActivity extends BaseActivity {
         doTheCall(programmesCall);
     }
 
-    private void doTheCall(Call<KujonResponse<ProgrammeSingle>> call) {
-        call.enqueue(new Callback<KujonResponse<ProgrammeSingle>>() {
+    private void doTheCall(Call<KujonResponse<List<ProgrammeSingle>>> call) {
+        call.enqueue(new Callback<KujonResponse<List<ProgrammeSingle>>>() {
             @Override
-            public void onResponse(Call<KujonResponse<ProgrammeSingle>> call, Response<KujonResponse<ProgrammeSingle>> response) {
+            public void onResponse(Call<KujonResponse<List<ProgrammeSingle>>> call, Response<KujonResponse<List<ProgrammeSingle>>> response) {
                 ProgrammeDetailsActivity.this.showProgress(false);
                 if (ErrorHandlerUtil.handleResponse(response)) {
                     processResponse(response);
                 }
             }
-
             @Override
-            public void onFailure(Call<KujonResponse<ProgrammeSingle>> call, Throwable t) {
+            public void onFailure(Call<KujonResponse<List<ProgrammeSingle>>> call, Throwable t) {
                 ProgrammeDetailsActivity.this.showProgress(false);
                 ErrorHandlerUtil.handleError(t);
             }
         });
     }
 
-    private void processResponse(Response<KujonResponse<ProgrammeSingle>> response) {
-        ProgrammeSingle programme = response.body().data;
+    private void processResponse(Response<KujonResponse<List<ProgrammeSingle>>> response) {
+        ProgrammeSingle programme = response.body().data.get(0);
         fillUpDataWithProgramme(programme);
     }
 
