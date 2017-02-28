@@ -15,6 +15,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -419,6 +420,7 @@ public class FilesActivity extends BaseFileActivity implements FileActivityView 
     public void fileDeleted() {
         this.setLoading(false);
         this.adapter.reload();
+        Toast.makeText(this,R.string.file_deleted,Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -440,5 +442,6 @@ public class FilesActivity extends BaseFileActivity implements FileActivityView 
     @Override
     public void onFileUploaded() {
         this.adapter.refresh();
+        Toast.makeText(this,R.string.file_added,Toast.LENGTH_SHORT).show();
     }
 }

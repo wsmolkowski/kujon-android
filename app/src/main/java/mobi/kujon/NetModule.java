@@ -46,20 +46,24 @@ public class NetModule {
     }
 
     @Provides @Singleton OkHttpClient provideOkHttpClient(Cache cache,AuthenticationInterceptor authenticationInterceptor) {
-        HttpLoggingInterceptor.Logger myLogger = message -> Log.d("CustomLogRetrofit", message);
-        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(myLogger);
-        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+
         CookieManager cookieManager = new CookieManager();
-        OkHttpClient httpClient = new OkHttpClient.Builder()
+        OkHttpClient.Builder builder = new OkHttpClient.Builder()
                 .addNetworkInterceptor(REWRITE_RESPONSE_INTERCEPTOR)
-                .addNetworkInterceptor(loggingInterceptor)
                 .addNetworkInterceptor(authenticationInterceptor)
                 .addInterceptor(OFFLINE_INTERCEPTOR)
                 .cache(cache)
                 .cookieJar(new JavaNetCookieJar(cookieManager))
-                .readTimeout(60, TimeUnit.SECONDS)
+                .readTimeout(60, TimeUnit.SECONDS);
+
+        if(BuildConfig.DEBUG){
+            HttpLoggingInterceptor.Logger myLogger = message -> Log.d("CustomLogRetrofit", message);
+            HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(myLogger);
+            loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+            builder.addInterceptor(loggingInterceptor);
+        }
+        return builder
                 .build();
-        return httpClient;
     }
 
 

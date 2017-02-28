@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.widget.Toast;
 
 import java.util.concurrent.TimeUnit;
 
@@ -134,6 +135,7 @@ public class DowloadFileService extends Service implements FileStreamUpdateMVP.C
                 .observeOn(schedulersHolder.observ())
                 .subscribe(it -> {
                     model.updateStream(new FileUpdateDto(fileName, 100, true,true));
+                    Toast.makeText(this,R.string.file_dowloaded,Toast.LENGTH_SHORT).show();
                     this.stopSelf();
                 }, error -> {
                     model.updateStream(new FileUpdateDto(fileName, 100, true, getString(R.string.download_failed)));

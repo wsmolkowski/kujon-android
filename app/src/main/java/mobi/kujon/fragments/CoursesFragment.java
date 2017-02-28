@@ -34,7 +34,8 @@ public class CoursesFragment extends AbstractFragmentSearchWidget<SortedMap<Stri
 
     private Adapter adapter;
 
-    @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         adapter = new Adapter();
         recyclerView.setAdapter(adapter);
@@ -57,9 +58,9 @@ public class CoursesFragment extends AbstractFragmentSearchWidget<SortedMap<Stri
     protected List<SortedMap<String, List<Course>>> performFiltering(String query) {
         CoursesPredicate coursesPredicate = new CoursesPredicate(query);
         List<SortedMap<String, List<Course>>> filteredData = new ArrayList<>();
-        for(SortedMap<String ,List<Course>> sortedMap:dataFromApi){
+        for (SortedMap<String, List<Course>> sortedMap : dataFromApi) {
             SortedMap<String, List<Course>> filteredMap = createMapIfAnyCoursePassesPredict(coursesPredicate, sortedMap);
-            if(filteredMap.keySet().size()>0){
+            if (filteredMap.keySet().size() > 0) {
                 filteredData.add(filteredMap);
             }
         }
@@ -68,26 +69,29 @@ public class CoursesFragment extends AbstractFragmentSearchWidget<SortedMap<Stri
 
     @NonNull
     private SortedMap<String, List<Course>> createMapIfAnyCoursePassesPredict(CoursesPredicate coursesPredicate, SortedMap<String, List<Course>> sortedMap) {
-        SortedMap<String,List<Course>> filteredMap = new TreeMap<>();
-        for(String key:sortedMap.keySet()){
+        SortedMap<String, List<Course>> filteredMap = new TreeMap<>();
+        for (String key : sortedMap.keySet()) {
             List<Course> courses = new ArrayList<>($.filter(sortedMap.get(key), coursesPredicate));
-            if(courses.size()>0){
-                filteredMap.put(key,courses);
+            if (courses.size() > 0) {
+                filteredMap.put(key, courses);
             }
         }
         return filteredMap;
     }
 
-    @Override protected String getRequestUrl() {
+    @Override
+    protected String getRequestUrl() {
         return backendApi.coursesEditionsByTerm().request().url().toString();
     }
 
-    @Override public void onStart() {
+    @Override
+    public void onStart() {
         super.onStart();
         activity.setToolbarTitle(R.string.lectures);
     }
 
-    @Override protected void loadData(boolean refresh) {
+    @Override
+    protected void loadData(boolean refresh) {
         Call<KujonResponse<List<SortedMap<String, List<Course>>>>> kujonResponseCall =
                 refresh ? backendApi.coursesEditionsByTermRefresh() : backendApi.coursesEditionsByTerm();
         kujonResponseCall.enqueue(new Callback<KujonResponse<List<SortedMap<String, List<Course>>>>>() {
@@ -101,7 +105,8 @@ public class CoursesFragment extends AbstractFragmentSearchWidget<SortedMap<Stri
                 }
             }
 
-            @Override public void onFailure(Call<KujonResponse<List<SortedMap<String, List<Course>>>>> call, Throwable t) {
+            @Override
+            public void onFailure(Call<KujonResponse<List<SortedMap<String, List<Course>>>>> call, Throwable t) {
                 showSpinner(false);
                 ErrorHandlerUtil.handleError(t);
             }
@@ -112,20 +117,24 @@ public class CoursesFragment extends AbstractFragmentSearchWidget<SortedMap<Stri
 
         List<SortedMap<String, List<Course>>> data = new ArrayList<>();
 
-        @Override public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        @Override
+        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_course_file, parent, false);
             return new ViewHolder(v);
         }
 
-        @Override public int getSectionCount() {
+        @Override
+        public int getSectionCount() {
             return data.size();
         }
 
-        @Override public int getItemCount(int section) {
+        @Override
+        public int getItemCount(int section) {
             return coursesInSection(section).size();
         }
 
-        @Override public void onBindHeaderViewHolder(ViewHolder holder, int section) {
+        @Override
+        public void onBindHeaderViewHolder(ViewHolder holder, int section) {
             holder.section.setText(sectionName(section));
             holder.termId = sectionName(section);
             holder.section.setVisibility(View.VISIBLE);
@@ -133,20 +142,15 @@ public class CoursesFragment extends AbstractFragmentSearchWidget<SortedMap<Stri
             holder.itemView.setTag(R.string.no_item_decorator, true);
         }
 
-        @Override public void onBindViewHolder(ViewHolder holder, int section, int relativePosition, int absolutePosition) {
+        @Override
+        public void onBindViewHolder(ViewHolder holder, int section, int relativePosition, int absolutePosition) {
             Course course = coursesInSection(section).get(relativePosition);
             holder.courseName.setText(course.courseName);
             holder.courseId = course.courseId;
             holder.termId = sectionName(section);
             holder.section.setVisibility(View.GONE);
             holder.courseLayout.setVisibility(View.VISIBLE);
-            if(course.fileCount==0){
-                holder.icon.setImageBitmap(null);
-                holder.fileCount.setText("");
-            }else {
-                holder.icon.setImageResource(R.drawable.file_icon);
-                holder.fileCount.setText(String.valueOf(course.fileCount));
-            }
+            holder.fileCount.setText(String.valueOf(course.fileCount));
             holder.itemView.setTag(R.string.no_item_decorator, false);
         }
 

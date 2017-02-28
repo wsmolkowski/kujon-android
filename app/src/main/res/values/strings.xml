@@ -214,6 +214,9 @@
     <string name="authors">Authors</string>
     <string name="reviewers">Reviewers</string>
     <string name="faculty">Faculty</string>
-    <string name="polish_enable">Force POL</string>
-    <string name="ang_enable">Force ENG</string>
+    <string name="polish_enable">Polish version</string>
+    <string name="ang_enable">English version</string>
+    <string name="file_deleted">File deleted</string>
+    <string name="file_added">File added</string>
+    <string name="file_dowloaded">File downloaded</string>
 </resources>
