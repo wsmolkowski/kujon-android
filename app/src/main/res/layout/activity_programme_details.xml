@@ -43,7 +43,7 @@
                     style="@style/Regular.Entry"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/none" />
+                    />
 
                 <TextView
                     style="@style/Regular.Label.Left"
@@ -56,7 +56,7 @@
                     style="@style/Regular.Entry"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/none" />
+                    />
 
                 <TextView
                     style="@style/Regular.Label.Left"
@@ -69,7 +69,7 @@
                     style="@style/Regular.Entry"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/none" />
+                    />
 
                 <TextView
                     style="@style/Regular.Label.Left"
@@ -82,7 +82,7 @@
                     style="@style/Regular.Entry"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/none" />
+                    />
 
                 <TextView
                     android:id="@+id/ects_sum_label"
@@ -96,7 +96,7 @@
                     style="@style/Regular.Entry"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/none" />
+                     />
 
                 <TextView
                     style="@style/Regular.Label.Left"
@@ -109,7 +109,7 @@
                     style="@style/Regular.Entry"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/none" />
+                    />
 
             </LinearLayout>
 
