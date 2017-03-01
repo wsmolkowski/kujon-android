@@ -51,6 +51,7 @@ public class FileDetailsAdapter extends RecyclerView.Adapter<BaseFileDetailsVH> 
 
                 StudentShareDto studentShareDTO = fileDetailsDto.getStudentShareDto().get(position - 1);
                 StudentVH holder1 = (StudentVH) holder;
+                holder1.studentChoiceCheckbox.setOnCheckedChangeListener(null);
                 holder1.bind(studentShareDTO, shouldBeEnabled);
                 holder1.studentChoiceCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
                     this.changed = true;
