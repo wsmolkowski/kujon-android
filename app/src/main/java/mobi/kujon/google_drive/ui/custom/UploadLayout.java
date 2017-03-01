@@ -64,17 +64,19 @@ public class UploadLayout extends LinearLayout {
         if (filesList.contains(fileName)) {
             doIfAlreadyExist(fileUpdateDto, fileName);
         } else {
-            this.filesList.add(fileUpdateDto.getFileName());
-            DowloadProgresView dowloadProgresView = new DowloadProgresView(getContext());
-            this.addView(dowloadProgresView);
-            dowloadProgresView.setCancelModel(cancelModel);
-            dowloadProgresView.setScaleY(0.0f);
-            dowloadProgresView.setAlpha(0.0f);
-            dowloadProgresView.updateProggress(fileUpdateDto);
-            dowloadProgresView.animate().scaleY(1.0f).alpha(1.0f).setDuration(300)
-                    .setInterpolator(new AccelerateDecelerateInterpolator())
-                    .start();
-            dowloadProgresView.setClick(() -> doOnProgressEnd(dowloadProgresView, fileName));
+            if (!fileUpdateDto.isEnded()) {
+                this.filesList.add(fileUpdateDto.getFileName());
+                DowloadProgresView dowloadProgresView = new DowloadProgresView(getContext());
+                this.addView(dowloadProgresView);
+                dowloadProgresView.setCancelModel(cancelModel);
+                dowloadProgresView.setScaleY(0.0f);
+                dowloadProgresView.setAlpha(0.0f);
+                dowloadProgresView.updateProggress(fileUpdateDto);
+                dowloadProgresView.animate().scaleY(1.0f).alpha(1.0f).setDuration(300)
+                        .setInterpolator(new AccelerateDecelerateInterpolator())
+                        .start();
+                dowloadProgresView.setClick(() -> doOnProgressEnd(dowloadProgresView, fileName));
+            }
         }
     }
 

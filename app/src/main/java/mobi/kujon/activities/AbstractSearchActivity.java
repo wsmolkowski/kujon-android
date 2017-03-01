@@ -24,7 +24,6 @@ import mobi.kujon.R;
 import mobi.kujon.network.KujonBackendApi;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.utils.ErrorHandlerUtil;
-import mobi.kujon.utils.SimpleDividerItemDecoration;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -53,7 +52,6 @@ public abstract class AbstractSearchActivity<S, T> extends BaseActivity implemen
         query = getIntent().getStringExtra(QUERY);
         endlessRecyclerViewAdapter = new EndlessRecyclerViewAdapter(this, adapter, this);
         recyclerView.setAdapter(endlessRecyclerViewAdapter);
-        recyclerView.addItemDecoration(new SimpleDividerItemDecoration(this));
         getSupportActionBar().setTitle(R.string.search_results);
     }
 

@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -119,6 +120,7 @@ public class FilesListFragment extends BaseFileFragment<FilesListFragment> imple
 
     @Override
     protected void setProgress(boolean b) {
+        Log.e("Refresh",String.valueOf(b));
         swipeRefreshLayout.setRefreshing(b);
     }
 
@@ -130,6 +132,7 @@ public class FilesListFragment extends BaseFileFragment<FilesListFragment> imple
 
     @Override
     public void listOfFilesLoaded(List<FileDTO> fileDTOs) {
+
         emptyView.setVisibility(View.GONE);
         recyclerView.setVisibility(View.VISIBLE);
         adapter.setFileDTOs(fileDTOs);
@@ -139,6 +142,7 @@ public class FilesListFragment extends BaseFileFragment<FilesListFragment> imple
     @Override
     public void noFilesAdded() {
         this.setProgress(false);
+
         emptyView.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.GONE);
     }
@@ -159,7 +163,7 @@ public class FilesListFragment extends BaseFileFragment<FilesListFragment> imple
     public void setSortStrategy(SortStrategy sortStrategy) {
         this.sortStrategy = sortStrategy;
         this.sortType = sortStrategy.getSortStrategy();
-        this.setProgress(true);
-        presenter.loadListOfFiles(false, fileOwnerType, this.sortStrategy);
+        presenter.sortList(this.sortStrategy);
+
     }
 }

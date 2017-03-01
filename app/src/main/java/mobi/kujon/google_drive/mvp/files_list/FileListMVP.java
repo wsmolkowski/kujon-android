@@ -17,6 +17,7 @@ public interface FileListMVP {
 
     interface LoadPresenter extends ClearSubscriptions {
         void loadListOfFiles(boolean reload, @FilesOwnerType int fileType, SortStrategy sortStrategy);
+        void sortList(SortStrategy sortStrategy);
     }
 
 
