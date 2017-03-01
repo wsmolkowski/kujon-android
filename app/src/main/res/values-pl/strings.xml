@@ -225,4 +225,6 @@
     <string name="save_changes">Zapisz zmiany</string>
     <string name="warining">Uwaga!</string>
     <string name="unsaved_changes">Masz niezapisane zmiany, czy chcesz je zapisać?</string>
+    <string name="one_more_time">Google Drive</string>
+    <string name="this_file_will_be_saved_as_pdf">"Plik zostanie zapisany jako pdf, jeżeli chcesz ustawić odpowiedni format (doc, xls itd) proszę skorzystaj z mechanizmu google drive "</string>
 </resources>
