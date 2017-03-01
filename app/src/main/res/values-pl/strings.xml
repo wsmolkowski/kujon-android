@@ -218,6 +218,6 @@
     <string name="polish_enable">Polska wersja</string>
     <string name="ang_enable">Angielska wersja</string>
     <string name="file_deleted">Plik został usunięty</string>
-    <string name="file_added">Plik został dodany</string>
+    <string name="file_added">Plik został udostępniony</string>
     <string name="file_dowloaded">Plik został pobrany</string>
 </resources>

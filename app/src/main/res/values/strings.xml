@@ -216,7 +216,7 @@
     <string name="faculty">Faculty</string>
     <string name="polish_enable">Polish version</string>
     <string name="ang_enable">English version</string>
-    <string name="file_deleted">File deleted</string>
-    <string name="file_added">File added</string>
-    <string name="file_dowloaded">File downloaded</string>
+    <string name="file_deleted">File has been deleted</string>
+    <string name="file_added">File has been shared</string>
+    <string name="file_dowloaded">File has been downloaded</string>
 </resources>
