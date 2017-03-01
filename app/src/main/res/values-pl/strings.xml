@@ -220,4 +220,5 @@
     <string name="file_deleted">Plik został usunięty</string>
     <string name="file_added">Plik został udostępniony</string>
     <string name="file_dowloaded">Plik został pobrany</string>
+    <string name="change">Zmień</string>
 </resources>

@@ -105,12 +105,12 @@ public class FileDetailsActivity extends BaseFileActivity implements FileDetails
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.share_file_menu, menu);
+        inflater.inflate(R.menu.file_details_menu, menu);
         return true;
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.share_file && adapter.isChanged()){
+        if(item.getItemId() == R.id.menu_change_share_file && adapter.isChanged()){
             shareFilePresenter.shareFileWith(fileId, selectTargetType(), adapter.getStudentShareDTOs());
             this.setLoading(true);
             return true;
