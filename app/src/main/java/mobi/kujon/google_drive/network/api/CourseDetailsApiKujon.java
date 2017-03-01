@@ -13,6 +13,6 @@ import static mobi.kujon.google_drive.network.api.ApiConst.KUJONREFRESH;
 public interface CourseDetailsApiKujon {
 
     @GET("courseseditions/{courseId}/{termId}")
-    Observable<KujonResponse<CourseDetails>> getCourseDetails(@Header(KUJONREFRESH) boolean refresh, @Path("courseId") String courseId, @Path("termId") String termId);
+    Observable<KujonResponse<CourseDetails>> getCourseDetails(@Header(KUJONREFRESH) String refresh, @Path("courseId") String courseId, @Path("termId") String termId);
 
 }

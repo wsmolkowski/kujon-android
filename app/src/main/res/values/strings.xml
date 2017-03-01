@@ -220,4 +220,8 @@
     <string name="file_added">File has been shared</string>
     <string name="file_dowloaded">File has been downloaded</string>
     <string name="change">Change</string>
+    <string name="warining">Warning</string>
+    <string name="unsaved_changes">You have unsaved changes, do you want to save them now ?</string>
+    <string name="discard">Discard</string>
+    <string name="save_changes">Save changes</string>
 </resources>

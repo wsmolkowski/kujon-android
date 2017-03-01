@@ -221,4 +221,8 @@
     <string name="file_added">Plik został udostępniony</string>
     <string name="file_dowloaded">Plik został pobrany</string>
     <string name="change">Zmień</string>
+    <string name="discard">Porzuć</string>
+    <string name="save_changes">Zapisz zmiany</string>
+    <string name="warining">Uwaga!</string>
+    <string name="unsaved_changes">Masz niezapisane zmiany, czy chcesz je zapisać?</string>
 </resources>

@@ -19,7 +19,7 @@ public class CourseDetailsFacade implements CourseDetailsApi {
 
     @Override
     public Observable<CourseDetails> getCourseDetails(boolean refresh, String courseId, String termId) {
-        return backendWrapper.doSomething(courseDetailsApiKujon.getCourseDetails(refresh, courseId, termId));
+        return backendWrapper.doSomething(courseDetailsApiKujon.getCourseDetails(refresh?"true":null, courseId, termId));
     }
 
 }

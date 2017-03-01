@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -31,7 +32,7 @@ import mobi.kujon.google_drive.mvp.file_details.FileDetailsView;
 import mobi.kujon.google_drive.ui.activities.BaseFileActivity;
 import mobi.kujon.google_drive.ui.activities.file_details.recycler_classes.FileDetailsAdapter;
 
-public class FileDetailsActivity extends BaseFileActivity implements FileDetailsView,  FileDetailsAdapter.OnEveryoneSwitchClicked{
+public class FileDetailsActivity extends BaseFileActivity implements FileDetailsView, FileDetailsAdapter.OnEveryoneSwitchClicked {
 
     private String coursId;
     private String termId;
@@ -40,7 +41,6 @@ public class FileDetailsActivity extends BaseFileActivity implements FileDetails
     public static final String COURSE_ID_KEY = "COURSE_ID";
     public static final String TERM_ID_KEY = "TERM_ID";
     public static final String FILE_ID_KEY = "FILE_ID";
-
 
 
     @Bind(R.id.toolbar)
@@ -61,15 +61,15 @@ public class FileDetailsActivity extends BaseFileActivity implements FileDetails
     FileDetailsMVP.ShareFilePresenter shareFilePresenter;
 
 
-
     private FileDetailsAdapter adapter;
+    private boolean close;
 
-    public static void openActivity(Activity context, String courseId, String termId, String fileId,int code) {
+    public static void openActivity(Activity context, String courseId, String termId, String fileId, int code) {
         Intent intent = new Intent(context, FileDetailsActivity.class);
         intent.putExtra(COURSE_ID_KEY, courseId);
         intent.putExtra(TERM_ID_KEY, termId);
         intent.putExtra(FILE_ID_KEY, fileId);
-        context.startActivityForResult(intent,code);
+        context.startActivityForResult(intent, code);
     }
 
     @Override
@@ -91,6 +91,7 @@ public class FileDetailsActivity extends BaseFileActivity implements FileDetails
             fileDetailsPresenter.loadFileDetails(fileId, true);
         });
         cancel.setOnClickListener(v -> {
+            if (checkForChanges()) return;
             finish();
         });
     }
@@ -108,22 +109,55 @@ public class FileDetailsActivity extends BaseFileActivity implements FileDetails
         inflater.inflate(R.menu.file_details_menu, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.menu_change_share_file && adapter.isChanged()){
-            shareFilePresenter.shareFileWith(fileId, selectTargetType(), adapter.getStudentShareDTOs());
-            this.setLoading(true);
+        if (item.getItemId() == R.id.menu_change_share_file && adapter.isChanged()) {
+            saveChanges();
             return true;
         }
         return false;
     }
 
-    private @ShareFileTargetType String selectTargetType(){
-        if(everyoneChosenToShare) {
+    private void saveChanges() {
+        shareFilePresenter.shareFileWith(fileId, selectTargetType(), adapter.getStudentShareDTOs());
+        this.setLoading(true);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        if (checkForChanges()) return;
+        super.onBackPressed();
+
+    }
+
+    private boolean checkForChanges() {
+        if (adapter.isChanged()) {
+            new AlertDialog.Builder(this)
+                    .setTitle(R.string.warining)
+                    .setMessage(R.string.unsaved_changes)
+                    .setNegativeButton(R.string.discard, (dialog, which) -> {
+                        dialog.dismiss();
+                        this.finish();
+                    })
+                    .setPositiveButton(R.string.save_changes, (dialog, which) -> {
+                        saveChanges();
+                        close = true;
+                    }).show();
+            return true;
+        }
+        return false;
+    }
+
+    private
+    @ShareFileTargetType
+    String selectTargetType() {
+        if (everyoneChosenToShare) {
             return ShareFileTargetType.ALL;
         } else {
-            for(StudentShareDto studentShareDTO : adapter.getStudentShareDTOs()) {
-                if(studentShareDTO.isChosen()) {
+            for (StudentShareDto studentShareDTO : adapter.getStudentShareDTOs()) {
+                if (studentShareDTO.isChosen()) {
                     return ShareFileTargetType.LIST;
                 }
             }
@@ -131,6 +165,7 @@ public class FileDetailsActivity extends BaseFileActivity implements FileDetails
             return ShareFileTargetType.NONE;
         }
     }
+
     public String getCoursId() {
         return coursId;
     }
@@ -138,7 +173,6 @@ public class FileDetailsActivity extends BaseFileActivity implements FileDetails
     public String getTermId() {
         return termId;
     }
-
 
 
     @Override
@@ -149,11 +183,16 @@ public class FileDetailsActivity extends BaseFileActivity implements FileDetails
 
     @Override
     public void fileShared(@ShareFileTargetType String shareType, List<String> fileSharedWith) {
-        adapter.setShareType(shareType,fileSharedWith);
-        this.setResult(RESULT_OK);
-        this.setLoading(false);
-    }
+        if (close) {
+            this.setResult(RESULT_OK);
+            finish();
+        } else {
+            adapter.setShareType(shareType, fileSharedWith);
+            this.setResult(RESULT_OK);
+            this.setLoading(false);
+        }
 
+    }
 
 
     @Override
@@ -172,7 +211,7 @@ public class FileDetailsActivity extends BaseFileActivity implements FileDetails
     public void onEveryoneClicked(boolean isEveryone) {
         everyoneChosenToShare = isEveryone;
         this.setLoading(true);
-        shareFilePresenter.shareFileWith(fileId,isEveryone?ShareFileTargetType.ALL:ShareFileTargetType.LIST,adapter.getStudentShareDTOs());
+        shareFilePresenter.shareFileWith(fileId, isEveryone ? ShareFileTargetType.ALL : ShareFileTargetType.LIST, adapter.getStudentShareDTOs());
     }
 
     @Override
