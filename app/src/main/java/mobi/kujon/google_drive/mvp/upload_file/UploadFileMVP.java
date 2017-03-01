@@ -15,8 +15,7 @@ public interface UploadFileMVP {
 
     interface Presenter extends ClearSubscriptions {
         void uploadFile(DataForFileUpload dataForFileUpload, FileUploadDto fileUploadDto);
-
-        void uploadFile(File file, FileUploadDto fileUploadDto);
+        void uploadFile(File file, FileUploadDto fileUploadDto, boolean deleteFileAfterUpload);
     }
 
     interface View extends HandleException {

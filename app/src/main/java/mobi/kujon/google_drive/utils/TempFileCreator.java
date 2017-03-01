@@ -69,13 +69,41 @@ public class TempFileCreator {
         }
     }
 
-    public File writeToDowload(ResponseBody body,String fileName, UpdateListener updateListener) {
+    public File writeToTempFile(InputStream inputStream, String fileName) {
+        File outputDir = kujonApplication.getCacheDir(); // context being the Activity pointer
+        OutputStream outputStream = null;
+        try {
+            File outputFile = new File(outputDir, fileName);
+
+            byte[] fileReader = new byte[4096];
+
+
+            outputStream = new FileOutputStream(outputFile);
+
+            while (true) {
+                int read = inputStream.read(fileReader);
+
+                if (read == -1) {
+                    break;
+                }
+                outputStream.write(fileReader, 0, read);
+            }
+
+            outputStream.flush();
+            return outputFile;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public File writeToDowload(ResponseBody body, String fileName, UpdateListener updateListener) {
         File outputDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
         InputStream inputStream = null;
         OutputStream outputStream = null;
         int lastProcent = 0;
         try {
-            File outputFile = new  File(outputDir,fileName);
+            File outputFile = new File(outputDir, fileName);
 
             byte[] fileReader = new byte[4096];
 
@@ -96,7 +124,7 @@ public class TempFileCreator {
 
                 fileSizeDownloaded += read;
                 int percent = (int) (100 * fileSizeDownloaded / fileSize);
-                if (percent > lastProcent && percent<100) {
+                if (percent > lastProcent && percent < 100) {
                     updateListener.onUpdate(percent);
                     lastProcent = percent;
                 }

@@ -224,4 +224,6 @@
     <string name="unsaved_changes">You have unsaved changes, do you want to save them now ?</string>
     <string name="discard">Discard</string>
     <string name="save_changes">Save changes</string>
+    <string name="this_file_will_be_saved_as_pdf">This file will be saved as pdf, if you want to share it with proper type, please fint it one more time native way</string>
+    <string name="one_more_time">Proper format</string>
 </resources>

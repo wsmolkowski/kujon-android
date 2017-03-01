@@ -44,18 +44,21 @@ public class UploadFilePresenter extends AbstractClearSubsriptions implements Up
     }
 
     @Override
-    public void uploadFile(File file, FileUploadDto fileUploadDto) {
+    public void uploadFile(File file, FileUploadDto fileUploadDto, boolean deleteFileAfterUpload) {
         addToSubsriptionList(fileUploadApi.uploadFile(fileUploadDto, file)
                 .subscribeOn(schedulersHolder.subscribe())
                 .observeOn(schedulersHolder.observ())
                 .subscribe(it -> {
                     this.model.updateStream(new FileUpdateDto(file.getName(),100,true));
+                    if(deleteFileAfterUpload)file.delete();
                     view.onFileUploaded();
                 }, error -> {
                     String name = file.getName();
+                    if(deleteFileAfterUpload)file.delete();
                     handleError(error, name);
                 }));
     }
+
 
     private void handleError(Throwable error, String name) {
         if(error.getCause() instanceof KujonException){

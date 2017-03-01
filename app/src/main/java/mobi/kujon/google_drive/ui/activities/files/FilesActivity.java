@@ -1,11 +1,16 @@
 package mobi.kujon.google_drive.ui.activities.files;
 
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.DocumentsContract;
+import android.provider.OpenableColumns;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -26,6 +31,9 @@ import com.google.android.gms.drive.DriveId;
 import com.google.android.gms.drive.OpenFileActivityBuilder;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -56,6 +64,7 @@ import mobi.kujon.google_drive.ui.util.AbstractPageSelectedListener;
 import mobi.kujon.google_drive.utils.GetFilePath;
 import mobi.kujon.google_drive.utils.GoogleDriveFileException;
 import mobi.kujon.google_drive.utils.PermissionAsk;
+import mobi.kujon.google_drive.utils.TempFileCreator;
 
 
 public class FilesActivity extends BaseFileActivity implements FileActivityView {
@@ -75,13 +84,14 @@ public class FilesActivity extends BaseFileActivity implements FileActivityView 
     private FileUploadInfoDto fileToUploadId;
     private File file;
     private boolean fileChoosen;
+    private boolean deleteFileAfterUpload = false;
 
-    public static void openActivity(Activity context, String courseId, String termId,String courseName,int requestCode) {
+    public static void openActivity(Activity context, String courseId, String termId, String courseName, int requestCode) {
         Intent intent = new Intent(context, FilesActivity.class);
         intent.putExtra(COURSE_ID_KEY, courseId);
         intent.putExtra(TERM_ID_KEY, termId);
         intent.putExtra(COURSE_NAME_KEY, courseName);
-        context.startActivityForResult(intent,requestCode);
+        context.startActivityForResult(intent, requestCode);
     }
 
     private GoogleApiClient apiClient;
@@ -120,6 +130,9 @@ public class FilesActivity extends BaseFileActivity implements FileActivityView 
     @Inject
     FileStreamUpdateMVP.CancelPresenter cancelPresenter;
 
+    @Inject
+    TempFileCreator tempFileCreator;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -144,9 +157,13 @@ public class FilesActivity extends BaseFileActivity implements FileActivityView 
         tabLayout.setupWithViewPager(viewPager);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
-                    ChooseFileSourceDialog chooseFileSourceDialog = ChooseFileSourceDialog.newInstance();
-                    chooseFileSourceDialog.setUpListener(this);
-                    chooseFileSourceDialog.show(getSupportFragmentManager(), CHOOSE_SOURCE);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                        doOnAllPermisions(this::askForFileOnDevice);
+                    } else {
+                        ChooseFileSourceDialog chooseFileSourceDialog = ChooseFileSourceDialog.newInstance();
+                        chooseFileSourceDialog.setUpListener(this);
+                        chooseFileSourceDialog.show(getSupportFragmentManager(), CHOOSE_SOURCE);
+                    }
                 }
         );
         uploadLayout.setUpdateFileListener(() -> {
@@ -277,17 +294,92 @@ public class FilesActivity extends BaseFileActivity implements FileActivityView 
                 file = new File(path);
                 fileChoosen = true;
                 showChooseStudentsDialog(file.getName());
+                deleteFileAfterUpload = false;
             }
         } catch (GoogleDriveFileException e) {
-            new AlertDialog.Builder(this)
-                    .setMessage("proszę skorzystać z mechanizmu GOOGLE DRIVE")
-                    .setTitle("Plik GOOGLE DRIVE")
-                    .setPositiveButton(R.string.yes, (dialog, which) -> {
-                        startFileSearching();
-                    }).show();
+
+            if (isVirtualFile(uriToFile)) {
+                new AlertDialog.Builder(this)
+                        .setTitle(R.string.warining)
+                        .setMessage(R.string.this_file_will_be_saved_as_pdf)
+                        .setPositiveButton(R.string.one_more_time, (dialog, which) -> {
+                            dialog.dismiss();
+                            startFileSearching();
+                        })
+                        .setNegativeButton(R.string.pdf_file, (dialog, which) -> {
+                            saveFileOnKujonFromGoogleDrive(uriToFile);
+                            dialog.dismiss();
+                        }).show();
+            } else {
+                saveFileOnKujonFromGoogleDrive(uriToFile);
+            }
 
         }
+    }
 
+    private void saveFileOnKujonFromGoogleDrive(Uri uriToFile) {
+        try {
+            Cursor returnCursor =
+                    getContentResolver().query(uriToFile, null, null, null, null);
+            int nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+            returnCursor.moveToFirst();
+            String fileName = returnCursor.getString(nameIndex);
+            returnCursor.close();
+            if (isVirtualFile(uriToFile) && !fileName.endsWith(".pdf")) {
+                fileName = fileName.concat(".pdf");
+            }
+            InputStream inputStream;
+            inputStream = getInputStream(uriToFile);
+            file = tempFileCreator.writeToTempFile(inputStream, fileName);
+            fileChoosen = true;
+            deleteFileAfterUpload = true;
+            showChooseStudentsDialog(file.getName());
+        } catch (FileNotFoundException e1) {
+            e1.printStackTrace();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+    }
+
+    private InputStream getInputStream(Uri uriToFile) throws IOException {
+        InputStream inputStream;
+        if (isVirtualFile(uriToFile)) {
+            inputStream = getInputStreamForVirtualFile(uriToFile);
+        } else {
+            inputStream = getContentResolver().openInputStream(uriToFile);
+        }
+        return inputStream;
+    }
+
+    private boolean isVirtualFile(Uri uri) {
+        if (!DocumentsContract.isDocumentUri(this, uri)) {
+            return false;
+        }
+        Cursor cursor = getContentResolver().query(
+                uri,
+                new String[]{DocumentsContract.Document.COLUMN_FLAGS},
+                null, null, null);
+
+        int flags = 0;
+        if (cursor.moveToFirst()) {
+            flags = cursor.getInt(0);
+        }
+        cursor.close();
+
+        return (flags & DocumentsContract.Document.FLAG_VIRTUAL_DOCUMENT) != 0;
+    }
+
+    private InputStream getInputStreamForVirtualFile(Uri uri)
+            throws IOException {
+        ContentResolver resolver = getContentResolver();
+        String[] openableMimeTypes = resolver.getStreamTypes(uri, "application/pdf");
+        if (openableMimeTypes == null ||
+                openableMimeTypes.length < 1) {
+            throw new FileNotFoundException();
+        }
+        return resolver
+                .openTypedAssetFileDescriptor(uri, openableMimeTypes[0], null)
+                .createInputStream();
     }
 
     private void openToUploadFileToDrive(Intent data) {
@@ -346,7 +438,7 @@ public class FilesActivity extends BaseFileActivity implements FileActivityView 
     @Override
     public void shareWith(@ShareFileTargetType String targetType, List<String> chosenStudentIds) {
         if (fileChoosen) {
-            uploadPresenter.uploadFile(file, new FileUploadDto(coursId, termId, targetType, chosenStudentIds));
+            uploadPresenter.uploadFile(file, new FileUploadDto(coursId, termId, targetType, chosenStudentIds), deleteFileAfterUpload);
         } else {
             FileUploadDto fileUploadDto = new FileUploadDto(coursId, termId, targetType, chosenStudentIds);
             serviceOpener.openUploadService(fileUploadDto, mSelectedFileDriveId);
@@ -421,7 +513,7 @@ public class FilesActivity extends BaseFileActivity implements FileActivityView 
         this.setLoading(false);
         this.setResult(RESULT_OK);
         this.adapter.reload();
-        Toast.makeText(this,R.string.file_deleted,Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.file_deleted, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -444,6 +536,6 @@ public class FilesActivity extends BaseFileActivity implements FileActivityView 
     public void onFileUploaded() {
         this.adapter.refresh();
         this.setResult(RESULT_OK);
-        Toast.makeText(this,R.string.file_added,Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.file_added, Toast.LENGTH_SHORT).show();
     }
 }
