@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
@@ -40,8 +41,29 @@ import static mobi.kujon.utils.CommonUtils.showList;
 
 public class CourseDetailsActivity extends BaseActivity {
 
+    public static void showCourseDetails(Fragment fragment, String courseId, String termId, int requestCode) {
+        Intent intent = new Intent(fragment.getActivity(), CourseDetailsActivity.class);
+        intent.putExtra(COURSE_ID, courseId);
+        intent.putExtra(TERM_ID, termId);
+        fragment.startActivityForResult(intent, requestCode);
+    }
+
+    public static void showCourseDetails(Activity activity, String courseId, String termId) {
+        Intent intent = new Intent(activity, CourseDetailsActivity.class);
+        intent.putExtra(COURSE_ID, courseId);
+        intent.putExtra(TERM_ID, termId);
+        activity.startActivity(intent);
+    }
+
+    public static void showCourseDetails(Activity activity, String courseId) {
+        Intent intent = new Intent(activity, CourseDetailsActivity.class);
+        intent.putExtra(COURSE_ID, courseId);
+        activity.startActivity(intent);
+    }
+
     public static final String COURSE_ID = "COURSE_ID";
     public static final String TERM_ID = "TERM_ID";
+    public static final int REQUEST_CODE_OPEN_FILE_ACTIVITY = 2647;
 
     @Bind(R.id.course_fac)
     TextView courseFac;
@@ -116,7 +138,20 @@ public class CourseDetailsActivity extends BaseActivity {
         swipeContainer.setOnRefreshListener(() -> loadData(true));
         showProgress(true);
         handler.post(() -> loadData(false));
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_OPEN_FILE_ACTIVITY && resultCode == RESULT_OK) {
+            if (termId != null) {
+                utils.invalidateEntry("courseseditions/" + courseId + "/" + termId);
+            } else {
+                utils.invalidateEntry("courses/" + courseId);
+            }
+            this.setResult(RESULT_OK);
+            loadData(false);
+        }
     }
 
     private void loadData(boolean refresh) {
@@ -133,7 +168,7 @@ public class CourseDetailsActivity extends BaseActivity {
             public void onResponse(Call<KujonResponse<CourseDetails>> call, Response<KujonResponse<CourseDetails>> response) {
                 if (ErrorHandlerUtil.handleResponse(response)) {
                     courseDetails = response.body().data;
-                    sharedFiles.setOnClickListener(v -> FilesActivity.openActivity(CourseDetailsActivity.this, courseId, termId, courseDetails.name));
+                    sharedFiles.setOnClickListener(v -> FilesActivity.openActivity(CourseDetailsActivity.this, courseId, termId, courseDetails.name, REQUEST_CODE_OPEN_FILE_ACTIVITY));
                     courseFac.setText(courseDetails.facId.name);
                     fileCount.setText(String.valueOf(courseDetails.fileCount));
                     courseName.setText(courseDetails.name);
@@ -235,18 +270,6 @@ public class CourseDetailsActivity extends BaseActivity {
         }
     }
 
-    public static void showCourseDetails(Activity activity, String courseId, String termId) {
-        Intent intent = new Intent(activity, CourseDetailsActivity.class);
-        intent.putExtra(COURSE_ID, courseId);
-        intent.putExtra(TERM_ID, termId);
-        activity.startActivity(intent);
-    }
-
-    public static void showCourseDetails(Activity activity, String courseId) {
-        Intent intent = new Intent(activity, CourseDetailsActivity.class);
-        intent.putExtra(COURSE_ID, courseId);
-        activity.startActivity(intent);
-    }
 
     @OnClick(R.id.course_fac)
     public void navigate() {

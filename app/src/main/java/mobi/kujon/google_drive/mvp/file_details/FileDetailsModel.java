@@ -6,11 +6,9 @@ import android.support.annotation.NonNull;
 import mobi.kujon.google_drive.model.dto.file.FileDTO;
 import mobi.kujon.google_drive.model.dto.file.FileDtoFactory;
 import mobi.kujon.google_drive.model.dto.file_details.FileDetailsDto;
-import mobi.kujon.google_drive.model.dto.file_details.FileDetailsHelp;
 import mobi.kujon.google_drive.mvp.choose_students.ChooseStudentsMVP;
 import mobi.kujon.google_drive.network.unwrapped_api.GetFilesApi;
 import rx.Observable;
-import rx.functions.Func2;
 
 
 public class FileDetailsModel implements FileDetailsMVP.FileDetailsModel {
@@ -34,12 +32,7 @@ public class FileDetailsModel implements FileDetailsMVP.FileDetailsModel {
     @Override
     public Observable<FileDetailsDto> loadFileDetails(String fileId, boolean refresh) {
         return Observable.combineLatest(getFileDto(fileId, refresh), chooseStudentModel.profileFileDetailsInfo(courseId, termId, refresh),
-                new Func2<FileDTO, FileDetailsHelp, FileDetailsDto>() {
-                    @Override
-                    public FileDetailsDto call(FileDTO fileDTO, FileDetailsHelp fileDetailsHelp) {
-                        return new FileDetailsDto(fileDTO,fileDetailsHelp);
-                    }
-                });
+                FileDetailsDto::new);
     }
 
     @NonNull

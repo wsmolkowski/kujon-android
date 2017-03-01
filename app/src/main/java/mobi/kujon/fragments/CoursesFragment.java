@@ -91,6 +91,12 @@ public class CoursesFragment extends AbstractFragmentSearchWidget<SortedMap<Stri
     }
 
     @Override
+    protected void loadData(boolean refresh, boolean invalidate) {
+        utils.invalidateEntry("courseseditionsbyterm");
+        this.loadData(refresh);
+    }
+
+    @Override
     protected void loadData(boolean refresh) {
         Call<KujonResponse<List<SortedMap<String, List<Course>>>>> kujonResponseCall =
                 refresh ? backendApi.coursesEditionsByTermRefresh() : backendApi.coursesEditionsByTerm();

@@ -1,5 +1,6 @@
 package mobi.kujon.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -30,20 +31,31 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.app.Activity.RESULT_OK;
 import static android.text.TextUtils.isEmpty;
 
 public abstract class ListFragment extends BaseFragment {
 
-    @Inject protected KujonBackendApi backendApi;
-    @Inject protected KujonUtils utils;
+    public static final int REQUEST_CODE = 1765;
+    @Inject
+    protected KujonBackendApi backendApi;
+    @Inject
+    protected KujonUtils utils;
 
-    protected @Bind(R.id.recyclerView) RecyclerView recyclerView;
-    protected @Bind(R.id.swipeContainer) SwipeRefreshLayout swipeContainer;
+    protected
+    @Bind(R.id.recyclerView)
+    RecyclerView recyclerView;
+    protected
+    @Bind(R.id.swipeContainer)
+    SwipeRefreshLayout swipeContainer;
 
-    @Bind(R.id.empty_info) TextView emptyInfo;
+    @Bind(R.id.empty_info)
+    TextView emptyInfo;
     protected BaseActivity activity;
 
-    @Nullable @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_list, container, false);
         ButterKnife.bind(this, rootView);
         KujonApplication.getComponent().inject(this);
@@ -55,7 +67,8 @@ public abstract class ListFragment extends BaseFragment {
         swipeContainer.setRefreshing(false);
     }
 
-    @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         activity = (BaseActivity) getActivity();
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -76,12 +89,26 @@ public abstract class ListFragment extends BaseFragment {
 
     protected abstract void loadData(boolean refresh);
 
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+            this.loadData(false,true);
+        }
+    }
+
+    protected void loadData(boolean refresh, boolean invalidate) {
+        this.loadData(refresh);
+    }
+
     protected void showCourseOrTerm(String courseId, String termId) {
         if (!isEmpty(courseId) && !isEmpty(termId)) {
-            CourseDetailsActivity.showCourseDetails(getActivity(), courseId, termId);
+            CourseDetailsActivity.showCourseDetails(this, courseId, termId, REQUEST_CODE);
         } else if (!isEmpty(termId)) {
             backendApi.terms(termId).enqueue(new Callback<KujonResponse<List<Term2>>>() {
-                @Override public void onResponse(Call<KujonResponse<List<Term2>>> call, Response<KujonResponse<List<Term2>>> response) {
+                @Override
+                public void onResponse(Call<KujonResponse<List<Term2>>> call, Response<KujonResponse<List<Term2>>> response) {
                     if (ErrorHandlerUtil.handleResponse(response)) {
                         Term2 term = response.body().data.get(0);
                         AlertDialog.Builder dlgAlert = new AlertDialog.Builder(activity);
@@ -98,7 +125,8 @@ public abstract class ListFragment extends BaseFragment {
                     }
                 }
 
-                @Override public void onFailure(Call<KujonResponse<List<Term2>>> call, Throwable t) {
+                @Override
+                public void onFailure(Call<KujonResponse<List<Term2>>> call, Throwable t) {
                     ErrorHandlerUtil.handleError(t);
                 }
             });

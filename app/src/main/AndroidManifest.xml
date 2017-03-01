@@ -131,13 +131,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/ToolbarAppTheme" />
         <activity
-            android:name=".google_drive.ui.activities.semesters.SemestersActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".google_drive.ui.activities.courses.CoursesInSemseterActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-
-        <activity
             android:name=".google_drive.ui.activities.files.FilesActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

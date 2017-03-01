@@ -76,12 +76,12 @@ public class FilesActivity extends BaseFileActivity implements FileActivityView 
     private File file;
     private boolean fileChoosen;
 
-    public static void openActivity(Activity context, String courseId, String termId,String courseName) {
+    public static void openActivity(Activity context, String courseId, String termId,String courseName,int requestCode) {
         Intent intent = new Intent(context, FilesActivity.class);
         intent.putExtra(COURSE_ID_KEY, courseId);
         intent.putExtra(TERM_ID_KEY, termId);
         intent.putExtra(COURSE_NAME_KEY, courseName);
-        context.startActivity(intent);
+        context.startActivityForResult(intent,requestCode);
     }
 
     private GoogleApiClient apiClient;
@@ -419,6 +419,7 @@ public class FilesActivity extends BaseFileActivity implements FileActivityView 
     @Override
     public void fileDeleted() {
         this.setLoading(false);
+        this.setResult(RESULT_OK);
         this.adapter.reload();
         Toast.makeText(this,R.string.file_deleted,Toast.LENGTH_SHORT).show();
     }
@@ -442,6 +443,7 @@ public class FilesActivity extends BaseFileActivity implements FileActivityView 
     @Override
     public void onFileUploaded() {
         this.adapter.refresh();
+        this.setResult(RESULT_OK);
         Toast.makeText(this,R.string.file_added,Toast.LENGTH_SHORT).show();
     }
 }
