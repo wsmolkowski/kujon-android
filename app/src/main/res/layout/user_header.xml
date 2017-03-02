@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="@layout/fragment_user_info">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <FrameLayout
+            android:id="@+id/image_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|start"
+            android:layout_margin="@dimen/kujon_margin_typ">
+
+            <ImageView
+                android:id="@+id/picture"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:src="@drawable/photo_placeholder" />
+
+            <ImageView
+                android:id="@+id/usosLogo"
+                android:layout_width="19dp"
+                android:layout_height="19dp"
+                android:layout_gravity="right|bottom"
+                tools:src="@drawable/user_placeholder" />
+
+        </FrameLayout>
+
+        <TextView
+            android:layout_marginTop="@dimen/kujon_margin_typ"
+            android:layout_marginStart="@dimen/kujon_margin_typ"
+            android:layout_marginLeft="@dimen/kujon_margin_typ"
+            android:layout_toRightOf="@+id/image_layout"
+            android:layout_toEndOf="@+id/image_layout"
+            android:id="@+id/firstLastName"
+            style="@style/Semibold"
+            tools:text='Jan Kowalski' />
+
+        <LinearLayout
+            android:layout_below="@+id/firstLastName"
+            android:layout_alignLeft="@+id/firstLastName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:layout_marginTop="@dimen/kujon_margin_typ"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/Regular.userInfoLabel"
+                    android:layout_marginTop="0dp"
+                    android:text="@string/index_number"
+                    />
+
+                <TextView
+                    style="@style/Regular.userLabel"
+                    tools:text='1234567890' />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/Regular.userInfoLabel"
+                    android:layout_marginTop="0dp"
+                    android:text="@string/account_number" />
+
+                <TextView
+                    style="@style/Regular.userLabel"
+                    tools:text='987654321' />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+</merge>

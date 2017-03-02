@@ -76,6 +76,19 @@
         <item name="android:textColor">@android:color/white</item>
         <item name="fontPath">fonts/Lato-Regular.ttf</item>
     </style>
+    <style name="Regular.userInfoLabel">
+        <item name="android:layout_gravity">left</item>
+        <item name="android:textSize">@dimen/font_small_label</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="fontPath">fonts/Lato-Regular.ttf</item>
+    </style>
+    <style name="Regular.userLabel">
+        <item name="android:layout_gravity">left</item>
+        <item name="android:textSize">@dimen/font_label</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="fontPath">fonts/Lato-Regular.ttf</item>
+    </style>
+
 
     <style name="Light">
         <item name="fontPath">fonts/Lato-Light.ttf</item>

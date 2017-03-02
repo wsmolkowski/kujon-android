@@ -228,7 +228,7 @@
     <string name="one_more_time">Google Drive</string>
     <string name="this_file_will_be_saved_as_pdf">"Plik zostanie zapisany jako pdf, jeżeli chcesz ustawić odpowiedni format (doc, xls itd) proszę skorzystaj z mechanizmu google drive "</string>
     <string name="active_study">Aktywny student</string>
-    <string name="cancelled_study">Anulowane studia</string>
+    <string name="cancelled_study">Przerwane studia</string>
     <string name="graduated_before">Zakończone, przed obroną</string>
     <string name="graduated_diploma">Zakończone, dyplom obroniony</string>
     <string name="graduated_end_of_study">Zakończone</string>
