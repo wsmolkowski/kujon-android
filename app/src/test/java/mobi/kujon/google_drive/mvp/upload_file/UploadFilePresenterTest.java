@@ -51,7 +51,7 @@ public class UploadFilePresenterTest extends UnitTest{
         Mockito.when(fileUploadApi.uploadFile(fileUploadDto,dataForFileUpload))
                 .thenReturn(Observable.just(responseFromServer));
         presenter.uploadFile(dataForFileUpload,fileUploadDto);
-        Mockito.verify(view).onFileUploaded();
+        Mockito.verify(view).onFileUploaded(dataForFileUpload.getTitle());
         Mockito.verify(model).updateStream(new FileUpdateDto(dataForFileUpload.getTitle(),100,true));
     }
 }
