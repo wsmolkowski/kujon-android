@@ -170,7 +170,7 @@ public class FilesActivity extends BaseFileActivity implements FileActivityView 
                 }
         );
         uploadLayout.setUpdateFileListener(text -> {
-            this.adapter.refresh();
+            filesModel.load(true);
             this.setResult(RESULT_OK);
             this.onFileUploaded(text);
         });
@@ -284,7 +284,7 @@ public class FilesActivity extends BaseFileActivity implements FileActivityView 
             break;
             case FILE_DETAILS_RESULT_CODE:
                 if (resultCode == RESULT_OK) {
-                    adapter.refresh();
+                    filesModel.load(true);
                 }
                 break;
         }
@@ -477,7 +477,8 @@ public class FilesActivity extends BaseFileActivity implements FileActivityView 
     public void fileDeleted(String name) {
         this.setLoading(false);
         this.setResult(RESULT_OK);
-        this.adapter.reload();
+        filesModel.load(false);
+        filesModel.load(true);
         Toast.makeText(this, String.format("%s %s", name, getString(R.string.file_deleted)), Toast.LENGTH_SHORT).show();
     }
 
