@@ -46,7 +46,6 @@ import static android.text.TextUtils.isEmpty;
 public class StudentInfoFragment extends BaseFragment {
 
     public static final String USER_ID = "USER_ID";
-    @Bind(R.id.student_status) TextView studentStatus;
     @Bind(R.id.student_account_number) TextView studentAccountNumber;
     @Bind(R.id.student_programmes) LinearLayout studentProgrammes;
     @Bind(R.id.firstLastName) TextView firstLastName;
@@ -114,11 +113,9 @@ public class StudentInfoFragment extends BaseFragment {
                             .into(picture);
                     ((StudentDetailsActivity) getActivity()).setToolbarTitle(name);
                     picture.setOnClickListener(v -> ImageActivity.show(getActivity(), user.photoUrl, name));
-                    studentStatus.setText(user.student_status);
                     studentAccountNumber.setText(user.id);
-                    List<String> collect = $.collect(user.student_programmes, it -> it.programme.description.split(",")[0]);
                     studentProgrammes.removeAllViews();
-                    CommonUtils.showList(activity.getLayoutInflater(), studentProgrammes, collect, position -> {
+                    CommonUtils.showListProgrammes(activity.getLayoutInflater(), studentProgrammes, user.student_programmes, position -> {
                         StudentProgramme studentProgramme = user.student_programmes.get(position);
                         Programme programme = studentProgramme.programme;
                         ProgrammeDetailsActivity.showProgrammeDetailsWithLoad(StudentInfoFragment.this.getActivity(), programme.id);

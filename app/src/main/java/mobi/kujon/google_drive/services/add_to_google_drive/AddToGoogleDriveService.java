@@ -153,7 +153,9 @@ public class AddToGoogleDriveService extends Service implements UploadToDrive.Vi
 
     @Override
     public void authenticate(UserRecoverableAuthIOException  e) {
-        startActivity(e.getIntent());
+        Intent intent = e.getIntent();
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
         this.stopSelf();
     }
 

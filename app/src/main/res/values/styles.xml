@@ -89,7 +89,12 @@
         <item name="fontPath">fonts/Lato-Regular.ttf</item>
     </style>
 
-
+    <style name="Regular.userInfoLabel.student">
+        <item name="android:textColor">@color/dark_60</item>
+    </style>
+    <style name="Regular.userLabel.student">
+        <item name="android:textColor">@color/dark</item>
+    </style>
     <style name="Light">
         <item name="fontPath">fonts/Lato-Light.ttf</item>
     </style>
