@@ -114,7 +114,7 @@
     <string name="image_file">Image</string>
     <string name="litlle_empty">no files or notes here</string>
     <string name="author">Author</string>
-    <string name="choose_file_to_send_to_kujon">Choose file do send to KUJON</string>
+    <string name="choose_file_to_send_to_kujon">Choose file to send to KUJON</string>
     <string name="choose_folder">Choose destination dir</string>
     <string name="shared_files">Shared files</string>
     <string name="are_you_sure">Are you sure</string>

@@ -1,7 +1,6 @@
 package mobi.kujon.google_drive.ui.activities.files;
 
 import android.app.Activity;
-import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
@@ -9,7 +8,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.DocumentsContract;
 import android.provider.OpenableColumns;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -63,6 +61,7 @@ import mobi.kujon.google_drive.ui.fragments.files.FilesListFragment;
 import mobi.kujon.google_drive.ui.util.AbstractPageSelectedListener;
 import mobi.kujon.google_drive.utils.GetFilePath;
 import mobi.kujon.google_drive.utils.GoogleDriveFileException;
+import mobi.kujon.google_drive.utils.GoogleDriveVirtualFile;
 import mobi.kujon.google_drive.utils.PermissionAsk;
 import mobi.kujon.google_drive.utils.TempFileCreator;
 
@@ -166,9 +165,7 @@ public class FilesActivity extends BaseFileActivity implements FileActivityView 
                     }
                 }
         );
-        uploadLayout.setUpdateFileListener(() -> {
-            this.adapter.refresh();
-        });
+        uploadLayout.setUpdateFileListener(() -> this.adapter.refresh());
         this.uploadLayout.setCancelModel(cancelModel);
         apiClient.connect();
         presenter.subscribeToStream(this);
@@ -177,7 +174,6 @@ public class FilesActivity extends BaseFileActivity implements FileActivityView 
                 this.presenter.clearSubscriptions();
             }
         });
-
     }
 
     private void setUpViewPager(String[] titles) {
@@ -275,7 +271,6 @@ public class FilesActivity extends BaseFileActivity implements FileActivityView 
                     handleResponseFromFile(data);
                 }
             }
-
             break;
             case FILE_DETAILS_RESULT_CODE:
                 if (resultCode == RESULT_OK) {
@@ -297,8 +292,7 @@ public class FilesActivity extends BaseFileActivity implements FileActivityView 
                 deleteFileAfterUpload = false;
             }
         } catch (GoogleDriveFileException e) {
-
-            if (isVirtualFile(uriToFile)) {
+            if (GoogleDriveVirtualFile.isVirtualFile(this,uriToFile)) {
                 new AlertDialog.Builder(this)
                         .setTitle(R.string.warining)
                         .setMessage(R.string.this_file_will_be_saved_as_pdf)
@@ -325,11 +319,11 @@ public class FilesActivity extends BaseFileActivity implements FileActivityView 
             returnCursor.moveToFirst();
             String fileName = returnCursor.getString(nameIndex);
             returnCursor.close();
-            if (isVirtualFile(uriToFile) && !fileName.endsWith(".pdf")) {
+            if (GoogleDriveVirtualFile.isVirtualFile(this,uriToFile) && !fileName.endsWith(".pdf")) {
                 fileName = fileName.concat(".pdf");
             }
             InputStream inputStream;
-            inputStream = getInputStream(uriToFile);
+            inputStream = GoogleDriveVirtualFile.getInputStream(this,uriToFile);
             file = tempFileCreator.writeToTempFile(inputStream, fileName);
             fileChoosen = true;
             deleteFileAfterUpload = true;
@@ -341,46 +335,6 @@ public class FilesActivity extends BaseFileActivity implements FileActivityView 
         }
     }
 
-    private InputStream getInputStream(Uri uriToFile) throws IOException {
-        InputStream inputStream;
-        if (isVirtualFile(uriToFile)) {
-            inputStream = getInputStreamForVirtualFile(uriToFile);
-        } else {
-            inputStream = getContentResolver().openInputStream(uriToFile);
-        }
-        return inputStream;
-    }
-
-    private boolean isVirtualFile(Uri uri) {
-        if (!DocumentsContract.isDocumentUri(this, uri)) {
-            return false;
-        }
-        Cursor cursor = getContentResolver().query(
-                uri,
-                new String[]{DocumentsContract.Document.COLUMN_FLAGS},
-                null, null, null);
-
-        int flags = 0;
-        if (cursor.moveToFirst()) {
-            flags = cursor.getInt(0);
-        }
-        cursor.close();
-
-        return (flags & DocumentsContract.Document.FLAG_VIRTUAL_DOCUMENT) != 0;
-    }
-
-    private InputStream getInputStreamForVirtualFile(Uri uri)
-            throws IOException {
-        ContentResolver resolver = getContentResolver();
-        String[] openableMimeTypes = resolver.getStreamTypes(uri, "application/pdf");
-        if (openableMimeTypes == null ||
-                openableMimeTypes.length < 1) {
-            throw new FileNotFoundException();
-        }
-        return resolver
-                .openTypedAssetFileDescriptor(uri, openableMimeTypes[0], null)
-                .createInputStream();
-    }
 
     private void openToUploadFileToDrive(Intent data) {
         serviceOpener.openAddToDriveService(fileToUploadId, data.getParcelableExtra(
@@ -459,7 +413,8 @@ public class FilesActivity extends BaseFileActivity implements FileActivityView 
                     dialog.dismiss();
                     deletePresenter.deleteFile(fileId);
                     this.setLoading(true);
-                }).setNegativeButton(R.string.cancel, (dialog, which) -> dialog.dismiss()).show();
+                }).setNegativeButton(R.string.cancel, (dialog, which) -> dialog.dismiss())
+                .show();
     }
 
     @Override
