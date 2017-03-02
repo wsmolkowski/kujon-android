@@ -79,6 +79,8 @@ public class ErrorHandlerUtil {
                 Intent intent = new Intent(KujonApplication.getApplication(), LoginActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 KujonApplication.getApplication().startActivity(intent);
+            }else  if(code==500){
+                Toast.makeText(KujonApplication.getApplication(), e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         } else {
             Toast.makeText(KujonApplication.getApplication(), R.string.server_communication_error, Toast.LENGTH_SHORT).show();
