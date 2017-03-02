@@ -27,5 +27,6 @@
     <dimen name="title_font_size">17sp</dimen>
     <dimen name="font_small_label">11sp</dimen>
     <dimen name="font_label">13sp</dimen>
+    <dimen name="two_and_half_typ_margin">20dp</dimen>
 
 </resources>

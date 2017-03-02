@@ -49,7 +49,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="left|start"
-                            android:layout_margin="@dimen/kujon_margin_typ">
+                            android:layout_marginTop="@dimen/two_and_half_typ_margin"
+                            android:layout_marginBottom="@dimen/two_and_half_typ_margin"
+                            android:layout_marginLeft="@dimen/kujon_margin_typ">
 
                             <ImageView
                                 android:id="@+id/picture"
@@ -67,9 +69,10 @@
                         </FrameLayout>
 
                         <TextView
-                            android:layout_marginTop="@dimen/kujon_margin_typ"
-                            android:layout_marginStart="@dimen/kujon_margin_typ"
-                            android:layout_marginLeft="@dimen/kujon_margin_typ"
+
+                            android:layout_marginStart="@dimen/two_and_half_typ_margin"
+                            android:layout_marginLeft="@dimen/two_and_half_typ_margin"
+                            android:layout_alignTop="@+id/image_layout"
                             android:layout_toRightOf="@+id/image_layout"
                             android:layout_toEndOf="@+id/image_layout"
                             android:id="@+id/firstLastName"
