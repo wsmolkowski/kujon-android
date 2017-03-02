@@ -135,7 +135,7 @@ public class DowloadFileService extends Service implements FileStreamUpdateMVP.C
                 .observeOn(schedulersHolder.observ())
                 .subscribe(it -> {
                     model.updateStream(new FileUpdateDto(fileName, 100, true,true));
-                    Toast.makeText(this,R.string.file_dowloaded,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, String.format("%s %s", fileName, getString(R.string.file_dowloaded)),Toast.LENGTH_SHORT).show();
                     this.stopSelf();
                 }, error -> {
                     model.updateStream(new FileUpdateDto(fileName, 100, true, getString(R.string.download_failed)));

@@ -36,7 +36,7 @@ public class UploadFilePresenter extends AbstractClearSubsriptions implements Up
                 .observeOn(schedulersHolder.observ())
                 .subscribe(it -> {
                     this.model.updateStream(new FileUpdateDto(dataForFileUpload.getTitle(),100,true));
-                    view.onFileUploaded();
+                    view.onFileUploaded(dataForFileUpload.getTitle());
                 }, error -> {
                     handleError(error,dataForFileUpload.getTitle());
                     view.handleException(error);
@@ -49,9 +49,10 @@ public class UploadFilePresenter extends AbstractClearSubsriptions implements Up
                 .subscribeOn(schedulersHolder.subscribe())
                 .observeOn(schedulersHolder.observ())
                 .subscribe(it -> {
-                    this.model.updateStream(new FileUpdateDto(file.getName(),100,true));
+                    String name = file.getName();
+                    view.onFileUploaded( name );
+                    this.model.updateStream(new FileUpdateDto(name,100,true));
                     if(deleteFileAfterUpload)file.delete();
-                    view.onFileUploaded();
                 }, error -> {
                     String name = file.getName();
                     if(deleteFileAfterUpload)file.delete();

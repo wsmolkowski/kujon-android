@@ -20,11 +20,11 @@ public class DeletePresenter extends AbstractClearSubsriptions implements FileLi
     }
 
     @Override
-    public void deleteFile(String fileId) {
+    public void deleteFile(String fileId, String name) {
         addToSubsriptionList(deleteModel.deleteFile(fileId).subscribeOn(schedulersHolder.subscribe())
                 .observeOn(schedulersHolder.observ())
                 .subscribe(it->{
-                    deleteView.fileDeleted();
+                    deleteView.fileDeleted(name);
                 },error->{
                     deleteView.handleException(error);
                 }));

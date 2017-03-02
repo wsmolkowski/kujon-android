@@ -217,9 +217,9 @@
     <string name="faculty">Wydział</string>
     <string name="polish_enable">Polska wersja</string>
     <string name="ang_enable">Angielska wersja</string>
-    <string name="file_deleted">Plik został usunięty</string>
-    <string name="file_added">Plik został udostępniony</string>
-    <string name="file_dowloaded">Plik został pobrany</string>
+    <string name="file_deleted"> został usunięty</string>
+    <string name="file_added"> został udostępniony</string>
+    <string name="file_dowloaded"> został pobrany</string>
     <string name="change">Zmień</string>
     <string name="discard">Porzuć</string>
     <string name="save_changes">Zapisz zmiany</string>

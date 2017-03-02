@@ -194,16 +194,9 @@ public class DowloadUploadFileServices extends Service implements UploadFileMVP.
     }
 
     @Override
-    public void onFileUploaded() {
-        Log.d("DOWLOAD", "COMPLETE");
-        this.stopSelf();
-    }
-
-    @Override
     public void handleException(Throwable throwable) {
         throwable.printStackTrace();
         this.stopSelf();
-//TODO restart Service with same parameters
     }
 
     @Override
@@ -229,5 +222,11 @@ public class DowloadUploadFileServices extends Service implements UploadFileMVP.
     private String fileName(String mimeType, String title) {
 
         return title + mimeTypeMapper.getExtension(mimeType);
+    }
+
+    @Override
+    public void onFileUploaded(String text) {
+        Log.d("DOWLOAD", "COMPLETE");
+        this.stopSelf();
     }
 }

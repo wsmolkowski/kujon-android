@@ -3,6 +3,7 @@ package mobi.kujon.google_drive.mvp.files_list;
 import java.util.List;
 
 import mobi.kujon.google_drive.model.dto.file.FileDTO;
+import mobi.kujon.google_drive.model.json.KujonFile;
 import mobi.kujon.google_drive.mvp.ClearSubscriptions;
 import mobi.kujon.google_drive.mvp.HandleException;
 import mobi.kujon.google_drive.ui.dialogs.sort_strategy.SortStrategy;
@@ -22,7 +23,8 @@ public interface FileListMVP {
 
 
     interface Model {
-        Observable<List<FileDTO>> getFilesDto(boolean reload, @FilesOwnerType int fileType);
+        Observable<List<KujonFile>> subscribe();
+        void load(boolean reload);
         void clear();
     }
 
@@ -33,11 +35,11 @@ public interface FileListMVP {
     }
 
     interface DeleteView extends HandleException {
-        void fileDeleted();
+        void fileDeleted(String name);
     }
 
     interface DeletePresenter extends ClearSubscriptions {
-        void deleteFile(String fileId);
+        void deleteFile(String fileId, String name);
     }
 
     interface DeleteModel {

@@ -7,7 +7,7 @@ import mobi.kujon.google_drive.model.dto.file_upload_info.FileUploadInfoDto;
  */
 
 public interface FileActionListener {
-    void onFileDelete(String fileId);
+    void onFileDelete(String fileId, String name);
     void onFileAddToGoogleDrive(FileUploadInfoDto  fileUploadInfoDto);
     void onFileDetails(String fileId);
     void onDownload(FileUploadInfoDto file);

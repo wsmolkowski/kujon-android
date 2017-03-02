@@ -19,6 +19,6 @@ public interface UploadFileMVP {
     }
 
     interface View extends HandleException {
-        void onFileUploaded();
+        void onFileUploaded(String text);
     }
 }

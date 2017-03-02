@@ -73,7 +73,7 @@ public class FileActionDialog extends DialogFragment {
             deleteFile.setOnClickListener(v -> {
                         dismiss();
                         if (fileActionListener != null) {
-                            fileActionListener.onFileDelete(file.getId());
+                            fileActionListener.onFileDelete(file.getId(),file.getName());
                         }
                     }
             );

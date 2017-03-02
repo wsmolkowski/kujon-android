@@ -5,6 +5,7 @@ import dagger.Provides;
 import mobi.kujon.google_drive.dagger.scopes.ActivityScope;
 import mobi.kujon.google_drive.mvp.files_list.FileListMVP;
 import mobi.kujon.google_drive.mvp.files_list.FilesListPresenter;
+import mobi.kujon.google_drive.utils.FilesFilter;
 import mobi.kujon.google_drive.utils.SchedulersHolder;
 
 /**
@@ -23,6 +24,6 @@ public class FilesFragmentModule {
     @ActivityScope
     @Provides
     public FileListMVP.LoadPresenter providePresenter(FileListMVP.Model model, SchedulersHolder schedulersHolder){
-        return new FilesListPresenter(model,filesView,schedulersHolder);
+        return new FilesListPresenter(model,filesView,schedulersHolder,new FilesFilter());
     }
 }

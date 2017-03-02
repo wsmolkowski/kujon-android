@@ -16,7 +16,6 @@ import mobi.kujon.google_drive.network.unwrapped_api.DeleteFileApi;
 import mobi.kujon.google_drive.network.unwrapped_api.FileUploadApi;
 import mobi.kujon.google_drive.network.unwrapped_api.GetFilesApi;
 import mobi.kujon.google_drive.ui.activities.files.FileActivityView;
-import mobi.kujon.google_drive.utils.FilesFilter;
 import mobi.kujon.google_drive.utils.SchedulersHolder;
 
 /**
@@ -37,7 +36,7 @@ public class FilesActivityModule {
     @ActivityScope
     @Provides
     FileListMVP.Model provideFileListModel(GetFilesApi getFilesApi, SchedulersHolder schedulersHolder) {
-        return new FileListModel(courseId, termId, getFilesApi, new FilesFilter(), schedulersHolder);
+        return new FileListModel(courseId, termId, getFilesApi, schedulersHolder);
     }
 
     @ActivityScope

@@ -111,6 +111,10 @@ public class FilesActivity extends BaseFileActivity implements FileActivityView 
     @Bind(R.id.update_layout)
     UploadLayout uploadLayout;
 
+
+    @Inject
+    FileListMVP.Model filesModel;
+
     @Inject
     FileStreamUpdateMVP.Presenter presenter;
 
@@ -165,7 +169,11 @@ public class FilesActivity extends BaseFileActivity implements FileActivityView 
                     }
                 }
         );
-        uploadLayout.setUpdateFileListener(() -> this.adapter.refresh());
+        uploadLayout.setUpdateFileListener(text -> {
+            this.adapter.refresh();
+            this.setResult(RESULT_OK);
+            this.onFileUploaded(text);
+        });
         this.uploadLayout.setCancelModel(cancelModel);
         apiClient.connect();
         presenter.subscribeToStream(this);
@@ -174,6 +182,7 @@ public class FilesActivity extends BaseFileActivity implements FileActivityView 
                 this.presenter.clearSubscriptions();
             }
         });
+        filesModel.load(false);
     }
 
     private void setUpViewPager(String[] titles) {
@@ -225,6 +234,7 @@ public class FilesActivity extends BaseFileActivity implements FileActivityView 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        filesModel.clear();
         fileActivityInjector = null;
         presenter.clearSubscriptions();
         cancelPresenter.clearSubscriptions();
@@ -405,13 +415,13 @@ public class FilesActivity extends BaseFileActivity implements FileActivityView 
     }
 
     @Override
-    public void onFileDelete(String fileId) {
+    public void onFileDelete(String fileId, String name) {
         new AlertDialog.Builder(this)
                 .setMessage(R.string.you_want_to_delete_this_file)
                 .setTitle(R.string.are_you_sure)
                 .setPositiveButton(R.string.yes, (dialog, which) -> {
                     dialog.dismiss();
-                    deletePresenter.deleteFile(fileId);
+                    deletePresenter.deleteFile(fileId,name);
                     this.setLoading(true);
                 }).setNegativeButton(R.string.cancel, (dialog, which) -> dialog.dismiss())
                 .show();
@@ -464,11 +474,11 @@ public class FilesActivity extends BaseFileActivity implements FileActivityView 
     }
 
     @Override
-    public void fileDeleted() {
+    public void fileDeleted(String name) {
         this.setLoading(false);
         this.setResult(RESULT_OK);
         this.adapter.reload();
-        Toast.makeText(this, R.string.file_deleted, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, String.format("%s %s", name, getString(R.string.file_deleted)), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -488,9 +498,7 @@ public class FilesActivity extends BaseFileActivity implements FileActivityView 
     }
 
     @Override
-    public void onFileUploaded() {
-        this.adapter.refresh();
-        this.setResult(RESULT_OK);
-        Toast.makeText(this, R.string.file_added, Toast.LENGTH_SHORT).show();
+    public void onFileUploaded(String text) {
+        Toast.makeText(this, String.format("%s %s", text, getString(R.string.file_added)), Toast.LENGTH_SHORT).show();
     }
 }

@@ -216,9 +216,9 @@
     <string name="faculty">Faculty</string>
     <string name="polish_enable">Polish version</string>
     <string name="ang_enable">English version</string>
-    <string name="file_deleted">File has been deleted</string>
-    <string name="file_added">File has been shared</string>
-    <string name="file_dowloaded">File has been downloaded</string>
+    <string name="file_deleted"> has been deleted</string>
+    <string name="file_added"> has been shared</string>
+    <string name="file_dowloaded"> has been downloaded</string>
     <string name="change">Change</string>
     <string name="warining">Warning</string>
     <string name="unsaved_changes">You have unsaved changes, do you want to save them now ?</string>
