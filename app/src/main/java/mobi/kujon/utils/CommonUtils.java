@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
+import mobi.kujon.network.json.StudentProgramme;
 
 public class CommonUtils {
 
@@ -25,7 +25,6 @@ public class CommonUtils {
     }
 
     public static void showList(LayoutInflater layoutInflater, LinearLayout layout, List<String> data, OnPositionClickListener listener) {
-        KujonApplication application = KujonApplication.getApplication();
         layout.removeAllViews();
         for (int i = 0; i < data.size(); i++) {
             String rowData = data.get(i);
@@ -34,7 +33,23 @@ public class CommonUtils {
             row.setText(rowData);
             final int finalI = i;
             view.setOnClickListener(v -> listener.onClick(finalI));
-//            row.setCompoundDrawablesWithIntrinsicBounds(null, null, application.getResources().getDrawable(R.drawable.navigate_next), null);
+            layout.addView(view);
+        }
+    }
+
+    public static void showListProgrammes(LayoutInflater layoutInflater, LinearLayout layout, List<StudentProgramme> data, OnPositionClickListener listener) {
+        layout.removeAllViews();
+        for (int i = 0; i < data.size(); i++) {
+            StudentProgramme studentProgramme = data.get(i);
+            String rowData = studentProgramme.programme.description.split(",")[0];
+            View view = layoutInflater.inflate(R.layout.list_row_programmes, null);
+            TextView row = (TextView) view.findViewById(R.id.text1);
+            TextView statusText = (TextView) view.findViewById(R.id.status_text);
+            statusText.setText(studentProgramme.getGraduateText());
+            statusText.setCompoundDrawablesWithIntrinsicBounds(studentProgramme.getImage(), 0, 0, 0);
+            row.setText(rowData);
+            final int finalI = i;
+            view.setOnClickListener(v -> listener.onClick(finalI));
             layout.addView(view);
         }
     }

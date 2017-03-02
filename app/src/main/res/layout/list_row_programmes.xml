@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="?android:attr/listPreferredItemHeightSmall"
+    android:background="?selectableItemBackground"
+    android:orientation="vertical"
+    android:gravity="center"
+    >
+
+    <TextView
+        android:layout_marginTop="@dimen/kujon_margin_typ"
+        android:id="@+id/text1"
+        style="@style/Regular.Entry"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:textAppearance="?android:attr/textAppearanceListItemSmall"
+        android:layout_marginBottom="0dp"
+        android:maxLines="1"
+        android:ellipsize="end"
+        tools:text="Lorem ipsum" />
+    <TextView
+        style="@style/Regular.Entry"
+        android:textSize="@dimen/font_size_vh_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/dark_60"
+        android:id="@+id/status_text"
+        tools:text="@string/active_study"
+        android:gravity="center_vertical"
+        android:includeFontPadding="false"
+        tools:drawableStart="@drawable/ic_active_study"
+        tools:drawableLeft="@drawable/ic_active_study"
+        android:drawablePadding="@dimen/kujon_margin_typ"
+        />
+    <View
+        style="@style/divider" />
+</LinearLayout>

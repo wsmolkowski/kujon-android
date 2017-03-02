@@ -112,12 +112,10 @@ public class UserInfoFragment extends BaseFragment {
                             .into(binding.picture);
                     showUsosLogo(user.usos_id, binding.usosLogo);
                     binding.picture.setOnClickListener(v -> ImageActivity.show(getActivity(), pictureUrl, name));
-                    List<String> collect = $.collect(user.student_programmes, it -> it.programme.description.split(",")[0]);
                     binding.studentProgrammes.removeAllViews();
-                    CommonUtils.showList(activity.getLayoutInflater(), binding.studentProgrammes, collect, position -> {
+                    CommonUtils.showListProgrammes(activity.getLayoutInflater(), binding.studentProgrammes, user.student_programmes, position -> {
                         StudentProgramme studentProgramme = user.student_programmes.get(position);
                         Programme programme = studentProgramme.programme;
-
                         List<Programme> data = user.programmes;
                         Optional<Programme> programmeOptional = $.find(data, it -> it.programme.id.equals(programme.id));
                         if (!programmeOptional.isPresent()) {

@@ -41,89 +41,94 @@
                         android:orientation="vertical"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-
-                        android:paddingBottom="8dp">
+                        android:paddingTop="@dimen/two_and_half_typ_margin"
+                        android:paddingBottom="@dimen/two_and_half_typ_margin"
+                        >
 
                         <FrameLayout
                             android:id="@+id/image_layout"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="left|start"
-                            android:layout_marginTop="@dimen/two_and_half_typ_margin"
-                            android:layout_marginBottom="@dimen/two_and_half_typ_margin"
+
                             android:layout_marginLeft="@dimen/kujon_margin_typ">
 
                             <ImageView
                                 android:id="@+id/picture"
-                                android:layout_width="70dp"
-                                android:layout_height="70dp"
+                                android:layout_width="@dimen/user_info_image_size"
+                                android:layout_height="@dimen/user_info_image_size"
                                 android:src="@drawable/photo_placeholder" />
 
                             <ImageView
                                 android:id="@+id/usosLogo"
-                                android:layout_width="19dp"
-                                android:layout_height="19dp"
+                                android:layout_width="@dimen/user_info_usos_image_size"
+                                android:layout_height="@dimen/user_info_usos_image_size"
                                 android:layout_gravity="right|bottom"
                                 tools:src="@drawable/user_placeholder" />
 
                         </FrameLayout>
-
-                        <TextView
-
+                        <LinearLayout
                             android:layout_marginStart="@dimen/two_and_half_typ_margin"
                             android:layout_marginLeft="@dimen/two_and_half_typ_margin"
-                            android:layout_alignTop="@+id/image_layout"
+                            android:layout_centerVertical="true"
                             android:layout_toRightOf="@+id/image_layout"
                             android:layout_toEndOf="@+id/image_layout"
-                            android:id="@+id/firstLastName"
-                            style="@style/Semibold"
-                            tools:text='Jan Kowalski' />
-
-                        <LinearLayout
-                            android:layout_below="@+id/firstLastName"
-                            android:layout_alignLeft="@+id/firstLastName"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="left"
-                            android:layout_marginTop="@dimen/kujon_margin_typ"
-                            android:orientation="horizontal">
+                            android:orientation="vertical"
+                            android:layout_height="wrap_content">
+                            <TextView
+
+                                android:gravity="left"
+                                android:layout_gravity="left"
+                                android:id="@+id/firstLastName"
+                                style="@style/Semibold"
+                                tools:text='Jan Kowalski' />
 
                             <LinearLayout
-                                android:layout_width="0dp"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:orientation="vertical">
+                                android:gravity="left"
+                                android:layout_marginTop="@dimen/kujon_margin_typ"
+                                android:orientation="horizontal">
 
-                                <TextView
-                                    style="@style/Regular.userInfoLabel"
-                                    android:layout_marginTop="0dp"
-                                    android:text="@string/index_number"
-                                    />
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
 
-                                <TextView
-                                    style="@style/Regular.userLabel"
-                                    android:text="@{user.student_number}"
-                                    tools:text='1234567890' />
+                                    <TextView
+                                        style="@style/Regular.userInfoLabel"
+                                        android:layout_marginTop="0dp"
+                                        android:text="@string/index_number"
+                                        />
 
-                            </LinearLayout>
+                                    <TextView
+                                        style="@style/Regular.userLabel"
+                                        android:text="@{user.student_number}"
+                                        tools:text='1234567890' />
 
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:orientation="vertical">
+                                </LinearLayout>
 
-                                <TextView
-                                    style="@style/Regular.userInfoLabel"
-                                    android:layout_marginTop="0dp"
-                                    android:text="@string/account_number" />
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
 
-                                <TextView
-                                    style="@style/Regular.userLabel"
-                                    android:text="@{user.id}"
-                                    tools:text='987654321' />
+                                    <TextView
+                                        style="@style/Regular.userInfoLabel"
+                                        android:layout_marginTop="0dp"
+                                        android:text="@string/account_number" />
+
+                                    <TextView
+                                        style="@style/Regular.userLabel"
+                                        android:text="@{user.id}"
+                                        tools:text='987654321' />
+                                </LinearLayout>
                             </LinearLayout>
                         </LinearLayout>
+
                     </RelativeLayout>
 
                     <TextView
