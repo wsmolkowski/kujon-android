@@ -113,6 +113,7 @@ public class FileDetailsActivity extends BaseFileActivity implements FileDetails
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.menu_change_share_file && adapter.isChanged()) {
+            close = true;
             saveChanges();
             return true;
         }
