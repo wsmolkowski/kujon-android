@@ -15,7 +15,6 @@
         style="@style/Regular.Entry"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
         android:textAppearance="?android:attr/textAppearanceListItemSmall"
         android:layout_marginBottom="0dp"
         android:maxLines="1"
@@ -34,7 +33,9 @@
         tools:drawableStart="@drawable/ic_active_study"
         tools:drawableLeft="@drawable/ic_active_study"
         android:drawablePadding="@dimen/kujon_margin_typ"
+        android:layout_marginBottom="0dp"
         />
     <View
+        android:layout_marginTop="@dimen/kujon_margin_typ"
         style="@style/divider" />
 </LinearLayout>

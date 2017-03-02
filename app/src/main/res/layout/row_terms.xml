@@ -101,6 +101,6 @@
     </RelativeLayout>
     <View
         android:layout_marginTop="@dimen/kujon_margin_typ"
-
+        android:id="@+id/divider"
         style="@style/divider" />
 </LinearLayout>

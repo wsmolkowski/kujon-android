@@ -45,8 +45,13 @@ public class CommonUtils {
             View view = layoutInflater.inflate(R.layout.list_row_programmes, null);
             TextView row = (TextView) view.findViewById(R.id.text1);
             TextView statusText = (TextView) view.findViewById(R.id.status_text);
-            statusText.setText(studentProgramme.getGraduateText());
-            statusText.setCompoundDrawablesWithIntrinsicBounds(studentProgramme.getImage(), 0, 0, 0);
+            try{
+                statusText.setText(studentProgramme.getGraduateText());
+                statusText.setCompoundDrawablesWithIntrinsicBounds(studentProgramme.getImage(), 0, 0, 0);
+            }catch (NullPointerException npe){
+                statusText.setVisibility(View.GONE);
+            }
+
             row.setText(rowData);
             final int finalI = i;
             view.setOnClickListener(v -> listener.onClick(finalI));

@@ -106,6 +106,7 @@ public class TermsFragment extends ListFragment {
             holder.section.setText(section == 0 ? getString(R.string.active) : getString(R.string.inactive));
             holder.section.setVisibility(View.VISIBLE);
             holder.termsView.setVisibility(View.GONE);
+            holder.divider.setVisibility(View.GONE);
 
         }
 
@@ -114,6 +115,7 @@ public class TermsFragment extends ListFragment {
             Term2 term = section == 0 ? data1.get(relativePosition) : data2.get(relativePosition);
             holder.section.setVisibility(View.GONE);
             holder.termsView.setVisibility(View.VISIBLE);
+            holder.divider.setVisibility(View.VISIBLE);
             if (section == 0) {
                 holder.finishDate.setVisibility(View.GONE);
                 holder.finishLabel.setVisibility(View.GONE);
@@ -161,6 +163,8 @@ public class TermsFragment extends ListFragment {
         public
         @Bind(R.id.finish_date_label)
         View finishLabel;
+        @Bind(R.id.divider)
+        View divider;
 
         public ViewHolder(View itemView) {
             super(itemView);
