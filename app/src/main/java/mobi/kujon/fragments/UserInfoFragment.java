@@ -119,6 +119,7 @@ public class UserInfoFragment extends BaseFragment {
 
 
     private void loadData(boolean refresh) {
+        cancelLastCallIfExist();
         swipeContainer.setRefreshing(true);
 
         if (refresh) {
@@ -188,6 +189,7 @@ public class UserInfoFragment extends BaseFragment {
                 ErrorHandlerUtil.handleError(t);
             }
         });
+        backendCall = usersCall;
     }
 
     @OnClick(R.id.terms)

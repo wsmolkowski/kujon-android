@@ -86,6 +86,7 @@ public class StudentInfoFragment extends BaseFragment {
     }
 
     private void loadData(boolean refresh) {
+        cancelLastCallIfExist();
         handler.post(() -> swipeContainer.setRefreshing(true));
 
         String userId = getArguments().getString(USER_ID);
@@ -130,6 +131,8 @@ public class StudentInfoFragment extends BaseFragment {
                 ErrorHandlerUtil.handleError(t);
             }
         });
+
+        backendCall = users;
     }
 
     @Override public void onStop() {
@@ -167,13 +170,5 @@ public class StudentInfoFragment extends BaseFragment {
                 }
             });
         }
-    }
-
-    @Override public void onDestroyView() {
-        super.onDestroyView();
-        if (users != null) {
-            users.cancel();
-        }
-
     }
 }

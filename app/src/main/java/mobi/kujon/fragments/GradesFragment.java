@@ -91,6 +91,7 @@ public class GradesFragment extends AbstractFragmentSearchWidget<TermGrades> {
 
     @Override
     protected void loadData(boolean refresh) {
+        cancelLastCallIfExist();
         Call<KujonResponse<List<TermGrades>>> kujonResponseCall = refresh ? backendApi.gradesByTermRefresh() : backendApi.gradesByTerm();
         kujonResponseCall.enqueue(new Callback<KujonResponse<List<TermGrades>>>() {
             @Override
@@ -109,6 +110,7 @@ public class GradesFragment extends AbstractFragmentSearchWidget<TermGrades> {
                 ErrorHandlerUtil.handleError(t);
             }
         });
+        this.backendCall = kujonResponseCall;
     }
 
     @Override

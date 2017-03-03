@@ -52,6 +52,7 @@ public class LecturersFragment extends AbstractFragmentSearchWidget<Lecturer> {
     }
 
     @Override protected void loadData(boolean refresh) {
+        cancelLastCallIfExist();
         Call<KujonResponse<List<Lecturer>>> lecturers = refresh ? backendApi.lecturersRefresh() : backendApi.lecturers();
         lecturers.enqueue(new Callback<KujonResponse<List<Lecturer>>>() {
             @Override public void onResponse(Call<KujonResponse<List<Lecturer>>> call, Response<KujonResponse<List<Lecturer>>> response) {
@@ -68,6 +69,7 @@ public class LecturersFragment extends AbstractFragmentSearchWidget<Lecturer> {
                 ErrorHandlerUtil.handleError(t);
             }
         });
+        backendCall = lecturers;
     }
 
     @Override public void onStart() {

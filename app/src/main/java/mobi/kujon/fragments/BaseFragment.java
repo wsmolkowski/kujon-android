@@ -21,4 +21,18 @@ public abstract class BaseFragment extends Fragment {
     protected void cancelCall(Call call) {
         if (call != null) call.cancel();
     }
+
+
+    protected Call backendCall;
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        cancelLastCallIfExist();
+    }
+
+    protected void cancelLastCallIfExist() {
+        if(backendCall != null){
+            cancelCall(backendCall);
+        }
+    }
 }

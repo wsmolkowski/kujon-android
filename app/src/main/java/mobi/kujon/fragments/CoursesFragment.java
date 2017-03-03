@@ -98,6 +98,7 @@ public class CoursesFragment extends AbstractFragmentSearchWidget<SortedMap<Stri
 
     @Override
     protected void loadData(boolean refresh) {
+        cancelLastCallIfExist();
         Call<KujonResponse<List<SortedMap<String, List<Course>>>>> kujonResponseCall =
                 refresh ? backendApi.coursesEditionsByTermRefresh() : backendApi.coursesEditionsByTerm();
         kujonResponseCall.enqueue(new Callback<KujonResponse<List<SortedMap<String, List<Course>>>>>() {
@@ -117,6 +118,7 @@ public class CoursesFragment extends AbstractFragmentSearchWidget<SortedMap<Stri
                 ErrorHandlerUtil.handleError(t);
             }
         });
+        backendCall = kujonResponseCall;
     }
 
     protected class Adapter extends SectionedRecyclerViewAdapter<ViewHolder> {

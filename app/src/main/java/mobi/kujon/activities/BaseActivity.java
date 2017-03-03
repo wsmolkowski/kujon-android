@@ -191,7 +191,7 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
             dlgAlert.setPositiveButton("OK", (dialog, which) -> {
                 kujonBackendApi.deleteAccount().enqueue(new Callback<Object>() {
                     @Override public void onResponse(Call<Object> call, Response<Object> response) {
-                        System.out.println("call = [" + call + "], response = [" + response + "]");
+                        System.out.println("backendCall = [" + call + "], response = [" + response + "]");
                         googleLogout();
                     }
 

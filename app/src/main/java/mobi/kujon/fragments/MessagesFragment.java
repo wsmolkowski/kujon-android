@@ -41,6 +41,7 @@ public class MessagesFragment extends AbstractFragmentSearchWidget<Message> {
     }
 
     @Override protected void loadData(boolean refresh) {
+        cancelLastCallIfExist();
         Call<KujonResponse<List<Message>>> messages = refresh ? backendApi.getMessagesRefresh() : backendApi.getMessages();
         messages.enqueue(new Callback<KujonResponse<List<Message>>>() {
             @Override
@@ -59,7 +60,10 @@ public class MessagesFragment extends AbstractFragmentSearchWidget<Message> {
                 ErrorHandlerUtil.handleError(t);
             }
         });
+        backendCall = messages;
     }
+
+
 
     @Override public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);

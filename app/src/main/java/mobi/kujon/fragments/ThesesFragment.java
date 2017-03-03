@@ -58,6 +58,7 @@ public class ThesesFragment extends ListFragment {
             loadDataFromBundle();
 
         } else {
+
             loadDataFromApi(refresh);
         }
 
@@ -83,6 +84,7 @@ public class ThesesFragment extends ListFragment {
     }
 
     private void loadDataFromApi(boolean refresh) {
+        cancelLastCallIfExist();
         ((ThesesActivity) getActivity()).setToolbarTitle(R.string.thesiss);
         Call<KujonResponse<List<Thesis_>>> theses = refresh ? backendApi.thesesRefresh() : backendApi.theses();
         theses.enqueue(new Callback<KujonResponse<List<Thesis_>>>() {
@@ -103,6 +105,7 @@ public class ThesesFragment extends ListFragment {
                 ErrorHandlerUtil.handleError(t);
             }
         });
+        backendCall = theses;
     }
 
     @Override

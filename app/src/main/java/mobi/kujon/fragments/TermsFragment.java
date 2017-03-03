@@ -46,6 +46,7 @@ public class TermsFragment extends ListFragment {
 
     @Override
     protected void loadData(boolean refresh) {
+        cancelLastCallIfExist();
         Call<KujonResponse<List<Term2>>> terms = refresh ? backendApi.termsRefresh() : backendApi.terms();
         terms.enqueue(new Callback<KujonResponse<List<Term2>>>() {
             @Override
@@ -66,7 +67,7 @@ public class TermsFragment extends ListFragment {
                 ErrorHandlerUtil.handleError(t);
             }
         });
-
+        backendCall = terms;
     }
 
     @Override
