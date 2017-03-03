@@ -179,6 +179,7 @@ public abstract class FileDTO {
         this.shareType = shareType;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -187,6 +188,7 @@ public abstract class FileDTO {
         FileDTO fileDTO = (FileDTO) o;
 
         if (numberOfShares != fileDTO.numberOfShares) return false;
+        if (isMy != fileDTO.isMy) return false;
         if (shareType != null ? !shareType.equals(fileDTO.shareType) : fileDTO.shareType != null)
             return false;
         if (fileName != null ? !fileName.equals(fileDTO.fileName) : fileDTO.fileName != null)
@@ -195,7 +197,17 @@ public abstract class FileDTO {
             return false;
         if (userName != null ? !userName.equals(fileDTO.userName) : fileDTO.userName != null)
             return false;
-        return fileId != null ? fileId.equals(fileDTO.fileId) : fileDTO.fileId == null;
+        if (fileId != null ? !fileId.equals(fileDTO.fileId) : fileDTO.fileId != null) return false;
+        if (dateCreated != null ? !dateCreated.equals(fileDTO.dateCreated) : fileDTO.dateCreated != null)
+            return false;
+        if (date != null ? !date.equals(fileDTO.date) : fileDTO.date != null) return false;
+        if (shares != null ? !shares.equals(fileDTO.shares) : fileDTO.shares != null) return false;
+        if (mimeType != null ? !mimeType.equals(fileDTO.mimeType) : fileDTO.mimeType != null)
+            return false;
+        if (courseId != null ? !courseId.equals(fileDTO.courseId) : fileDTO.courseId != null)
+            return false;
+        if (termId != null ? !termId.equals(fileDTO.termId) : fileDTO.termId != null) return false;
+        return courseName != null ? courseName.equals(fileDTO.courseName) : fileDTO.courseName == null;
 
     }
 
@@ -207,6 +219,14 @@ public abstract class FileDTO {
         result = 31 * result + (fileSize != null ? fileSize.hashCode() : 0);
         result = 31 * result + (userName != null ? userName.hashCode() : 0);
         result = 31 * result + (fileId != null ? fileId.hashCode() : 0);
+        result = 31 * result + (dateCreated != null ? dateCreated.hashCode() : 0);
+        result = 31 * result + (date != null ? date.hashCode() : 0);
+        result = 31 * result + (shares != null ? shares.hashCode() : 0);
+        result = 31 * result + (mimeType != null ? mimeType.hashCode() : 0);
+        result = 31 * result + (isMy ? 1 : 0);
+        result = 31 * result + (courseId != null ? courseId.hashCode() : 0);
+        result = 31 * result + (termId != null ? termId.hashCode() : 0);
+        result = 31 * result + (courseName != null ? courseName.hashCode() : 0);
         return result;
     }
 }

@@ -38,7 +38,6 @@ public class FilesRecyclerAdapter extends RecyclerView.Adapter<FileVH> {
 
     public void setFileDTOs(List<FileDTO> fileDTOs) {
         this.fileDTOs = fileDTOs;
-        this.notifyDataSetChanged();
     }
 
     @Override
@@ -48,5 +47,9 @@ public class FilesRecyclerAdapter extends RecyclerView.Adapter<FileVH> {
 
     public interface OnFileClick {
         void onFileClick(FileDTO fileDTO);
+    }
+
+    public List<FileDTO> getFileDTOs() {
+        return fileDTOs;
     }
 }

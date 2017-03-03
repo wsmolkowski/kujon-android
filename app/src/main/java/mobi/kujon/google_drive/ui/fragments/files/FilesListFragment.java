@@ -4,6 +4,8 @@ package mobi.kujon.google_drive.ui.fragments.files;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.util.DiffUtil;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -32,6 +34,7 @@ import mobi.kujon.google_drive.ui.dialogs.sort_strategy.SortStrategy;
 import mobi.kujon.google_drive.ui.dialogs.sort_strategy.SortStrategyListener;
 import mobi.kujon.google_drive.ui.dialogs.sort_strategy.SortStrategyType;
 import mobi.kujon.google_drive.ui.fragments.BaseFileFragment;
+import mobi.kujon.google_drive.ui.fragments.files.recycler_classes.FilesDiffCallback;
 import mobi.kujon.google_drive.ui.fragments.files.recycler_classes.FilesRecyclerAdapter;
 
 
@@ -96,6 +99,7 @@ public class FilesListFragment extends BaseFileFragment<FilesListFragment> imple
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         presenter.loadListOfFiles(false, fileOwnerType, sortStrategy);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
         this.setProgress(true);
         swipeRefreshLayout.setOnRefreshListener(() -> presenter.loadListOfFiles(true, fileOwnerType, sortStrategy));
         return rootView;
@@ -132,8 +136,14 @@ public class FilesListFragment extends BaseFileFragment<FilesListFragment> imple
     public void listOfFilesLoaded(List<FileDTO> fileDTOs) {
 
         emptyView.setVisibility(View.GONE);
-        recyclerView.setVisibility(View.VISIBLE);
+        if(recyclerView.getVisibility()==View.GONE){
+            recyclerView.setVisibility(View.VISIBLE);
+        }
+
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new FilesDiffCallback(adapter.getFileDTOs(),fileDTOs));
         adapter.setFileDTOs(fileDTOs);
+        diffResult.dispatchUpdatesTo(adapter);
+
         this.setProgress(false);
     }
 

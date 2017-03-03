@@ -14,7 +14,7 @@ public class DateSortStrategy implements SortStrategy {
     @Override
     public List<FileDTO> sort(List<FileDTO> fileDTOs) {
         List<FileDTO> sorts = new ArrayList<>(fileDTOs);
-        Collections.sort(sorts, (o1, o2) -> o1.getDate().compareTo(o2.getDate()));
+        Collections.sort(sorts, (o1, o2) -> o2.getDate().compareTo(o1.getDate()));
         return sorts;
     }
 
