@@ -68,7 +68,6 @@ public class ProgrammeDetailsActivity extends BaseActivity {
     public static final String NAME = "NAME";
     public static final String FULL_NAME = "FULL_NAME";
     public static final String ECTS_SUM = "ECTS_SUM";
-    private Call<KujonResponse<List<ProgrammeSingle>>> programmesCall;
     private String programmeId;
 
     @Override
@@ -100,8 +99,10 @@ public class ProgrammeDetailsActivity extends BaseActivity {
 
     private void handleOnlyIdComming(boolean b) {
         programmeId = getIntent().getStringExtra(PRGRAMME_ID_KEY);
-        programmesCall = kujonBackendApi.programmes(programmeId, String.valueOf(b));
+        Call<KujonResponse<List<ProgrammeSingle>>> programmesCall = kujonBackendApi.programmes(programmeId, String.valueOf(b));
+        cancelLastCallIfExist();
         doTheCall(programmesCall);
+        backendCall = programmesCall;
     }
 
     private void doTheCall(Call<KujonResponse<List<ProgrammeSingle>>> call) {
@@ -126,13 +127,6 @@ public class ProgrammeDetailsActivity extends BaseActivity {
         fillUpDataWithProgramme(programme);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (programmesCall != null && programmesCall.isExecuted()) {
-            programmesCall.cancel();
-        }
-    }
 
     private void fillUpDataWithProgramme(ProgrammeSingle programme) {
         programmeFullName.setText(programme.getFullName());

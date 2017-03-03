@@ -74,7 +74,9 @@ public class FacultyDetailsActivity extends BaseActivity implements OnMapReadyCa
     }
 
     private void loadData(String facultyId) {
-        kujonBackendApi.faculty(facultyId).enqueue(new Callback<KujonResponse<Faculty2>>() {
+        cancelLastCallIfExist();
+        Call<KujonResponse<Faculty2>> faculty = kujonBackendApi.faculty(facultyId);
+        faculty.enqueue(new Callback<KujonResponse<Faculty2>>() {
             @Override
             public void onResponse(Call<KujonResponse<Faculty2>> call, Response<KujonResponse<Faculty2>> response) {
                 showProgress(false);
@@ -95,6 +97,7 @@ public class FacultyDetailsActivity extends BaseActivity implements OnMapReadyCa
                 ErrorHandlerUtil.handleError(t);
             }
         });
+        backendCall = faculty;
     }
 
     private void fillUpWithFacultyData(Faculty2 faculty) {

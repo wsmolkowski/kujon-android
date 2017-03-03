@@ -56,7 +56,9 @@ public abstract class AbstractSearchActivity<S, T> extends BaseActivity implemen
     }
 
     @Override public void onLoadMoreRequested() {
-        getKujonResponseCall().enqueue(new Callback<KujonResponse<S>>() {
+        cancelLastCallIfExist();
+        Call<KujonResponse<S>> kujonResponseCall = getKujonResponseCall();
+        kujonResponseCall.enqueue(new Callback<KujonResponse<S>>() {
             @Override
             public void onResponse(Call<KujonResponse<S>> call, Response<KujonResponse<S>> response) {
                 if (ErrorHandlerUtil.handleResponse(response)) {
@@ -78,6 +80,7 @@ public abstract class AbstractSearchActivity<S, T> extends BaseActivity implemen
                 ErrorHandlerUtil.handleError(t);
             }
         });
+        backendCall = kujonResponseCall;
     }
 
     protected abstract boolean getNextPage(S data);

@@ -147,6 +147,7 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
 
     @Override protected void onDestroy() {
         super.onDestroy();
+        cancelLastCallIfExist();
         if (alertDialog != null && alertDialog.isShowing()) {
             alertDialog.dismiss();
             alertDialog = null;
@@ -292,5 +293,20 @@ public abstract class BaseActivity extends AppCompatActivity implements GoogleAp
     @Override
     public void onConnectionSuspended(int i) {
 
+    }
+
+
+    protected void cancelCall(Call call) {
+        if (call != null) call.cancel();
+    }
+
+
+    protected Call backendCall;
+
+
+    protected void cancelLastCallIfExist() {
+        if(backendCall != null){
+            cancelCall(backendCall);
+        }
     }
 }

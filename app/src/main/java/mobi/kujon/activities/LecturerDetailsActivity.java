@@ -83,6 +83,7 @@ public class LecturerDetailsActivity extends BaseActivity {
     }
 
     private void loadData(boolean refresh) {
+        cancelLastCallIfExist();
         if (refresh) {
             swipeContainer.setRefreshing(true);
         } else {
@@ -142,6 +143,7 @@ public class LecturerDetailsActivity extends BaseActivity {
                 ErrorHandlerUtil.handleError(t);
             }
         });
+        backendCall = lecturerCall;
     }
 
     @Override

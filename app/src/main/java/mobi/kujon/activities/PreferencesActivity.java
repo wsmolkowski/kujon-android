@@ -118,7 +118,8 @@ public class PreferencesActivity extends BaseActivity {
     }
 
     private void setGoogleCalendar(boolean isChecked) {
-        settingsApi.setGoogleCalendar(isChecked).enqueue(new Callback<KujonResponse<String>>() {
+        Call<KujonResponse<String>> kujonResponseCall = settingsApi.setGoogleCalendar(isChecked);
+        kujonResponseCall.enqueue(new Callback<KujonResponse<String>>() {
             @Override
             public void onResponse(Call<KujonResponse<String>> call, Response<KujonResponse<String>> response) {
                 showProgress(false);
@@ -136,6 +137,7 @@ public class PreferencesActivity extends BaseActivity {
                 ErrorHandlerUtil.handleError(t);
             }
         });
+        backendCall = kujonResponseCall;
     }
 
     private void programGoogleCalendarSwitchChange(boolean isChecked) {
@@ -154,7 +156,8 @@ public class PreferencesActivity extends BaseActivity {
     }
 
     private void setEvents(boolean isChecked) {
-        settingsApi.setEvents(isChecked).enqueue(new Callback<KujonResponse<String>>() {
+        Call<KujonResponse<String>> kujonResponseCall = settingsApi.setEvents(isChecked);
+        kujonResponseCall.enqueue(new Callback<KujonResponse<String>>() {
             @Override
             public void onResponse(Call<KujonResponse<String>> call, Response<KujonResponse<String>> response) {
                 showProgress(false);
@@ -172,6 +175,7 @@ public class PreferencesActivity extends BaseActivity {
                 ErrorHandlerUtil.handleError(t);
             }
         });
+        backendCall = kujonResponseCall;
     }
 
     private void programNotificationSwitchChange(boolean isChecked) {

@@ -98,9 +98,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/ToolbarAppTheme" />
         <activity
-            android:name=".activities.TextViewActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".activities.StudentSearchActivity"
             android:screenOrientation="portrait" />
         <activity

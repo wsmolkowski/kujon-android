@@ -155,6 +155,7 @@ public class CourseDetailsActivity extends BaseActivity {
     }
 
     private void loadData(boolean refresh) {
+        cancelLastCallIfExist();
         Call<KujonResponse<CourseDetails>> call = getCourseCall(refresh);
 
         if (refresh) {
@@ -229,6 +230,7 @@ public class CourseDetailsActivity extends BaseActivity {
                 ErrorHandlerUtil.handleError(t);
             }
         });
+        backendCall  = call;
     }
 
     private void handle4Layouts() {
