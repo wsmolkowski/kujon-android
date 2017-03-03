@@ -1,0 +1,3 @@
+poprawka z tytułem na dialogu udostępnienia
+dodanie statusu kierunku na jego szczegółach
+dodanie termId przy harmonogramie
