@@ -504,6 +504,7 @@ public class FilesActivity extends BaseFileActivity implements FileActivityView 
 
     @Override
     public void onFileUploaded(String text) {
-        Toast.makeText(this, String.format("%s %s", text, getString(R.string.file_added)), Toast.LENGTH_SHORT).show();
+        Toast toast = Toast.makeText(this, String.format("%s %s", text, getString(R.string.file_added)), Toast.LENGTH_SHORT);
+        toast.show();
     }
 }

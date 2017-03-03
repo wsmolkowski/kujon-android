@@ -50,7 +50,6 @@ public class UploadFilePresenter extends AbstractClearSubsriptions implements Up
                 .observeOn(schedulersHolder.observ())
                 .subscribe(it -> {
                     String name = file.getName();
-                    view.onFileUploaded( name );
                     this.model.updateStream(new FileUpdateDto(name,100,true));
                     if(deleteFileAfterUpload)file.delete();
                 }, error -> {
