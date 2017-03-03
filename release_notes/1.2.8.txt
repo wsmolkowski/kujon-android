@@ -1,3 +1,4 @@
 poprawka z tytułem na dialogu udostępnienia
 dodanie statusu kierunku na jego szczegółach
 dodanie termId przy harmonogramie
+dodanie scrollowania na ustawieniach tak żeby można było przewinąć ekran
