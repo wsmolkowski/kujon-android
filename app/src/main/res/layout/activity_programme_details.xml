@@ -6,10 +6,12 @@
     android:orientation="vertical">
 
     <include layout="@layout/kujon_toolbar_with_back" />
+
     <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/refresh_layout">
+        android:layout_height="match_parent">
+
         <ScrollView
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
@@ -25,12 +27,31 @@
                     style="@style/Regular.Entry.Semibold"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="0dp"
                     android:layout_marginTop="@dimen/one_and_half_typ_margin"
                     android:textSize="@dimen/title_font_size" />
 
+                <TextView
+                    android:id="@+id/status_text"
+                    style="@style/Regular.Entry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:drawablePadding="@dimen/kujon_margin_typ"
+                    android:gravity="center_vertical"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/dark_60"
+                    android:textSize="@dimen/font_size_vh_header"
+                    tools:drawableLeft="@drawable/ic_active_study"
+                    tools:drawableStart="@drawable/ic_active_study"
+                    tools:text="@string/active_study"
+                    android:layout_marginBottom="0dp"
+                    />
+
                 <View
                     style="@style/divider"
-                    android:layout_marginBottom="@dimen/kujon_margin_typ"/>
+                    android:layout_marginTop="@dimen/one_and_half_typ_margin"
+                    android:layout_marginBottom="@dimen/kujon_margin_typ" />
 
                 <TextView
                     style="@style/Regular.Label.Left"
@@ -42,8 +63,7 @@
                     android:id="@+id/programme_level"
                     style="@style/Regular.Entry"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    />
+                    android:layout_height="wrap_content" />
 
                 <TextView
                     style="@style/Regular.Label.Left"
@@ -55,8 +75,7 @@
                     android:id="@+id/programme_duration"
                     style="@style/Regular.Entry"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    />
+                    android:layout_height="wrap_content" />
 
                 <TextView
                     style="@style/Regular.Label.Left"
@@ -68,8 +87,7 @@
                     android:id="@+id/programme_id"
                     style="@style/Regular.Entry"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    />
+                    android:layout_height="wrap_content" />
 
                 <TextView
                     style="@style/Regular.Label.Left"
@@ -81,8 +99,7 @@
                     android:id="@+id/programme_mode"
                     style="@style/Regular.Entry"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    />
+                    android:layout_height="wrap_content" />
 
                 <TextView
                     android:id="@+id/ects_sum_label"
@@ -95,8 +112,7 @@
                     android:id="@+id/programme_ects_sum"
                     style="@style/Regular.Entry"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                     />
+                    android:layout_height="wrap_content" />
 
                 <TextView
                     style="@style/Regular.Label.Left"
@@ -108,8 +124,7 @@
                     android:id="@+id/programme_name"
                     style="@style/Regular.Entry"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    />
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
 

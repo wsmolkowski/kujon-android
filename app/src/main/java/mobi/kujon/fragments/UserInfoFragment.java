@@ -165,7 +165,7 @@ public class UserInfoFragment extends BaseFragment {
                             Programme_ programmeFull = prog.programme;
                             if (getActivity() != null) {
                                 String programmeName = programmeFull.description.split(",")[0];
-                                ProgrammeDetailsActivity.showProgrammeDetails(getActivity(), programmeFull, programmeName);
+                                ProgrammeDetailsActivity.showProgrammeDetails(getActivity(), studentProgramme,programmeFull, programmeName);
                             }
                         }
                     });

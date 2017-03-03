@@ -21,15 +21,20 @@ import mobi.kujon.network.KujonBackendApi;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.network.json.ProgrammeSingle;
 import mobi.kujon.network.json.Programme_;
+import mobi.kujon.network.json.StudentProgramme;
 import mobi.kujon.utils.ErrorHandlerUtil;
 import mobi.kujon.utils.KujonUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static mobi.kujon.R.string.programme;
+
 public class ProgrammeDetailsActivity extends BaseActivity {
 
     public static final String PRGRAMME_ID_KEY = "PRGRAMME_ID_KEY";
+    public static final String STATUS = "STATUS";
+    public static final String IMAGERES = "IMAGERES";
 
 
     @Inject
@@ -61,6 +66,9 @@ public class ProgrammeDetailsActivity extends BaseActivity {
     @BindView(R.id.refresh_layout)
     SwipeRefreshLayout refreshLayout;
 
+    @BindView(R.id.status_text)
+    TextView statusTextView;
+
     public static final String LEVEL_OF_STUDIES = "LEVEL_OF_STUDIES";
     public static final String DURATION = "DURATION";
     public static final String ID = "ID";
@@ -77,7 +85,7 @@ public class ProgrammeDetailsActivity extends BaseActivity {
         setContentView(R.layout.activity_programme_details);
         ButterKnife.bind(this);
         KujonApplication.getComponent().inject(this);
-        toolbarTitle.setText(R.string.programme);
+        toolbarTitle.setText(programme);
         if (getIntent().getStringExtra(PRGRAMME_ID_KEY) != null) {
             ectsSum.setVisibility(View.GONE);
             ectsSumLabel.setVisibility(View.GONE);
@@ -114,6 +122,7 @@ public class ProgrammeDetailsActivity extends BaseActivity {
                     processResponse(response);
                 }
             }
+
             @Override
             public void onFailure(Call<KujonResponse<List<ProgrammeSingle>>> call, Throwable t) {
                 ProgrammeDetailsActivity.this.showProgress(false);
@@ -135,6 +144,7 @@ public class ProgrammeDetailsActivity extends BaseActivity {
         programmeDuration.setText(programme.duration);
         programmeMode.setText(programme.modeOfStudies);
         programmeName.setText(programme.name);
+        fillUpStatus(getIntent().getExtras());
 
     }
 
@@ -147,9 +157,21 @@ public class ProgrammeDetailsActivity extends BaseActivity {
         programmeMode.setText(bundle.getString(MODE));
         ectsSum.setText(bundle.getString(ECTS_SUM));
         programmeName.setText(bundle.getString(NAME));
+        fillUpStatus(bundle);
+
     }
 
-    public static void showProgrammeDetails(Activity activity, Programme_ programme, String name) {
+    private void fillUpStatus(Bundle bundle) {
+        if (bundle.getInt(STATUS) != 0) {
+            statusTextView.setText(bundle.getInt(STATUS));
+            statusTextView.setCompoundDrawablesWithIntrinsicBounds(bundle.getInt(IMAGERES), 0, 0, 0);
+        } else {
+            statusTextView.setVisibility(View.GONE);
+        }
+    }
+
+    public static void showProgrammeDetails(Activity activity, StudentProgramme studentProgramme, Programme_ programmeFull, String name) {
+        Programme_ programme = programmeFull;
         Intent intent = new Intent(activity, ProgrammeDetailsActivity.class);
         intent.putExtra(LEVEL_OF_STUDIES, programme.levelOfStudies);
         intent.putExtra(DURATION, programme.duration);
@@ -158,6 +180,8 @@ public class ProgrammeDetailsActivity extends BaseActivity {
         intent.putExtra(NAME, programme.description);
         intent.putExtra(FULL_NAME, name);
         intent.putExtra(ECTS_SUM, programme.ectsUsedSum);
+        intent.putExtra(STATUS, studentProgramme.getGraduateText());
+        intent.putExtra(IMAGERES, studentProgramme.getImage());
         activity.startActivity(intent);
     }
 
@@ -183,9 +207,16 @@ public class ProgrammeDetailsActivity extends BaseActivity {
         activity.startActivity(intent);
     }
 
-    public static void showProgrammeDetailsWithLoad(Activity activity, String programmeId) {
+    public static void showProgrammeDetailsWithLoad(Activity activity, StudentProgramme studentProgramme) {
         Intent intent = new Intent(activity, ProgrammeDetailsActivity.class);
-        intent.putExtra(PRGRAMME_ID_KEY, programmeId);
+        intent.putExtra(PRGRAMME_ID_KEY, studentProgramme.programme.id);
+        try {
+            intent.putExtra(STATUS, studentProgramme.getGraduateText());
+            intent.putExtra(IMAGERES, studentProgramme.getImage());
+        }catch (NullPointerException npe){
+            intent.putExtra(STATUS, 0);
+            intent.putExtra(IMAGERES, 0);
+        }
         activity.startActivity(intent);
     }
 

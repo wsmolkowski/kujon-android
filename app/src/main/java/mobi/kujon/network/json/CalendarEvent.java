@@ -41,6 +41,9 @@ public class CalendarEvent {
     @SerializedName("building_name")
     @Expose
     public String buildingName;
+    @SerializedName("term_id")
+    @Expose
+    public String termId;
 
 //    @SerializedName("lecturers") @Expose public List<LecturerLong> lecturers;
 

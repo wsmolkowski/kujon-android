@@ -86,8 +86,9 @@
     <string name="server_communication_error">Error in server communication</string>
     <string name="empty_results">No Results Found</string>
     <string name="semester_choose">Choose semester</string>
-    <string name="share_with_everyone">Share with everyone within this course</string>
-    <string name="share_with_chosen">Choose people within this course, to share with</string>
+    <string name="share_text">Share</string>
+    <string name="share_with_everyone">Everyone within this course</string>
+    <string name="share_with_chosen">Choose people within this course</string>
     <string name="file_details">File details</string>
     <string name="add_to_google_drive">Add to Google Drive</string>
     <string name="delete">Delete</string>

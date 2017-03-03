@@ -119,7 +119,7 @@ public class StudentInfoFragment extends BaseFragment {
                     CommonUtils.showListProgrammes(activity.getLayoutInflater(), studentProgrammes, user.student_programmes, position -> {
                         StudentProgramme studentProgramme = user.student_programmes.get(position);
                         Programme programme = studentProgramme.programme;
-                        ProgrammeDetailsActivity.showProgrammeDetailsWithLoad(StudentInfoFragment.this.getActivity(), programme.id);
+                        ProgrammeDetailsActivity.showProgrammeDetailsWithLoad(StudentInfoFragment.this.getActivity(),studentProgramme);
                     });
                 }
             }

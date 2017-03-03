@@ -31,6 +31,9 @@ public class ShareTargetDialog extends DialogFragment {
     public static final String TITLE = "TITLE";
 
 
+
+    @BindView(R.id.fileTitle)
+    TextView fileTitle;
     @BindView(R.id.share_with_everyone)
     TextView shareWithEveryone;
 
@@ -56,13 +59,13 @@ public class ShareTargetDialog extends DialogFragment {
         builder.setView(view);
         ButterKnife.bind(this, view);
         setOnClickListeners();
+        String title = getArguments().getString(TITLE);
+        fileTitle.setText(String.format("%s %s", getString(R.string.share_text), title));
         return builder.create();
     }
 
     private void setOnClickListeners() {
-        shareWithChosen.setOnClickListener(v -> {
-            showStudentChoiceList();
-        });
+        shareWithChosen.setOnClickListener(v -> showStudentChoiceList());
 
         shareWithEveryone.setOnClickListener(v -> {
             chooseShareTargetListener.shareWith(ShareFileTargetType.ALL, null);

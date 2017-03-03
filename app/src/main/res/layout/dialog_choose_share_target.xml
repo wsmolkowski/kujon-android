@@ -2,10 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_margin="8dp"
     android:background="@android:color/white">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/textDialogWithDrawable.title"
 
+        android:id="@+id/fileTitle"
+        android:paddingBottom="9dp"
+        tools:text="Share file dupa.txt"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
