@@ -15,7 +15,7 @@ import com.github.underscore.$;
 import java.util.LinkedList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import mobi.kujon.R;
 import mobi.kujon.network.json.KujonResponse;
@@ -140,30 +140,30 @@ public class TermsFragment extends ListFragment {
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         public
-        @Bind(R.id.section)
+        @BindView(R.id.section)
         TextView section;
         public
-        @Bind(R.id.term_layout)
+        @BindView(R.id.term_layout)
         View termsView;
         public
-        @Bind(R.id.term_name_text)
+        @BindView(R.id.term_name_text)
         TextView termName;
         public
-        @Bind(R.id.term_id_text_view)
+        @BindView(R.id.term_id_text_view)
         TextView termId;
         public
-        @Bind(R.id.start_date_text)
+        @BindView(R.id.start_date_text)
         TextView startDate;
         public
-        @Bind(R.id.end_date_text)
+        @BindView(R.id.end_date_text)
         TextView endDate;
         public
-        @Bind(R.id.finish_date_text)
+        @BindView(R.id.finish_date_text)
         TextView finishDate;
         public
-        @Bind(R.id.finish_date_label)
+        @BindView(R.id.finish_date_label)
         View finishLabel;
-        @Bind(R.id.divider)
+        @BindView(R.id.divider)
         View divider;
 
         public ViewHolder(View itemView) {

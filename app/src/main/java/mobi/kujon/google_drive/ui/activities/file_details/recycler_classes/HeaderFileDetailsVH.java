@@ -6,30 +6,30 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import mobi.kujon.R;
 import mobi.kujon.google_drive.model.dto.file.FileDTO;
 import mobi.kujon.google_drive.model.json.ShareFileTargetType;
 
 public class HeaderFileDetailsVH extends BaseFileDetailsVH<FileDTO> {
-    @Bind(R.id.file_name)
+    @BindView(R.id.file_name)
     TextView fileName;
-    @Bind(R.id.file_type)
+    @BindView(R.id.file_type)
     TextView fileType;
-    @Bind(R.id.file_size)
+    @BindView(R.id.file_size)
     TextView fileSize;
-    @Bind(R.id.file_creation_date)
+    @BindView(R.id.file_creation_date)
     TextView fileCreationDate;
-    @Bind(R.id.autor_text_view)
+    @BindView(R.id.autor_text_view)
     TextView autorTextView;
-    @Bind(R.id.course_of_file)
+    @BindView(R.id.course_of_file)
     TextView courseTextView;
-    @Bind(R.id.term_of_file)
+    @BindView(R.id.term_of_file)
     TextView termTextView;
-    @Bind(R.id.share_with_everyone)
+    @BindView(R.id.share_with_everyone)
     SwitchCompat shareWithEveryone;
-    @Bind(R.id.image_type_icon)
+    @BindView(R.id.image_type_icon)
     ImageView imageView;
 
     private FileDetailsAdapter.OnEveryoneSwitchClicked onEveryoneSwitchClicked;

@@ -16,7 +16,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import mobi.kujon.KujonApplication;
@@ -46,16 +46,16 @@ public class LoginActivity extends BaseActivity {
 
     public static final int RC_SIGN_IN = 1;
 
-    @Bind(R.id.google_login_button)
+    @BindView(R.id.google_login_button)
     View signIn;
-    @Bind(R.id.progressBar)
+    @BindView(R.id.progressBar)
     ProgressBar progressBar;
-    @Bind(R.id.regulations)
+    @BindView(R.id.regulations)
     TextView regulations;
-    @Bind(R.id.login_text)
+    @BindView(R.id.login_text)
     TextView logInByText;
 
-    @Bind(R.id.login_logo)
+    @BindView(R.id.login_logo)
     ImageView loginLogo;
     private int counter = 0;
     private Handler handler;

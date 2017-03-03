@@ -33,7 +33,7 @@ import java.util.TreeMap;
 import javax.inject.Inject;
 
 import bolts.Task;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import hugo.weaving.DebugLog;
@@ -58,8 +58,8 @@ public class PlanListFragment extends BaseFragment implements EndlessRecyclerVie
 
     PlanEventsDownloader planEventsDownloader = new PlanEventsDownloader();
 
-    @Bind(R.id.recyclerView) RecyclerView recyclerView;
-    @Bind(R.id.empty_info) TextView emptyInfo;
+    @BindView(R.id.recyclerView) RecyclerView recyclerView;
+    @BindView(R.id.empty_info) TextView emptyInfo;
     private BaseActivity activity;
     private Adapter adapter;
     private LinearLayoutManager layoutManager;
@@ -265,12 +265,12 @@ public class PlanListFragment extends BaseFragment implements EndlessRecyclerVie
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.event_name) TextView eventName;
-        @Bind(R.id.time) TextView time;
-        @Bind(R.id.section) TextView section;
-        @Bind(R.id.sectionMonth) TextView sectionMonth;
-        @Bind(R.id.dataLayout) View dataLayout;
-        @Bind(R.id.no_events) View noEvents;
+        @BindView(R.id.event_name) TextView eventName;
+        @BindView(R.id.time) TextView time;
+        @BindView(R.id.section) TextView section;
+        @BindView(R.id.sectionMonth) TextView sectionMonth;
+        @BindView(R.id.dataLayout) View dataLayout;
+        @BindView(R.id.no_events) View noEvents;
         CalendarEvent event;
 
         public ViewHolder(View itemView, int contentHeight) {

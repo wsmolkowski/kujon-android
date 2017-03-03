@@ -4,26 +4,21 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.TextView;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
 
 public class MessageDetailsActivity extends BaseActivity {
 
-    @Bind(R.id.toolbar) Toolbar toolbar;
-    @Bind(R.id.toolbar_title) TextView toolbarTitle;
-    @Bind(R.id.message_sender_details) TextView sender;
-    @Bind(R.id.message_send_date_details) TextView sendDate;
-    @Bind(R.id.message_text) TextView message;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.toolbar_title) TextView toolbarTitle;
+    @BindView(R.id.message_sender_details) TextView sender;
+    @BindView(R.id.message_send_date_details) TextView sendDate;
+    @BindView(R.id.message_text) TextView message;
 
     public static final String SENDER = "SENDER";
     public static final String DATE_SENT = "DATE_SENT";

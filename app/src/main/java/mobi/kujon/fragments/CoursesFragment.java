@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import mobi.kujon.R;
 import mobi.kujon.network.json.Course;
@@ -176,17 +176,17 @@ public class CoursesFragment extends AbstractFragmentSearchWidget<SortedMap<Stri
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.course_name)
+        @BindView(R.id.course_name)
         TextView courseName;
-        @Bind(R.id.section)
+        @BindView(R.id.section)
         TextView section;
-        @Bind(R.id.courseLayout)
+        @BindView(R.id.courseLayout)
         View courseLayout;
 
-        @Bind(R.id.files_count)
+        @BindView(R.id.files_count)
         TextView fileCount;
 
-        @Bind(R.id.file_icon)
+        @BindView(R.id.file_icon)
         ImageView icon;
         String courseId;
         String termId;

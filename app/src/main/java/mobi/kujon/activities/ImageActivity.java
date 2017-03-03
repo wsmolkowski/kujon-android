@@ -7,7 +7,7 @@ import android.support.annotation.Nullable;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
@@ -18,7 +18,7 @@ public class ImageActivity extends BaseActivity {
 
     public static final String URI = "URI";
     public static final String TITLE = "TITLE";
-    @Bind(R.id.image) ImageView image;
+    @BindView(R.id.image) ImageView image;
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

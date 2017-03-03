@@ -18,7 +18,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import mobi.kujon.R;
 import mobi.kujon.google_drive.dagger.injectors.Injector;
@@ -51,13 +51,13 @@ public class FilesListFragment extends BaseFileFragment<FilesListFragment> imple
     }
 
 
-    @Bind(R.id.file_recycler_view)
+    @BindView(R.id.file_recycler_view)
     RecyclerView recyclerView;
 
-    @Bind(R.id.refresh_layout)
+    @BindView(R.id.refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
 
-    @Bind(R.id.empty_folder_id)
+    @BindView(R.id.empty_folder_id)
     View emptyView;
 
     @Inject

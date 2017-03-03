@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import mobi.kujon.R;
 import mobi.kujon.fragments.ThesesFragment;
@@ -24,9 +24,9 @@ public class ThesesActivity extends BaseActivity {
         intent.putExtra(THESE_KEY,s);
         activity.startActivity(intent);
     }
-    @Bind(R.id.toolbar_title)
+    @BindView(R.id.toolbar_title)
     TextView toolbarTitle;
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

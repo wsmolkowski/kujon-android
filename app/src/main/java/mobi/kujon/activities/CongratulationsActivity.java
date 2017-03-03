@@ -3,10 +3,9 @@ package mobi.kujon.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import mobi.kujon.R;
@@ -14,7 +13,7 @@ import mobi.kujon.network.json.Usos;
 
 public class CongratulationsActivity extends BaseActivity {
 
-    @Bind(R.id.congratulations) TextView congratulations;
+    @BindView(R.id.congratulations) TextView congratulations;
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

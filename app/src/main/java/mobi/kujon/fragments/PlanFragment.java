@@ -31,8 +31,8 @@ import java.util.Locale;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
 import butterknife.BindColor;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import hugo.weaving.DebugLog;
 import mobi.kujon.KujonApplication;
@@ -52,9 +52,9 @@ import mobi.kujon.utils.plan_fragment.NoDataDownloaded;
 
 public class PlanFragment extends BaseFragment implements MonthLoader.MonthChangeListener, ActivityChange {
 
-    @Bind(R.id.weekView)
+    @BindView(R.id.weekView)
     WeekView weekView;
-    @Bind(R.id.fab)
+    @BindView(R.id.fab)
     FloatingActionButton fab;
 
     @BindColor(R.color.event_color)

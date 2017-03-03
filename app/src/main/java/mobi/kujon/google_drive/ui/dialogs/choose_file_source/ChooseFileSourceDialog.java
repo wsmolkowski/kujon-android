@@ -7,7 +7,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.TextView;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import mobi.kujon.R;
 
@@ -29,10 +29,10 @@ public class ChooseFileSourceDialog extends DialogFragment {
         return fragment;
     }
 
-    @Bind(R.id.google_drive_source)
+    @BindView(R.id.google_drive_source)
     TextView googleSource;
 
-    @Bind(R.id.this_device_file)
+    @BindView(R.id.this_device_file)
     TextView deviceSource;
 
 

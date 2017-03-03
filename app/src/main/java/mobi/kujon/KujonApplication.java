@@ -1,13 +1,13 @@
 package mobi.kujon;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.support.multidex.MultiDexApplication;
 import android.widget.ImageView;
 
 import com.crashlytics.android.Crashlytics;
@@ -41,7 +41,7 @@ import mobi.kujon.google_drive.dagger.injectors.InjectorProvider;
 import mobi.kujon.utils.KujonUtils;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
-public class KujonApplication extends MultiDexApplication implements OneSignal.NotificationOpenedHandler {
+public class KujonApplication extends Application implements OneSignal.NotificationOpenedHandler {
 
     public static final String USER_EMAIL_TAG = "user_email";
     public static final String FROM_NOTIFICATION = "FROM_NOTIFICATION";

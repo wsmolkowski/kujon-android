@@ -14,7 +14,7 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import mobi.kujon.R;
 
@@ -34,13 +34,13 @@ public class SortDialog extends DialogFragment {
         return fragment;
     }
 
-    @Bind(R.id.date_sort)
+    @BindView(R.id.date_sort)
     RadioButton dateSort;
 
-    @Bind(R.id.author_sort)
+    @BindView(R.id.author_sort)
     RadioButton authorSort;
 
-    @Bind(R.id.file_name_sort)
+    @BindView(R.id.file_name_sort)
     RadioButton fileSort;
 
     @Override

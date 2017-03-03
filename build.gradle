@@ -12,8 +12,8 @@ buildscript {
     ext.rx_bindings = '0.4.0'
 
 
-    ext.daggerVersion = '2.8'
-    ext.butterknife_version = '7.0.1'
+    ext.daggerVersion = '2.9'
+    ext.butterknife_version = '8.5.1'
     ext.jsr_annotation_version = '1.0'
 
     ext.retrofitVersion = '2.1.0'
@@ -58,8 +58,8 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.2.3'
-        classpath 'me.tatarka:gradle-retrolambda:3.3.1'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+        classpath 'me.tatarka:gradle-retrolambda:3.3.1'
         classpath 'com.google.gms:google-services:3.0.0'
         classpath 'io.fabric.tools:gradle:1.+'
 

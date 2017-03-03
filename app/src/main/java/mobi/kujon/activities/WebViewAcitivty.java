@@ -9,14 +9,14 @@ import android.webkit.WebView;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.api.ResultCallback;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import mobi.kujon.R;
 
 public class WebViewAcitivty extends BaseActivity {
 
     public static final String URL = "URL";
-    @Bind(R.id.webView) WebView webView;
+    @BindView(R.id.webView) WebView webView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

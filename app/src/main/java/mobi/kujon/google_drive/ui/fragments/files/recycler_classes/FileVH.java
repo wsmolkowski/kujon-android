@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import mobi.kujon.R;
 import mobi.kujon.google_drive.model.dto.file.FileDTO;
@@ -21,21 +21,21 @@ import mobi.kujon.google_drive.model.dto.file.FileDTO;
 
 public class FileVH extends RecyclerView.ViewHolder implements ShowShareIcon {
 
-    @Bind(R.id.file_layout)
+    @BindView(R.id.file_layout)
     RelativeLayout fileLayout;
 
-    @Bind(R.id.vh_file_icon)
+    @BindView(R.id.vh_file_icon)
     ImageView imageView;
 
-    @Bind(R.id.vh_file_header)
+    @BindView(R.id.vh_file_header)
     TextView fileHeader;
-    @Bind(R.id.vh_file_date)
+    @BindView(R.id.vh_file_date)
     TextView fileDate;
-    @Bind(R.id.vh_file_owner)
+    @BindView(R.id.vh_file_owner)
     TextView fileOwner;
-    @Bind(R.id.vh_file_file_size)
+    @BindView(R.id.vh_file_file_size)
     TextView fileSize;
-    @Bind(R.id.vh_file_share)
+    @BindView(R.id.vh_file_share)
     TextView shareFile;
 
     public FileVH(View itemView) {

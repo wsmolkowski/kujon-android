@@ -1,6 +1,5 @@
 package mobi.kujon.fragments;
 
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -10,6 +9,7 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.afollestad.sectionedrecyclerview.SectionedRecyclerViewAdapter;
 import com.annimon.stream.Collectors;
@@ -20,8 +20,9 @@ import com.github.underscore.Predicate;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import mobi.kujon.R;
-import mobi.kujon.databinding.RowGradeBinding;
 import mobi.kujon.network.json.CourseGrades;
 import mobi.kujon.network.json.Grade;
 import mobi.kujon.network.json.KujonResponse;
@@ -123,8 +124,8 @@ public class GradesFragment extends AbstractFragmentSearchWidget<TermGrades> {
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            RowGradeBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.row_grade, parent, false);
-            return new ViewHolder(binding);
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_grade, parent, false);
+            return new ViewHolder(v);
         }
 
         @Override
@@ -140,9 +141,9 @@ public class GradesFragment extends AbstractFragmentSearchWidget<TermGrades> {
         @Override
         public void onBindHeaderViewHolder(ViewHolder holder, int section) {
             TermGrades termGrades = data.get(section);
-            holder.binding.section.setText(termGrades.termId + ", " + getString(R.string.average_grade) + ": " + termGrades.avrGrades);
-            holder.binding.section.setVisibility(View.VISIBLE);
-            holder.binding.dataLayout.setVisibility(View.GONE);
+            holder.section.setText(termGrades.termId + ", " + getString(R.string.average_grade) + ": " + termGrades.avrGrades);
+            holder.section.setVisibility(View.VISIBLE);
+            holder.dataLayout.setVisibility(View.GONE);
             holder.termId = termGrades.termId;
             holder.itemView.setTag(R.string.no_item_decorator, true);
         }
@@ -151,20 +152,20 @@ public class GradesFragment extends AbstractFragmentSearchWidget<TermGrades> {
         public void onBindViewHolder(ViewHolder holder, int section, int relativePosition, int absolutePosition) {
             Pair<CourseGrades, Grade> grade = gradesInSection(section).get(relativePosition);
             TermGrades termGrades = data.get(section);
-            holder.binding.title.setText(grade.first.courseName);
-            holder.binding.desc.setText(Html.fromHtml(String.format("%s, %s: %s", grade.second.classType.name, getString(R.string.deadline),grade.second.examSessionNumber)));
+            holder.title.setText(grade.first.courseName);
+            holder.description.setText(Html.fromHtml(String.format("%s, %s: %s", grade.second.classType.name, getString(R.string.deadline),grade.second.examSessionNumber)));
             String symbol = grade.second.valueSymbol;
-            holder.binding.gradeValueSymbol.setText(symbol);
+            holder.gradeSymbol.setText(symbol);
             if (symbol != null) {
                 int color = "2".equals(symbol) || "nzal".equals(symbol.toLowerCase()) ? red : dark;
-                holder.binding.gradeValueSymbol.setTextColor(color);
-                holder.binding.gradeValueDesc.setTextColor(color);
+                holder.gradeSymbol.setTextColor(color);
+                holder.gradeDesc.setTextColor(color);
             }
-            holder.binding.gradeValueDesc.setText(grade.second.valueDescription);
+            holder.gradeDesc.setText(grade.second.valueDescription);
             holder.courseId = grade.first.courseId;
             holder.termId = termGrades.termId;
-            holder.binding.section.setVisibility(View.GONE);
-            holder.binding.dataLayout.setVisibility(View.VISIBLE);
+            holder.section.setVisibility(View.GONE);
+            holder.dataLayout.setVisibility(View.VISIBLE);
             holder.itemView.setTag(R.string.no_item_decorator, false);
         }
 
@@ -188,15 +189,31 @@ public class GradesFragment extends AbstractFragmentSearchWidget<TermGrades> {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.title)
+        TextView title;
+
+        @BindView(R.id.desc)
+        TextView description;
+
+        @BindView(R.id.section)
+        TextView section;
+        @BindView(R.id.dataLayout)
+        View dataLayout;
+        @BindView(R.id.grade_value_symbol)
+        TextView gradeSymbol;
+
+        @BindView(R.id.grade_value_desc)
+        TextView gradeDesc;
+
 
         String courseId;
         String termId;
-        public final RowGradeBinding binding;
 
-        public ViewHolder(RowGradeBinding binding) {
-            super(binding.getRoot());
-            this.binding = binding;
-            binding.getRoot().setOnClickListener(v -> showCourseOrTerm(courseId, termId));
+        public ViewHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+
+            itemView.setOnClickListener(v -> showCourseOrTerm(courseId, termId));
         }
     }
 }

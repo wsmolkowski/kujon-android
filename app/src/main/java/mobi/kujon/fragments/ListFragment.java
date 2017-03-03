@@ -16,7 +16,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
@@ -43,13 +43,13 @@ public abstract class ListFragment extends BaseFragment {
     protected KujonUtils utils;
 
     protected
-    @Bind(R.id.recyclerView)
+    @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     protected
-    @Bind(R.id.swipeContainer)
+    @BindView(R.id.swipeContainer)
     SwipeRefreshLayout swipeContainer;
 
-    @Bind(R.id.empty_info)
+    @BindView(R.id.empty_info)
     TextView emptyInfo;
     protected BaseActivity activity;
 

@@ -22,7 +22,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
@@ -43,17 +43,17 @@ public class FacultyDetailsActivity extends BaseActivity implements OnMapReadyCa
 
     public static final String FACULTY_ID = "FACULTY_ID";
 
-    @Bind(R.id.faculty_name) TextView facultyName;
-    @Bind(R.id.logo) ImageView logo;
-    @Bind(R.id.postal_address) TextView postalAddress;
-    @Bind(R.id.phone) TextView phone;
-    @Bind(R.id.homepage) TextView homepage;
-    @Bind(R.id.programmeCount) TextView programmeCount;
-    @Bind(R.id.courseCount) TextView courseCount;
-    @Bind(R.id.staffCount) TextView staffCount;
-    @Bind(R.id.parent_faculties) LinearLayout parentFaculties;
-    @Bind(R.id.toolbar_title) TextView toolbarTitle;
-    @Bind(R.id.scrollView) ScrollView scrollView;
+    @BindView(R.id.faculty_name) TextView facultyName;
+    @BindView(R.id.logo) ImageView logo;
+    @BindView(R.id.postal_address) TextView postalAddress;
+    @BindView(R.id.phone) TextView phone;
+    @BindView(R.id.homepage) TextView homepage;
+    @BindView(R.id.programmeCount) TextView programmeCount;
+    @BindView(R.id.courseCount) TextView courseCount;
+    @BindView(R.id.staffCount) TextView staffCount;
+    @BindView(R.id.parent_faculties) LinearLayout parentFaculties;
+    @BindView(R.id.toolbar_title) TextView toolbarTitle;
+    @BindView(R.id.scrollView) ScrollView scrollView;
     private GoogleMap googleMap;
     private boolean loaded;
     private String addressLine;

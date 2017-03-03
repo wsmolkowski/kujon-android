@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import java.util.Arrays;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import mobi.kujon.R;
 import mobi.kujon.google_drive.model.json.ShareFileTargetType;
@@ -31,10 +31,10 @@ public class ShareTargetDialog extends DialogFragment {
     public static final String TITLE = "TITLE";
 
 
-    @Bind(R.id.share_with_everyone)
+    @BindView(R.id.share_with_everyone)
     TextView shareWithEveryone;
 
-    @Bind(R.id.share_with_chosen)
+    @BindView(R.id.share_with_chosen)
     TextView shareWithChosen;
 
     private ChooseShareStudentsListener chooseShareTargetListener;

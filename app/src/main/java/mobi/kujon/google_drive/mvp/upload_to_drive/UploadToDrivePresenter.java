@@ -79,6 +79,7 @@ public class UploadToDrivePresenter extends AbstractClearSubsriptions implements
                 .subscribe(it -> {
                     view.fileUploaded();
                 }, error -> {
+                    model.updateStream(new FileUpdateDto(fileUploadInfoDto.getName(),100,true,"upload failed"));
                     view.handleException(error);
                 });
 

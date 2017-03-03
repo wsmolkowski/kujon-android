@@ -18,7 +18,7 @@ import javax.inject.Inject;
 
 import bolts.CancellationTokenSource;
 import bolts.Task;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import mobi.kujon.KujonApplication;
@@ -46,29 +46,29 @@ public class SearchFragment extends BaseFragment {
     @Inject
     KujonBackendApi kujonBackendApi;
 
-    @Bind(R.id.student_query)
+    @BindView(R.id.student_query)
     EditText studentQuery;
-    @Bind(R.id.student_search_message)
+    @BindView(R.id.student_search_message)
     TextView studentSearchMessage;
 
-    @Bind(R.id.faculty_query)
+    @BindView(R.id.faculty_query)
     EditText facultyQuery;
-    @Bind(R.id.faculty_search_message)
+    @BindView(R.id.faculty_search_message)
     TextView facultySearchMessage;
 
-    @Bind(R.id.course_query)
+    @BindView(R.id.course_query)
     EditText courseQuery;
-    @Bind(R.id.course_search_message)
+    @BindView(R.id.course_search_message)
     TextView courseSearchMessage;
 
-    @Bind(R.id.programme_query)
+    @BindView(R.id.programme_query)
     EditText programmeQuery;
-    @Bind(R.id.programme_search_message)
+    @BindView(R.id.programme_search_message)
     TextView programmeSearchMessage;
 
-    @Bind(R.id.thesis_query)
+    @BindView(R.id.thesis_query)
     EditText thesisQuery;
-    @Bind(R.id.thesis_search_message)
+    @BindView(R.id.thesis_search_message)
     TextView thesisSearchMessage;
 
     @Nullable

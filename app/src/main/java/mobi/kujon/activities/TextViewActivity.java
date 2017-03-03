@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.widget.TextView;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import mobi.kujon.R;
 
@@ -14,7 +14,7 @@ public class TextViewActivity extends BaseActivity {
 
     public static final String TEXT = "TEXT";
     public static final String TITLE = "TITLE";
-    @Bind(R.id.text) TextView text;
+    @BindView(R.id.text) TextView text;
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

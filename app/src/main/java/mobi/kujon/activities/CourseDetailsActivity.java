@@ -20,7 +20,7 @@ import com.github.underscore.$;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import mobi.kujon.R;
@@ -65,58 +65,58 @@ public class CourseDetailsActivity extends BaseActivity {
     public static final String TERM_ID = "TERM_ID";
     public static final int REQUEST_CODE_OPEN_FILE_ACTIVITY = 2647;
 
-    @Bind(R.id.course_fac)
+    @BindView(R.id.course_fac)
     TextView courseFac;
-    @Bind(R.id.description)
+    @BindView(R.id.description)
     TextView description;
-    @Bind(R.id.course_name)
+    @BindView(R.id.course_name)
     TextView courseName;
-    @Bind(R.id.bibliography)
+    @BindView(R.id.bibliography)
     TextView bibliography;
-    @Bind(R.id.assessment_criteria)
+    @BindView(R.id.assessment_criteria)
     TextView assessmentCriteria;
-    @Bind(R.id.course_term_name)
+    @BindView(R.id.course_term_name)
     TextView courseTermName;
-    @Bind(R.id.course_lecturers)
+    @BindView(R.id.course_lecturers)
     LinearLayout courseLecturers;
-    @Bind(R.id.course_coordinators)
+    @BindView(R.id.course_coordinators)
     LinearLayout courseCoordinators;
-    @Bind(R.id.course_class_type)
+    @BindView(R.id.course_class_type)
     TextView courseClassType;
-    @Bind(R.id.course_students)
+    @BindView(R.id.course_students)
     LinearLayout courseStudents;
-    @Bind(R.id.scrollView)
+    @BindView(R.id.scrollView)
     ScrollView scrollView;
-    @Bind(R.id.swipeContainer)
+    @BindView(R.id.swipeContainer)
     SwipeRefreshLayout swipeContainer;
-    @Bind(R.id.toolbar_title)
+    @BindView(R.id.toolbar_title)
     TextView toolbarTitle;
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.before_layout)
+    @BindView(R.id.before_layout)
     View beforeLayout;
 
-    @Bind(R.id.description_label)
+    @BindView(R.id.description_label)
     TextView descriptionLabel;
-    @Bind(R.id.bibliography_label)
+    @BindView(R.id.bibliography_label)
     TextView bibliographyLabel;
-    @Bind(R.id.assessment_criteria_label)
+    @BindView(R.id.assessment_criteria_label)
     TextView assessmentCriteriaLabel;
-    @Bind(R.id.course_term_name_label)
+    @BindView(R.id.course_term_name_label)
     TextView courseTermNameLabel;
-    @Bind(R.id.course_class_type_label)
+    @BindView(R.id.course_class_type_label)
     TextView courseClassTypeLabel;
-    @Bind(R.id.course_lecturers_label)
+    @BindView(R.id.course_lecturers_label)
     TextView courseLecturersLabel;
-    @Bind(R.id.course_coordinators_label)
+    @BindView(R.id.course_coordinators_label)
     TextView courseCoordinatorsLabel;
-    @Bind(R.id.course_students_label)
+    @BindView(R.id.course_students_label)
     TextView courseStudentsLabel;
-    @Bind(R.id.course_additional_info)
+    @BindView(R.id.course_additional_info)
     TextView courseAdditionalInfo;
-    @Bind(R.id.course_files)
+    @BindView(R.id.course_files)
     View sharedFiles;
-    @Bind(R.id.files_count)
+    @BindView(R.id.files_count)
     TextView fileCount;
     private LayoutInflater layoutInflater;
     private CourseDetails courseDetails;

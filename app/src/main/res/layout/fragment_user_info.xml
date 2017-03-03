@@ -1,189 +1,172 @@
 <?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
-
-    <data>
-
-        <variable
-            name="user"
-            type="mobi.kujon.network.json.User"/>
-    </data>
-
-    <FrameLayout
-
+    <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/swipeContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
 
-        <android.support.v4.widget.SwipeRefreshLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:id="@+id/swipeContainer"
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ScrollView
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/dark_blue_sky"
                     android:orientation="vertical"
-                    >
+                    android:paddingBottom="@dimen/two_and_half_typ_margin"
+                    android:paddingTop="@dimen/two_and_half_typ_margin">
 
+                    <FrameLayout
+                        android:id="@+id/image_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left|start"
 
-                    <RelativeLayout
-                        android:background="@color/dark_blue_sky"
-                        android:orientation="vertical"
+                        android:layout_marginLeft="@dimen/kujon_margin_typ">
+
+                        <ImageView
+                            android:id="@+id/picture"
+                            android:layout_width="@dimen/user_info_image_size"
+                            android:layout_height="@dimen/user_info_image_size"
+                            android:src="@drawable/photo_placeholder" />
+
+                        <ImageView
+                            android:id="@+id/usosLogo"
+                            android:layout_width="@dimen/user_info_usos_image_size"
+                            android:layout_height="@dimen/user_info_usos_image_size"
+                            android:layout_gravity="right|bottom"
+                            tools:src="@drawable/user_placeholder" />
+
+                    </FrameLayout>
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingTop="@dimen/two_and_half_typ_margin"
-                        android:paddingBottom="@dimen/two_and_half_typ_margin"
-                        >
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/two_and_half_typ_margin"
+                        android:layout_marginStart="@dimen/two_and_half_typ_margin"
+                        android:layout_toEndOf="@+id/image_layout"
+                        android:layout_toRightOf="@+id/image_layout"
+                        android:orientation="vertical">
 
-                        <FrameLayout
-                            android:id="@+id/image_layout"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="left|start"
+                        <TextView
 
-                            android:layout_marginLeft="@dimen/kujon_margin_typ">
+                            android:id="@+id/firstLastName"
+                            style="@style/Semibold"
+                            android:layout_gravity="left"
+                            android:gravity="left"
+                            tools:text='Jan Kowalski' />
 
-                            <ImageView
-                                android:id="@+id/picture"
-                                android:layout_width="@dimen/user_info_image_size"
-                                android:layout_height="@dimen/user_info_image_size"
-                                android:src="@drawable/photo_placeholder" />
-
-                            <ImageView
-                                android:id="@+id/usosLogo"
-                                android:layout_width="@dimen/user_info_usos_image_size"
-                                android:layout_height="@dimen/user_info_usos_image_size"
-                                android:layout_gravity="right|bottom"
-                                tools:src="@drawable/user_placeholder" />
-
-                        </FrameLayout>
                         <LinearLayout
-                            android:layout_marginStart="@dimen/two_and_half_typ_margin"
-                            android:layout_marginLeft="@dimen/two_and_half_typ_margin"
-                            android:layout_centerVertical="true"
-                            android:layout_toRightOf="@+id/image_layout"
-                            android:layout_toEndOf="@+id/image_layout"
                             android:layout_width="match_parent"
-                            android:orientation="vertical"
-                            android:layout_height="wrap_content">
-                            <TextView
-
-                                android:gravity="left"
-                                android:layout_gravity="left"
-                                android:id="@+id/firstLastName"
-                                style="@style/Semibold"
-                                tools:text='Jan Kowalski' />
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/kujon_margin_typ"
+                            android:gravity="left"
+                            android:orientation="horizontal">
 
                             <LinearLayout
-                                android:layout_width="match_parent"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:gravity="left"
-                                android:layout_marginTop="@dimen/kujon_margin_typ"
-                                android:orientation="horizontal">
+                                android:layout_weight="1"
+                                android:orientation="vertical">
 
-                                <LinearLayout
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:orientation="vertical">
+                                <TextView
+                                    style="@style/Regular.userInfoLabel"
+                                    android:layout_marginTop="0dp"
+                                    android:text="@string/index_number" />
 
-                                    <TextView
-                                        style="@style/Regular.userInfoLabel"
-                                        android:layout_marginTop="0dp"
-                                        android:text="@string/index_number"
-                                        />
+                                <TextView
+                                    android:id="@+id/index_number"
+                                    style="@style/Regular.userLabel"
+                                    tools:text='1234567890' />
 
-                                    <TextView
-                                        style="@style/Regular.userLabel"
-                                        android:text="@{user.student_number}"
-                                        tools:text='1234567890' />
+                            </LinearLayout>
 
-                                </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
 
-                                <LinearLayout
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:orientation="vertical">
+                                <TextView
+                                    style="@style/Regular.userInfoLabel"
+                                    android:layout_marginTop="0dp"
+                                    android:text="@string/account_number" />
 
-                                    <TextView
-                                        style="@style/Regular.userInfoLabel"
-                                        android:layout_marginTop="0dp"
-                                        android:text="@string/account_number" />
-
-                                    <TextView
-                                        style="@style/Regular.userLabel"
-                                        android:text="@{user.id}"
-                                        tools:text='987654321' />
-                                </LinearLayout>
+                                <TextView
+                                    android:id="@+id/userId"
+                                    style="@style/Regular.userLabel"
+                                    tools:text='987654321' />
                             </LinearLayout>
                         </LinearLayout>
+                    </LinearLayout>
 
-                    </RelativeLayout>
+                </RelativeLayout>
 
-                    <TextView
-                        android:layout_marginTop="0dp"
-                        style="@style/Regular.Label.Background"
-                        android:text="@string/majors"/>
+                <TextView
+                    style="@style/Regular.Label.Background"
+                    android:layout_marginTop="0dp"
+                    android:text="@string/majors" />
 
-                    <LinearLayout
-                        android:id="@+id/student_programmes"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        />
+                <LinearLayout
+                    android:id="@+id/student_programmes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
 
-                    <TextView
-                        android:layout_marginTop="0dp"
-                        style="@style/Regular.Label.Background"
-                        android:text="@string/organization_units"/>
+                <TextView
+                    style="@style/Regular.Label.Background"
+                    android:layout_marginTop="0dp"
+                    android:text="@string/organization_units" />
 
-                    <LinearLayout
-                        android:id="@+id/student_faculties"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        />
+                <LinearLayout
+                    android:id="@+id/student_faculties"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
 
-                    <TextView
-                        android:layout_marginTop="0dp"
-                        style="@style/Regular.Label.Background"
-                        android:text="@string/additional_information"/>
+                <TextView
+                    style="@style/Regular.Label.Background"
+                    android:layout_marginTop="0dp"
+                    android:text="@string/additional_information" />
 
-                    <TextView
-                        android:id="@+id/terms"
-                        style="@style/entry"
-                        android:layout_marginLeft="@dimen/kujon_margin_typ"
-                        android:layout_marginRight="@dimen/kujon_margin_typ"
-                        android:layout_marginTop="@dimen/double_typ_margin"
-                        android:layout_marginBottom="@dimen/double_typ_margin"
-                        android:gravity="center_vertical"
-                        android:text="@string/study_cycles"/>
+                <TextView
+                    android:id="@+id/terms"
+                    style="@style/entry"
+                    android:layout_marginBottom="@dimen/double_typ_margin"
+                    android:layout_marginLeft="@dimen/kujon_margin_typ"
+                    android:layout_marginRight="@dimen/kujon_margin_typ"
+                    android:layout_marginTop="@dimen/double_typ_margin"
+                    android:gravity="center_vertical"
+                    android:text="@string/study_cycles" />
 
-                    <View style="@style/divider"/>
-                    <TextView
-                        android:id="@+id/theses"
-                        style="@style/entry"
-                        android:layout_marginLeft="@dimen/kujon_margin_typ"
-                        android:layout_marginRight="@dimen/kujon_margin_typ"
-                        android:layout_marginTop="@dimen/double_typ_margin"
-                        android:layout_marginBottom="@dimen/double_typ_margin"
-                        android:background="?selectableItemBackground"
-                        android:gravity="center_vertical"
-                        android:text="@string/thesiss"/>
+                <View style="@style/divider" />
 
-                </LinearLayout>
-            </ScrollView>
-        </android.support.v4.widget.SwipeRefreshLayout>
-    </FrameLayout>
-</layout>
+                <TextView
+                    android:id="@+id/theses"
+                    style="@style/entry"
+                    android:layout_marginBottom="@dimen/double_typ_margin"
+                    android:layout_marginLeft="@dimen/kujon_margin_typ"
+                    android:layout_marginRight="@dimen/kujon_margin_typ"
+                    android:layout_marginTop="@dimen/double_typ_margin"
+                    android:background="?selectableItemBackground"
+                    android:gravity="center_vertical"
+                    android:text="@string/thesiss" />
+
+            </LinearLayout>
+        </ScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+</FrameLayout>

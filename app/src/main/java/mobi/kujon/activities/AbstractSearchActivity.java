@@ -18,7 +18,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import mobi.kujon.R;
 import mobi.kujon.network.KujonBackendApi;
@@ -32,10 +32,10 @@ import retrofit2.Response;
 public abstract class AbstractSearchActivity<S, T> extends BaseActivity implements EndlessRecyclerViewAdapter.RequestToLoadMoreListener {
 
     public static final String QUERY = "QUERY";
-    @Bind(R.id.recyclerView) RecyclerView recyclerView;
+    @BindView(R.id.recyclerView) RecyclerView recyclerView;
     protected EndlessRecyclerViewAdapter endlessRecyclerViewAdapter;
 
-    @Bind(R.id.empty_text) TextView emptyTextView;
+    @BindView(R.id.empty_text) TextView emptyTextView;
 
     @Inject KujonBackendApi kujonBackendApi;
 
@@ -129,7 +129,7 @@ public abstract class AbstractSearchActivity<S, T> extends BaseActivity implemen
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.name) TextView lecturerName;
+        @BindView(R.id.name) TextView lecturerName;
         T item;
 
         public ViewHolder(View itemView) {

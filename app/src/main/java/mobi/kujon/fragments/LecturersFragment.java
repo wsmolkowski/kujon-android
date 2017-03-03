@@ -13,7 +13,7 @@ import com.github.underscore.Predicate;
 import java.util.LinkedList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import mobi.kujon.R;
 import mobi.kujon.activities.LecturerDetailsActivity;
@@ -105,7 +105,7 @@ public class LecturersFragment extends AbstractFragmentSearchWidget<Lecturer> {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.name) TextView lecturerName;
+        @BindView(R.id.name) TextView lecturerName;
         String lecturerId;
 
         public ViewHolder(View itemView) {

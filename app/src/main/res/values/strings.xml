@@ -6,6 +6,7 @@
     <string name="no_item_decorator" translatable="false">NO_ITEM_DECORATOR</string>
     <string name="storage_permission" translatable="false">android.permission.WRITE_EXTERNAL_STORAGE</string>
     <string name="storage__read_permission" translatable="false">android.permission.READ_EXTERNAL_STORAGE</string>
+    <string name="get_account_permission" translatable="false">android.permission.GET_ACCOUNTS</string>
     <string name="google" translatable="false">Google</string>
 
 

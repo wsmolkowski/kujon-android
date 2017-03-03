@@ -33,7 +33,7 @@ import java.util.regex.Pattern;
 import javax.inject.Inject;
 
 import bolts.Task;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
@@ -54,8 +54,8 @@ public class UsoswebLoginActivity extends BaseActivity {
     public static final String USOS_POJO = "USOS_POJO";
 
 
-    @Bind(R.id.webView) WebView webView;
-    @Bind(R.id.progressBar) ProgressBar progressBar;
+    @BindView(R.id.webView) WebView webView;
+    @BindView(R.id.progressBar) ProgressBar progressBar;
 
     @Inject OkHttpClient client;
     @Inject ApiProvider apiProvider;

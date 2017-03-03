@@ -36,7 +36,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
@@ -78,6 +78,7 @@ public class FilesActivity extends BaseFileActivity implements FileActivityView 
     public static final String CHOOSE_SOURCE = "Choose_SOURCE";
     public static final int FILE_DETAILS_RESULT_CODE = 874;
     private static final int REQUEST_CODE_FOR_FOLDER = 1234;
+    private static final int GET_ACCOUNT_PERMISSION = 107;
     private FileActivityInjector fileActivityInjector;
     private FilesFragmentPagerAdapter adapter;
     private FileUploadInfoDto fileToUploadId;
@@ -98,17 +99,17 @@ public class FilesActivity extends BaseFileActivity implements FileActivityView 
 
 
     private String coursId, termId;
-    @Bind(R.id.viewpager)
+    @BindView(R.id.viewpager)
     ViewPager viewPager;
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.sliding_tabs)
+    @BindView(R.id.sliding_tabs)
     TabLayout tabLayout;
 
-    @Bind(R.id.toolbar_title)
+    @BindView(R.id.toolbar_title)
     TextView toolbarTitle;
 
-    @Bind(R.id.update_layout)
+    @BindView(R.id.update_layout)
     UploadLayout uploadLayout;
 
 
@@ -430,8 +431,9 @@ public class FilesActivity extends BaseFileActivity implements FileActivityView 
     @Override
     public void onFileAddToGoogleDrive(FileUploadInfoDto fileId) {
         this.fileToUploadId = fileId;
-        doOnAllPermisions(this::askForFolder);
-
+        if (PermissionAsk.askForPermission(this, getString(R.string.get_account_permission), GET_ACCOUNT_PERMISSION)){
+            doOnAllPermisions(this::askForFolder);
+        }
     }
 
     private void doOnAllPermisions(LamdaFunciton lamdaFunciton) {
@@ -459,6 +461,8 @@ public class FilesActivity extends BaseFileActivity implements FileActivityView 
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == STORAGE_PERSMISSION && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             askForFolder();
+        }else if(requestCode == GET_ACCOUNT_PERMISSION && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+            doOnAllPermisions(this::askForFolder);
         }
     }
 

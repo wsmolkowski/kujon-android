@@ -36,10 +36,10 @@ public class FileUpdateDto {
         this.doNotUpdate = doNotUpdate;
     }
 
-    public FileUpdateDto(String title, int i, boolean ended, String b1) {
+    public FileUpdateDto(String title, int i, boolean ended, String errorReason) {
         this(title, i, ended, false);
         this.error = true;
-        errorReason = b1;
+        this.errorReason = errorReason;
     }
 
     public FileUpdateDto(String fileName, String id, int streamType, boolean ended, FileDTO fileDTO) {

@@ -6,7 +6,7 @@ import android.widget.CheckBox;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import mobi.kujon.R;
 import mobi.kujon.google_drive.model.dto.StudentShareDto;
@@ -14,14 +14,14 @@ import mobi.kujon.google_drive.model.dto.StudentShareDto;
 public class StudentVH extends BaseFileDetailsVH<StudentShareDto> {
 
 
-    @Bind(R.id.student_choice_checkbox)
+    @BindView(R.id.student_choice_checkbox)
     CheckBox studentChoiceCheckbox;
 
-    @Bind(R.id.student_name)
+    @BindView(R.id.student_name)
     TextView studentName;
 
 
-    @Bind(R.id.choose_student_container)
+    @BindView(R.id.choose_student_container)
     RelativeLayout chooseStudentContainer;
 
     public StudentVH(View itemView) {

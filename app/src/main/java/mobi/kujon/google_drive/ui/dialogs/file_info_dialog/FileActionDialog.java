@@ -10,7 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import mobi.kujon.R;
 import mobi.kujon.google_drive.model.dto.file.FileDTO;
@@ -22,16 +22,16 @@ public class FileActionDialog extends DialogFragment {
     public static final String FILE_ID_KEY = "fileIdTralala";
     private static final String FILE_TYPE_KEY = "fileTYpe_key";
     private static final String FILE_NAME_KEY = "fileNmaeKey";
-    @Bind(R.id.file_details)
+    @BindView(R.id.file_details)
     TextView fileDetails;
 
-    @Bind(R.id.add_to_google_drive)
+    @BindView(R.id.add_to_google_drive)
     TextView addToGoogleDrive;
 
-    @Bind(R.id.delete_file)
+    @BindView(R.id.delete_file)
     TextView deleteFile;
 
-    @Bind(R.id.download_to_phone)
+    @BindView(R.id.download_to_phone)
     TextView dowloadFile;
 
     private static final String IS_OWNED = "IS_OWNED";

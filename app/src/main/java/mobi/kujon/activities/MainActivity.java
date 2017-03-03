@@ -26,7 +26,7 @@ import com.mikepenz.materialdrawer.view.BezelImageView;
 import javax.inject.Inject;
 
 import bolts.Task;
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
@@ -50,14 +50,14 @@ public class MainActivity extends BaseActivity {
     ApiProvider apiProvider;
 
     public static final int CALENDAR_POSITION = 1;
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
 
     public int[] TITLES = new int[]{R.string.user, R.string.plan, R.string.courses, R.string.grades, R.string.teachers, R.string.messages, R.string.search};
     public int[] ICONS = new int[]{R.drawable.user, R.drawable.plan, R.drawable.courses, R.drawable.grades, R.drawable.teachers, R.drawable.ic_messages, R.drawable.search};
     public Fragment[] FRAGMENTS = new Fragment[]{
             new UserInfoFragment(), new PlanFragment(), new CoursesFragment(), new GradesFragment(), new LecturersFragment(), new MessagesFragment(), new SearchFragment()};
-    @Bind(R.id.toolbar_title)
+    @BindView(R.id.toolbar_title)
     TextView toolbarTitle;
     private Drawer drawer;
     private AccountHeader headerResult;

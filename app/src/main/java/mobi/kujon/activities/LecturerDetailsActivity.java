@@ -24,7 +24,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
@@ -46,19 +46,19 @@ public class LecturerDetailsActivity extends BaseActivity {
 
     public static final String LECTURER_ID = "LECTURER_ID";
 
-    @Bind(R.id.name) TextView lecturerName;
-    @Bind(R.id.lecturer_status) TextView lecturerStatus;
-    @Bind(R.id.lecturer_room) TextView lecturerRoom;
-    @Bind(R.id.lecturer_email) TextView lecturerEmail;
-    @Bind(R.id.lecturer_courses) LinearLayout lecturerCourses;
-    @Bind(R.id.lecturer_faculty) LinearLayout lecturersFaculty;
-    @Bind(R.id.picture) ImageView picture;
-    @Bind(R.id.lecturer_homepage) TextView lecturerHomepage;
-    @Bind(R.id.lecturer_office_hours) TextView lecturerOfficeHours;
-    @Bind(R.id.lecturer_interests) TextView lecturerInterests;
-    @Bind(R.id.swipeContainer) SwipeRefreshLayout swipeContainer;
-    @Bind(R.id.toolbar_title) TextView toolbarTitle;
-    @Bind(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.name) TextView lecturerName;
+    @BindView(R.id.lecturer_status) TextView lecturerStatus;
+    @BindView(R.id.lecturer_room) TextView lecturerRoom;
+    @BindView(R.id.lecturer_email) TextView lecturerEmail;
+    @BindView(R.id.lecturer_courses) LinearLayout lecturerCourses;
+    @BindView(R.id.lecturer_faculty) LinearLayout lecturersFaculty;
+    @BindView(R.id.picture) ImageView picture;
+    @BindView(R.id.lecturer_homepage) TextView lecturerHomepage;
+    @BindView(R.id.lecturer_office_hours) TextView lecturerOfficeHours;
+    @BindView(R.id.lecturer_interests) TextView lecturerInterests;
+    @BindView(R.id.swipeContainer) SwipeRefreshLayout swipeContainer;
+    @BindView(R.id.toolbar_title) TextView toolbarTitle;
+    @BindView(R.id.toolbar) Toolbar toolbar;
 
     @Inject protected KujonUtils utils;
 

@@ -19,7 +19,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
@@ -46,12 +46,12 @@ import static android.text.TextUtils.isEmpty;
 public class StudentInfoFragment extends BaseFragment {
 
     public static final String USER_ID = "USER_ID";
-    @Bind(R.id.student_account_number) TextView studentAccountNumber;
-    @Bind(R.id.student_programmes) LinearLayout studentProgrammes;
-    @Bind(R.id.firstLastName) TextView firstLastName;
-    @Bind(R.id.picture) ImageView picture;
-    @Bind(R.id.usosLogo) ImageView usosLogo;
-    @Bind(R.id.swipeContainer) SwipeRefreshLayout swipeContainer;
+    @BindView(R.id.student_account_number) TextView studentAccountNumber;
+    @BindView(R.id.student_programmes) LinearLayout studentProgrammes;
+    @BindView(R.id.firstLastName) TextView firstLastName;
+    @BindView(R.id.picture) ImageView picture;
+    @BindView(R.id.usosLogo) ImageView usosLogo;
+    @BindView(R.id.swipeContainer) SwipeRefreshLayout swipeContainer;
 
     @Inject KujonUtils utils;
     @Inject KujonBackendApi kujonBackendApi;
@@ -174,6 +174,6 @@ public class StudentInfoFragment extends BaseFragment {
         if (users != null) {
             users.cancel();
         }
-        ButterKnife.unbind(this);
+
     }
 }

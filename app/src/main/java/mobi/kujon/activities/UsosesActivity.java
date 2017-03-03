@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.BindColor;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -43,10 +43,10 @@ public class UsosesActivity extends BaseActivity {
     public static final int NUMBER_OF_CLICKS = 5;
     public static final int CLICKS_TIME = 2 * 1000;
     public static final int USOS_LOGIN_REQUEST_CODE = 1;
-    @Bind(R.id.toolbar) Toolbar toolbar;
-    @Bind(R.id.recyclerView) RecyclerView recyclerView;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.recyclerView) RecyclerView recyclerView;
     List<Long> toolbarClickTimestamps = new ArrayList<>();
-    @Bind(R.id.toolbar_title) TextView toolbarTitle;
+    @BindView(R.id.toolbar_title) TextView toolbarTitle;
 
     @BindColor(R.color.dark) int colorDark;
     @BindColor(R.color.opacityBlack) int colorOpacityBlack;
@@ -192,8 +192,8 @@ public class UsosesActivity extends BaseActivity {
 
     class UsosViewHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.usos_name) TextView name;
-        @Bind(R.id.usos_logo) ImageView logo;
+        @BindView(R.id.usos_name) TextView name;
+        @BindView(R.id.usos_logo) ImageView logo;
         View rootView;
 
         public UsosViewHolder(View itemView) {

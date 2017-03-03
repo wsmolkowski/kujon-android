@@ -13,7 +13,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
@@ -38,27 +38,27 @@ public class ProgrammeDetailsActivity extends BaseActivity {
     @Inject
     KujonUtils kujonUtils;
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.toolbar_title)
+    @BindView(R.id.toolbar_title)
     TextView toolbarTitle;
-    @Bind(R.id.programme_full_name)
+    @BindView(R.id.programme_full_name)
     TextView programmeFullName;
-    @Bind(R.id.programme_id)
+    @BindView(R.id.programme_id)
     TextView programmeIdTextView;
-    @Bind(R.id.programme_duration)
+    @BindView(R.id.programme_duration)
     TextView programmeDuration;
-    @Bind(R.id.programme_mode)
+    @BindView(R.id.programme_mode)
     TextView programmeMode;
-    @Bind(R.id.programme_name)
+    @BindView(R.id.programme_name)
     TextView programmeName;
-    @Bind(R.id.programme_level)
+    @BindView(R.id.programme_level)
     TextView programmeLevel;
-    @Bind(R.id.programme_ects_sum)
+    @BindView(R.id.programme_ects_sum)
     TextView ectsSum;
-    @Bind(R.id.ects_sum_label)
+    @BindView(R.id.ects_sum_label)
     TextView ectsSumLabel;
-    @Bind(R.id.refresh_layout)
+    @BindView(R.id.refresh_layout)
     SwipeRefreshLayout refreshLayout;
 
     public static final String LEVEL_OF_STUDIES = "LEVEL_OF_STUDIES";

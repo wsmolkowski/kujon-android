@@ -18,7 +18,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import mobi.kujon.R;
 import mobi.kujon.activities.ThesesActivity;
@@ -149,17 +149,17 @@ public class ThesesFragment extends ListFragment {
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.title)
+        @BindView(R.id.title)
         TextView title;
-        @Bind(R.id.authors)
+        @BindView(R.id.authors)
         TextView authors;
-        @Bind(R.id.supervisors)
+        @BindView(R.id.supervisors)
         LinearLayout supervisors;
-        @Bind(R.id.type)
+        @BindView(R.id.type)
         TextView type;
-        @Bind(R.id.faculty)
+        @BindView(R.id.faculty)
         LinearLayout faculty;
-        @Bind(R.id.last_grey)
+        @BindView(R.id.last_grey)
         View greyView;
 
         public ViewHolder(View itemView) {

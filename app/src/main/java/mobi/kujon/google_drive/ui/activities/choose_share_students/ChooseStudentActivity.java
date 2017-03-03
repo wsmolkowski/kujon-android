@@ -19,7 +19,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
@@ -41,16 +41,16 @@ public class ChooseStudentActivity extends BaseFileActivity implements HandleExc
     @Inject
     ChooseStudentsMVP.Presenter presenter;
 
-    @Bind(R.id.cancel)
+    @BindView(R.id.cancel)
     ImageView cancel;
-    @Bind(R.id.toolbar_title)
+    @BindView(R.id.toolbar_title)
     TextView toolbarTitle;
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
 
-    @Bind(R.id.recyclerView)
+    @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
-    @Bind(R.id.refresh)
+    @BindView(R.id.refresh)
     SwipeRefreshLayout swipeRefreshLayout;
 
     private ChooseStudentAdapter adapter;

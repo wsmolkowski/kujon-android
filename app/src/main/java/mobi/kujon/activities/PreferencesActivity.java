@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import mobi.kujon.BuildConfig;
@@ -31,18 +31,18 @@ public class PreferencesActivity extends BaseActivity {
 
 
 
-    @Bind(R.id.toolbar_title)
+    @BindView(R.id.toolbar_title)
     TextView toolbarTitle;
-    @Bind(R.id.notifications_enabler)
+    @BindView(R.id.notifications_enabler)
     SwitchCompat notificationsSwitch;
-    @Bind(R.id.googlecalendar_enabler)
+    @BindView(R.id.googlecalendar_enabler)
     SwitchCompat googleCalendarSwitch;
-    @Bind(R.id.polish_enable)
+    @BindView(R.id.polish_enable)
     SwitchCompat languageSwitch;
-    @Bind(R.id.language_text)
+    @BindView(R.id.language_text)
     TextView languageText;
 
-    @Bind(R.id.app_version_text)
+    @BindView(R.id.app_version_text)
     TextView versionText;
     private boolean notificationSwitchChangeCalledByUser = true;
     private boolean googleCalendarSwitchChangeCalledByUser = true;

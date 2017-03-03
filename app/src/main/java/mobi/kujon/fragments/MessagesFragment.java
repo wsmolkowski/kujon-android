@@ -17,7 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import mobi.kujon.R;
 import mobi.kujon.activities.MessageDetailsActivity;
@@ -112,8 +112,8 @@ public class MessagesFragment extends AbstractFragmentSearchWidget<Message> {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.message_sender) TextView messageSender;
-        @Bind(R.id.message_send_date) TextView messageSendDate;
+        @BindView(R.id.message_sender) TextView messageSender;
+        @BindView(R.id.message_send_date) TextView messageSendDate;
         Message message;
 
         public ViewHolder(View itemView) {
