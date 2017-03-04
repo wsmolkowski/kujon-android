@@ -169,9 +169,13 @@ public class CourseDetailsActivity extends BaseActivity {
             public void onResponse(Call<KujonResponse<CourseDetails>> call, Response<KujonResponse<CourseDetails>> response) {
                 if (ErrorHandlerUtil.handleResponse(response)) {
                     courseDetails = response.body().data;
-                    sharedFiles.setOnClickListener(v -> FilesActivity.openActivity(CourseDetailsActivity.this, courseId, termId, courseDetails.name, REQUEST_CODE_OPEN_FILE_ACTIVITY));
+                    if(termId != null){
+                        sharedFiles.setOnClickListener(v -> FilesActivity.openActivity(CourseDetailsActivity.this, courseId, termId, courseDetails.name, REQUEST_CODE_OPEN_FILE_ACTIVITY));
+                        fileCount.setText(String.valueOf(courseDetails.fileCount));
+                    }else {
+                        sharedFiles.setVisibility(View.GONE);
+                    }
                     courseFac.setText(courseDetails.facId.name);
-                    fileCount.setText(String.valueOf(courseDetails.fileCount));
                     courseName.setText(courseDetails.name);
                     courseAdditionalInfo.setText(String.format("id: %s, %s: %s, %s: %s", courseDetails.courseId, getString(R.string.language),
                             isEmpty(courseDetails.langId) ? getString(R.string.missing) : courseDetails.langId, getString(R.string.is_currently_conducted),
