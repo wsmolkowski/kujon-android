@@ -105,6 +105,7 @@ public class UserInfoFragment extends BaseFragment {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_user_info, container, false);
         ButterKnife.bind(this, rootView);
         KujonApplication.getComponent().inject(this);
+        handler.post(() -> loadData(false));
         return rootView;
     }
 
@@ -113,7 +114,6 @@ public class UserInfoFragment extends BaseFragment {
         super.onActivityCreated(savedInstanceState);
         activity = (BaseActivity) getActivity();
         activity.setToolbarTitle(R.string.app_name);
-        handler.post(() -> loadData(false));
         swipeContainer.setOnRefreshListener(() -> loadData(true));
     }
 
@@ -155,6 +155,7 @@ public class UserInfoFragment extends BaseFragment {
                     studentProgrammes.removeAllViews();
                     CommonUtils.showListProgrammes(activity.getLayoutInflater(), studentProgrammes, user.student_programmes, position -> {
                         StudentProgramme studentProgramme = user.student_programmes.get(position);
+
                         Programme programme = studentProgramme.programme;
                         List<Programme> data = user.programmes;
                         Optional<Programme> programmeOptional = $.find(data, it -> it.programme.id.equals(programme.id));

@@ -180,8 +180,12 @@ public class ProgrammeDetailsActivity extends BaseActivity {
         intent.putExtra(NAME, programme.description);
         intent.putExtra(FULL_NAME, name);
         intent.putExtra(ECTS_SUM, programme.ectsUsedSum);
-        intent.putExtra(STATUS, studentProgramme.getGraduateText());
-        intent.putExtra(IMAGERES, studentProgramme.getImage());
+        try {
+            intent.putExtra(STATUS, studentProgramme.getGraduateText());
+            intent.putExtra(IMAGERES, studentProgramme.getImage());
+        }catch (NullPointerException npe){
+
+        }
         activity.startActivity(intent);
     }
 
