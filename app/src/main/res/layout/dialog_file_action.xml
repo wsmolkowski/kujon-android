@@ -14,7 +14,14 @@
         android:text="@string/file_details"
         android:paddingTop="@dimen/big_margin"
         android:id="@+id/file_details"/>
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/textDialogWithDrawable"
+        android:drawableStart="@drawable/ic_save_on_device"
+        android:drawableLeft="@drawable/ic_save_on_device"
+        android:text="@string/download_file"
+        android:id="@+id/download_to_phone"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,14 +31,7 @@
         android:text="@string/add_to_google_drive"
         android:id="@+id/add_to_google_drive"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/textDialogWithDrawable"
-        android:drawableStart="@drawable/ic_save_on_device"
-        android:drawableLeft="@drawable/ic_save_on_device"
-        android:text="@string/download_file"
-        android:id="@+id/download_to_phone"/>
+
 
     <TextView
         android:layout_width="match_parent"

@@ -91,7 +91,7 @@
     <string name="share_with_everyone">Wszystkim osobom z danego przedmiotu</string>
     <string name="share_with_chosen">Wybranym osobom z danego przedmiotu</string>
     <string name="file_details">Szczegóły pliku</string>
-    <string name="add_to_google_drive">Dodaj do Google Drive</string>
+    <string name="add_to_google_drive">Zapisz plik na Google Drive</string>
     <string name="delete">Usuń</string>
     <string name="share">ZAPISZ</string>
     <string name="created_time">Stworzony</string>
@@ -135,7 +135,7 @@
     <string name="course_file">Przedmiot</string>
     <string name="term">Okres</string>
     <string name="download_failed">Zapis pliku się nie powiódł</string>
-    <string name="download_file">Zapisz plik na tym urządzeniu</string>
+    <string name="download_file">Zapisz plik</string>
     <string name="shared_files_title">Pliki udostępnione</string>
     <string name="app_version">Wersja</string>
     <string name="start_date">Data początkowa</string>
