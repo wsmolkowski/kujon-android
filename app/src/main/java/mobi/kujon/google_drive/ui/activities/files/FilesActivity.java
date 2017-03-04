@@ -303,7 +303,7 @@ public class FilesActivity extends BaseFileActivity implements FileActivityView 
                 deleteFileAfterUpload = false;
             }
         } catch (GoogleDriveFileException e) {
-            if (GoogleDriveVirtualFile.isVirtualFile(this,uriToFile)) {
+            if (GoogleDriveVirtualFile.isVirtualFile(this, uriToFile)) {
                 new AlertDialog.Builder(this)
                         .setTitle(R.string.warining)
                         .setMessage(R.string.this_file_will_be_saved_as_pdf)
@@ -330,11 +330,11 @@ public class FilesActivity extends BaseFileActivity implements FileActivityView 
             returnCursor.moveToFirst();
             String fileName = returnCursor.getString(nameIndex);
             returnCursor.close();
-            if (GoogleDriveVirtualFile.isVirtualFile(this,uriToFile) && !fileName.endsWith(".pdf")) {
+            if (GoogleDriveVirtualFile.isVirtualFile(this, uriToFile) && !fileName.endsWith(".pdf")) {
                 fileName = fileName.concat(".pdf");
             }
             InputStream inputStream;
-            inputStream = GoogleDriveVirtualFile.getInputStream(this,uriToFile);
+            inputStream = GoogleDriveVirtualFile.getInputStream(this, uriToFile);
             file = tempFileCreator.writeToTempFile(inputStream, fileName);
             fileChoosen = true;
             deleteFileAfterUpload = true;
@@ -422,7 +422,7 @@ public class FilesActivity extends BaseFileActivity implements FileActivityView 
                 .setTitle(R.string.are_you_sure)
                 .setPositiveButton(R.string.yes, (dialog, which) -> {
                     dialog.dismiss();
-                    deletePresenter.deleteFile(fileId,name);
+                    deletePresenter.deleteFile(fileId, name);
                     this.setLoading(true);
                 }).setNegativeButton(R.string.cancel, (dialog, which) -> dialog.dismiss())
                 .show();
@@ -430,8 +430,9 @@ public class FilesActivity extends BaseFileActivity implements FileActivityView 
 
     @Override
     public void onFileAddToGoogleDrive(FileUploadInfoDto fileId) {
+        dowloadFile = false;
         this.fileToUploadId = fileId;
-        if (PermissionAsk.askForPermission(this, getString(R.string.get_account_permission), GET_ACCOUNT_PERMISSION)){
+        if (PermissionAsk.askForPermission(this, getString(R.string.get_account_permission), GET_ACCOUNT_PERMISSION)) {
             doOnAllPermisions(this::askForFolder);
         }
     }
@@ -460,8 +461,11 @@ public class FilesActivity extends BaseFileActivity implements FileActivityView 
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == STORAGE_PERSMISSION && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            askForFolder();
-        }else if(requestCode == GET_ACCOUNT_PERMISSION && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+            if (dowloadFile) {
+                serviceOpener.openDowloadService(fileToUploadId);
+            } else
+                askForFolder();
+        } else if (requestCode == GET_ACCOUNT_PERMISSION && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             doOnAllPermisions(this::askForFolder);
         }
     }
@@ -471,8 +475,12 @@ public class FilesActivity extends BaseFileActivity implements FileActivityView 
         FileDetailsActivity.openActivity(this, coursId, termId, fileId, FILE_DETAILS_RESULT_CODE);
     }
 
+    private boolean dowloadFile = false;
+
     @Override
     public void onDownload(FileUploadInfoDto file) {
+        dowloadFile = true;
+        this.fileToUploadId = file;
         doOnAllPermisions(() -> serviceOpener.openDowloadService(file));
 
     }
