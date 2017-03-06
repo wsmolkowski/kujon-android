@@ -33,6 +33,8 @@
                 <TextView
                     android:id="@+id/course_additional_info"
                     style="@style/Regular.Entry"
+                    android:textSize="@dimen/font_label"
+                    android:textColor="@color/dark_60"
                     tools:text="id: 2500-OB-33, język: POL, prowadzonu: TAK"
                     />
 
