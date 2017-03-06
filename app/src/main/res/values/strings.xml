@@ -236,4 +236,5 @@
     <string name="graduated_diploma">Graduated diploma</string>
     <string name="active_one">Active</string>
     <string name="inactive_one">Inactive</string>
+    <string name="enable_notifications_files">Notifications files and notes</string>
 </resources>

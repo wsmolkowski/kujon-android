@@ -11,6 +11,7 @@ public class SettingsApi {
     private KujonBackendApi kujonBackendApi;
     private static final String GOOGLE_CALENDAR = "googlecalendar";
     private static final String EVENT = "event";
+    private static final String EVENT_FILE = "eventfiles";
 
     private static final String ENABLE = "enable";
     private static final String DISABLE = "disable";
@@ -21,18 +22,22 @@ public class SettingsApi {
     }
 
     public Call<KujonResponse<String>> setGoogleCalendar(boolean state) {
-        if(state) {
-            return kujonBackendApi.setSetting(GOOGLE_CALENDAR, ENABLE);
-        } else {
-            return kujonBackendApi.setSetting(GOOGLE_CALENDAR, DISABLE);
-        }
+        return getKujonResponseCall(state, GOOGLE_CALENDAR);
     }
 
     public Call<KujonResponse<String>> setEvents(boolean state) {
-        if(state) {
-            return kujonBackendApi.setSetting(EVENT, ENABLE);
+        return getKujonResponseCall(state, EVENT);
+    }
+
+    public Call<KujonResponse<String>> setEventsFiles(boolean state) {
+        return getKujonResponseCall(state, EVENT_FILE);
+    }
+
+    private Call<KujonResponse<String>> getKujonResponseCall(boolean state, String eventFile) {
+        if (state) {
+            return kujonBackendApi.setSetting(eventFile, ENABLE);
         } else {
-            return kujonBackendApi.setSetting(EVENT, DISABLE);
+            return kujonBackendApi.setSetting(eventFile, DISABLE);
         }
     }
 }

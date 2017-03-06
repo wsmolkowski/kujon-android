@@ -25,6 +25,7 @@ import retrofit2.Response;
 public class PreferencesActivity extends BaseActivity {
 
     private static final String NOTIFICATION_PREFS_KEY = "NOTIFICATION_PREFS_KEY";
+    private static final String NOTIFICATION_FILE_PREFS_KEY = "NOTIFICATION_FILES_PREFS_KEY";
     private static final String CALENDAR_PREFS_KEY = "CALENDAR_PREFS_KEY";
     @Inject
     SharedPreferencesFacade sharedPreferencesFacade;
@@ -37,6 +38,8 @@ public class PreferencesActivity extends BaseActivity {
     SwitchCompat notificationsSwitch;
     @BindView(R.id.googlecalendar_enabler)
     SwitchCompat googleCalendarSwitch;
+    @BindView(R.id.notifications_files_enabler)
+    SwitchCompat notificationsFileSwitch;
     @BindView(R.id.polish_enable)
     SwitchCompat languageSwitch;
     @BindView(R.id.language_text)
@@ -44,8 +47,9 @@ public class PreferencesActivity extends BaseActivity {
 
     @BindView(R.id.app_version_text)
     TextView versionText;
-    private boolean notificationSwitchChangeCalledByUser = true;
-    private boolean googleCalendarSwitchChangeCalledByUser = true;
+
+    private boolean userChangeSwitch = true;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,12 +76,9 @@ public class PreferencesActivity extends BaseActivity {
     }
 
     private void initSwitches() {
-        if (sharedPreferencesFacade.contaisKey(NOTIFICATION_PREFS_KEY)) {
-            notificationsSwitch.setChecked(sharedPreferencesFacade.retrieveBoolean(NOTIFICATION_PREFS_KEY));
-        }
-        if (sharedPreferencesFacade.contaisKey(CALENDAR_PREFS_KEY)) {
-            googleCalendarSwitch.setChecked(sharedPreferencesFacade.retrieveBoolean(CALENDAR_PREFS_KEY));
-        }
+        setSwitch(NOTIFICATION_FILE_PREFS_KEY,notificationsFileSwitch);
+        setSwitch(NOTIFICATION_PREFS_KEY,notificationsSwitch);
+        setSwitch(CALENDAR_PREFS_KEY,googleCalendarSwitch);
         kujonBackendApi.getUserPreferences().enqueue(new Callback<KujonResponse<Preferences>>() {
             @Override
             public void onResponse(Call<KujonResponse<Preferences>> call, Response<KujonResponse<Preferences>> response) {
@@ -89,10 +90,7 @@ public class PreferencesActivity extends BaseActivity {
                     sharedPreferencesFacade.putBoolean(CALENDAR_PREFS_KEY, response.body().data.googleCalendarEnabled);
                     initSwitchListeners();
                 }
-
-                handler.postDelayed(() -> {
-                    showProgress(false);
-                }, 200);
+                handler.postDelayed(() -> showProgress(false), 200);
             }
 
             @Override
@@ -103,86 +101,76 @@ public class PreferencesActivity extends BaseActivity {
         });
     }
 
+    private void setSwitch(String key, SwitchCompat switchCompat) {
+        if (sharedPreferencesFacade.contaisKey(key)) {
+            switchCompat.setChecked(sharedPreferencesFacade.retrieveBoolean(key));
+        }
+    }
+
     private void initSwitchListeners() {
         initNotificationsSwitchListener();
         initGoogleCalendarSwitchListener();
+        initNotificationsFilesrSwitchListener();
     }
 
-    private void initGoogleCalendarSwitchListener() {
-        googleCalendarSwitch.setOnCheckedChangeListener((compoundButton, isChecked) -> {
-            if (googleCalendarSwitchChangeCalledByUser) {
+    private void initNotificationsFilesrSwitchListener() {
+        notificationsFileSwitch.setOnCheckedChangeListener((compoundButton, isChecked) -> {
+            if (userChangeSwitch) {
                 showProgress(true);
-                setGoogleCalendar(isChecked);
+                setSwitchCompatState(notificationsFileSwitch,isChecked,
+                        NOTIFICATION_FILE_PREFS_KEY,settingsApi.setEventsFiles(isChecked));
             }
         });
-    }
-
-    private void setGoogleCalendar(boolean isChecked) {
-        Call<KujonResponse<String>> kujonResponseCall = settingsApi.setGoogleCalendar(isChecked);
-        kujonResponseCall.enqueue(new Callback<KujonResponse<String>>() {
-            @Override
-            public void onResponse(Call<KujonResponse<String>> call, Response<KujonResponse<String>> response) {
-                showProgress(false);
-                if (!ErrorHandlerUtil.handleResponse(response)) {
-                    programGoogleCalendarSwitchChange(isChecked);
-                }else {
-                    sharedPreferencesFacade.putBoolean(CALENDAR_PREFS_KEY, isChecked);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<KujonResponse<String>> call, Throwable t) {
-                showProgress(false);
-                programGoogleCalendarSwitchChange(isChecked);
-                ErrorHandlerUtil.handleError(t);
-            }
-        });
-        backendCall = kujonResponseCall;
-    }
-
-    private void programGoogleCalendarSwitchChange(boolean isChecked) {
-        googleCalendarSwitchChangeCalledByUser = false;
-        googleCalendarSwitch.setChecked(!isChecked);
-        googleCalendarSwitchChangeCalledByUser = true;
     }
 
     private void initNotificationsSwitchListener() {
         notificationsSwitch.setOnCheckedChangeListener((compoundButton, isChecked) -> {
-            if (notificationSwitchChangeCalledByUser) {
+            if (userChangeSwitch) {
                 showProgress(true);
-                setEvents(isChecked);
+                setSwitchCompatState(notificationsSwitch,isChecked,
+                        NOTIFICATION_PREFS_KEY,settingsApi.setEvents(isChecked));
             }
         });
     }
 
-    private void setEvents(boolean isChecked) {
-        Call<KujonResponse<String>> kujonResponseCall = settingsApi.setEvents(isChecked);
+    private void initGoogleCalendarSwitchListener() {
+        googleCalendarSwitch.setOnCheckedChangeListener((compoundButton, isChecked) -> {
+            if (userChangeSwitch) {
+                showProgress(true);
+                setSwitchCompatState(googleCalendarSwitch,isChecked,
+                        CALENDAR_PREFS_KEY,settingsApi.setGoogleCalendar(isChecked));
+            }
+        });
+    }
+
+
+    private void setSwitchCompatState(SwitchCompat notificationsFileSwitch, boolean isChecked, String key, Call<KujonResponse<String>>  kujonResponseCall) {
         kujonResponseCall.enqueue(new Callback<KujonResponse<String>>() {
             @Override
             public void onResponse(Call<KujonResponse<String>> call, Response<KujonResponse<String>> response) {
                 showProgress(false);
                 if (!ErrorHandlerUtil.handleResponse(response)) {
-                    programNotificationSwitchChange(isChecked);
+                    programSwitchChange(notificationsFileSwitch,isChecked);
                 }else {
-                    sharedPreferencesFacade.putBoolean(NOTIFICATION_PREFS_KEY, isChecked);
+                    sharedPreferencesFacade.putBoolean(key, isChecked);
                 }
             }
-
             @Override
             public void onFailure(Call<KujonResponse<String>> call, Throwable t) {
                 showProgress(false);
-                programNotificationSwitchChange(isChecked);
+                programSwitchChange(notificationsFileSwitch,isChecked);
                 ErrorHandlerUtil.handleError(t);
             }
         });
         backendCall = kujonResponseCall;
     }
 
-    private void programNotificationSwitchChange(boolean isChecked) {
-        notificationSwitchChangeCalledByUser = false;
-        notificationsSwitch.setChecked(!isChecked);
-        notificationSwitchChangeCalledByUser = true;
+    private void programSwitchChange(SwitchCompat switchCompat,boolean isChecked) {
+        userChangeSwitch = false;
+        switchCompat.setChecked(!isChecked);
+        userChangeSwitch = true;
     }
+
 
     @OnClick({R.id.logout, R.id.delete_account, R.id.regulations, R.id.contact_us, R.id.share_app})
     public void onClick(View view) {
@@ -209,4 +197,6 @@ public class PreferencesActivity extends BaseActivity {
                 break;
         }
     }
+
+
 }
