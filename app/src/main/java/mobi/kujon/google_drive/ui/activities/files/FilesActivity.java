@@ -463,10 +463,19 @@ public class FilesActivity extends BaseFileActivity implements FileActivityView 
         if (requestCode == STORAGE_PERSMISSION && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             if (dowloadFile) {
                 serviceOpener.openDowloadService(fileToUploadId);
-            } else
+            } else{
+                reconectGoogleClient();
                 askForFolder();
+            }
         } else if (requestCode == GET_ACCOUNT_PERMISSION && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            reconectGoogleClient();
             doOnAllPermisions(this::askForFolder);
+        }
+    }
+
+    private void reconectGoogleClient() {
+        if(apiClient != null) {
+            apiClient.reconnect();
         }
     }
 

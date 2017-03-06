@@ -233,4 +233,6 @@
     <string name="graduated_before">Zakończone, przed obroną</string>
     <string name="graduated_diploma">Zakończone, dyplom obroniony</string>
     <string name="graduated_end_of_study">Zakończone</string>
+    <string name="active_one">Aktywny</string>
+    <string name="inactive_one">Nieaktywny</string>
 </resources>

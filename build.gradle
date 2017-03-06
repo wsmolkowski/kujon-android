@@ -4,8 +4,8 @@ buildscript {
     ext.multidex_version = '1.0.1'
 
     ext.crashlytics_version = '2.6.6@aar'
-    ext.material_drawer_version = '5.8.1@aar'
-    ext.sectioned_recycler_view_version = '0.2.2'
+    ext.material_drawer_version = '5.8.2@aar'
+    ext.sectioned_recycler_view_version = '0.2.3'
 
     ext.rx_java = '1.1.5'
     ext.rx_android = '1.2.0'

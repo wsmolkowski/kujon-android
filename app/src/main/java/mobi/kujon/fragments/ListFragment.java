@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -27,6 +26,7 @@ import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.network.json.Term2;
 import mobi.kujon.utils.ErrorHandlerUtil;
 import mobi.kujon.utils.KujonUtils;
+import mobi.kujon.utils.ShowTermDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -110,18 +110,7 @@ public abstract class ListFragment extends BaseFragment {
                 @Override
                 public void onResponse(Call<KujonResponse<List<Term2>>> call, Response<KujonResponse<List<Term2>>> response) {
                     if (ErrorHandlerUtil.handleResponse(response)) {
-                        Term2 term = response.body().data.get(0);
-                        AlertDialog.Builder dlgAlert = new AlertDialog.Builder(activity);
-                        dlgAlert.setMessage(String.format("%s: %s\n%s: %s\n%s: %s\n%s: %s",
-                                getString(R.string.number), term.termId,
-                                getString(R.string.start_date), term.startDate,
-                                getString(R.string.end_date), term.endDate,
-                                getString(R.string.finish_date), term.finishDate));
-                        dlgAlert.setTitle(term.name);
-                        dlgAlert.setPositiveButton(R.string.ok, null);
-                        dlgAlert.setCancelable(true);
-                        AlertDialog alertDialog = dlgAlert.create();
-                        alertDialog.show();
+                        ShowTermDialog.showTermDialog(getActivity(),response.body().data.get(0));
                     }
                 }
 

@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.Spanned;
@@ -24,14 +23,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import mobi.kujon.R;
-import mobi.kujon.fragments.TermsFragment;
 import mobi.kujon.google_drive.ui.activities.files.FilesActivity;
 import mobi.kujon.network.json.Coordinator;
 import mobi.kujon.network.json.CourseDetails;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.network.json.Lecturer;
-import mobi.kujon.network.json.Term2;
 import mobi.kujon.utils.ErrorHandlerUtil;
+import mobi.kujon.utils.ShowTermDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -286,25 +284,8 @@ public class CourseDetailsActivity extends BaseActivity {
 
     @OnClick(R.id.course_term_name)
     public void termDesc() {
-        AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);
-        View termView = getLayoutInflater().inflate(R.layout.row_terms, null);
-        TermsFragment.ViewHolder holder = new TermsFragment.ViewHolder(termView);
-
         if (courseDetails.term != null && courseDetails.term.size() > 0) {
-            Term2 term = courseDetails.term.get(0);
-            holder.termName.setText(term.name);
-            holder.termId.setText(term.termId);
-            holder.section.setText(term.active ? getString(R.string.active) : getString(R.string.inactive));
-            holder.startDate.setText(term.startDate);
-            holder.endDate.setText(term.endDate);
-            holder.finishDate.setText(term.finishDate);
-
-            dlgAlert.setView(termView);
-            dlgAlert.setCancelable(false);
-            dlgAlert.setNegativeButton(R.string.ok, (dialog, which) -> {
-                dialog.dismiss();
-            });
-            dlgAlert.create().show();
+            ShowTermDialog.showTermDialog(this,courseDetails.term.get(0));
         }
     }
 }

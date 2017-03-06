@@ -234,4 +234,6 @@
     <string name="graduated_end_of_study">Graduated - end of study</string>
     <string name="graduated_before">Graduated before diploma</string>
     <string name="graduated_diploma">Graduated diploma</string>
+    <string name="active_one">Active</string>
+    <string name="inactive_one">Inactive</string>
 </resources>
