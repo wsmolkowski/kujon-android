@@ -6,7 +6,9 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Point;
 import android.graphics.Typeface;
+import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Display;
@@ -24,7 +26,7 @@ import mobi.kujon.google_drive.ui.util.AbstractAnimatorListener;
 
 public class ExpandableTextView extends android.support.v7.widget.AppCompatTextView {
     private static final int DEFAULT_TRIM_LENGTH = 200;
-    private static final String ELLIPSIS = ".....";
+    private static final String ELLIPSIS = "  ...  ";
 
     private CharSequence originalText;
     private CharSequence trimmedText;
@@ -95,7 +97,9 @@ public class ExpandableTextView extends android.support.v7.widget.AppCompatTextV
 
     private CharSequence getTrimmedText(CharSequence text) {
         if (originalText != null && originalText.length() > trimLength) {
-            return new SpannableStringBuilder(originalText, 0, trimLength + 1).append(ELLIPSIS);
+            SpannableString str2= new SpannableString(getResources().getString(R.string.more));
+            str2.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.dark_60)), 0, str2.length(), 0);
+            return new SpannableStringBuilder(originalText, 0, trimLength + 1).append(ELLIPSIS).append(str2);
         } else {
             return originalText;
         }
