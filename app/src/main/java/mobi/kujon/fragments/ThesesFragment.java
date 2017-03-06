@@ -14,7 +14,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -29,7 +28,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static mobi.kujon.activities.FacultyDetailsActivity.showFacultyDetails;
 import static mobi.kujon.activities.LecturerDetailsActivity.showLecturerDatails;
 import static mobi.kujon.utils.CommonUtils.showList;
 
@@ -133,10 +131,8 @@ public class ThesesFragment extends ListFragment {
             List<String> names = $.collect(thesis.supervisors, supervisor -> supervisor.first_name + " " + supervisor.last_name);
             showList(activity.getLayoutInflater(), holder.supervisors, names, index -> showLecturerDatails(activity, thesis.supervisors.get(index).id));
 
-            showList(activity.getLayoutInflater(), holder.faculty, Arrays.asList(thesis.faculty.name), index -> showFacultyDetails(activity, thesis.faculty.id));
-            if (position == getItemCount() - 1) {
-                holder.greyView.setVisibility(View.GONE);
-            }
+//            showList(activity.getLayoutInflater(), holder.faculty, Arrays.asList(thesis.faculty.name), index -> showFacultyDetails(activity, thesis.faculty.id));
+
         }
 
         @Override
@@ -161,9 +157,8 @@ public class ThesesFragment extends ListFragment {
         @BindView(R.id.type)
         TextView type;
         @BindView(R.id.faculty)
-        LinearLayout faculty;
-        @BindView(R.id.last_grey)
-        View greyView;
+        TextView faculty;
+
 
         public ViewHolder(View itemView) {
             super(itemView);

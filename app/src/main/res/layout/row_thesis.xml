@@ -1,68 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView  xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_margin="@dimen/kujon_margin_typ" >
 
-    <TextView
-        android:id="@+id/title"
-        style="@style/Regular.Entry.Semibold"
-        android:textStyle="bold"
-        tools:text='Edukacyjna rola filmu na przyk\u0142adzie dzia\u0142alno\u015bci warszawskiego kina \u201ePraha\u201d' />
-
-    <TextView
-        android:id="@+id/type"
-        style="@style/Regular.Label"
-        tools:text='licencjacka' />
-
-    <View
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/grey" />
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/kujon_margin_typ"
+        android:orientation="vertical">
 
-    <TextView
-        style="@style/Regular.Label"
-        android:text="@string/authors" />
+        <TextView
+            android:id="@+id/title"
+            style="@style/Regular.Entry.Semibold"
+            android:textStyle="bold"
+            tools:text='Edukacyjna rola filmu na przyk\u0142adzie dzia\u0142alno\u015bci warszawskiego kina \u201ePraha\u201d' />
 
-    <TextView
-        android:id="@+id/authors"
-        style="@style/Regular.Entry"
-        tools:text='Jan Kowalski' />
+        <TextView
+            android:layout_marginTop="@dimen/kujon_margin_typ"
+            style="@style/Regular.Label"
+            android:text="@string/thesis_type" />
+        <TextView
+            android:layout_marginTop="0dp"
+            style="@style/Regular.Label"
+            android:textColor="@color/dark"
+            android:id="@+id/type"
+            tools:text="Master" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/grey" />
 
-    <TextView
-        style="@style/Regular.Label"
-        android:text="@string/reviewers" />
 
-    <LinearLayout
-        android:id="@+id/supervisors"
-        style="@style/Regular.Entry"
-        android:orientation="vertical"
-        tools:text='Lorem ipsum' />
+        <TextView
+            android:layout_marginTop="@dimen/triple_typ_margin"
+            style="@style/Regular.Label"
+            android:text="@string/authors" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/grey" />
 
-    <TextView
-        style="@style/Regular.Label"
-        android:text="@string/faculty" />
+        <LinearLayout
+            android:id="@+id/authors"
+            style="@style/Regular.Entry"
+            android:orientation="vertical"
+            tools:text='Lorem ipsum' />
 
-    <LinearLayout
-        android:id="@+id/faculty"
-        style="@style/Regular.Entry"
-        android:orientation="vertical"
-        tools:text='Lorem ipsum' />
 
-    <View
-        android:id="@+id/last_grey"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:background="@color/grey" />
-</LinearLayout>
+
+
+
+        <TextView
+            android:layout_marginTop="@dimen/triple_typ_margin"
+            style="@style/Regular.Label"
+            android:text="@string/reviewers" />
+
+        <LinearLayout
+            android:id="@+id/supervisors"
+            style="@style/Regular.Entry"
+            android:orientation="vertical"
+            tools:text='Lorem ipsum' />
+
+        <RelativeLayout
+            android:layout_marginTop="@dimen/double_typ_margin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/kujon_margin_typ"
+            android:paddingRight="@dimen/kujon_margin_typ"
+            android:layout_marginBottom="@dimen/double_typ_margin"
+            android:id="@+id/facilty_layout"
+            android:background="?selectableItemBackground">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_faculty_info_icon"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:id="@+id/icon_info"
+                android:layout_alignParentEnd="true"/>
+            <TextView
+                android:id="@+id/faculty"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_toLeftOf="@+id/icon_info"
+                style="@style/Regular.Entry"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:layout_marginBottom="0dp"
+                tools:text="Wydział matematyki i wąchania kwiatków"/>
+            <TextView
+                style="@style/Regular.Label"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_toLeftOf="@+id/icon_info"
+                android:layout_below="@+id/faculty"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:layout_marginTop="0dp"
+                android:text="@string/faculty" />
+
+        </RelativeLayout>
+
+
+
+
+    </LinearLayout>
+</android.support.v7.widget.CardView>
