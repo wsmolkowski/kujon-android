@@ -69,7 +69,7 @@
             />
 
         <RelativeLayout
-            android:layout_marginTop="@dimen/double_typ_margin"
+            android:layout_marginTop="@dimen/two_and_half_typ_margin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="@dimen/kujon_margin_typ"
