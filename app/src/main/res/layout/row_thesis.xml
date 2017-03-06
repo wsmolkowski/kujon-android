@@ -10,53 +10,63 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/kujon_margin_typ"
+        android:paddingTop="@dimen/kujon_margin_typ"
+        android:paddingBottom="@dimen/kujon_margin_typ"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/title"
             style="@style/Regular.Entry.Semibold"
-            android:textStyle="bold"
+            android:textSize="@dimen/title_font_size"
+            android:layout_marginBottom="0dp"
             tools:text='Edukacyjna rola filmu na przyk\u0142adzie dzia\u0142alno\u015bci warszawskiego kina \u201ePraha\u201d' />
 
         <TextView
-            android:layout_marginTop="@dimen/kujon_margin_typ"
             style="@style/Regular.Label"
-            android:text="@string/thesis_type" />
+            android:text="@string/thesis_type"
+            android:textSize="@dimen/font_label"/>
         <TextView
             android:layout_marginTop="0dp"
             style="@style/Regular.Label"
             android:textColor="@color/dark"
             android:id="@+id/type"
-            tools:text="Master" />
+            tools:text="Master"
+            android:textSize="@dimen/font_label"/>
 
 
 
         <TextView
             android:layout_marginTop="@dimen/triple_typ_margin"
             style="@style/Regular.Label"
-            android:text="@string/authors" />
+            android:text="@string/authors"
+            android:layout_marginBottom="@dimen/half_typ_margin"
+            android:textSize="@dimen/font_label"/>
 
 
         <LinearLayout
             android:id="@+id/authors"
             style="@style/Regular.Entry"
             android:orientation="vertical"
-            tools:text='Lorem ipsum' />
+            tools:text='Lorem ipsum'
+            android:layout_marginBottom="0dp"/>
 
 
 
 
 
         <TextView
-            android:layout_marginTop="@dimen/triple_typ_margin"
+            android:layout_marginTop="@dimen/two_and_half_typ_margin"
             style="@style/Regular.Label"
-            android:text="@string/reviewers" />
+            android:text="@string/reviewers"
+            android:layout_marginBottom="@dimen/half_typ_margin"
+            android:textSize="@dimen/font_label"/>
 
         <LinearLayout
             android:id="@+id/supervisors"
             style="@style/Regular.Entry"
             android:orientation="vertical"
-            tools:text='Lorem ipsum' />
+            android:layout_marginBottom="0dp"
+            />
 
         <RelativeLayout
             android:layout_marginTop="@dimen/double_typ_margin"
@@ -80,6 +90,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentLeft="true"
                 android:layout_toLeftOf="@+id/icon_info"
+                android:layout_marginRight="@dimen/double_typ_margin"
                 style="@style/Regular.Entry"
                 android:ellipsize="end"
                 android:maxLines="1"
@@ -95,7 +106,7 @@
                 android:layout_below="@+id/faculty"
                 android:layout_marginLeft="0dp"
                 android:layout_marginRight="0dp"
-                android:layout_marginTop="0dp"
+                android:layout_marginTop="3dp"
                 android:text="@string/faculty" />
 
         </RelativeLayout>

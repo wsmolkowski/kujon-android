@@ -1,10 +1,15 @@
 package mobi.kujon.network.json;
 
+import android.support.annotation.StringRes;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import mobi.kujon.R;
+import mobi.kujon.utils.statuses.ThesisType;
 
 /**
  *
@@ -29,7 +34,27 @@ public class Thesis {
     public String title;
     @SerializedName("type")
     @Expose
-    public String type;
+    public @ThesisType String type;
+
+
+
+
+    public @StringRes int getThesisType(){
+        switch (type){
+            case ThesisType.DOCTORAL:
+                return R.string.doctoral;
+            case ThesisType.MASTER:
+                return R.string.master;
+            case ThesisType.LIC:
+                return R.string.licencjat;
+            case ThesisType.ENGINEER:
+                return R.string.engineer;
+            case ThesisType.POSTGRADUATE:
+                return R.string.postgraduate;
+            default:
+                return R.string.master;
+        }
+    }
 
     @Override
     public boolean equals(Object o) {

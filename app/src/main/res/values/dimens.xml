@@ -29,5 +29,6 @@
     <dimen name="font_label">13sp</dimen>
     <dimen name="two_and_half_typ_margin">20dp</dimen>
     <dimen name="triple_typ_margin">24dp</dimen>
+    <dimen name="half_typ_margin">4dp</dimen>
 
 </resources>

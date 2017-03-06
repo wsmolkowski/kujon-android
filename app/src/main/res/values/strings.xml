@@ -238,4 +238,9 @@
     <string name="inactive_one">Inactive</string>
     <string name="enable_notifications_files">Notifications files and notes</string>
     <string name="thesis_type">Thesis type</string>
+    <string name="doctoral">doctoral</string>
+    <string name="master">master</string>
+    <string name="licencjat">licentiate</string>
+    <string name="engineer">engineer</string>
+    <string name="postgraduate">postgraduate</string>
 </resources>

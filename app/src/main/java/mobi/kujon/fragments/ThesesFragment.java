@@ -128,7 +128,7 @@ public class ThesesFragment extends ListFragment {
         public void onBindViewHolder(ViewHolder holder, int position) {
             Thesis thesis = data.get(position);
             holder.title.setText(thesis.title);
-            holder.type.setText(thesis.type);
+            holder.type.setText(thesis.getThesisType());
 
             List<SimpleUser> supervisors = $.collect(thesis.supervisors, SimpleUser::new);
             List<SimpleUser> authorsList = $.collect(thesis.authors, SimpleUser::new);
