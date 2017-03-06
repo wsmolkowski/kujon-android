@@ -1,4 +1,4 @@
-package mobi.kujon.utils.programme_status;
+package mobi.kujon.utils.statuses;
 
 import android.support.annotation.StringDef;
 

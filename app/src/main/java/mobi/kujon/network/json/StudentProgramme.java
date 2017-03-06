@@ -7,7 +7,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import mobi.kujon.R;
-import mobi.kujon.utils.programme_status.StudentProgrammeStatus;
+import mobi.kujon.utils.statuses.StudentProgrammeStatus;
 
 public class StudentProgramme {
 
