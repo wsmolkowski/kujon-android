@@ -127,9 +127,10 @@
                     style="@style/Regular.Label"
                     android:text="@string/description"/>
 
-                <TextView
+                <mobi.kujon.ui.ExpandableTextView
                     android:id="@+id/description"
                     style="@style/Regular.Entry"
+                    android:background="?selectableItemBackground"
                     tools:text="@string/lorem"
                     />
 
@@ -138,9 +139,10 @@
                     style="@style/Regular.Label"
                     android:text="@string/bibliography"/>
 
-                <TextView
+                <mobi.kujon.ui.ExpandableTextView
                     android:id="@+id/bibliography"
                     style="@style/Regular.Entry"
+                    android:background="?selectableItemBackground"
                     tools:text="@string/lorem"
                     />
 
@@ -149,9 +151,10 @@
                     style="@style/Regular.Label"
                     android:text="@string/grading_criteria"/>
 
-                <TextView
+                <mobi.kujon.ui.ExpandableTextView
                     android:id="@+id/assessment_criteria"
                     style="@style/Regular.Entry"
+                    android:background="?selectableItemBackground"
                     tools:text="@string/lorem"/>
 
                 <TextView
