@@ -17,6 +17,7 @@ import mobi.kujon.network.json.Programme;
 import mobi.kujon.network.json.ProgrammeSingle;
 import mobi.kujon.network.json.Term2;
 import mobi.kujon.network.json.TermGrades;
+import mobi.kujon.network.json.Thesis;
 import mobi.kujon.network.json.User;
 import mobi.kujon.network.json.Usos;
 import mobi.kujon.network.json.gen.CoursersSearchResult;
@@ -25,7 +26,6 @@ import mobi.kujon.network.json.gen.Faculty2;
 import mobi.kujon.network.json.gen.ProgrammeSearchResult;
 import mobi.kujon.network.json.gen.StudentSearchResult;
 import mobi.kujon.network.json.gen.ThesesSearchResult;
-import mobi.kujon.network.json.gen.Thesis_;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
@@ -73,9 +73,9 @@ public interface KujonBackendApi {
 
     @GET("faculties") @Headers(X_KUJONREFRESH_TRUE) Call<KujonResponse<List<Faculty2>>> facultiesRefresh();
 
-    @GET("theses") Call<KujonResponse<List<Thesis_>>> theses();
+    @GET("theses") Call<KujonResponse<List<Thesis>>> theses();
 
-    @GET("theses") @Headers(X_KUJONREFRESH_TRUE) Call<KujonResponse<List<Thesis_>>> thesesRefresh();
+    @GET("theses") @Headers(X_KUJONREFRESH_TRUE) Call<KujonResponse<List<Thesis>>> thesesRefresh();
 
     @GET("faculties/{facultyId}") Call<KujonResponse<Faculty2>> faculty(@Path("facultyId") String facultyId);
 

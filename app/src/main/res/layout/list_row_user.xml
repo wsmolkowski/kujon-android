@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/text1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:minHeight="41dp"
+    style="@style/Regular.Entry"
+    android:layout_marginBottom="0dp"
+    android:gravity="center_vertical|left"
+    android:background="?selectableItemBackground"
+    android:layout_marginLeft="0dp"
+    android:paddingLeft="0dp"/>
+

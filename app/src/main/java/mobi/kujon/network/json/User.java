@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mobi.kujon.network.json.gen.Faculty2;
-import mobi.kujon.network.json.gen.Thesis_;
+
 
 public class User {
 
@@ -58,7 +58,7 @@ public class User {
     public Object user_email;
     @SerializedName("theses")
     @Expose
-    public List<Thesis_> theses;
+    public List<Thesis> theses;
     @SerializedName("terms")
     @Expose
     public List<Term2> terms;

@@ -12,6 +12,7 @@ import java.util.List;
 
 import mobi.kujon.R;
 import mobi.kujon.network.json.StudentProgramme;
+import mobi.kujon.utils.dto.SimpleUser;
 
 public class CommonUtils {
 
@@ -25,6 +26,19 @@ public class CommonUtils {
     }
 
     public static void showList(LayoutInflater layoutInflater, LinearLayout layout, List<String> data, OnPositionClickListener listener) {
+        layout.removeAllViews();
+        for (int i = 0; i < data.size(); i++) {
+            String rowData = data.get(i);
+            View view = layoutInflater.inflate(R.layout.list_row, null);
+            TextView row = (TextView) view.findViewById(R.id.text1);
+            row.setText(rowData);
+            final int finalI = i;
+            view.setOnClickListener(v -> listener.onClick(finalI));
+            layout.addView(view);
+        }
+    }
+
+    public static void showListUserWithImage(LayoutInflater layoutInflater, LinearLayout layout, List<String> data, OnPositionClickListener listener) {
         layout.removeAllViews();
         for (int i = 0; i < data.size(); i++) {
             String rowData = data.get(i);
@@ -69,5 +83,19 @@ public class CommonUtils {
         }
 
         return left.trim().toLowerCase().equals(right.trim().toLowerCase());
+    }
+
+    public static void showListUser(LayoutInflater layoutInflater, LinearLayout layout, List<SimpleUser> data, OnPositionClickListener listener) {
+        layout.removeAllViews();
+        for (int i = 0; i < data.size(); i++) {
+            SimpleUser simpleUser = data.get(i);
+
+            View view = layoutInflater.inflate(R.layout.list_row_user, null);
+            TextView row = (TextView) view.findViewById(R.id.text1);
+            row.setText(simpleUser.getName());
+            final int finalI = i;
+            view.setOnClickListener(v -> listener.onClick(finalI));
+            layout.addView(view);
+        }
     }
 }
