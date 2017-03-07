@@ -88,6 +88,8 @@ public class PreferencesActivity extends BaseActivity {
                     sharedPreferencesFacade.putBoolean(NOTIFICATION_PREFS_KEY, response.body().data.notificationsEnabled);
                     googleCalendarSwitch.setChecked(response.body().data.googleCalendarEnabled);
                     sharedPreferencesFacade.putBoolean(CALENDAR_PREFS_KEY, response.body().data.googleCalendarEnabled);
+                    notificationsFileSwitch.setChecked(response.body().data.notificationFilesEnable);
+                    sharedPreferencesFacade.putBoolean(NOTIFICATION_FILE_PREFS_KEY, response.body().data.notificationFilesEnable);
                     initSwitchListeners();
                 }
                 handler.postDelayed(() -> showProgress(false), 200);

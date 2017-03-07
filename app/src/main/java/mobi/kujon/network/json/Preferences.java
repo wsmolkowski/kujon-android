@@ -14,4 +14,9 @@ public class Preferences {
     @Expose
     public Boolean googleCalendarEnabled;
 
+
+    @SerializedName("event_files_enable")
+    @Expose
+    public Boolean notificationFilesEnable;
+
 }
