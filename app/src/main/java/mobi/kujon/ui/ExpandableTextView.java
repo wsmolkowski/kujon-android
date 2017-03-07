@@ -6,10 +6,14 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Point;
 import android.graphics.Typeface;
+import android.text.Layout;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
+import android.text.style.AlignmentSpan;
 import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
 import android.view.View;
@@ -58,6 +62,7 @@ public class ExpandableTextView extends android.support.v7.widget.AppCompatTextV
             trim = !trim;
             ValueAnimator valueAnimator = ValueAnimator.ofInt(height, maxHeight);
             valueAnimator.addUpdateListener(animation -> {
+                Log.e("height",String.valueOf(Math.round((int)animation.getAnimatedValue())));
                 this.getLayoutParams().height = (int)animation.getAnimatedValue();
                 this.requestLayout();
             });
@@ -71,7 +76,8 @@ public class ExpandableTextView extends android.support.v7.widget.AppCompatTextV
 
                 @Override
                 public void onAnimationEnd(Animator animator) {
-                    if(trim)setText();
+                    Log.e("MAX_HEIGHT",String.valueOf(maxHeight));
+                    setText();
                 }
             });
 
@@ -97,8 +103,10 @@ public class ExpandableTextView extends android.support.v7.widget.AppCompatTextV
 
     private CharSequence getTrimmedText(CharSequence text) {
         if (originalText != null && originalText.length() > trimLength) {
-            SpannableString str2= new SpannableString(getResources().getString(R.string.more));
+            SpannableString str2= new SpannableString("\n"+getResources().getString(R.string.more));
             str2.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.dark_60)), 0, str2.length(), 0);
+            str2.setSpan(new AlignmentSpan.Standard(Layout.Alignment.ALIGN_OPPOSITE), 0, str2.length(), 0);
+            str2.setSpan(new StyleSpan(Typeface.ITALIC), 0, str2.length(), 0);
             return new SpannableStringBuilder(originalText, 0, trimLength + 1).append(ELLIPSIS).append(str2);
         } else {
             return originalText;
@@ -129,16 +137,17 @@ public class ExpandableTextView extends android.support.v7.widget.AppCompatTextV
             Point size = new Point();
             display.getSize(size);
             deviceWidth = size.x;
-            int padding = getContext().getResources().getDimensionPixelSize(R.dimen.kujon_margin_typ);
+
             TextView textView = new TextView(this.getContext());
-            textView.setPadding(padding, 0, padding, 0);
+            textView.setPadding(this.getPaddingLeft(), this.getPaddingTop(), this.getPaddingRight(), this.getPaddingBottom());
+            textView.setLayoutParams(this.getLayoutParams());
             textView.setTypeface(typeface);
-            textView.setText(getOriginalText(), TextView.BufferType.SPANNABLE);
+            textView.setText(getOriginalText()+"\n\n", TextView.BufferType.SPANNABLE);
             textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, getTextSize());
             int widthMeasureSpec = View.MeasureSpec.makeMeasureSpec(deviceWidth, View.MeasureSpec.AT_MOST);
             int heightMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
             textView.measure(widthMeasureSpec, heightMeasureSpec);
-            this.maxHeight  = textView.getMeasuredHeight()+10;
+            this.maxHeight  = textView.getMeasuredHeight();
         }
 
         return maxHeight;
