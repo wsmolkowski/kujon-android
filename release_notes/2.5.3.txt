@@ -1,0 +1,2 @@
+#256 chowamy gdy nie przekazujemy termID, ale się pojawi jezeli w jsonie wróci
+poprawki rozciąganego textView
