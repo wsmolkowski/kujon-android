@@ -132,7 +132,9 @@ public class CourseDetailsActivity extends BaseActivity {
 
         courseId = getIntent().getStringExtra(COURSE_ID);
         termId = getIntent().getStringExtra(TERM_ID);
-
+        if(termId==null){
+            sharedFiles.setVisibility(View.GONE);
+        }
         swipeContainer.setOnRefreshListener(() -> loadData(true));
         showProgress(true);
         handler.post(() -> loadData(false));
@@ -168,6 +170,7 @@ public class CourseDetailsActivity extends BaseActivity {
                 if (ErrorHandlerUtil.handleResponse(response)) {
                     courseDetails = response.body().data;
                     if(termId != null){
+                        sharedFiles.setVisibility(View.VISIBLE);
                         sharedFiles.setOnClickListener(v -> FilesActivity.openActivity(CourseDetailsActivity.this, courseId, termId, courseDetails.name, REQUEST_CODE_OPEN_FILE_ACTIVITY));
                         fileCount.setText(String.valueOf(courseDetails.fileCount));
                     }else {
