@@ -105,8 +105,13 @@ public class UserInfoFragment extends BaseFragment {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_user_info, container, false);
         ButterKnife.bind(this, rootView);
         KujonApplication.getComponent().inject(this);
-        handler.post(() -> loadData(false));
         return rootView;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        handler.post(() -> loadData(false));
     }
 
     @Override
@@ -136,7 +141,7 @@ public class UserInfoFragment extends BaseFragment {
             @Override
             public void onResponse(Call<KujonResponse<User>> call, Response<KujonResponse<User>> response) {
                 swipeContainer.setRefreshing(false);
-                if (ErrorHandlerUtil.handleResponse(response)) {
+                if (ErrorHandlerUtil.handleResponse(response) && isAdded()) {
                     user = response.body().data;
                     userDataFacade.saveUserId(user.id);
                     String name = user.first_name + " " + user.last_name;

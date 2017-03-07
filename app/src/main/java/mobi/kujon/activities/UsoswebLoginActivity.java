@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.gson.JsonSyntaxException;
 
 import org.apache.commons.lang.StringEscapeUtils;
 
@@ -140,21 +141,28 @@ public class UsoswebLoginActivity extends BaseActivity {
 
                         @Override public void onResponse(Call call, Response response) throws IOException {
                             String responseString = response.body().string();
+                            try {
+                                KujonResponse kujonResponse = gson.fromJson(responseString, KujonResponse.class);
+                                runOnUiThread(() -> {
+                                    if (kujonResponse.isSuccessful()) {
+                                        Toast.makeText(UsoswebLoginActivity.this, "Successful login", Toast.LENGTH_SHORT).show();
+                                        Intent data = new Intent();
+                                        data.putExtra(USOS_POJO, usosPojo);
+                                        setResult(RESULT_OK, data);
+                                        finish();
+                                    } else {
 
-                            KujonResponse kujonResponse = gson.fromJson(responseString, KujonResponse.class);
-                            runOnUiThread(() -> {
-                                if (kujonResponse.isSuccessful()) {
-                                    Toast.makeText(UsoswebLoginActivity.this, "Successful login", Toast.LENGTH_SHORT).show();
-                                    Intent data = new Intent();
-                                    data.putExtra(USOS_POJO, usosPojo);
-                                    setResult(RESULT_OK, data);
-                                    finish();
-                                } else {
+                                        Toast.makeText(UsoswebLoginActivity.this, "Login error", Toast.LENGTH_SHORT).show();
+                                        finish();
+                                    }
+                                });
+                            }catch (JsonSyntaxException jse){
+                                runOnUiThread(() -> {
+                                    Toast.makeText(UsoswebLoginActivity.this, "Network error", Toast.LENGTH_SHORT).show();
 
-                                    Toast.makeText(UsoswebLoginActivity.this, "Login error", Toast.LENGTH_SHORT).show();
                                     finish();
-                                }
-                            });
+                                });
+                            }
                         }
                     });
 
