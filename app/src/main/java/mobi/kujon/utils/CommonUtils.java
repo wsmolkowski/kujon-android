@@ -55,7 +55,12 @@ public class CommonUtils {
         layout.removeAllViews();
         for (int i = 0; i < data.size(); i++) {
             StudentProgramme studentProgramme = data.get(i);
-            String rowData = studentProgramme.programme.description.split(",")[0];
+            String rowData;
+            try {
+                 rowData = studentProgramme.programme.description.split(",")[0];
+            }catch (NullPointerException npe){
+                 rowData = studentProgramme.programme.name.split(",")[0];
+            }
             View view = layoutInflater.inflate(R.layout.list_row_programmes, null);
             TextView row = (TextView) view.findViewById(R.id.text1);
             TextView statusText = (TextView) view.findViewById(R.id.status_text);

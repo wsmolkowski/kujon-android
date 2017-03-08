@@ -19,8 +19,8 @@ import mobi.kujon.KujonApplication;
 import mobi.kujon.R;
 import mobi.kujon.network.KujonBackendApi;
 import mobi.kujon.network.json.KujonResponse;
+import mobi.kujon.network.json.Programme;
 import mobi.kujon.network.json.ProgrammeSingle;
-import mobi.kujon.network.json.Programme_;
 import mobi.kujon.network.json.StudentProgramme;
 import mobi.kujon.utils.ErrorHandlerUtil;
 import mobi.kujon.utils.KujonUtils;
@@ -170,8 +170,8 @@ public class ProgrammeDetailsActivity extends BaseActivity {
         }
     }
 
-    public static void showProgrammeDetails(Activity activity, StudentProgramme studentProgramme, Programme_ programmeFull, String name) {
-        Programme_ programme = programmeFull;
+    public static void showProgrammeDetails(Activity activity, StudentProgramme studentProgramme, Programme programmeFull, String name) {
+        Programme programme = programmeFull;
         Intent intent = new Intent(activity, ProgrammeDetailsActivity.class);
         intent.putExtra(LEVEL_OF_STUDIES, programme.levelOfStudies);
         intent.putExtra(DURATION, programme.duration);

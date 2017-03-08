@@ -1,0 +1,2 @@
+poprawka na liście wiadomości - sortowanie
+poprawka na liście programów dotycząca description/name

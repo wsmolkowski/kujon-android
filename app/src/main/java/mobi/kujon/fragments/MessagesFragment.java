@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.github.underscore.$;
 import com.github.underscore.Predicate;
 
 import java.text.DateFormat;
@@ -109,7 +108,7 @@ public class MessagesFragment extends AbstractFragmentSearchWidget<Message> {
         }
 
         public void setData(List<Message> data) {
-            this.messages = $.sortBy(data, item -> item.createdTime);
+            this.messages = data;
             notifyDataSetChanged();
         }
     }
