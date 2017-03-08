@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.underscore.$;
 import com.github.underscore.Optional;
@@ -35,7 +34,6 @@ import mobi.kujon.activities.ThesesActivity;
 import mobi.kujon.network.KujonBackendApi;
 import mobi.kujon.network.json.KujonResponse;
 import mobi.kujon.network.json.Programme;
-import mobi.kujon.network.json.Programme_;
 import mobi.kujon.network.json.StudentProgramme;
 import mobi.kujon.network.json.User;
 import mobi.kujon.network.json.Usos;
@@ -162,18 +160,14 @@ public class UserInfoFragment extends BaseFragment {
                         StudentProgramme studentProgramme = user.student_programmes.get(position);
 
                         Programme programme = studentProgramme.programme;
-                        List<Programme> data = user.programmes;
-                        Optional<Programme> programmeOptional = $.find(data, it -> it.programme.id.equals(programme.id));
-                        if (!programmeOptional.isPresent()) {
-                            Toast.makeText(KujonApplication.getApplication(), R.string.no_programme_desc, Toast.LENGTH_SHORT).show();
-                        } else {
-                            Programme prog = programmeOptional.get();
-                            Programme_ programmeFull = prog.programme;
-                            if (getActivity() != null) {
-                                String programmeName = programmeFull.description.split(",")[0];
-                                ProgrammeDetailsActivity.showProgrammeDetails(getActivity(), studentProgramme,programmeFull, programmeName);
-                            }
+                        String programmeName;
+                        try {
+                            programmeName = programme.name.split(",")[0];
+                        }catch (NullPointerException npe){
+                            programmeName = programme.description.split(",")[0];
                         }
+                        ProgrammeDetailsActivity.showProgrammeDetails(getActivity(), studentProgramme,programme, programmeName);
+
                     });
 
                     List<Faculty2> faculties = user.faculties;
