@@ -287,7 +287,7 @@ public class CourseDetailsActivity extends BaseActivity {
 
     @OnClick(R.id.course_term_name)
     public void termDesc() {
-        if (courseDetails.term != null && courseDetails.term.size() > 0) {
+        if (courseDetails != null && courseDetails.term != null && courseDetails.term.size() > 0) {
             ShowTermDialog.showTermDialog(this,courseDetails.term.get(0));
         }
     }
