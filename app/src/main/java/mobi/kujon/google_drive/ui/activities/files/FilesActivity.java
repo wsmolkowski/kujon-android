@@ -79,6 +79,8 @@ public class FilesActivity extends BaseFileActivity implements FileActivityView 
     public static final int FILE_DETAILS_RESULT_CODE = 874;
     private static final int REQUEST_CODE_FOR_FOLDER = 1234;
     private static final int GET_ACCOUNT_PERMISSION = 107;
+    private static final int PURPOSE_DOWLOAD = 1;
+    private static final int PURPOSE_ASK = 2;
     private FileActivityInjector fileActivityInjector;
     private FilesFragmentPagerAdapter adapter;
     private FileUploadInfoDto fileToUploadId;
@@ -374,7 +376,18 @@ public class FilesActivity extends BaseFileActivity implements FileActivityView 
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-
+        switch (purposeState) {
+            case PURPOSE_DOWLOAD:
+                purposeState = 0;
+                askForFolder();
+                break;
+            case PURPOSE_ASK:
+                purposeState = 0;
+                doOnAllPermisions(this::askForFolder);
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
@@ -457,26 +470,33 @@ public class FilesActivity extends BaseFileActivity implements FileActivityView 
         }
     }
 
+    private int purposeState = 0;
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == STORAGE_PERSMISSION && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             if (dowloadFile) {
                 serviceOpener.openDowloadService(fileToUploadId);
-            } else{
-                reconectGoogleClient();
-                askForFolder();
+            } else {
+                if (reconectGoogleClient(PURPOSE_DOWLOAD)) {
+                    askForFolder();
+                }
             }
         } else if (requestCode == GET_ACCOUNT_PERMISSION && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            reconectGoogleClient();
-            doOnAllPermisions(this::askForFolder);
+            if (reconectGoogleClient(PURPOSE_ASK)) {
+                doOnAllPermisions(this::askForFolder);
+            }
         }
     }
 
-    private void reconectGoogleClient() {
-        if(apiClient != null) {
+    private boolean reconectGoogleClient(int state) {
+        if (apiClient != null && !apiClient.isConnected()) {
+            purposeState = state;
             apiClient.reconnect();
+            return false;
         }
+        return true;
     }
 
     @Override
