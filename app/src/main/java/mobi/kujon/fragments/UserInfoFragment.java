@@ -96,6 +96,7 @@ public class UserInfoFragment extends BaseFragment {
 
     @BindView(R.id.userId)
     TextView userId;
+    private Call<KujonResponse<List<Usos>>> usoses;
 
     @Nullable
     @Override
@@ -215,11 +216,14 @@ public class UserInfoFragment extends BaseFragment {
         swipeContainer.destroyDrawingCache();
         swipeContainer.clearAnimation();
         cancelCall(usersCall);
+        cancelCall(usoses);
     }
+
 
     private void showUsosLogo(String usosId, ImageView imageView) {
         if (!isEmpty(usosId)) {
-            kujonBackendApi.usoses().enqueue(new Callback<KujonResponse<List<Usos>>>() {
+            usoses = kujonBackendApi.usoses();
+            usoses.enqueue(new Callback<KujonResponse<List<Usos>>>() {
                 @Override
                 public void onResponse(Call<KujonResponse<List<Usos>>> call, Response<KujonResponse<List<Usos>>> response) {
                     if (ErrorHandlerUtil.handleResponse(response)) {
@@ -227,11 +231,13 @@ public class UserInfoFragment extends BaseFragment {
                         Optional<Usos> usosOpt = $.find(usoses, it -> usosId.equals(it.usosId));
                         if (usosOpt.isPresent()) {
                             Usos usos = usosOpt.get();
-                            Picasso.with(getActivity()).load(usos.logo)
-                                    .transform(new CircleTransform())
-                                    .fit()
-                                    .centerInside()
-                                    .into(imageView);
+                            if(isAdded()){
+                                picasso.load(usos.logo)
+                                        .transform(new CircleTransform())
+                                        .fit()
+                                        .centerInside()
+                                        .into(imageView);
+                            }
                         }
                     }
                 }
